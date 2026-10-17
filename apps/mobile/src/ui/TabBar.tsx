@@ -1,8 +1,16 @@
 import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+} from 'react-native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
-import { component, motion, radius, space } from '@cfa/tokens';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { component, homeIndicator, motion, radius, space } from '@cfa/tokens';
 import { currentLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
 import { useA11y } from '@/theme/useA11y';
@@ -46,12 +54,25 @@ type Props = {
 
 const tb = component.tabBar;
 
+/**
+ * Distance from the screen's bottom edge to the tab bar: §4.4 "26 pt above the home indicator"
+ * (DECISIONS D25). iOS: above the indicator's top (39 pt on an iPhone 16 Pro); no indicator: 26 pt.
+ * Android: above the gesture or button bar, which is the bottom inset.
+ */
+export function useTabBarBottom() {
+  const { bottom } = useSafeAreaInsets();
+  const indicatorTop =
+    Platform.OS === 'ios' ? (bottom > 0 ? homeIndicator.fromBottom + homeIndicator.height : 0) : bottom;
+  return indicatorTop + tb.aboveHomeIndicator;
+}
+
 /** §4.4 floating glass tab bar (custom fallback; iOS 26 uses NativeTabs from Phase 1, design.md §7). */
 export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false, onRestore }: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();
   const { reduceMotion } = useA11y();
   const lang = currentLang();
+  const bottom = useTabBarBottom();
   // Scale only: fading a parent of native glass breaks it (DECISIONS D20).
   const pop = reduceMotion ? undefined : ZoomIn.duration(motion.tabMinimiseMs);
 
@@ -82,7 +103,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   if (minimised) {
     const jump: TabKey = active === 'messages' ? 'home' : 'messages';
     return (
-      <Animated.View key="min" entering={pop} style={[styles.wrap, styles.minRow]}>
+      <Animated.View key="min" entering={pop} style={[styles.wrap, { bottom }, styles.minRow]}>
         <Pressable accessibilityRole="button" accessibilityLabel={label(active)} onPress={onRestore}>
           <Glass radius={radius.pill}>
             <View style={[styles.minTab, { backgroundColor: c.glassSelected }]}>
@@ -103,7 +124,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   }
 
   return (
-    <Animated.View key="full" entering={pop} style={styles.wrap}>
+    <Animated.View key="full" entering={pop} style={[styles.wrap, { bottom }]}>
       <Glass radius={radius.pill}>
         <View accessibilityRole="tablist" style={styles.bar}>
           {TABS.map((tab) => {
@@ -128,7 +149,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
 }
 
 const styles = StyleSheet.create({
-  wrap: { position: 'absolute', start: tb.inset, end: tb.inset, bottom: tb.aboveHomeIndicator },
+  wrap: { position: 'absolute', start: tb.inset, end: tb.inset },
   bar: { flexDirection: 'row', minHeight: tb.height, padding: tb.padding },
   tab: { flex: 1, borderRadius: radius.pill, minHeight: tb.tabHeight, justifyContent: 'center' },
   tabInner: { alignItems: 'center', gap: space.space1 / 2, paddingHorizontal: space.space1 },

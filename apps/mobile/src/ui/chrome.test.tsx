@@ -1,6 +1,7 @@
 import { act, fireEvent, render, renderHook, screen } from '@testing-library/react-native';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { AccessibilityInfo } from 'react-native';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { light, motion } from '@cfa/tokens';
 import '@/i18n';
 import { useSettings } from '@/theme/settings';
@@ -8,7 +9,7 @@ import { BottomActionBar } from './BottomActionBar';
 import { Button } from './Button';
 import { NavigationBar } from './NavigationBar';
 import { useSheetOptions } from './Sheet';
-import { TabBar, useMinimiseOnScroll } from './TabBar';
+import { TabBar, useMinimiseOnScroll, useTabBarBottom } from './TabBar';
 import { Toast } from './Toast';
 
 jest.mock('expo-glass-effect', () => ({
@@ -63,6 +64,22 @@ test('TabBar: five tabs, active one selected, unread count in the Messages label
   expect(screen.getByText('3', { includeHiddenElements: true }).parent).toHaveStyle({
     backgroundColor: light.glassLabel,
   });
+});
+
+test('tab bar sits 26 pt above the home indicator (§4.4)', async () => {
+  const insets = (bottom: number) => ({ top: 0, left: 0, right: 0, bottom });
+  const { result } = await renderHook(() => useTabBarBottom(), {
+    wrapper: ({ children }) => (
+      <SafeAreaInsetsContext.Provider value={insets(34)}>{children}</SafeAreaInsetsContext.Provider>
+    ),
+  });
+  expect(result.current).toBe(8 + 5 + 26); // iPhone 16 Pro: indicator top at 13 pt
+  const none = await renderHook(() => useTabBarBottom(), {
+    wrapper: ({ children }) => (
+      <SafeAreaInsetsContext.Provider value={insets(0)}>{children}</SafeAreaInsetsContext.Provider>
+    ),
+  });
+  expect(none.result.current).toBe(26); // no home indicator
 });
 
 test('minimised TabBar shows the active tab and a jump button (Home when on Messages)', async () => {

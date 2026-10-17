@@ -23,7 +23,7 @@ import { SearchField } from '@/ui/SearchField';
 import { SegmentedControl } from '@/ui/SegmentedControl';
 import { Switch } from '@/ui/Switch';
 import { T } from '@/ui/T';
-import { TabBar, useMinimiseOnScroll, type TabKey } from '@/ui/TabBar';
+import { TabBar, useMinimiseOnScroll, useTabBarBottom, type TabKey } from '@/ui/TabBar';
 import { TimeSlots, type Slot } from '@/ui/TimeSlots';
 import { Toast } from '@/ui/Toast';
 import { WorkshopCard } from '@/ui/WorkshopCard';
@@ -68,6 +68,7 @@ export function Gallery() {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useScrollViewOffset(scrollRef);
   const tabs = useMinimiseOnScroll();
+  const tabBarBottom = useTabBarBottom();
 
   const [chip, setChip] = useState('All');
   const [search, setSearch] = useState('');
@@ -90,7 +91,7 @@ export function Gallery() {
         testID="gallery-scroll"
         contentContainerStyle={{
           paddingTop: insets.top + component.navBar.height + space.space6,
-          paddingBottom: component.tabBar.height + component.tabBar.aboveHomeIndicator + space.space8,
+          paddingBottom: component.tabBar.height + tabBarBottom + space.space8,
           paddingHorizontal: layout.sideMargin,
           gap: layout.sectionGap,
         }}

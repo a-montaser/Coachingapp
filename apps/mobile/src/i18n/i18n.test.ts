@@ -27,6 +27,8 @@ test('Arabic falls back to English for keys without approved Arabic', async () =
   expect(i18n.t('category.trayTitle')).toBe('Browse by');
   expect(missingArabicKeys()).toContain('category.trayTitle');
   expect(missingArabicKeys()).not.toContain('tabs.home');
+  // Arabic prices drop "From" (owner, D25).
+  expect(i18n.t('card.from', { price: '٣٩٠ ج.م' })).toBe('٣٩٠ ج.م');
   await i18n.changeLanguage('en');
 });
 

@@ -26,6 +26,9 @@ export const motion = {
 
 export const icon = { regular: 22, small: 17, xsmall: 14 } as const; // DS .ic / .ic.s / .ic.xs
 
+// Apple's home indicator: 5 pt tall, 8 pt above the screen edge, inside the bottom safe-area inset.
+export const homeIndicator = { height: 5, fromBottom: 8 } as const;
+
 export const component = {
   glass: {
     rim: 0.5,

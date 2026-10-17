@@ -7,6 +7,7 @@ import en from './en.json';
 export type Lang = 'en' | 'ar';
 
 // Only handoff-approved Arabic lives in ar.json (§7.15); anything else falls back to English.
+// New Arabic copy is Egyptian Arabic (owner, DECISIONS D25). Arabic prices drop "From": card.from = the price.
 // shortcut: language follows the native RTL flag (persists across reloads); Phase 1 stores it explicitly.
 export const currentLang = (): Lang => (I18nManager.isRTL ? 'ar' : 'en');
 

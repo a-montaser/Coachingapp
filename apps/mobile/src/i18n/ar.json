@@ -6,5 +6,11 @@
     "messages": "الرسائل",
     "profile": "حسابي"
   },
-  "language": { "en": "English", "ar": "العربية" }
+  "language": {
+    "en": "English",
+    "ar": "العربية"
+  },
+  "card": {
+    "from": "{{price}}"
+  }
 }
