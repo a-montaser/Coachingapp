@@ -90,15 +90,17 @@ export const component = {
   progress: { segments: 3, height: 4, radius: 2, gap: 6 }, // §5, DS .progress
   toast: { fontSize: 15, weight: '600' }, // §5 (not in DS)
   navBar: {
-    height: 52,
+    height: 52, // space reserved above content for the floating buttons
     padding: 4,
-    inset: 12,
+    inset: 16, // canvas Instructor/Workshop: buttons 16 in from the sides
+    top: 4, // canvas: 58 from the top of an 852 frame = 4 below the status bar
+    clusterPadding: 2, // DS .cluster
     hairlineWidth: 0.5,
     hairlineHeight: 22,
     fadeHeight: 120,
     fadeBlur: 8,
     titleFadeAfter: 150,
-  }, // §4.4, §8, DS .navglass
+  }, // §4.4, §8, canvas Instructor/Workshop, DS .icbtn.glass + .cluster
   tabBar: {
     height: 64,
     padding: 4,

@@ -87,7 +87,7 @@ export default function Family() {
           ]}
         />
       </ScrollView>
-      <NavigationBar title={t('family.title')} onBack={() => router.back()} />
+      <NavigationBar onBack={() => router.back()} />
     </View>
   );
 }

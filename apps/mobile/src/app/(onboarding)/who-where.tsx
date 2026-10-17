@@ -164,7 +164,6 @@ export default function WhoWhereScreen() {
         />
       </ScrollView>
       <NavigationBar
-        title=""
         onBack={() => router.back()}
         actions={[{ label: t('onboarding.skip'), onPress: () => finish({}) }]}
       />

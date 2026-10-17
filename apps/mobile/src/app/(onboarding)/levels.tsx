@@ -182,7 +182,6 @@ export default function Levels() {
         )}
       </ScrollView>
       <NavigationBar
-        title={done ? '' : current ? name(current) : ''}
         onBack={() => (index > 0 ? setIndex(Math.min(index, items.length) - 1) : router.back())}
         actions={
           done || !current

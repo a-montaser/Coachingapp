@@ -121,7 +121,7 @@ export default function Interests() {
           <Button label={t('onboarding.pickOne')} disabled onPress={() => {}} />
         )}
       </View>
-      {edit && <NavigationBar title="" onBack={() => router.back()} />}
+      {edit && <NavigationBar onBack={() => router.back()} />}
     </View>
   );
 }

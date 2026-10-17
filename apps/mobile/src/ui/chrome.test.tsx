@@ -92,7 +92,7 @@ test('minimised TabBar shows the active tab and a jump button (Home when on Mess
   expect(onSelect).toHaveBeenCalledWith('home');
 });
 
-test('NavigationBar: labelled back, header title, up to two labelled actions', async () => {
+test('NavigationBar: labelled back and up to two labelled actions; no inline title without a hero', async () => {
   const onBack = jest.fn();
   await render(
     <NavigationBar
@@ -104,7 +104,7 @@ test('NavigationBar: labelled back, header title, up to two labelled actions', a
       ]}
     />,
   );
-  expect(screen.getByRole('header', { name: 'Booking' })).toBeOnTheScreen();
+  expect(screen.queryByRole('header', { name: 'Booking' })).toBeNull();
   await fireEvent.press(screen.getByRole('button', { name: 'Back' }));
   expect(onBack).toHaveBeenCalled();
   expect(screen.getByRole('button', { name: 'More' })).toBeOnTheScreen();
