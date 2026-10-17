@@ -1,0 +1,39 @@
+{
+  "tabs": {
+    "home": "Home",
+    "explore": "Explore",
+    "bookings": "Bookings",
+    "messages": "Messages",
+    "profile": "Profile"
+  },
+  "category": {
+    "hobbies": "Hobbies",
+    "sports": "Sports",
+    "education": "Education",
+    "languages": "Languages",
+    "trigger": "Category: {{name}}. Change category",
+    "trayTitle": "Browse by",
+    "traySubtitle": "Switch between hobbies, sports, education and languages",
+    "close": "Close"
+  },
+  "common": {
+    "back": "Back",
+    "clear": "Clear search",
+    "share": "Share",
+    "favourite": "Favourite",
+    "more": "More"
+  },
+  "language": { "en": "English", "ar": "العربية" },
+  "gallery": {
+    "title": "Component gallery",
+    "theme": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "reduceTransparency": "Reduce Transparency",
+    "increaseContrast": "Increase Contrast",
+    "reduceMotion": "Reduce Motion",
+    "missingArabic": "Keys without approved Arabic: {{count}}"
+  }
+}

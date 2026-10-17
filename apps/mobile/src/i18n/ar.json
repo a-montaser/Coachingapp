@@ -1,0 +1,10 @@
+{
+  "tabs": {
+    "home": "الرئيسية",
+    "explore": "استكشف",
+    "bookings": "حجوزاتي",
+    "messages": "الرسائل",
+    "profile": "حسابي"
+  },
+  "language": { "en": "English", "ar": "العربية" }
+}
