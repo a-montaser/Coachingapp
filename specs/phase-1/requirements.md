@@ -1,6 +1,6 @@
 # Phase 1 — Requirements: MVP, the hobbies-first booking loop
 
-Status: **DRAFT, awaiting approval** · 17 Oct 2026
+Status: **APPROVED 17 Oct 2026** with the answers in "Resolved" below (they override any text above).
 Sources: `docs/DESIGN_HANDOFF.md` (§1 and §6–§14 win on conflict), the design canvas https://claude.ai/artifact/T5HG8bjkJWWg48RsUwrGhC (its 10 artboards are the look) and its design system https://claude.ai/artifact/MEfnwmckrfLtf6ccKrnFbW (D23, D24).
 
 ## Objective
@@ -225,30 +225,17 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 - **Phase 4:** InstaPay, Fawry, Vodafone Cash; Members' Circle (`[OPEN]`)
 - **Later:** Payments & receipts and Notifications screens, Edit profile, Apple/Google sign-in, Email receipt, Report a problem, search dictation (D25)
 
-## Open questions (need your answer before I build)
-1. **Instructor and workshop pictures.**
-   - The canvas uses flat illustrations (drawings, clearly not photos). Its design system says to use them until real photos exist.
-   - The handoff says silhouettes, and your rules say never present illustrations as real instructors.
-   - Since the seed instructors are fictional, may the demo use the canvas illustrations? The other option is neutral silhouettes everywhere.
-2. **Gateway and Phase 1 methods.**
-   - I propose **Paymob**, through its hosted checkout. It opens in an in-app browser, so it works in Expo Go; its native SDK doesn't.
-   - The Phase 1 methods would be **card (sandbox) + pay at the venue**.
-   - Apple Pay needs an Apple Developer membership and a merchant ID, so it moves to when you have one.
-   - Can you create a Paymob account (test mode), or should I list exactly what to sign up for?
-3. **Unpaid hold length:** 10 minutes?
-4. **Kids bookings,** which are `pending` until ops confirm them in Studio. Which payment model?
-   - (a) Charge now; refund in full automatically if declined.
-   - (b) Pay at the venue only.
-   - (c) Charge when confirmed.
-5. **Automatic refunds:** may a cancellation more than 24 h out trigger the gateway refund automatically through the API? The alternative is ops refunding by hand. This touches money flow.
-6. **Reschedule window:** allowed until the session starts, or only until 24 h before (matching free cancellation)?
-7. **"The evening before" reminder time:** 20:00 Cairo time?
-8. **Booking-detail map:** a real map (`react-native-maps`, works in Expo Go), or a solid header with the venue name and a Directions button until the Phase 2 map work?
-9. **"Use my location" on Who & where:** add it (`expo-location`), or keep the area chips only? Distances are measured from the chosen area either way.
-10. **Tab bar:** keep the Phase 0 custom glass tab bar on iOS 26 instead of native tabs? Native tabs wouldn't mirror in Arabic under JS RTL (D26), and the custom bar matches the canvas exactly. This changes a locked-architecture line.
-11. **Greeting thresholds** (not in the handoff): Good morning 05:00–11:59, Good afternoon 12:00–16:59, Good evening 17:00–04:59?
-12. **New dependencies** (design.md §5): approve the list.
-13. **Accounts you'll need to set up:**
-    - **GitHub:** the push from Phase 0 is still pending.
-    - **Supabase:** the keys in `.env` are still pending, and phone sign-in may need an SMS provider set up even for test numbers (design.md §4).
-    - **Paymob:** a test-mode account (question 2).
+## Resolved (owner, 17 Oct 2026) — these override the text above
+1. **Pictures:** neutral placeholders until the owner provides images. The schema keeps `photo_path` / `banner_path`, so real images drop in without code changes.
+2. **Payments:** a **demo provider** works end to end on the device now: an in-app demo checkout with Pay or Fail. **Paymob** is built behind the same `PaymentProvider` interface and switched on by secrets plus `PAYMENT_PROVIDER=paymob`, with no app release needed. Phase 1 methods: card (demo, then Paymob test) and pay at the venue.
+3. **Unpaid card hold:** 5 minutes.
+4. **Kids bookings:** `pending` with seats held, no charge. Once confirmed: a card booking becomes `payment_due`, payable from Booking detail within **24 h of confirmation or by the start time, whichever is first**, after which the seat is released; a venue booking becomes `confirmed`. In Phase 1 ops confirm with `approve_booking(ref)` / `decline_booking(ref)` in Studio. A push to the parent needs remote push (development build), so Phase 1 shows it in Bookings and on Booking detail.
+5. **Refunds:** cancelling more than 24 h before the start refunds the amount paid automatically through the provider. Inside 24 h, or for same-day bookings: no refund.
+6. **Reschedule:** allowed until 24 h before the start.
+7. **"The evening before":** 20:00 Cairo time, the day before.
+8. **Booking detail:** a real map header (`react-native-maps`).
+9. **"Use my location":** included (`expo-location`). Distance uses the device location when granted, otherwise the chosen area's centre.
+10. **Tab bar:** Apple's native tabs on iOS (`NativeTabs`, `minimizeBehavior="onScrollDown"`, Messages badge). Android keeps the Phase 0 frosted `TabBar` (locked architecture). Known limit: in Arabic under JS-level RTL (D26) the native tab order doesn't mirror inside Expo Go.
+11. **Greetings:** morning 05:00–11:59, afternoon 12:00–16:59, evening 17:00–04:59 (Cairo time).
+12. **Dependencies** in design.md §5: all approved, including maps and location.
+13. **Still needs the owner:** G1 GitHub push, G2 Supabase keys. Without Docker on this Mac, database tests run only against the hosted dev project or in CI, so both gate items block the `data` tasks' verification.

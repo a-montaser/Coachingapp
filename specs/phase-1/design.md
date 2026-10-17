@@ -1,6 +1,6 @@
 # Phase 1 — Technical design
 
-Status: **DRAFT, awaiting approval** · pairs with `requirements.md`. The schema (§2) is locked once you approve this spec; changing it after that needs your sign-off (prompt rule).
+Status: **APPROVED 17 Oct 2026**; the "Resolved" answers in requirements.md override this text where they differ (statuses, hold time, providers, tabs). The schema (§2) is locked once you approve this spec; changing it after that needs your sign-off (prompt rule).
 
 ## 1. Shape of the app
 
@@ -10,7 +10,7 @@ apps/mobile/src/
     _layout.tsx                providers: QueryClient, settings hydration, auth gate, theme, direction
     (auth)/welcome.tsx  sign-up.tsx  verify.tsx
     (onboarding)/interests.tsx  levels.tsx  who-where.tsx
-    (tabs)/_layout.tsx         Tabs + the custom glass TabBar (Open question 10)
+    (tabs)/_layout.tsx         iOS: NativeTabs (Apple tab bar, minimize on scroll); Android: Tabs + Phase 0 TabBar
     (tabs)/index.tsx  explore.tsx  bookings.tsx  messages.tsx  profile.tsx
     instructor/[id].tsx  workshop/[id].tsx  book/[offeringId].tsx  review.tsx
     confirmed/[ref].tsx  booking/[ref].tsx  family.tsx
@@ -46,7 +46,7 @@ supabase/
 | `offerings` | `id`, `instructor_id`, `discipline_id`, `venue_id`, `type` (private/group/kids/workshop), `title`, `description`, `duration_min`, `price_egp`, `capacity`, `min_age`, `max_age`, `included`, `take_home`, `what_to_bring`, `needs_approval`, `published` | public read where published |
 | `slots` | `id`, `offering_id`, `starts_at`, `ends_at`, `capacity`, `seats_taken`, **check `0 ≤ seats_taken ≤ capacity`** | public read |
 | `promo_codes` | `code`, `percent_off`, `active`, `valid_until` | no direct read (`apply_promo` only) |
-| `bookings` | `id`, `ref` unique, `user_id`, `slot_id`, `family_member_id`, `seats`, `status` (awaiting_payment/pending/confirmed/cancelled), `method` (card/venue), `subtotal_egp`, `discount_egp`, `total_egp`, `promo_code`, `note`, `hold_expires_at`, `refundable_until`, `same_day`, `reminder_min` default 120, `created_at`, `cancelled_at`, `cancel_reason`, `refund_egp` | self read; **no direct writes** |
+| `bookings` | `id`, `ref` unique, `user_id`, `slot_id`, `family_member_id`, `seats`, `status` (awaiting_payment/pending/payment_due/confirmed/cancelled), `approved_at`, `pay_by`, `method` (card/venue), `subtotal_egp`, `discount_egp`, `total_egp`, `promo_code`, `note`, `hold_expires_at`, `refundable_until`, `same_day`, `reminder_min` default 120, `created_at`, `cancelled_at`, `cancel_reason`, `refund_egp` | self read; **no direct writes** |
 | `payments` | `id`, `booking_id`, `provider`, `provider_ref`, `amount_egp`, `status` (initiated/paid/failed/refunded), `raw` jsonb, `created_at` | self read through the booking; writes from the service role only |
 | `refunds` | `id`, `payment_id`, `amount_egp`, `status`, `provider_ref`, `created_at` | self read; service role writes |
 
@@ -62,15 +62,20 @@ book(slot uuid, seats int, child uuid, method text, promo text, note text) retur
   -- 3. reject: past / today < now()+60 min / seats > free / workshop > 3 / private ≠ 1 / kids without a 6–14 child
   -- 4. price = offering.price × seats; promo % off subtotal (rounded to whole EGP)
   -- 5. insert booking: venue → confirmed (pending if needs_approval or kids);
-  --    card → awaiting_payment, hold_expires_at = now() + [10 min, OQ3]
+  --    card → awaiting_payment, hold_expires_at = now() + 5 min; kids/needs_approval → pending (seats held, no charge)
   -- 6. seats_taken += seats;  refundable_until = starts_at − 24 h;  same_day = booked on the start date (Cairo)
 cancel_booking(ref text, reason text) returns { refund_egp }
   -- lock booking + slot; refund = paid ∧ now() < refundable_until ∧ ¬same_day ? amount paid : 0
   -- status cancelled, seats freed; a refund row is queued for the refund Edge Function (OQ5)
 reschedule_booking(ref text, new_slot uuid) returns bookings
   -- lock both slots in id order (no deadlock); same offering; new slot passes book()'s checks
-  -- move seats, keep ref and payment, recompute refundable_until / same_day / status   (window: OQ6)
+  -- allowed only while now() < starts_at − 24 h; move seats, keep ref and payment, recompute refundable_until / same_day
 apply_promo(code text, subtotal int) returns { percent_off, discount_egp } | error 'invalid'
+approve_booking(ref text) / decline_booking(ref text)          -- ops only (service role, Studio)
+  -- approve: card → payment_due, pay_by = least(now() + 24 h, starts_at); venue → confirmed
+  -- decline: cancelled, seats freed, nothing charged
+release_expired_holds()                                         -- pg_cron every minute + lazily inside book()
+  -- awaiting_payment past hold_expires_at, payment_due past pay_by → cancelled, seats freed
 ```
 
 - **Ref:** `'CFA-' || lpad(floor(random()*1e5)::text, 5, '0')`, retried if it collides.
@@ -97,8 +102,8 @@ Already approved and installed: Expo SDK 57 set, Zustand, i18next. Approved, now
 | `expo-web-browser` | Hosted gateway checkout (R7.2); Terms/Privacy links |
 | `expo-notifications` | Local booking reminders (R9) |
 | `@react-native-community/slider` | Filters max-price slider (R5.3) |
-| `react-native-maps` | *only if* Open question 8 = map |
-| `expo-location` | *only if* Open question 9 = yes |
+| `react-native-maps` | Booking detail map header (approved) |
+| `expo-location` | "Use my location" and distances (approved) |
 
 Edge Functions use Deno's standard library only. pgTAP is built into the Supabase CLI.
 
@@ -115,7 +120,8 @@ interface PaymentProvider {
 - **create-checkout** (signed-in user): loads the caller's `awaiting_payment` booking, calls `provider.createCheckout`, inserts a `payments` row as `initiated`, and returns the URL. The app opens it with `WebBrowser.openAuthSessionAsync(url, Linking.createURL('payment-return'))`, then refetches the booking.
 - **payment-webhook** (public, HMAC-verified): marks `paid` or `failed` idempotently on `provider_ref`. When paid, the booking becomes confirmed, or pending if it needs approval. When failed, the hold is released.
 - **refund** (service): sends queued refunds through `provider.refund` and records the outcome.
-- **Provider choice:** `PAYMENT_PROVIDER` = `paymob` | `fake`. The fake provider is CI only, and the function refuses it whenever `ENV=production`.
+- **Provider choice:** `PAYMENT_PROVIDER` = `demo` (default now) | `paymob` | `fake` (CI). `demo` and `fake` are refused whenever `ENV=production`.
+- **`demo` provider:** `createCheckout` returns an in-app URL (`coachforall://demo-checkout?ref=…`) instead of a web page. The app opens it as a route showing "Demo payment · Pay N EGP / Fail". The buttons call the `demo-pay` function, which records the outcome through the same code path the real webhook uses. When the URL is `https`, the app opens it in the in-app browser instead, so switching to Paymob needs no app change.
 - **Paymob details to verify at task start:** Intention API, hosted (unified) checkout URL, HMAC fields, refund endpoint, sandbox test cards. I've only confirmed the Intention flow so far.
 
 ## 7. Screens: canvas fidelity
