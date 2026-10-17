@@ -23,7 +23,8 @@
     "share": "Share",
     "favourite": "Favourite",
     "more": "More",
-    "close": "Close"
+    "close": "Close",
+    "comingSoon": "Coming soon"
   },
   "language": {
     "en": "English",
@@ -52,5 +53,43 @@
     "hasTimes": "open times",
     "noTimes": "no times",
     "today": "Today"
+  },
+  "brand": {
+    "wordmark": "Coach For All"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "welcomeHeadline": "Learn something new in Cairo.",
+    "welcomeBody": "Private, group and kids sessions in hobbies, sports, education and languages, with free cancellation up to 24 hours before.",
+    "getStarted": "Get started",
+    "heroPlaceholder": "Illustration coming soon",
+    "phoneTitle": "Your phone number",
+    "phoneSub": "We'll text you a code. Instructors see your number only after you book.",
+    "phoneLabel": "Phone number",
+    "phonePrefix": "EG +20",
+    "phoneInvalid": "Enter the 10 digits after +20, like 100 234 5678.",
+    "sendCode": "Send code",
+    "legal": "By continuing you agree to the Terms and Privacy Policy.",
+    "codeTitle": "Enter the code",
+    "sentTo": "Sent to {{phone}}",
+    "changeNumber": "Change number",
+    "codeLabel": "6-digit code",
+    "wrongCode": "That code isn't right. Try again.",
+    "tooMany": "Too many tries. Wait a minute and try again.",
+    "genericError": "Something went wrong. Check your connection and try again.",
+    "notConfigured": "The app isn't connected to Supabase yet: add the keys to .env.",
+    "resendIn": "Resend code in {{time}}",
+    "resend": "Resend code",
+    "verifying": "Checking",
+    "signOut": "Sign out",
+    "signOutTitle": "Sign out?",
+    "signOutBody": "You can sign back in with your phone number any time.",
+    "keepSignedIn": "Stay signed in"
+  },
+  "messages": {
+    "title": "Messages",
+    "emptyTitle": "No messages yet",
+    "emptyBody": "Chat with your instructors after you book.",
+    "emptyAction": "Explore"
   }
 }

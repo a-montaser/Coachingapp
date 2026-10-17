@@ -117,6 +117,11 @@ export const component = {
   }, // §4.4, DS .tabbar .tab .tabmini .fab .badge
   bottomBar: { inset: 8, radius: 34, padTop: 12, padEnd: 12, padBottom: 22, padStart: 20, gap: 10 }, // §4.4, DS
   sheet: { inset: 8, radius: 34, grabberWidth: 36, grabberHeight: 5 }, // §4.4
+  welcome: { heroHeight: 560, wordmarkSize: 24 }, // §7.1
+  homeWordmarkSize: 22, // §7.4
+  emptyState: { iconTile: 56, iconSize: 26 /* provisional */ }, // §5
+  phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
+  otp: { boxHeight: 60, ring: 2, length: 6, resendSeconds: 60 }, // §7.2; resend = Supabase's 60 s limit
   categoryButton: { padStart: 10, padEnd: 12, gap: 6, iconSize: icon.small, chevronSize: icon.xsmall }, // §6.2, DS .modebtn
   tray: {
     triggerHeight: 40,
