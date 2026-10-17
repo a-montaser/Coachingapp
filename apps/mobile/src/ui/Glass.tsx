@@ -14,7 +14,7 @@ export function glassMode(os: string, liquidAvailable: boolean, reduceTransparen
   return liquidAvailable ? 'liquid' : 'blur';
 }
 
-const liquidAvailable = () =>
+export const liquidAvailable = () =>
   Platform.OS === 'ios' && isLiquidGlassAvailable() && isGlassEffectAPIAvailable();
 
 type Props = {

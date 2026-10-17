@@ -4,7 +4,8 @@
     "explore": "Explore",
     "bookings": "Bookings",
     "messages": "Messages",
-    "profile": "Profile"
+    "profile": "Profile",
+    "unread": "{{count}} unread"
   },
   "category": {
     "hobbies": "Hobbies",

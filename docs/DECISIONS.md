@@ -21,3 +21,5 @@
 | D17 | 2026-10-17 | No separate `GlassGroup`: grouped controls share one `Glass` shape (e.g. nav capsule) | §4.2 "one container"; less code | Pending (Phase 0 report) |
 | D18 | 2026-10-17 | Tokens package tested with Node's built-in test runner; Prettier runs as its own check (no eslint-plugin-prettier) | No extra dependencies | Pending (Phase 0 report) |
 | D19 | 2026-10-17 | App routes live in `apps/mobile/src/app` (SDK 57 default), not `app/` | Expo convention | Pending (Phase 0 report) |
+| D20 | 2026-10-17 | Motion that wraps glass (toast, tab-bar minimise) slides or scales instead of fading; under Reduce Motion it does not animate | expo-glass-effect: opacity < 1 on a GlassView or its parents breaks the material; §8 allows "fades or nothing" | Pending (Phase 0 report) |
+| D21 | 2026-10-17 | Gallery control panel sits at the top (nav-bar action scrolls back to it) rather than sticky; gallery demo copy is English handoff/seed text, not product strings | A sticky header would slide under the floating nav bar; gallery is dev-only | Pending (Phase 0 report) |

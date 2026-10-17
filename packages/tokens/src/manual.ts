@@ -74,5 +74,8 @@ export const component = {
     radioBorderOff: 1.5,
     radioBorderOn: 2,
     radioDot: 12,
+    springDamping: 0.75 /* provisional: "slight overshoot" */,
+    dismissDistance: 80 /* provisional */,
+    dismissVelocity: 800 /* provisional */,
   }, // §6.2
 } as const;
