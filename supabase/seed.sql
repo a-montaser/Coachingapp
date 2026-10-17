@@ -1,0 +1,1 @@
+-- Seed data from docs/DESIGN_HANDOFF.md §14 arrives with the Phase 1 schema.

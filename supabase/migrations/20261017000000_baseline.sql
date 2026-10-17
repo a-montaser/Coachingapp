@@ -1,0 +1,3 @@
+-- Phase 0 baseline: no tables yet. The schema starts with the approved Phase 1 spec.
+-- Convention for every later migration: a table enables Row Level Security in the same
+-- migration that creates it, and ships with its policies (prompt: RLS on every table).
