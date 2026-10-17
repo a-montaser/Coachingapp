@@ -1,7 +1,23 @@
 {
   "name": "coach-for-all",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
-  "engines": { "node": ">=22.13" },
-  "scripts": {}
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "lint": "npm run lint -w @cfa/mobile && prettier --check \"**/*.{ts,tsx,js,json}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json}\"",
+    "typecheck": "npm run typecheck -w @cfa/mobile",
+    "test": "npm test -w @cfa/tokens && npm test -w @cfa/mobile",
+    "tokens": "npm run generate -w @cfa/tokens",
+    "tokens:check": "npm run check -w @cfa/tokens",
+    "check": "npm run lint && npm run typecheck && npm test && npm run tokens:check"
+  },
+  "overrides": {
+    "react": "19.2.3"
+  }
 }
