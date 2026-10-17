@@ -24,10 +24,14 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 });
 
+// The store is the source of truth: any change (a tap, or saved settings loading at launch) moves i18next.
+useSettings.subscribe((s, prev) => {
+  if (s.lang !== prev.lang) i18n.changeLanguage(s.lang);
+});
+
 /** Switches language and layout direction at once; no reload. */
 export function setLanguage(lang: Lang) {
   useSettings.getState().setLang(lang);
-  i18n.changeLanguage(lang);
 }
 
 type Tree = { [k: string]: string | Tree };
