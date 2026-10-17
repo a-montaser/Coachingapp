@@ -1,0 +1,14 @@
+{
+  "docs/DECISIONS.md": {
+    "mtime": 1792230399.4471762,
+    "seen": 1792231096.413424,
+    "ast_hash": "1c34406c929ddee710af5e5c3f8bbf1f",
+    "semantic_hash": "1c34406c929ddee710af5e5c3f8bbf1f"
+  },
+  "docs/DESIGN_HANDOFF.md": {
+    "mtime": 1792229468.815123,
+    "seen": 1792231096.41343,
+    "ast_hash": "8cf8b26a24b1aa6bd79103b606c27650",
+    "semantic_hash": "8cf8b26a24b1aa6bd79103b606c27650"
+  }
+}

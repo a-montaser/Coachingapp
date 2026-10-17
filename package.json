@@ -1,0 +1,7 @@
+{
+  "name": "coach-for-all",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": { "node": ">=22.13" },
+  "scripts": {}
+}
