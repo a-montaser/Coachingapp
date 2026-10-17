@@ -16,3 +16,15 @@ export const formatTime = (hours: number, minutes: number, lang: Lang) => {
 
 export const formatDistance = (km: number, lang: Lang) =>
   lang === 'ar' ? `${formatNumber(km, lang)} كم` : `${formatNumber(km, lang)} km`;
+
+// All dates are shown in Cairo time regardless of the device zone (§1: Egypt only).
+const dateFormat = (lang: Lang, options: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat(locale(lang), { timeZone: 'Africa/Cairo', ...options });
+
+export const formatWeekday = (date: Date, lang: Lang, width: 'short' | 'long' = 'short') =>
+  dateFormat(lang, { weekday: width }).format(date);
+export const formatDayOfMonth = (date: Date, lang: Lang) => dateFormat(lang, { day: 'numeric' }).format(date);
+export const formatMonth = (date: Date, lang: Lang, width: 'short' | 'long' = 'short') =>
+  dateFormat(lang, { month: width }).format(date);
+export const formatFullDate = (date: Date, lang: Lang) =>
+  dateFormat(lang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);

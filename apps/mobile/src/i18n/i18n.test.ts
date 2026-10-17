@@ -1,4 +1,11 @@
-import { formatDistance, formatNumber, formatPrice, formatTime } from './format';
+import {
+  formatDayOfMonth,
+  formatDistance,
+  formatNumber,
+  formatPrice,
+  formatTime,
+  formatWeekday,
+} from './format';
 import i18n, { missingArabicKeys } from './index';
 
 test('Arabic uses Arabic-Indic digits, ٫ decimals, ج.م and كم (§7.15)', () => {
@@ -21,4 +28,12 @@ test('Arabic falls back to English for keys without approved Arabic', async () =
   expect(missingArabicKeys()).toContain('category.trayTitle');
   expect(missingArabicKeys()).not.toContain('tabs.home');
   await i18n.changeLanguage('en');
+});
+
+test('dates use Cairo time and Arabic day names (§7.15)', () => {
+  const sat = new Date('2026-10-17T09:00:00Z'); // Sat 17 Oct, 11:00 in Cairo
+  expect(formatWeekday(sat, 'en')).toBe('Sat');
+  expect(formatDayOfMonth(sat, 'ar')).toBe('١٧');
+  expect(formatWeekday(sat, 'ar', 'long')).toBe('السبت');
+  expect(formatWeekday(new Date('2026-10-17T22:30:00Z'), 'en')).toBe('Sun'); // already Sunday in Cairo
 });

@@ -21,9 +21,13 @@
     "clear": "Clear search",
     "share": "Share",
     "favourite": "Favourite",
-    "more": "More"
+    "more": "More",
+    "close": "Close"
   },
-  "language": { "en": "English", "ar": "العربية" },
+  "language": {
+    "en": "English",
+    "ar": "العربية"
+  },
   "gallery": {
     "title": "Component gallery",
     "theme": "Theme",
@@ -35,5 +39,28 @@
     "increaseContrast": "Increase Contrast",
     "reduceMotion": "Reduce Motion",
     "missingArabic": "Keys without approved Arabic: {{count}}"
+  },
+  "card": {
+    "next": "Next: {{when}}",
+    "from": "From {{price}}",
+    "spotsLeft": "{{left}} of {{total}} spots left",
+    "full": "Full",
+    "rating": "Rated {{rating}}, {{count}} reviews",
+    "favourited": "Favourited",
+    "photoPlaceholder": "Photo coming soon"
+  },
+  "slots": {
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "booked": "booked",
+    "yours": "yours",
+    "until": "– {{end}}"
+  },
+  "dayPicker": {
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "hasTimes": "open times",
+    "noTimes": "no times"
   }
 }
