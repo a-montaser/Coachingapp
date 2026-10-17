@@ -49,6 +49,6 @@ Each task ends with a report line: "✅ [task] · files touched · tests added o
 
 ## E. Verification and close
 
-- [ ] **T22 Maestro flow** `e2e/gallery.yaml` with screenshots of the four combinations. Verify: passes on the emulator.
+- [~] **T22 Maestro flow** `e2e/gallery.yaml` written; **not run in Phase 0** (Android emulator dropped, D22). Runs once an Android device or CI emulator exists (Phase 1).
 - [ ] **T23 iPhone check in Expo Go.** You scan the QR code. Capture the four combinations plus the real Reduce Transparency and Increase Contrast checks from iOS Settings. Verify: your screenshots.
 - [ ] **T24 Graphify update** over handoff + code. Update `DECISIONS.md`. Write the phase report. Verify: CI is green on the final commit. **STOP for the Phase 1 gate.**

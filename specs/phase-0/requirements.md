@@ -116,7 +116,7 @@ Every primitive has an accessibility label and role, has touch targets of at lea
 - **AC:** `graphify-out/GRAPH_REPORT.md` exists and covers the handoff and the Phase 0 code.
 
 ## Phase 0 "done when" (revised for this Mac)
-1. The app runs in **Expo Go on your iPhone 16 Pro** and in **Expo Go on the Android emulator**. (No iOS simulator on macOS 12, and no dev build without an Apple Developer membership.)
+1. The app runs in **Expo Go on your iPhone 16 Pro**. (No iOS simulator on macOS 12, and no dev build without an Apple Developer membership.) The Android emulator was dropped from Phase 0 on 17 Oct 2026 (DECISIONS D22): it boots on this Mac but crashes installing Expo Go under memory pressure.
 2. CI is green.
 3. The gallery shows every primitive in both themes, LTR and RTL, and each accessibility fallback works.
 
