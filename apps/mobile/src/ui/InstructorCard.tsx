@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { component, radius, space } from '@cfa/tokens';
-import { currentLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatDistance, formatNumber, formatPrice } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { Card } from './Card';
@@ -29,7 +29,7 @@ const ic = component.instructorCard;
 export function InstructorCard({ instructor: p, onPress }: { instructor: Instructor; onPress: () => void }) {
   const { c } = useTheme();
   const { t } = useTranslation();
-  const lang = currentLang();
+  const lang = useLang();
   const meta = [p.discipline, p.levels].filter(Boolean).join(' · ');
   const place = [p.distanceKm !== undefined && formatDistance(p.distanceKm, lang), p.area]
     .filter(Boolean)

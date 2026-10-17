@@ -1,5 +1,5 @@
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
-import { I18nManager, Platform } from 'react-native';
+import { useIsRTL } from '@/i18n';
 
 type Names = Extract<SymbolViewProps['name'], object>;
 
@@ -32,13 +32,14 @@ const names = {
 
 export type IconName = keyof typeof names;
 
-// iOS "backward/forward" symbols mirror themselves in RTL; Material ones need flipping.
+// Direction is applied in JS (D26), so the system doesn't mirror symbols for us: flip directional ones.
+// When native RTL arrives (Phase 1 dev build), iOS backward/forward symbols self-mirror: flip Android only then.
 const directional = new Set<IconName>(['back', 'forward']);
 
 type Props = { name: IconName; size: number; color: string };
 
 export function Icon({ name, size, color }: Props) {
-  const flip = Platform.OS !== 'ios' && I18nManager.isRTL && directional.has(name);
+  const flip = useIsRTL() && directional.has(name);
   return (
     <SymbolView
       name={names[name]}

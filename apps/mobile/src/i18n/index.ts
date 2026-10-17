@@ -1,15 +1,19 @@
 import { createInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { DevSettings, I18nManager } from 'react-native';
+import { useSettings, type Lang } from '@/theme/settings';
 import ar from './ar.json';
 import en from './en.json';
 
-export type Lang = 'en' | 'ar';
+export type { Lang };
 
 // Only handoff-approved Arabic lives in ar.json (§7.15); anything else falls back to English.
 // New Arabic copy is Egyptian Arabic (owner, DECISIONS D25). Arabic prices drop "From": card.from = the price.
-// shortcut: language follows the native RTL flag (persists across reloads); Phase 1 stores it explicitly.
-export const currentLang = (): Lang => (I18nManager.isRTL ? 'ar' : 'en');
+// Direction is applied in JS (a `direction` style at each root), not with I18nManager.forceRTL + reload:
+// Expo Go resets native RTL and does not support switching it at runtime (DECISIONS D26).
+// shortcut: native RTL (system nav bars, swipe-back) needs a development build; planned for Phase 1.
+export const currentLang = (): Lang => useSettings.getState().lang;
+export const useLang = (): Lang => useSettings((s) => s.lang);
+export const useIsRTL = (): boolean => useLang() === 'ar';
 
 const i18n = createInstance();
 
@@ -20,14 +24,10 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 });
 
-/** Switches language and direction. Direction needs a reload to apply (dev reload; Phase 1: expo-updates). */
+/** Switches language and layout direction at once; no reload. */
 export function setLanguage(lang: Lang) {
-  const rtl = lang === 'ar';
+  useSettings.getState().setLang(lang);
   i18n.changeLanguage(lang);
-  if (I18nManager.isRTL === rtl) return;
-  I18nManager.allowRTL(rtl);
-  I18nManager.forceRTL(rtl);
-  DevSettings.reload();
 }
 
 type Tree = { [k: string]: string | Tree };

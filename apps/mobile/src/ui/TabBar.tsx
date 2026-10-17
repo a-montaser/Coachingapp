@@ -11,7 +11,7 @@ import {
 import Animated, { ZoomIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, homeIndicator, motion, radius, space } from '@cfa/tokens';
-import { currentLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
@@ -71,7 +71,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   const { c } = useTheme();
   const { t } = useTranslation();
   const { reduceMotion } = useA11y();
-  const lang = currentLang();
+  const lang = useLang();
   const bottom = useTabBarBottom();
   // Scale only: fading a parent of native glass breaks it (DECISIONS D20).
   const pop = reduceMotion ? undefined : ZoomIn.duration(motion.tabMinimiseMs);

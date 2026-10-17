@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { component, radius } from '@cfa/tokens';
-import { currentLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatDayOfMonth, formatFullDate, formatMonth, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { T } from './T';
@@ -10,7 +10,7 @@ const d = component.dateTile;
 /** §5 Date tile: brand-tint / brand-text; past bookings use neutral grey. */
 export function DateTile({ date, past = false }: { date: Date; past?: boolean }) {
   const { c } = useTheme();
-  const lang = currentLang();
+  const lang = useLang();
   const fg = past ? c.label2 : c.brandText;
   const caps = { fontSize: d.capsSize, fontWeight: d.capsWeight } as const;
   return (

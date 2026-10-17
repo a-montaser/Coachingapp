@@ -1,5 +1,6 @@
-import { I18nManager, Text, type TextProps } from 'react-native';
+import { Text, type TextProps } from 'react-native';
 import { type as scale } from '@cfa/tokens';
+import { useIsRTL } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
 
 export type TypeVariant = keyof typeof scale;
@@ -13,9 +14,15 @@ type Props = TextProps & { variant?: TypeVariant; color?: string; weight?: Weigh
 /** All app text. Dynamic Type stays on (§12); prices and times wrap rather than truncate (§3.3). */
 export function T({ variant = 'body', color, weight, style, ...rest }: Props) {
   const { c } = useTheme();
-  const v = (I18nManager.isRTL && arabic[variant]) || variant;
+  const rtl = useIsRTL();
+  const v = (rtl && arabic[variant]) || variant;
   const base = scale[v];
   // The bundled Playfair file is already 600; a weight on top makes Android fall back to the system font.
   const fontWeight = 'fontFamily' in base ? undefined : (weight ?? base.fontWeight);
-  return <Text {...rest} style={[base, { color: color ?? c.label, fontWeight }, style]} />;
+  return (
+    <Text
+      {...rest}
+      style={[base, { color: color ?? c.label, fontWeight, writingDirection: rtl ? 'rtl' : 'ltr' }, style]}
+    />
+  );
 }

@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
-import { currentLang, missingArabicKeys, setLanguage } from '@/i18n';
+import { missingArabicKeys, setLanguage, useLang } from '@/i18n';
 import { useSettings, type A11yFlag, type ThemePref } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { BottomActionBar } from '@/ui/BottomActionBar';
@@ -69,6 +69,7 @@ export function Gallery() {
   const scrollY = useScrollViewOffset(scrollRef);
   const tabs = useMinimiseOnScroll();
   const tabBarBottom = useTabBarBottom();
+  const lang = useLang();
 
   const [chip, setChip] = useState('All');
   const [search, setSearch] = useState('');
@@ -110,7 +111,7 @@ export function Gallery() {
           <SegmentedControl
             accessibilityLabel="Language"
             segments={['English', 'العربية']}
-            selectedIndex={currentLang() === 'ar' ? 1 : 0}
+            selectedIndex={lang === 'ar' ? 1 : 0}
             onChange={(i) => setLanguage(i === 1 ? 'ar' : 'en')}
           />
           <GroupedList

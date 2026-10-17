@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { component, radius, space } from '@cfa/tokens';
-import { currentLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatDayOfMonth, formatFullDate, formatWeekday, isSameCairoDay } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { IconButton } from './IconButton';
@@ -35,7 +35,7 @@ export function DayPicker({
 }: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();
-  const lang = currentLang();
+  const lang = useLang();
   return (
     <View style={styles.wrap}>
       <View style={styles.header}>

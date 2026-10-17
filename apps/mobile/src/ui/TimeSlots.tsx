@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { component, radius, space } from '@cfa/tokens';
-import { currentLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatTime } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { T } from './T';
@@ -28,7 +28,7 @@ export function groupSlots(slots: Slot[]): [PartOfDay, Slot[]][] {
 function TimeSlot({ slot, selected, onPress }: { slot: Slot; selected: boolean; onPress: () => void }) {
   const { c } = useTheme();
   const { t } = useTranslation();
-  const lang = currentLang();
+  const lang = useLang();
   const booked = slot.state === 'booked';
   const start = formatTime(...slot.start, lang);
   const tail =

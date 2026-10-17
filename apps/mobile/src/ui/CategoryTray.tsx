@@ -5,6 +5,7 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-g
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { component, motion, radius, space, touch, tray } from '@cfa/tokens';
+import { useIsRTL } from '@/i18n';
 import type { Category } from '@/theme/settings';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
@@ -81,6 +82,7 @@ export function CategoryTray({ visible, selected, onSelect, onClose }: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();
   const { reduceMotion } = useA11y();
+  const rtl = useIsRTL();
   const [mounted, setMounted] = useState(visible);
   const [pending, setPending] = useState(selected);
   const closing = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -148,7 +150,8 @@ export function CategoryTray({ visible, selected, onSelect, onClose }: Props) {
 
   return (
     <Modal transparent visible={mounted} animationType="none" onRequestClose={onClose} statusBarTranslucent>
-      <GestureHandlerRootView style={StyleSheet.absoluteFill}>
+      {/* A Modal is a separate native root, so it needs the layout direction again (D26). */}
+      <GestureHandlerRootView style={[StyleSheet.absoluteFill, { direction: rtl ? 'rtl' : 'ltr' }]}>
         <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: tray.dim }, dimStyle]}>
           <Pressable
             style={StyleSheet.absoluteFill}

@@ -6,7 +6,9 @@ import {
   formatTime,
   formatWeekday,
 } from './format';
-import i18n, { missingArabicKeys } from './index';
+import { DevSettings } from 'react-native';
+import { useSettings } from '@/theme/settings';
+import i18n, { missingArabicKeys, setLanguage } from './index';
 
 test('Arabic uses Arabic-Indic digits, ٫ decimals, ج.م and كم (§7.15)', () => {
   expect(formatPrice(390, 'ar')).toBe('٣٩٠ ج.م');
@@ -38,4 +40,14 @@ test('dates use Cairo time and Arabic day names (§7.15)', () => {
   expect(formatDayOfMonth(sat, 'ar')).toBe('١٧');
   expect(formatWeekday(sat, 'ar', 'long')).toBe('السبت');
   expect(formatWeekday(new Date('2026-10-17T22:30:00Z'), 'en')).toBe('Sun'); // already Sunday in Cairo
+});
+
+test('setLanguage switches language and direction in place, with no reload (D26)', async () => {
+  const reload = jest.spyOn(DevSettings, 'reload');
+  setLanguage('ar');
+  expect(useSettings.getState().lang).toBe('ar');
+  expect(i18n.language).toBe('ar');
+  expect(reload).not.toHaveBeenCalled();
+  setLanguage('en');
+  expect(useSettings.getState().lang).toBe('en');
 });

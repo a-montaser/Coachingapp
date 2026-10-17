@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { light } from '@cfa/tokens';
-import '@/i18n';
+import { setLanguage } from '@/i18n';
 import { useSettings } from '@/theme/settings';
 import { DateTile } from './DateTile';
 import { DayPicker } from './DayPicker';
@@ -16,6 +16,14 @@ test('DateTile shows weekday, day and month caps in brand-text', async () => {
   expect(screen.getByText('17')).toBeOnTheScreen();
   expect(screen.getByText('OCT')).toBeOnTheScreen();
   expect(screen.getByLabelText('Saturday 17 October')).toBeOnTheScreen();
+});
+
+test('DateTile re-renders in Arabic-Indic digits when the language switches', async () => {
+  await render(<DateTile date={sat} />);
+  await act(async () => setLanguage('ar'));
+  expect(screen.getByText('١٧')).toBeOnTheScreen();
+  await act(async () => setLanguage('en'));
+  expect(screen.getByText('17')).toBeOnTheScreen();
 });
 
 test('DayPicker marks the selected day and labels days with no times', async () => {

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { component, space } from '@cfa/tokens';
-import { currentLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatNumber, formatPrice } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { Card } from './Card';
@@ -33,7 +33,7 @@ export function WorkshopCard({
 }) {
   const { c } = useTheme();
   const { t } = useTranslation();
-  const lang = currentLang();
+  const lang = useLang();
   const spots =
     k.spotsLeft > 0
       ? t('card.spotsLeft', { left: formatNumber(k.spotsLeft, lang), total: formatNumber(k.capacity, lang) })

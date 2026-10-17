@@ -50,7 +50,7 @@ Set up a working repo, toolchain and CI. Build the design tokens and every primi
 
 ### R5 — Theme, direction and accessibility plumbing
 - R5.1 Theme preference System / Light / Dark lives in Zustand. `useTheme()` returns the active colour set and follows the system when set to System. In-memory only in Phase 0; persistence comes in Phase 1.
-- R5.2 Direction: switching to Arabic sets i18next to `ar` and calls `I18nManager.forceRTL(true)`, then reloads the app. Switching back reverses it.
+- R5.2 Direction: switching to Arabic sets i18next to `ar` and lays the app out right-to-left at once, with a JS `direction` style at each root (app, tray modal, sheet). No reload. (Revised 17 Oct 2026, DECISIONS D26: `I18nManager.forceRTL` + reload closes Expo Go.)
 - R5.3 i18next has `en` and `ar` resources. In Arabic, a key with no approved Arabic string falls back to English. A dev-only list shows the missing keys, so no Arabic is invented (handoff 7.15).
 - R5.4 Number helpers use `Intl` with `ar-EG` to give Arabic-Indic digits, `٫` decimals and `ج.م` prices (`٣٩٠ ج.م`, `١٧:٣٠`), and Latin digits with `EGP` in English.
 - R5.5 Accessibility state: `useA11y()` exposes `reduceTransparency`, `reduceMotion` and `increaseContrast` from `AccessibilityInfo`. In dev builds, gallery switches can force each one on, so the fallbacks can be checked on the Android emulator.
