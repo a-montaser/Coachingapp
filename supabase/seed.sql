@@ -181,7 +181,8 @@ select o.id, start_at, start_at + make_interval(mins => o.duration_min), o.capac
 from weekly w
 join public.offerings o on o.title = w.title
 cross join lateral (
-  select ((d + w.at) at time zone 'Africa/Cairo') as start_at
+  -- d::date + time is a Cairo wall-clock time; `at time zone` turns it into the right instant.
+  select ((d::date + w.at) at time zone 'Africa/Cairo') as start_at
   from generate_series(current_date + 1, current_date + 21, interval '1 day') d
   where extract(dow from d) = w.dow
   order by d limit 3
@@ -194,7 +195,7 @@ select o.id, start_at, start_at + make_interval(mins => o.duration_min), o.capac
 from public.offerings o
 cross join generate_series(current_date, current_date + 13, interval '1 day') d
 cross join (values (time '09:00'), (time '17:30'), (time '19:00')) h(at)
-cross join lateral (select ((d + h.at) at time zone 'Africa/Cairo') as start_at) s
+cross join lateral (select ((d::date + h.at) at time zone 'Africa/Cairo') as start_at) s
 where (o.type in ('private', 'kids') or (o.type = 'group' and o.title = 'Small group'))
   and extract(dow from d) <> 5
   and start_at > now();
@@ -202,10 +203,13 @@ where (o.type in ('private', 'kids') or (o.type = 'group' and o.title = 'Small g
 insert into public.promo_codes (code, percent_off) values ('CFA10', 10); -- §9.8 demo code
 
 -- Demo learner Omar (§14): +20 100 234 5678, code 482917 (config.toml test_otp). Child Ali, 9.
+-- Supabase Auth reads these token columns as strings: they must be '' rather than NULL (D30).
 insert into auth.users (id, instance_id, aud, role, phone, phone_confirmed_at, created_at, updated_at,
-  raw_app_meta_data, raw_user_meta_data)
+  raw_app_meta_data, raw_user_meta_data, confirmation_token, recovery_token, email_change_token_new,
+  email_change, phone_change, phone_change_token, email_change_token_current, reauthentication_token)
 values ('00000000-0000-4000-8000-000000000001', '00000000-0000-0000-0000-000000000000', 'authenticated',
-  'authenticated', '201002345678', now(), now(), now(), '{"provider":"phone","providers":["phone"]}', '{}');
+  'authenticated', '201002345678', now(), now(), now(), '{"provider":"phone","providers":["phone"]}', '{}',
+  '', '', '', '', '', '', '', '');
 update public.profiles set first_name = 'Omar', area_id = 'new-cairo', who_for = 'both'
  where id = '00000000-0000-4000-8000-000000000001';
 insert into public.family_members (user_id, first_name, age) values ('00000000-0000-4000-8000-000000000001', 'Ali', 9);
