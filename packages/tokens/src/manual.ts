@@ -1,5 +1,7 @@
 // Values the handoff gives in prose (§4–§8), not in the §3 tables. Each cites its section.
-// `provisional` marks a size the handoff does not specify; listed in the Phase 0 report for design to confirm.
+// `DS` = the "Coach For All — Liquid Glass" design system (cfa components/bundle.css) on the design canvas,
+// the reference for details the handoff leaves out (DECISIONS D23).
+// `provisional` = in neither; listed in the phase report for design to confirm.
 
 export const tray = {
   dim: 'rgba(0,0,0,0.45)', // §3.1 note, §6.2
@@ -22,26 +24,53 @@ export const motion = {
   navTitleRise: 6, // §8
 } as const;
 
+export const icon = { regular: 22, small: 17, xsmall: 14 } as const; // DS .ic / .ic.s / .ic.xs
+
 export const component = {
   glass: { rim: 0.5, rimProminent: 1, frostedProminentBorder: 1.5, contrastRim: 1.5, prominentWeight: '700' }, // §4.2, §4.3
-  button: { height: 50, smallHeight: 36, weight: '600', smallFontSize: 15, iconSize: 17 /* provisional */ }, // §5
-  iconButton: { size: 44, iconSize: 22 /* provisional */ }, // §5
-  chip: { height: 36, fontSize: 15, weight: '600', hairline: 0.5 }, // §5
-  pill: { height: 24, fontSize: 12, weight: '600' }, // §5
-  groupedListIcon: { size: 18 /* provisional */ },
-  tabBadge: { minSize: 18 /* provisional */ },
-  categoryButton: { iconSize: 17 /* provisional */, chevronSize: 12 /* provisional */ },
-  trayClose: { iconSize: 17 /* provisional */ },
-  searchField: { height: 44, iconSize: 17 /* provisional */ }, // §5
-  segmented: { height: 40, padding: 3 }, // §5
-  groupedList: { rowMinHeight: 56, padding: 16, iconTile: 32, iconTileRadius: 9, separatorInset: 60 }, // §5
-  instructorCard: { padding: 8, photoWidth: 96, photoHeight: 120, metaFontSize: 13 }, // §5
-  workshopCard: { bannerMinHeight: 126, bannerMaxHeight: 150, railWidth: 252, bannerAspect: 2 }, // §5
-  dateTile: { width: 56, height: 64, capsSize: 12, capsWeight: '700', daySize: 22, dayWeight: '700' }, // §5
-  dayPicker: { emptyOpacity: 0.45, dotSize: 6 /* provisional */, tileMinHeight: 56 /* provisional */ }, // §5
-  timeSlot: { height: 44, columns: 3, morningEndsHour: 12, eveningStartsHour: 17 }, // §5
-  progress: { segments: 3, height: 4, radius: 2, gap: 4 /* provisional */ }, // §5
-  toast: { fontSize: 15, weight: '600' }, // §5
+  button: { height: 50, smallHeight: 36, weight: '600', padding: 24, smallPadding: 16, iconSize: icon.small }, // §5, DS .btn
+  iconButton: { size: 44, iconSize: icon.regular }, // §5, DS .icbtn
+  chip: { height: 36, weight: '600', padding: 14, outline: 1 }, // §5, DS .chip
+  pill: { height: 24, weight: '600', padding: 10 }, // §5, DS .pill
+  searchField: { height: 44, padding: 14, iconSize: icon.small }, // §5, DS .search
+  segmented: { height: 40, padding: 3, weight: '600' }, // §5, DS .seg
+  groupedList: {
+    rowMinHeight: 56,
+    padding: 16,
+    paddingVertical: 10,
+    iconTile: 32,
+    iconTileRadius: 9,
+    iconSize: icon.small,
+    separatorInset: 60,
+  }, // §5, DS .group .li
+  instructorCard: { padding: 8, photoWidth: 96, photoHeight: 120, infoGap: 3, starSize: icon.xsmall }, // §5, DS .coach
+  workshopCard: {
+    bannerMinHeight: 126,
+    bannerMaxHeight: 150,
+    railWidth: 252,
+    bannerAspect: 2,
+    padTop: 12,
+    padSide: 14,
+    padBottom: 14,
+    gap: 3,
+    footerTop: 6,
+  }, // §5, DS .ws
+  price: { fontSize: 15, weight: '700' }, // DS .price.t-sub
+  dateTile: { width: 56, height: 64, capsSize: 12, capsWeight: '700', daySize: 22, dayWeight: '700' }, // §5, DS .datetile
+  dayPicker: { emptyOpacity: 0.45, tileHeight: 68, gap: 8, numberSize: 20, dotSize: 5 }, // §5, DS .day
+  timeSlot: {
+    height: 44,
+    columns: 3,
+    border: 1,
+    startSize: 15,
+    startWeight: '600',
+    tailSize: 12,
+    tailWeight: '500',
+    morningEndsHour: 12,
+    eveningStartsHour: 17,
+  }, // §5, DS .slot
+  progress: { segments: 3, height: 4, radius: 2, gap: 6 }, // §5, DS .progress
+  toast: { fontSize: 15, weight: '600' }, // §5 (not in DS)
   navBar: {
     height: 52,
     padding: 4,
@@ -51,10 +80,26 @@ export const component = {
     fadeHeight: 120,
     fadeBlur: 8,
     titleFadeAfter: 150,
-  }, // §4.4, §8
-  tabBar: { height: 64, padding: 4, inset: 16, aboveHomeIndicator: 26, iconSize: 22 /* provisional */ }, // §4.4
-  bottomBar: { inset: 8, radius: 34 }, // §4.4
+  }, // §4.4, §8, DS .navglass
+  tabBar: {
+    height: 64,
+    padding: 4,
+    inset: 16,
+    aboveHomeIndicator: 26,
+    tabHeight: 56,
+    iconSize: icon.regular,
+    labelWeight: '600',
+    miniHeight: 52,
+    miniPadStart: 14,
+    miniPadEnd: 18,
+    badgeSize: 18,
+    badgePadding: 5,
+    badgeTop: -3, // DS .badge top 5 in a 56 pt tab = 3 above the icon
+    badgeFromCentre: 4, // DS left: calc(50% + 4px)
+  }, // §4.4, DS .tabbar .tab .tabmini .fab .badge
+  bottomBar: { inset: 8, radius: 34, padTop: 12, padEnd: 12, padBottom: 22, padStart: 20, gap: 10 }, // §4.4, DS
   sheet: { inset: 8, radius: 34, grabberWidth: 36, grabberHeight: 5 }, // §4.4
+  categoryButton: { padStart: 10, padEnd: 12, gap: 6, iconSize: icon.small, chevronSize: icon.xsmall }, // §6.2, DS .modebtn
   tray: {
     triggerHeight: 40,
     inset: 8,
@@ -62,10 +107,13 @@ export const component = {
     padTop: 22,
     padSide: 22,
     padBottom: 10,
+    headerGap: 16,
     titleSize: 20,
     titleWeight: '700',
     closeSize: 36,
+    closeIconSize: icon.regular,
     rowHeight: 56,
+    rowGap: 14,
     iconSize: 22,
     labelSize: 14,
     labelWeight: '600',
@@ -77,5 +125,5 @@ export const component = {
     springDamping: 0.75 /* provisional: "slight overshoot" */,
     dismissDistance: 80 /* provisional */,
     dismissVelocity: 800 /* provisional */,
-  }, // §6.2
+  }, // §6.2, DS .tray .trow .radio
 } as const;

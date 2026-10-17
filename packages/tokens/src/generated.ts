@@ -64,11 +64,11 @@ export const dark = {
 } as const;
 export const shadow = {
   "light": {
-    "glass": "0px 6px 22px rgba(0,0,0,0.08), inset 0px 1px 0px rgba(255,255,255,0.95), inset 0px -1px 0px rgba(255,255,255,0.40)",
+    "glass": "0px 6px 22px rgba(0,0,0,0.08), inset 0px 1px 1px rgba(255,255,255,0.95), inset 0px -1px 1px rgba(255,255,255,0.40)",
     "thumb": "0px 1px 2px rgba(0,0,0,0.10), 0px 3px 8px rgba(0,0,0,0.08)"
   },
   "dark": {
-    "glass": "0px 6px 22px rgba(0,0,0,0.40), inset 0px 1px 0px rgba(255,255,255,0.28), inset 0px -1px 0px rgba(255,255,255,0.10)",
+    "glass": "0px 6px 22px rgba(0,0,0,0.40), inset 0px 1px 1px rgba(255,255,255,0.28), inset 0px -1px 1px rgba(255,255,255,0.10)",
     "thumb": "0px 1px 2px rgba(0,0,0,0.50)"
   }
 } as const;
@@ -90,7 +90,7 @@ export const space = {
   "space4": 16,
   "space5": 20,
   "space6": 24,
-  "space7": 32
+  "space8": 32
 } as const;
 export const touch = 44 as const;
 export const type = {

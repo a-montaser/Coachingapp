@@ -24,7 +24,7 @@ export function BottomActionBar({ caption, price, children }: Props) {
       <Glass radius={bb.radius}>
         <View style={styles.row}>
           <View style={styles.text}>
-            <T variant="footnote" color={c.glassLabel}>
+            <T variant="caption1" color={c.glassLabel}>
               {caption}
             </T>
             <T variant="title3" color={c.glassLabel}>
@@ -40,7 +40,15 @@ export function BottomActionBar({ caption, price, children }: Props) {
 
 const styles = StyleSheet.create({
   wrap: { position: 'absolute', start: bb.inset, end: bb.inset, bottom: bb.inset },
-  row: { flexDirection: 'row', alignItems: 'center', gap: space.space3, padding: space.space3 },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: bb.gap,
+    paddingTop: bb.padTop,
+    paddingEnd: bb.padEnd,
+    paddingBottom: bb.padBottom,
+    paddingStart: bb.padStart,
+  },
   text: { flex: 1 },
   actions: { flexDirection: 'row', alignItems: 'center', gap: space.space2 },
 });

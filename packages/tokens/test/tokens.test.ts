@@ -38,8 +38,16 @@ test('type scale spot checks', () => {
   assert.equal(tokens.type.arBody.lineHeight, 26);
 });
 
-test('spacing has exactly the 7 listed values (D8)', () => {
-  assert.deepEqual(Object.values(tokens.space), [4, 8, 12, 16, 20, 24, 32]);
+test('spacing is space1–6 and space8, matching the design system (D8, D23)', () => {
+  assert.deepEqual(tokens.space, {
+    space1: 4,
+    space2: 8,
+    space3: 12,
+    space4: 16,
+    space5: 20,
+    space6: 24,
+    space8: 32,
+  });
 });
 
 test('radius, blur, touch and shadows', () => {
@@ -47,7 +55,7 @@ test('radius, blur, touch and shadows', () => {
   assert.deepEqual(tokens.blur, { regular: 24, clear: 14 });
   assert.equal(tokens.touch, 44);
   assert.equal(tokens.shadow.dark.thumb, '0px 1px 2px rgba(0,0,0,0.50)');
-  assert.match(tokens.shadow.light.glass, /inset 0px -1px 0px rgba\(255,255,255,0.40\)$/);
+  assert.match(tokens.shadow.light.glass, /inset 0px -1px 1px rgba\(255,255,255,0.40\)$/);
 });
 
 test('generated file is fresh', () => {

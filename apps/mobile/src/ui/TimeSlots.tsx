@@ -46,14 +46,18 @@ function TimeSlot({ slot, selected, onPress }: { slot: Slot; selected: boolean; 
       style={[
         styles.slot,
         selected
-          ? { backgroundColor: c.brand }
-          : { backgroundColor: c.surface, borderWidth: StyleSheet.hairlineWidth, borderColor: c.separator },
+          ? { backgroundColor: c.brand, borderColor: c.brand }
+          : { backgroundColor: booked ? 'transparent' : c.surface, borderColor: c.separator },
       ]}
     >
-      <T variant="headline" color={fg} style={booked && styles.struck}>
+      <T variant="subheadline" weight={ts.startWeight} color={fg} style={booked && styles.struck}>
         {start}
       </T>
-      <T variant="footnote" color={selected ? c.onBrand : booked ? c.label3 : c.label2}>
+      <T
+        variant="caption1"
+        weight={ts.tailWeight}
+        color={selected ? c.onBrand : booked ? c.label3 : c.label2}
+      >
         {tail}
       </T>
     </Pressable>
@@ -108,6 +112,7 @@ const styles = StyleSheet.create({
   slot: {
     minHeight: ts.height,
     borderRadius: radius.sm,
+    borderWidth: ts.border,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: space.space1,

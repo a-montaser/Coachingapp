@@ -62,10 +62,10 @@ export function DayPicker({ monthLabel, days, selectedIndex, onSelect, onPreviou
                 !day.hasTimes && !selected && { opacity: dp.emptyOpacity },
               ]}
             >
-              <T variant="caption1" color={selected ? c.onBrand : c.label2}>
+              <T variant="caption1" weight="600" color={selected ? c.onBrand : c.label2}>
                 {formatWeekday(day.date, lang)}
               </T>
-              <T variant="headline" color={fg}>
+              <T variant="title3" weight="700" color={fg}>
                 {formatDayOfMonth(day.date, lang)}
               </T>
               <View
@@ -83,10 +83,10 @@ const styles = StyleSheet.create({
   wrap: { gap: space.space2 },
   header: { flexDirection: 'row', alignItems: 'center' },
   flex: { flex: 1 },
-  row: { flexDirection: 'row', gap: space.space1 },
+  row: { flexDirection: 'row', gap: dp.gap },
   tile: {
     flex: 1,
-    minHeight: dp.tileMinHeight,
+    minHeight: dp.tileHeight,
     borderRadius: radius.sm,
     alignItems: 'center',
     justifyContent: 'center',

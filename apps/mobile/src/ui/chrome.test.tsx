@@ -59,6 +59,10 @@ test('TabBar: five tabs, active one selected, unread count in the Messages label
   expect(screen.getByRole('tab', { name: 'Home' })).toBeSelected();
   await fireEvent.press(screen.getByRole('tab', { name: 'Messages, 3 unread' }));
   expect(onSelect).toHaveBeenCalledWith('messages');
+  // Glass carries no colour: the badge is glass-label on bg, not danger (§4.2, DS .glass .badge).
+  expect(screen.getByText('3', { includeHiddenElements: true }).parent).toHaveStyle({
+    backgroundColor: light.glassLabel,
+  });
 });
 
 test('minimised TabBar shows the active tab and a jump button (Home when on Messages)', async () => {

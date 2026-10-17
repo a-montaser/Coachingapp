@@ -30,7 +30,12 @@ export function SegmentedControl({ segments, selectedIndex, onChange, accessibil
               hitSlop={(touch - seg.height) / 2}
               style={[styles.segment, selected && { backgroundColor: c.surface, boxShadow: shadow.thumb }]}
             >
-              <T variant="subheadline" color={selected ? c.label : c.glassLabel} numberOfLines={1}>
+              <T
+                variant="subheadline"
+                weight={seg.weight}
+                color={selected ? c.label : c.glassLabel}
+                numberOfLines={1}
+              >
                 {label}
               </T>
             </Pressable>

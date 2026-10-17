@@ -50,7 +50,7 @@ export function SearchField({ value, onChangeText, placeholder, onFocus, autoFoc
 
 const styles = StyleSheet.create({
   field: { minHeight: s.height, justifyContent: 'center' },
-  row: { flexDirection: 'row', alignItems: 'center', paddingStart: space.space3, gap: space.space2 },
+  row: { flexDirection: 'row', alignItems: 'center', paddingStart: s.padding, gap: space.space2 },
   // Height comes from the field; the input fills it so the whole capsule is a 44 pt target.
   input: { flex: 1, minHeight: s.height, paddingVertical: 0, textAlign: 'auto' },
 });

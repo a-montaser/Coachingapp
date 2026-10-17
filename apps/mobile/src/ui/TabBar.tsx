@@ -65,14 +65,15 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
       <View>
         <Icon name={tab} size={tb.iconSize} color={c.glassLabel} />
         {tab === 'messages' && unreadMessages > 0 && (
-          <View style={[styles.badge, { backgroundColor: c.danger }]}>
-            <T variant="caption1" weight="700" color={c.onBrand}>
+          // Glass carries no colour: the badge on glass is glass-label, not danger (§4.2, DS .glass .badge).
+          <View style={[styles.badge, { backgroundColor: c.glassLabel }]}>
+            <T variant="caption1" weight="700" color={c.bg}>
               {formatNumber(unreadMessages, lang)}
             </T>
           </View>
         )}
       </View>
-      <T variant="caption1" weight={selected ? '700' : undefined} color={c.glassLabel} numberOfLines={1}>
+      <T variant="caption1" weight={selected ? '700' : tb.labelWeight} color={c.glassLabel} numberOfLines={1}>
         {t(`tabs.${tab}`)}
       </T>
     </View>
@@ -84,7 +85,12 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
       <Animated.View key="min" entering={pop} style={[styles.wrap, styles.minRow]}>
         <Pressable accessibilityRole="button" accessibilityLabel={label(active)} onPress={onRestore}>
           <Glass radius={radius.pill}>
-            <View style={[styles.minTab, { backgroundColor: c.glassSelected }]}>{content(active, true)}</View>
+            <View style={[styles.minTab, { backgroundColor: c.glassSelected }]}>
+              <Icon name={active} size={tb.iconSize} color={c.glassLabel} />
+              <T variant="subheadline" weight="600" color={c.glassLabel} numberOfLines={1}>
+                {t(`tabs.${active}`)}
+              </T>
+            </View>
           </Glass>
         </Pressable>
         <Pressable accessibilityRole="button" accessibilityLabel={label(jump)} onPress={() => onSelect(jump)}>
@@ -121,28 +127,31 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   );
 }
 
-const inner = tb.height - tb.padding * 2;
-
 const styles = StyleSheet.create({
   wrap: { position: 'absolute', start: tb.inset, end: tb.inset, bottom: tb.aboveHomeIndicator },
   bar: { flexDirection: 'row', minHeight: tb.height, padding: tb.padding },
-  tab: { flex: 1, borderRadius: radius.pill, minHeight: inner, justifyContent: 'center' },
+  tab: { flex: 1, borderRadius: radius.pill, minHeight: tb.tabHeight, justifyContent: 'center' },
   tabInner: { alignItems: 'center', gap: space.space1 / 2, paddingHorizontal: space.space1 },
   badge: {
     position: 'absolute',
-    top: -space.space1,
-    end: -space.space3,
-    minWidth: component.tabBadge.minSize,
-    paddingHorizontal: space.space1,
+    top: tb.badgeTop,
+    start: tb.iconSize / 2 + tb.badgeFromCentre,
+    minWidth: tb.badgeSize,
+    height: tb.badgeSize,
+    paddingHorizontal: tb.badgePadding,
     borderRadius: radius.pill,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   minRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   minTab: {
-    minHeight: tb.height,
-    paddingHorizontal: space.space5,
+    minHeight: tb.miniHeight,
+    paddingStart: tb.miniPadStart,
+    paddingEnd: tb.miniPadEnd,
     borderRadius: radius.pill,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.space2,
   },
-  round: { width: tb.height, height: tb.height, alignItems: 'center', justifyContent: 'center' },
+  round: { width: tb.miniHeight, height: tb.miniHeight, alignItems: 'center', justifyContent: 'center' },
 });

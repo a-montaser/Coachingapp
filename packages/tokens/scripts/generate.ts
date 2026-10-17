@@ -50,7 +50,8 @@ function glassShadow(value: string): string {
   for (const p of inner) {
     const m = /inner (top|bottom) ([\d.]+) pt `([^`]+)`/.exec(p);
     if (!m) throw new Error(`Unparsed glass shadow part "${p}"`);
-    parts.push(`inset 0px ${m[1] === 'top' ? '' : '-'}${m[2]}px 0px ${m[3]}`);
+    // The handoff gives no blur for the inner lines; the design system uses 1 px (DS tokens.css --shadow-glass).
+    parts.push(`inset 0px ${m[1] === 'top' ? '' : '-'}${m[2]}px 1px ${m[3]}`);
   }
   return parts.join(', ');
 }
@@ -94,8 +95,11 @@ export function build(md: string) {
     else if (token === 'glass-blur') blur.regular = leadingNumber(value);
     else if (token === 'glass-blur-clear') blur.clear = leadingNumber(value);
     else if (token.startsWith('space-')) {
-      // Handoff names "space-1…8" but lists 7 values; only the listed ones exist (DECISIONS D8).
-      value.split(',').forEach((v, i) => (space[`space${i + 1}`] = leadingNumber(v)));
+      // Handoff names "space-1…8" with 7 values: the design system's scale skips space-7 (DECISIONS D8, D23).
+      const names = [1, 2, 3, 4, 5, 6, 8];
+      const values = value.split(',').map(leadingNumber);
+      if (values.length !== names.length) throw new Error(`Expected ${names.length} spacing values`);
+      values.forEach((v, i) => (space[`space${names[i]}`] = v));
     } else if (token === 'touch') touch = leadingNumber(value);
     else throw new Error(`Unknown §3.2 token "${token}"`);
   }

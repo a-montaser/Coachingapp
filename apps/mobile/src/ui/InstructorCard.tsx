@@ -67,15 +67,17 @@ export function InstructorCard({ instructor: p, onPress }: { instructor: Instruc
           </T>
         )}
         <View style={styles.metaRow}>
-          <Icon name="star" size={ic.metaFontSize} color={c.gold} />
+          <Icon name="star" size={ic.starSize} color={c.gold} />
           <T variant="footnote" color={c.label2} style={styles.flex}>
             {[rating, place].filter(Boolean).join(' · ')}
           </T>
         </View>
         {next && <Pill label={next} tone="next" />}
-        <T variant="headline" weight="700" color={c.brandText}>
-          {from}
-        </T>
+        <View style={styles.foot}>
+          <T variant="subheadline" weight={component.price.weight} color={c.brandText}>
+            {from}
+          </T>
+        </View>
       </View>
     </Card>
   );
@@ -90,7 +92,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  body: { flex: 1, gap: space.space1, paddingVertical: space.space1 },
+  body: { flex: 1, gap: ic.infoGap, paddingVertical: space.space1 },
+  foot: { marginTop: 'auto' },
   titleRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.space2 },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: space.space1 },
   flex: { flex: 1 },

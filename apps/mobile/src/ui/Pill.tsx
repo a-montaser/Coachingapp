@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { component, radius, space } from '@cfa/tokens';
+import { component, radius } from '@cfa/tokens';
 import { useTheme } from '@/theme/useTheme';
 import { T } from './T';
 
@@ -28,7 +28,7 @@ export function Pill({ label, tone = 'neutral' }: { label: string; tone?: PillTo
 const styles = StyleSheet.create({
   pill: {
     minHeight: p.height,
-    paddingHorizontal: space.space3,
+    paddingHorizontal: p.padding,
     borderRadius: radius.pill,
     alignSelf: 'flex-start',
     justifyContent: 'center',

@@ -90,7 +90,7 @@ export function Gallery() {
         testID="gallery-scroll"
         contentContainerStyle={{
           paddingTop: insets.top + component.navBar.height + space.space6,
-          paddingBottom: component.tabBar.height + component.tabBar.aboveHomeIndicator + space.space7,
+          paddingBottom: component.tabBar.height + component.tabBar.aboveHomeIndicator + space.space8,
           paddingHorizontal: layout.sideMargin,
           gap: layout.sectionGap,
         }}

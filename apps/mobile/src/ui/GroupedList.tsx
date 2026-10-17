@@ -29,7 +29,7 @@ export function GroupedList({ rows }: { rows: GroupedRow[] }) {
           <View style={styles.row}>
             {row.icon && (
               <View style={[styles.tile, { backgroundColor: c.surface2 }]}>
-                <Icon name={row.icon} size={component.groupedListIcon.size} color={c.label} />
+                <Icon name={row.icon} size={g.iconSize} color={c.label} />
               </View>
             )}
             <View style={styles.text}>
@@ -41,8 +41,7 @@ export function GroupedList({ rows }: { rows: GroupedRow[] }) {
               )}
             </View>
             {row.value && <T color={c.label2}>{row.value}</T>}
-            {row.trailing ??
-              (row.onPress && <Icon name="forward" size={component.groupedListIcon.size} color={c.label2} />)}
+            {row.trailing ?? (row.onPress && <Icon name="forward" size={g.iconSize} color={c.label2} />)}
           </View>
         );
         return (
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
   row: {
     minHeight: g.rowMinHeight,
     paddingHorizontal: g.padding,
-    paddingVertical: space.space2,
+    paddingVertical: g.paddingVertical,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.space3,

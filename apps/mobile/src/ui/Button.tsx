@@ -48,7 +48,7 @@ export function Button({
 
   const content = (
     <View
-      style={[styles.content, { minHeight: height, paddingHorizontal: small ? space.space4 : space.space5 }]}
+      style={[styles.content, { minHeight: height, paddingHorizontal: small ? b.smallPadding : b.padding }]}
     >
       {busy && <ActivityIndicator color={color} />}
       <T

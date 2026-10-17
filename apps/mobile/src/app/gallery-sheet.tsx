@@ -33,6 +33,6 @@ export default function GallerySheet() {
 }
 
 const styles = StyleSheet.create({
-  body: { padding: layout.sideMargin, paddingTop: space.space7, gap: space.space4 },
+  body: { padding: layout.sideMargin, paddingTop: space.space8, gap: space.space4 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space2 },
 });

@@ -57,7 +57,7 @@ export function WorkshopCard({
         </T>
         <View style={styles.footer}>
           <Pill label={spots} tone={k.spotsLeft > 0 ? 'next' : 'neutral'} />
-          <T variant="headline" weight="700" color={c.brandText}>
+          <T variant="subheadline" weight={component.price.weight} color={c.brandText}>
             {price}
           </T>
         </View>
@@ -75,12 +75,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  body: { padding: space.space3, gap: space.space1 },
+  body: { paddingTop: w.padTop, paddingHorizontal: w.padSide, paddingBottom: w.padBottom, gap: w.gap },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     gap: space.space2,
+    marginTop: w.footerTop,
   },
 });

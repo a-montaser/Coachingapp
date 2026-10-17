@@ -182,7 +182,7 @@ export function CategoryTray({ visible, selected, onSelect, onClose }: Props) {
                 hitSlop={(touch - tr.closeSize) / 2}
                 style={styles.close}
               >
-                <Icon name="close" size={component.trayClose.iconSize} color={c.label} />
+                <Icon name="close" size={tr.closeIconSize} color={c.label} />
               </Pressable>
             </View>
             <View style={[styles.hairline, { backgroundColor: c.separator }]} />
@@ -226,8 +226,9 @@ const styles = StyleSheet.create({
     minHeight: tr.triggerHeight,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.space1,
-    paddingHorizontal: space.space3,
+    gap: cb.gap,
+    paddingStart: cb.padStart,
+    paddingEnd: cb.padEnd,
   },
   card: {
     position: 'absolute',
@@ -239,11 +240,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: tr.padSide,
     paddingBottom: tr.padBottom,
   },
-  header: { flexDirection: 'row', alignItems: 'flex-start', gap: space.space3, paddingBottom: space.space4 },
+  header: { flexDirection: 'row', alignItems: 'flex-start', gap: space.space3, paddingBottom: tr.headerGap },
   flex: { flex: 1 },
   close: { width: tr.closeSize, height: tr.closeSize, alignItems: 'center', justifyContent: 'center' },
   hairline: { height: StyleSheet.hairlineWidth },
-  row: { minHeight: tr.rowHeight, flexDirection: 'row', alignItems: 'center', gap: space.space3 },
+  row: { minHeight: tr.rowHeight, flexDirection: 'row', alignItems: 'center', gap: tr.rowGap },
   rowLabel: { fontSize: tr.labelSize, letterSpacing: tr.labelTracking },
   radio: {
     width: tr.radioSize,

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet } from 'react-native';
-import { component, radius, space, touch } from '@cfa/tokens';
+import { component, radius, touch } from '@cfa/tokens';
 import { useTheme } from '@/theme/useTheme';
 import { T } from './T';
 
@@ -25,7 +25,7 @@ export function Chip({ label, onPress, selected = false, outlined = false }: Pro
       style={[
         styles.chip,
         { backgroundColor: bg },
-        outlined && !selected && { borderWidth: chip.hairline, borderColor: c.separator },
+        outlined && !selected && { borderWidth: chip.outline, borderColor: c.separator },
       ]}
     >
       <T variant="subheadline" weight={chip.weight} color={selected ? c.onBrand : c.label}>
@@ -38,7 +38,7 @@ export function Chip({ label, onPress, selected = false, outlined = false }: Pro
 const styles = StyleSheet.create({
   chip: {
     minHeight: chip.height,
-    paddingHorizontal: space.space4,
+    paddingHorizontal: chip.padding,
     borderRadius: radius.pill,
     alignItems: 'center',
     justifyContent: 'center',
