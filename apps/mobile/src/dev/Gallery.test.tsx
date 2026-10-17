@@ -41,3 +41,13 @@ test('every primitive section is on the gallery', async () => {
   expect(screen.getAllByRole('tab', { name: /Home|Explore|Bookings|Profile|Messages/ })).toHaveLength(5);
   expect(screen.getByRole('button', { name: 'Category: Hobbies. Change category' })).toBeOnTheScreen();
 });
+
+test('the gallery switches its demo copy, seed and digits to Arabic', async () => {
+  await render(<Gallery />);
+  await fireEvent.press(screen.getByRole('tab', { name: 'العربية' }));
+  expect(screen.getByRole('header', { name: 'الأزرار' })).toBeOnTheScreen();
+  expect(screen.getByText('ياسمين فتحي')).toBeOnTheScreen();
+  expect(screen.getByText('٤٥٠ ج.م')).toBeOnTheScreen(); // "From" dropped in Arabic (D25)
+  await fireEvent.press(screen.getByRole('tab', { name: 'English' }));
+  expect(screen.getByRole('header', { name: 'Buttons' })).toBeOnTheScreen();
+});

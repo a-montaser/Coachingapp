@@ -34,3 +34,6 @@ export const isSameCairoDay = (a: Date, b: Date) => {
   const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo' });
   return day.format(a) === day.format(b);
 };
+
+export const formatMonthYear = (date: Date, lang: Lang) =>
+  dateFormat(lang, { month: 'long', year: 'numeric' }).format(date);

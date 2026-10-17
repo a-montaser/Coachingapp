@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useCallback, useState, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
@@ -27,16 +28,14 @@ import { TabBar, useMinimiseOnScroll, useTabBarBottom, type TabKey } from '@/ui/
 import { TimeSlots, type Slot } from '@/ui/TimeSlots';
 import { Toast } from '@/ui/Toast';
 import { WorkshopCard } from '@/ui/WorkshopCard';
-import { nour, photoWalk, wheelTaster, yasmine } from './seed';
+import { formatMonthYear, formatNumber, formatPrice } from '@/i18n/format';
+import { galleryCopy } from './galleryCopy';
+import { seedFor } from './seed';
 
-// Dev-only screen: demo copy is the handoff's English sample copy (§5, §7, §14), not product strings.
+// Dev-only screen: demo copy comes from galleryCopy.ts (English handoff samples + an Arabic draft, D27).
 
 const THEMES: ThemePref[] = ['system', 'light', 'dark'];
-const FLAGS: [A11yFlag, string][] = [
-  ['reduceTransparency', 'Reduce Transparency'],
-  ['increaseContrast', 'Increase Contrast'],
-  ['reduceMotion', 'Reduce Motion'],
-];
+const FLAGS: A11yFlag[] = ['reduceTransparency', 'increaseContrast', 'reduceMotion'];
 const DAY = 24 * 60 * 60 * 1000;
 const WEEK = Array.from({ length: 7 }, (_, i) => ({
   date: new Date(Date.parse('2026-10-17T09:00:00Z') + i * DAY),
@@ -70,8 +69,12 @@ export function Gallery() {
   const tabs = useMinimiseOnScroll();
   const tabBarBottom = useTabBarBottom();
   const lang = useLang();
+  const g = galleryCopy[lang];
+  const { t } = useTranslation();
+  const seed = seedFor(lang);
+  const n = (x: number) => formatNumber(x, lang);
 
-  const [chip, setChip] = useState('All');
+  const [chip, setChip] = useState(0);
   const [search, setSearch] = useState('');
   const [segment, setSegment] = useState(0);
   const [weekly, setWeekly] = useState(true);
@@ -98,29 +101,29 @@ export function Gallery() {
         }}
       >
         <T variant="largeTitle" accessibilityRole="header">
-          Component gallery
+          {g.title}
         </T>
 
-        <Section title="Controls">
+        <Section title={g.sections.controls}>
           <SegmentedControl
-            accessibilityLabel="Theme"
-            segments={['System', 'Light', 'Dark']}
+            accessibilityLabel={g.theme}
+            segments={g.themes}
             selectedIndex={THEMES.indexOf(settings.theme)}
             onChange={(i) => settings.setTheme(THEMES[i] ?? 'system')}
           />
           <SegmentedControl
-            accessibilityLabel="Language"
+            accessibilityLabel={g.language}
             segments={['English', 'العربية']}
             selectedIndex={lang === 'ar' ? 1 : 0}
             onChange={(i) => setLanguage(i === 1 ? 'ar' : 'en')}
           />
           <GroupedList
-            rows={FLAGS.map(([flag, title]) => ({
+            rows={FLAGS.map((flag) => ({
               key: flag,
-              title,
+              title: g.flags[flag],
               trailing: (
                 <Switch
-                  accessibilityLabel={title}
+                  accessibilityLabel={g.flags[flag]}
                   value={settings.devForce[flag]}
                   onValueChange={(on) => settings.setDevForce(flag, on)}
                 />
@@ -128,105 +131,119 @@ export function Gallery() {
             }))}
           />
           <T variant="footnote" color={c.label2}>
-            {`Keys without approved Arabic: ${missing.length} [OPEN, needs a translator]`}
+            {g.missing(n(missing.length))}
           </T>
         </Section>
 
-        <Section title="Buttons">
-          <Button label="Book a session" variant="primary" onPress={() => setToast('Primary pressed')} />
-          <Button label="Message" variant="secondary" onPress={() => {}} />
-          <Button label="Show 6 coaches" onPress={() => {}} />
-          <Button label="Cancel booking" variant="destructive" onPress={() => {}} />
-          <Button label="Cancel and refund 800 EGP" variant="destructiveFilled" onPress={() => {}} />
-          <Button label="Pick a time" disabled onPress={() => {}} />
+        <Section title={g.sections.buttons}>
+          <Button label={g.buttons.book} variant="primary" onPress={() => setToast(g.buttons.pressed)} />
+          <Button label={g.buttons.message} variant="secondary" onPress={() => {}} />
+          <Button label={g.buttons.show} onPress={() => {}} />
+          <Button label={g.buttons.cancel} variant="destructive" onPress={() => {}} />
+          <Button
+            label={g.buttons.refund(formatPrice(800, lang))}
+            variant="destructiveFilled"
+            onPress={() => {}}
+          />
+          <Button label={g.buttons.pickTime} disabled reason={g.buttons.pickTimeReason} onPress={() => {}} />
           <View style={styles.row}>
-            <Button label="Reserve" size="small" variant="primary" onPress={() => {}} />
-            <Button label="Edit" size="small" onPress={() => {}} />
-            <Button label="Processing" size="small" busy onPress={() => {}} />
+            <Button label={g.buttons.reserve} size="small" variant="primary" onPress={() => {}} />
+            <Button label={g.buttons.edit} size="small" onPress={() => {}} />
+            <Button label={g.buttons.processing} size="small" busy onPress={() => {}} />
           </View>
         </Section>
 
-        <Section title="Icon buttons">
+        <Section title={g.sections.iconButtons}>
           <View style={styles.row}>
-            <IconButton icon="back" accessibilityLabel="Back" floating onPress={() => {}} />
-            <IconButton icon="share" accessibilityLabel="Share" floating onPress={() => {}} />
-            <IconButton icon="heart" accessibilityLabel="Favourite" floating onPress={() => {}} />
-            <IconButton icon="close" accessibilityLabel="Close" onPress={() => {}} />
+            <IconButton icon="back" accessibilityLabel={t('common.back')} floating onPress={() => {}} />
+            <IconButton icon="share" accessibilityLabel={t('common.share')} floating onPress={() => {}} />
+            <IconButton icon="heart" accessibilityLabel={t('common.favourite')} floating onPress={() => {}} />
+            <IconButton icon="close" accessibilityLabel={t('common.close')} onPress={() => {}} />
           </View>
         </Section>
 
-        <Section title="Chips and pills">
+        <Section title={g.sections.chips}>
           <View style={styles.wrap}>
-            <Chip label="Filters · 2" outlined onPress={() => {}} />
-            {['All', 'Pottery', 'Painting', 'Oud'].map((label) => (
-              <Chip key={label} label={label} selected={chip === label} onPress={() => setChip(label)} />
+            <Chip label={g.filters(n(2))} outlined onPress={() => {}} />
+            {g.chips.map((label, i) => (
+              <Chip key={label} label={label} selected={chip === i} onPress={() => setChip(i)} />
             ))}
           </View>
           <View style={styles.wrap}>
-            <Pill label="Confirmed" tone="ok" />
-            <Pill label="Waiting for Nour to confirm" tone="warn" />
-            <Pill label="Next: Today 17:30" tone="next" />
-            <Pill label="Members' Circle" tone="gold" />
-            <Pill label="Completed" />
+            <Pill label={g.pills.confirmed} tone="ok" />
+            <Pill label={g.pills.waiting} tone="warn" />
+            <Pill label={g.pills.next} tone="next" />
+            <Pill label={g.pills.members} tone="gold" />
+            <Pill label={g.pills.completed} />
           </View>
         </Section>
 
-        <Section title="Search and segments">
-          <SearchField value={search} onChangeText={setSearch} placeholder="Pottery, oud, photography…" />
+        <Section title={g.sections.search}>
+          <SearchField value={search} onChangeText={setSearch} placeholder={g.searchPlaceholder} />
           <SegmentedControl
-            accessibilityLabel="Explore view"
-            segments={['Workshops', '1:1 lessons']}
+            accessibilityLabel={g.exploreView}
+            segments={g.exploreSegments}
             selectedIndex={segment}
             onChange={setSegment}
           />
         </Section>
 
-        <Section title="Switch and progress">
+        <Section title={g.sections.switches}>
           <GroupedList
             rows={[
               {
                 key: 'weekly',
-                title: 'Repeat weekly',
-                subtitle: 'Same time every Tuesday, cancel any week',
-                trailing: (
-                  <Switch accessibilityLabel="Repeat weekly" value={weekly} onValueChange={setWeekly} />
-                ),
+                title: g.weekly,
+                subtitle: g.weeklySub,
+                trailing: <Switch accessibilityLabel={g.weekly} value={weekly} onValueChange={setWeekly} />,
               },
             ]}
           />
-          <Progress value={1} accessibilityLabel="Onboarding progress, step 1" />
-          <Progress value={1.5} accessibilityLabel="Onboarding progress, step 2 half done" />
-          <Progress value={3} accessibilityLabel="Onboarding progress, done" />
+          <Progress value={1} accessibilityLabel={g.progress[0]!} />
+          <Progress value={1.5} accessibilityLabel={g.progress[1]!} />
+          <Progress value={3} accessibilityLabel={g.progress[2]!} />
         </Section>
 
-        <Section title="Cards">
-          <InstructorCard instructor={yasmine} onPress={() => {}} />
-          <InstructorCard instructor={nour} onPress={() => {}} />
+        <Section title={g.sections.cards}>
+          <InstructorCard instructor={seed.yasmine} onPress={() => {}} />
+          <InstructorCard instructor={seed.nour} onPress={() => {}} />
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.rail}>
-            <WorkshopCard workshop={wheelTaster} layout="rail" onPress={() => {}} />
-            <WorkshopCard workshop={photoWalk} layout="rail" onPress={() => {}} />
+            <WorkshopCard workshop={seed.wheelTaster} layout="rail" onPress={() => {}} />
+            <WorkshopCard workshop={seed.photoWalk} layout="rail" onPress={() => {}} />
           </ScrollView>
-          <WorkshopCard workshop={wheelTaster} onPress={() => {}} />
+          <WorkshopCard workshop={seed.wheelTaster} onPress={() => {}} />
         </Section>
 
-        <Section title="Grouped list">
+        <Section title={g.sections.list}>
           <GroupedList
             rows={[
-              { key: 'family', title: 'Family & kids', icon: 'profile', onPress: () => {} },
-              { key: 'lang', title: 'Language', value: 'English', icon: 'languages', onPress: () => {} },
-              { key: 'appearance', title: 'Appearance', value: 'System', icon: 'more', onPress: () => {} },
-              { key: 'out', title: 'Sign out', destructive: true, onPress: () => {} },
+              { key: 'family', title: g.list.family, icon: 'profile', onPress: () => {} },
+              {
+                key: 'lang',
+                title: g.list.language,
+                value: lang === 'ar' ? 'العربية' : 'English',
+                icon: 'languages',
+                onPress: () => {},
+              },
+              {
+                key: 'appearance',
+                title: g.list.appearance,
+                value: g.list.system,
+                icon: 'more',
+                onPress: () => {},
+              },
+              { key: 'out', title: g.list.signOut, destructive: true, onPress: () => {} },
             ]}
           />
         </Section>
 
-        <Section title="Dates and times">
+        <Section title={g.sections.dates}>
           <View style={styles.row}>
             <DateTile date={WEEK[0]!.date} />
             <DateTile date={new Date('2026-10-06T09:00:00Z')} past />
           </View>
           <DayPicker
-            monthLabel="October 2026"
+            monthLabel={formatMonthYear(WEEK[0]!.date, lang)}
             days={WEEK}
             selectedIndex={day}
             onSelect={setDay}
@@ -235,28 +252,31 @@ export function Gallery() {
           <TimeSlots slots={SLOTS} selectedId={slot} onSelect={(s) => setSlot(s.id)} />
         </Section>
 
-        <Section title="Overlays">
+        <Section title={g.sections.overlays}>
           <View style={styles.row}>
             <CategoryButton category={settings.category} onPress={() => setTrayOpen(true)} />
           </View>
-          <Button label="Show toast" onPress={() => setToast('Booking cancelled')} />
-          <Button label="Open sheet" onPress={() => router.push('/gallery-sheet')} />
+          <Button label={g.showToast} onPress={() => setToast(g.toast)} />
+          <Button label={g.openSheet} onPress={() => router.push('/gallery-sheet')} />
           <View style={[styles.barDemo, { backgroundColor: c.surface2 }]}>
-            <BottomActionBar caption="Sat 17 Oct · 11:00 · 2 seats" price="1,300 EGP">
-              <Button label="Reserve" size="small" variant="primary" onPress={() => {}} />
+            <BottomActionBar
+              caption={`${seed.wheelTaster.when} · ${g.seats(n(2))}`}
+              price={formatPrice(1300, lang)}
+            >
+              <Button label={g.buttons.reserve} size="small" variant="primary" onPress={() => {}} />
             </BottomActionBar>
           </View>
         </Section>
       </Animated.ScrollView>
 
       <NavigationBar
-        title="Component gallery"
+        title={g.title}
         titleAfterHero
         scrollY={scrollY}
         actions={[
           {
             icon: 'more',
-            label: 'Gallery controls',
+            label: g.controlsAction,
             onPress: () => scrollRef.current?.scrollTo({ y: 0, animated: true }),
           },
         ]}

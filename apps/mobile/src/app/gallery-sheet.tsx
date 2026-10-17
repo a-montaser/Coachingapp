@@ -2,13 +2,13 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { layout, space } from '@cfa/tokens';
+import { galleryCopy } from '@/dev/galleryCopy';
+import { useLang } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
 import { Chip } from '@/ui/Chip';
 import { IconButton } from '@/ui/IconButton';
 import { T } from '@/ui/T';
-
-const TYPES = ['Any', '1:1', 'Group', 'Kids', 'Workshop'];
 
 /**
  * Sheet demo for the gallery. Header per §7.5 and DS Sheet: glass close · Headline title · plain Reset;
@@ -16,26 +16,28 @@ const TYPES = ['Any', '1:1', 'Group', 'Kids', 'Workshop'];
  */
 export default function GallerySheet() {
   const { c } = useTheme();
-  const [type, setType] = useState('Any');
+  const copy = galleryCopy[useLang()];
+  const g = copy.sheet;
+  const [type, setType] = useState(0);
   if (!__DEV__) return null;
   return (
     <ScrollView contentContainerStyle={styles.body}>
       <View style={styles.header}>
-        <IconButton icon="close" accessibilityLabel="Close" floating onPress={() => router.back()} />
+        <IconButton icon="close" accessibilityLabel={g.close} floating onPress={() => router.back()} />
         <T variant="headline" accessibilityRole="header" style={styles.title}>
-          Filters
+          {g.title}
         </T>
-        <Button label="Reset" size="small" onPress={() => setType('Any')} />
+        <Button label={g.reset} size="small" onPress={() => setType(0)} />
       </View>
       <T variant="footnote" color={c.label2}>
-        Session type
+        {g.sessionType}
       </T>
       <View style={styles.chips}>
-        {TYPES.map((label) => (
-          <Chip key={label} label={label} selected={label === type} onPress={() => setType(label)} />
+        {g.types.map((label, i) => (
+          <Chip key={label} label={label} selected={i === type} onPress={() => setType(i)} />
         ))}
       </View>
-      <Button label="Show 6 coaches" variant="primary" onPress={() => router.back()} />
+      <Button label={copy.buttons.show} variant="primary" onPress={() => router.back()} />
     </ScrollView>
   );
 }

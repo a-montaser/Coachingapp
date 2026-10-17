@@ -29,18 +29,6 @@
     "en": "English",
     "ar": "العربية"
   },
-  "gallery": {
-    "title": "Component gallery",
-    "theme": "Theme",
-    "system": "System",
-    "light": "Light",
-    "dark": "Dark",
-    "language": "Language",
-    "reduceTransparency": "Reduce Transparency",
-    "increaseContrast": "Increase Contrast",
-    "reduceMotion": "Reduce Motion",
-    "missingArabic": "Keys without approved Arabic: {{count}}"
-  },
   "card": {
     "next": "Next: {{when}}",
     "from": "From {{price}}",
