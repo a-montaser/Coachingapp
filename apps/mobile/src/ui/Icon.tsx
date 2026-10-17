@@ -33,9 +33,40 @@ const names = {
   appearance: { ios: 'circle.lefthalf.filled', android: 'contrast' },
   signOut: { ios: 'rectangle.portrait.and.arrow.right', android: 'logout' },
   clock: { ios: 'clock', android: 'schedule' },
+  // Disciplines, keyed by `disciplines.icon` (not named in the handoff; picked to match the canvas drawings).
+  pottery: { ios: 'cup.and.saucer', android: 'emoji_food_beverage' },
+  painting: { ios: 'paintbrush', android: 'brush' },
+  photography: { ios: 'camera', android: 'photo_camera' },
+  oud: { ios: 'guitars', android: 'music_note' },
+  calligraphy: { ios: 'scribble', android: 'draw' },
+  cooking: { ios: 'frying.pan', android: 'skillet' },
+  chess: { ios: 'checkerboard.rectangle', android: 'chess' },
+  dance: { ios: 'figure.dance', android: 'nightlife' },
+  baking: { ios: 'birthday.cake', android: 'cake' },
+  padel: { ios: 'figure.pickleball', android: 'sports_tennis' },
+  tennis: { ios: 'tennis.racket', android: 'sports_tennis' },
+  squash: { ios: 'figure.squash', android: 'sports_tennis' },
+  swimming: { ios: 'figure.pool.swim', android: 'pool' },
+  basketball: { ios: 'basketball', android: 'sports_basketball' },
+  fitness: { ios: 'dumbbell', android: 'fitness_center' },
+  boxing: { ios: 'figure.boxing', android: 'sports_mma' },
+  football: { ios: 'soccerball', android: 'sports_soccer' },
+  volleyball: { ios: 'volleyball', android: 'sports_volleyball' },
+  golf: { ios: 'figure.golf', android: 'sports_golf' },
+  maths: { ios: 'function', android: 'functions' },
+  physics: { ios: 'atom', android: 'science' },
+  chemistry: { ios: 'flask', android: 'science' },
+  biology: { ios: 'leaf', android: 'eco' },
+  coding: { ios: 'chevron.left.forwardslash.chevron.right', android: 'code' },
+  sat: { ios: 'pencil.and.list.clipboard', android: 'quiz' },
+  igcse: { ios: 'graduationcap', android: 'school' },
 } satisfies Record<string, Names>;
 
 export type IconName = keyof typeof names;
+
+/** A discipline's `icon` column → an icon we draw, or null (languages show their code instead). */
+export const disciplineIcon = (key: string | null): IconName | null =>
+  key && key in names ? (key as IconName) : null;
 
 // Direction is applied in JS (D26), so the system doesn't mirror symbols for us: flip directional ones.
 // When native RTL arrives (Phase 1 dev build), iOS backward/forward symbols self-mirror: flip Android only then.

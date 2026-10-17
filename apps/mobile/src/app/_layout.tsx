@@ -32,9 +32,6 @@ function RootNavigator() {
       <Stack.Protected guard={!signedIn}>
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
-      <Stack.Protected guard={signedIn && !onboarded}>
-        <Stack.Screen name="(onboarding)" />
-      </Stack.Protected>
       <Stack.Protected guard={signedIn && onboarded}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="family" />
@@ -42,6 +39,10 @@ function RootNavigator() {
         <Stack.Screen name="language" options={sheet} />
         <Stack.Screen name="appearance" options={sheet} />
         <Stack.Screen name="sign-out" options={sheet} />
+      </Stack.Protected>
+      {/* After the tabs, so a signed-in, onboarded learner lands Home; Profile reopens steps 1–2 from here. */}
+      <Stack.Protected guard={signedIn}>
+        <Stack.Screen name="(onboarding)" />
       </Stack.Protected>
       <Stack.Screen name="gallery" />
       <Stack.Screen name="gallery-sheet" options={sheet} />

@@ -139,5 +139,46 @@
     "ageRange": "Kids sessions are for ages 6 to 14.",
     "addButton": "Add to family",
     "saveButton": "Save changes"
+  },
+  "onboarding": {
+    "progress": "Setup progress",
+    "interestsTitle": "What do you want to learn?",
+    "interestsSub": "Pick anything that sounds fun. You can switch between hobbies, sports, education and languages from Home at any time.",
+    "picked": "{{count}} picked",
+    "continuePicked": "Continue · {{count}} picked",
+    "pickOne": "Pick at least one",
+    "skip": "Skip",
+    "levelQuestion": "How experienced are you with {{name}}?",
+    "levelSub": "Pick the closest match. Your instructor adjusts it after your first session.",
+    "levelDesc": {
+      "beginner": "New to it, or tried it a few times",
+      "intermediate": "Know the basics and want to get better",
+      "advanced": "Practise often and have solid technique",
+      "pro": "Compete, perform or teach"
+    },
+    "allSet": "You're all set",
+    "allSetSub": "Tap a pick to change its level.",
+    "continue": "Continue",
+    "saveChanges": "Save changes",
+    "whoTitle": "Who are the sessions for?",
+    "who": {
+      "me": "Me",
+      "meSub": "Adult sessions",
+      "child": "My child",
+      "childSub": "Kids sessions, ages 6–14",
+      "both": "Both",
+      "bothSub": "Add kids as family members next"
+    },
+    "whereTitle": "Where do you usually learn?",
+    "useLocation": "Use my location",
+    "locationOff": "Location is off. Pick an area instead.",
+    "prefTitle": "Instructor preference",
+    "pref": {
+      "none": "No preference",
+      "female": "Female",
+      "male": "Male"
+    },
+    "changeLater": "You can change any of this later in Profile.",
+    "showPicks": "Show my picks"
   }
 }

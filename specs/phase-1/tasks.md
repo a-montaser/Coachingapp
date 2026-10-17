@@ -27,7 +27,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: RNTL tests, including family-member validation.
 
 ## C. Onboarding
-- [ ] **T9 Interests (canvas 6), Levels, Who & where**, saving to `interests` and `profiles`.
+- [x] **T9 Interests (canvas 6), Levels, Who & where**, saving to `interests` and `profiles`.
   - Verify: RNTL tests; Arabic screenshot.
 
 ## D. Discovery

@@ -108,3 +108,36 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `family.ageRange` | Family & kids and its sheet | Kids sessions are for ages 6 to 14. |  |
 | `family.addButton` | Family & kids and its sheet | Add to family |  |
 | `family.saveButton` | Family & kids and its sheet | Save changes |  |
+| `onboarding.progress` | Onboarding | Setup progress |  |
+| `onboarding.interestsTitle` | Onboarding | What do you want to learn? |  |
+| `onboarding.interestsSub` | Onboarding | Pick anything that sounds fun. You can switch between hobbies, sports, education and languages from Home at any time. |  |
+| `onboarding.picked` | Onboarding | {{count}} picked |  |
+| `onboarding.continuePicked` | Onboarding | Continue · {{count}} picked |  |
+| `onboarding.pickOne` | Onboarding | Pick at least one |  |
+| `onboarding.skip` | Onboarding | Skip |  |
+| `onboarding.levelQuestion` | Onboarding | How experienced are you with {{name}}? |  |
+| `onboarding.levelSub` | Onboarding | Pick the closest match. Your instructor adjusts it after your first session. |  |
+| `onboarding.levelDesc.beginner` | Onboarding | New to it, or tried it a few times |  |
+| `onboarding.levelDesc.intermediate` | Onboarding | Know the basics and want to get better |  |
+| `onboarding.levelDesc.advanced` | Onboarding | Practise often and have solid technique |  |
+| `onboarding.levelDesc.pro` | Onboarding | Compete, perform or teach |  |
+| `onboarding.allSet` | Onboarding | You're all set |  |
+| `onboarding.allSetSub` | Onboarding | Tap a pick to change its level. |  |
+| `onboarding.continue` | Onboarding | Continue |  |
+| `onboarding.saveChanges` | Onboarding | Save changes |  |
+| `onboarding.whoTitle` | Onboarding | Who are the sessions for? |  |
+| `onboarding.who.me` | Onboarding | Me |  |
+| `onboarding.who.meSub` | Onboarding | Adult sessions |  |
+| `onboarding.who.child` | Onboarding | My child |  |
+| `onboarding.who.childSub` | Onboarding | Kids sessions, ages 6–14 |  |
+| `onboarding.who.both` | Onboarding | Both |  |
+| `onboarding.who.bothSub` | Onboarding | Add kids as family members next |  |
+| `onboarding.whereTitle` | Onboarding | Where do you usually learn? |  |
+| `onboarding.useLocation` | Onboarding | Use my location |  |
+| `onboarding.locationOff` | Onboarding | Location is off. Pick an area instead. |  |
+| `onboarding.prefTitle` | Onboarding | Instructor preference |  |
+| `onboarding.pref.none` | Onboarding | No preference |  |
+| `onboarding.pref.female` | Onboarding | Female |  |
+| `onboarding.pref.male` | Onboarding | Male |  |
+| `onboarding.changeLater` | Onboarding | You can change any of this later in Profile. |  |
+| `onboarding.showPicks` | Onboarding | Show my picks |  |

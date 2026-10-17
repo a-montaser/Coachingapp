@@ -122,6 +122,26 @@ export const component = {
   emptyState: { iconTile: 56, iconSize: 26 /* provisional */ }, // §5
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
   profilePhoto: { size: 64, iconSize: 28 /* provisional */ }, // §7.14
+  interestTile: {
+    height: 92,
+    padding: 14,
+    gap: 10,
+    iconSize: 26,
+    codeSize: 20,
+    codeWeight: '700',
+    border: 1,
+    selectedBorder: 1.5,
+    tick: 22,
+    tickIconSize: icon.xsmall,
+    tickInset: 12,
+  }, // §7.3, canvas .pick
+  levels: {
+    iconCircle: 56,
+    iconSize: 28 /* provisional */,
+    glyphWidth: 22,
+    glyphHeight: 18,
+    glyphBarGap: 2 /* provisional */,
+  }, // §7.3
   dashedCard: { border: 1.5, minHeight: 64 /* provisional */ }, // §7.14 "Add a family member"
   otp: { boxHeight: 60, ring: 2, length: 6, resendSeconds: 60 }, // §7.2; resend = Supabase's 60 s limit
   categoryButton: { padStart: 10, padEnd: 12, gap: 6, iconSize: icon.small, chevronSize: icon.xsmall }, // §6.2, DS .modebtn

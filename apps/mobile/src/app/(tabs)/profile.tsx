@@ -88,8 +88,7 @@ export default function Profile() {
             {
               key: 'change',
               title: t('profile.changeInterests'),
-              // shortcut: opens onboarding step 1 once T9 builds Interests/Levels for signed-in users.
-              value: t('common.comingSoon'),
+              onPress: () => router.push({ pathname: '/interests', params: { edit: '1' } }),
             },
           ]}
         />

@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, motion, radius } from '@cfa/tokens';
+import { component, motion, radius, space } from '@cfa/tokens';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
 import { Glass } from './Glass';
@@ -11,7 +11,8 @@ import { type IconName } from './Icon';
 import { IconButton } from './IconButton';
 import { T } from './T';
 
-export type NavAction = { icon: IconName; label: string; onPress: () => void };
+/** An icon action, or a text action such as "Skip" when `icon` is left out. */
+export type NavAction = { icon?: IconName; label: string; onPress: () => void };
 
 type Props = {
   title: string;
@@ -76,12 +77,20 @@ export function NavigationBar({ title, onBack, actions: allActions = [], scrollY
               {actions.map((a, i) => (
                 <Fragment key={a.label}>
                   {i > 0 && hairline}
-                  <IconButton
-                    icon={a.icon}
-                    accessibilityLabel={a.label}
-                    onPress={a.onPress}
-                    color={c.glassLabel}
-                  />
+                  {a.icon ? (
+                    <IconButton
+                      icon={a.icon}
+                      accessibilityLabel={a.label}
+                      onPress={a.onPress}
+                      color={c.glassLabel}
+                    />
+                  ) : (
+                    <Pressable accessibilityRole="button" onPress={a.onPress} style={styles.textAction}>
+                      <T variant="headline" weight="400" color={c.glassLabel}>
+                        {a.label}
+                      </T>
+                    </Pressable>
+                  )}
                 </Fragment>
               ))}
             </View>
@@ -97,6 +106,12 @@ const styles = StyleSheet.create({
   wrap: { position: 'absolute', start: n.inset, end: n.inset },
   row: { minHeight: n.height, padding: n.padding, flexDirection: 'row', alignItems: 'center' },
   slot: { minWidth: component.iconButton.size },
+  textAction: {
+    minHeight: component.iconButton.size,
+    minWidth: component.iconButton.size,
+    paddingHorizontal: space.space3,
+    justifyContent: 'center',
+  },
   title: { flex: 1, alignItems: 'center' },
   actions: { flexDirection: 'row', alignItems: 'center' },
   hairline: { width: n.hairlineWidth, height: n.hairlineHeight },
