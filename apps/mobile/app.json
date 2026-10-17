@@ -30,7 +30,8 @@
         {
           "supportsRTL": true
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "scheme": "coachforall",
     "experiments": {

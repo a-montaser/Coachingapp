@@ -26,6 +26,16 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: latest
-      - run: supabase db start
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      # Database, auth and REST only: what the tests need.
+      - run: supabase start -x studio,imgproxy,inbucket,realtime,storage-api,edge-runtime,logflare,vector,supavisor,postgres-meta
       - run: supabase db reset
       - run: supabase db lint --fail-on error
+      - run: supabase test db
+      - name: Last seat goes to exactly one of 20 simultaneous bookings
+        run: |
+          eval "$(supabase status -o env)"
+          API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" JWT_SECRET="$JWT_SECRET" \
+            node supabase/tests/concurrency.mjs
