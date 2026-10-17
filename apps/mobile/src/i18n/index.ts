@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import { createInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { DevSettings, I18nManager } from 'react-native';
 import ar from './ar.json';
@@ -9,6 +9,8 @@ export type Lang = 'en' | 'ar';
 // Only handoff-approved Arabic lives in ar.json (§7.15); anything else falls back to English.
 // shortcut: language follows the native RTL flag (persists across reloads); Phase 1 stores it explicitly.
 export const currentLang = (): Lang => (I18nManager.isRTL ? 'ar' : 'en');
+
+const i18n = createInstance();
 
 i18n.use(initReactI18next).init({
   resources: { en: { translation: en }, ar: { translation: ar } },

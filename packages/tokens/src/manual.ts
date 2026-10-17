@@ -24,19 +24,23 @@ export const motion = {
 
 export const component = {
   glass: { rim: 0.5, rimProminent: 1, frostedProminentBorder: 1.5, contrastRim: 1.5, prominentWeight: '700' }, // §4.2, §4.3
-  button: { height: 50, smallHeight: 36, weight: '600', smallFontSize: 15 }, // §5
-  iconButton: { size: 44 }, // §5
+  button: { height: 50, smallHeight: 36, weight: '600', smallFontSize: 15, iconSize: 17 /* provisional */ }, // §5
+  iconButton: { size: 44, iconSize: 22 /* provisional */ }, // §5
   chip: { height: 36, fontSize: 15, weight: '600', hairline: 0.5 }, // §5
   pill: { height: 24, fontSize: 12, weight: '600' }, // §5
-  searchField: { height: 44 }, // §5
+  groupedListIcon: { size: 18 /* provisional */ },
+  tabBadge: { minSize: 18 /* provisional */ },
+  categoryButton: { iconSize: 17 /* provisional */, chevronSize: 12 /* provisional */ },
+  trayClose: { iconSize: 17 /* provisional */ },
+  searchField: { height: 44, iconSize: 17 /* provisional */ }, // §5
   segmented: { height: 40, padding: 3 }, // §5
   groupedList: { rowMinHeight: 56, padding: 16, iconTile: 32, iconTileRadius: 9, separatorInset: 60 }, // §5
   instructorCard: { padding: 8, photoWidth: 96, photoHeight: 120, metaFontSize: 13 }, // §5
   workshopCard: { bannerMinHeight: 126, bannerMaxHeight: 150, railWidth: 252, bannerAspect: 2 }, // §5
   dateTile: { width: 56, height: 64, capsSize: 12, capsWeight: '700', daySize: 22, dayWeight: '700' }, // §5
-  dayPicker: { emptyOpacity: 0.45, dotSize: 6 /* provisional */ }, // §5
+  dayPicker: { emptyOpacity: 0.45, dotSize: 6 /* provisional */, tileMinHeight: 56 /* provisional */ }, // §5
   timeSlot: { height: 44, columns: 3, morningEndsHour: 12, eveningStartsHour: 17 }, // §5
-  progress: { segments: 3, height: 4, radius: 2 }, // §5
+  progress: { segments: 3, height: 4, radius: 2, gap: 4 /* provisional */ }, // §5
   toast: { fontSize: 15, weight: '600' }, // §5
   navBar: {
     height: 52,
