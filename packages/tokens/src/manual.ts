@@ -27,8 +27,23 @@ export const motion = {
 export const icon = { regular: 22, small: 17, xsmall: 14 } as const; // DS .ic / .ic.s / .ic.xs
 
 export const component = {
-  glass: { rim: 0.5, rimProminent: 1, frostedProminentBorder: 1.5, contrastRim: 1.5, prominentWeight: '700' }, // §4.2, §4.3
-  button: { height: 50, smallHeight: 36, weight: '600', padding: 24, smallPadding: 16, iconSize: icon.small }, // §5, DS .btn
+  glass: {
+    rim: 0.5,
+    rimProminent: 1,
+    frostedProminentBorder: 1.5,
+    contrastRim: 1.5,
+    prominentWeight: '700',
+    sheenOpacity: 0.35,
+  }, // §4.2, §4.3, DS .glass::before
+  button: {
+    height: 50,
+    smallHeight: 36,
+    weight: '600',
+    padding: 24,
+    smallPadding: 16,
+    iconSize: icon.small,
+    reasonGap: 6,
+  }, // §5, DS .btn .why
   iconButton: { size: 44, iconSize: icon.regular }, // §5, DS .icbtn
   chip: { height: 36, weight: '600', padding: 14, outline: 1 }, // §5, DS .chip
   pill: { height: 24, weight: '600', padding: 10 }, // §5, DS .pill

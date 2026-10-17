@@ -13,6 +13,8 @@ type Props = {
   variant?: ButtonVariant;
   size?: 'regular' | 'small';
   disabled?: boolean;
+  /** Shown under a disabled button: why it can't be used yet, e.g. "Pick a time to continue" (DS Button). */
+  reason?: string;
   /** Inline spinner, e.g. "Processing" on Review & pay (§7.9). */
   busy?: boolean;
   accessibilityHint?: string;
@@ -26,6 +28,7 @@ export function Button({
   variant = 'plain',
   size = 'regular',
   disabled = false,
+  reason,
   busy = false,
   accessibilityHint,
 }: Props) {
@@ -62,11 +65,11 @@ export function Button({
     </View>
   );
 
-  return (
+  const button = (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityHint={accessibilityHint}
+      accessibilityHint={disabled && reason ? reason : accessibilityHint}
       accessibilityState={{ disabled: inactive, busy }}
       disabled={inactive}
       onPress={onPress}
@@ -85,11 +88,28 @@ export function Button({
       )}
     </Pressable>
   );
+  if (!disabled || !reason) return button;
+  return (
+    <View>
+      {button}
+      {/* Announced through the button's hint, so hidden from the screen reader here. */}
+      <T
+        variant="footnote"
+        color={c.label2}
+        style={styles.reason}
+        accessibilityElementsHidden
+        importantForAccessibility="no"
+      >
+        {reason}
+      </T>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   content: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.space2 },
   label: { textAlign: 'center' },
+  reason: { textAlign: 'center', marginTop: b.reasonGap },
   // Never dim glass itself (expo-glass-effect: opacity < 1 breaks the material); plain fills only.
   pressed: { opacity: 0.7 },
 });

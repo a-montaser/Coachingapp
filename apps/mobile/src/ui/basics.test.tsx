@@ -34,6 +34,17 @@ test('Button: names the outcome, reports disabled and busy, meets 44 pt at both 
   expect(screen.getByText('Pick a time')).toHaveStyle({ color: light.label3 });
 });
 
+test('a disabled Button says why under it, and the reason is its accessibility hint', async () => {
+  await render(<Button label="Continue" disabled reason="Pick a time to continue" onPress={() => {}} />);
+  expect(screen.getByRole('button', { name: 'Continue' })).toHaveProp(
+    'accessibilityHint',
+    'Pick a time to continue',
+  );
+  expect(screen.getByText('Pick a time to continue', { includeHiddenElements: true })).toHaveStyle({
+    color: light.label2,
+  });
+});
+
 test('Button busy state is announced and blocks presses', async () => {
   const onPress = jest.fn();
   await render(<Button label="Processing" onPress={onPress} variant="primary" busy />);

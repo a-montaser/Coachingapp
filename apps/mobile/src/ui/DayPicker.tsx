@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { component, radius, space } from '@cfa/tokens';
 import { currentLang } from '@/i18n';
-import { formatDayOfMonth, formatFullDate, formatWeekday } from '@/i18n/format';
+import { formatDayOfMonth, formatFullDate, formatWeekday, isSameCairoDay } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { IconButton } from './IconButton';
 import { T } from './T';
@@ -17,12 +17,22 @@ type Props = {
   onSelect: (index: number) => void;
   onPreviousWeek?: () => void;
   onNextWeek?: () => void;
+  /** Injected for tests; defaults to the current time. */
+  now?: Date;
 };
 
 const dp = component.dayPicker;
 
 /** §5 Day picker: 7 flexible tiles, success dot for open days, 45% for days with none. */
-export function DayPicker({ monthLabel, days, selectedIndex, onSelect, onPreviousWeek, onNextWeek }: Props) {
+export function DayPicker({
+  monthLabel,
+  days,
+  selectedIndex,
+  onSelect,
+  onPreviousWeek,
+  onNextWeek,
+  now = new Date(),
+}: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();
   const lang = currentLang();
@@ -49,12 +59,15 @@ export function DayPicker({ monthLabel, days, selectedIndex, onSelect, onPreviou
         {days.map((day, i) => {
           const selected = i === selectedIndex;
           const fg = selected ? c.onBrand : c.label;
+          // DS DateTimePicker: today is labelled "Today".
+          const today = isSameCairoDay(day.date, now);
+          const weekday = today ? t('dayPicker.today') : formatWeekday(day.date, lang);
           return (
             <Pressable
               key={day.date.toISOString()}
               accessibilityRole="button"
               accessibilityState={{ selected }}
-              accessibilityLabel={`${formatFullDate(day.date, lang)}, ${t(day.hasTimes ? 'dayPicker.hasTimes' : 'dayPicker.noTimes')}`}
+              accessibilityLabel={`${today ? `${t('dayPicker.today')}, ` : ''}${formatFullDate(day.date, lang)}, ${t(day.hasTimes ? 'dayPicker.hasTimes' : 'dayPicker.noTimes')}`}
               onPress={() => onSelect(i)}
               style={[
                 styles.tile,
@@ -63,7 +76,7 @@ export function DayPicker({ monthLabel, days, selectedIndex, onSelect, onPreviou
               ]}
             >
               <T variant="caption1" weight="600" color={selected ? c.onBrand : c.label2}>
-                {formatWeekday(day.date, lang)}
+                {weekday}
               </T>
               <T variant="title3" weight="700" color={fg}>
                 {formatDayOfMonth(day.date, lang)}

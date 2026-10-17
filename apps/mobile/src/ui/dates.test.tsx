@@ -24,11 +24,33 @@ test('DayPicker marks the selected day and labels days with no times', async () 
     { date: sat, hasTimes: true },
     { date: new Date('2026-10-18T09:00:00Z'), hasTimes: false },
   ];
-  await render(<DayPicker monthLabel="October 2026" days={days} selectedIndex={0} onSelect={onSelect} />);
+  const notThisWeek = new Date('2026-10-01T09:00:00Z');
+  await render(
+    <DayPicker
+      monthLabel="October 2026"
+      days={days}
+      selectedIndex={0}
+      onSelect={onSelect}
+      now={notThisWeek}
+    />,
+  );
   expect(screen.getByRole('button', { name: 'Saturday 17 October, open times' })).toBeSelected();
   await fireEvent.press(screen.getByRole('button', { name: 'Sunday 18 October, no times' }));
   expect(onSelect).toHaveBeenCalledWith(1);
   expect(screen.getByRole('button', { name: 'Previous week' })).toBeDisabled();
+});
+
+test('DayPicker labels today "Today" (in Cairo time)', async () => {
+  const days = [
+    { date: sat, hasTimes: true },
+    { date: new Date('2026-10-18T09:00:00Z'), hasTimes: true },
+  ];
+  await render(
+    <DayPicker monthLabel="October 2026" days={days} selectedIndex={1} onSelect={() => {}} now={sat} />,
+  );
+  expect(screen.getByText('Today')).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Today, Saturday 17 October, open times' })).toBeOnTheScreen();
+  expect(screen.getByText('Sun')).toBeOnTheScreen();
 });
 
 test('part of day: 11:59 morning, 12:00 afternoon, 16:59 afternoon, 17:00 evening', () => {

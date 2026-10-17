@@ -28,3 +28,9 @@ export const formatMonth = (date: Date, lang: Lang, width: 'short' | 'long' = 's
   dateFormat(lang, { month: width }).format(date);
 export const formatFullDate = (date: Date, lang: Lang) =>
   dateFormat(lang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
+
+/** True when both instants fall on the same calendar day in Cairo. */
+export const isSameCairoDay = (a: Date, b: Date) => {
+  const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo' });
+  return day.format(a) === day.format(b);
+};

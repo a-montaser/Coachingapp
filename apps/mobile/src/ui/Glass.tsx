@@ -1,7 +1,7 @@
 import { BlurView } from 'expo-blur';
 import { GlassView, isGlassEffectAPIAvailable, isLiquidGlassAvailable } from 'expo-glass-effect';
 import type { ReactNode } from 'react';
-import { Platform, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { blur, component } from '@cfa/tokens';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
@@ -49,6 +49,20 @@ export function Glass({ radius, variant = 'regular', prominent = false, style, c
         : null;
 
   const base = [{ borderRadius: radius }, border, style];
+  // The glass-highlight top and bottom sheen the fallbacks need; native Liquid Glass has its own (DS Materials).
+  const sheen = (
+    <View
+      pointerEvents="none"
+      style={[
+        StyleSheet.absoluteFill,
+        {
+          borderRadius: radius,
+          opacity: g.sheenOpacity,
+          experimental_backgroundImage: `linear-gradient(180deg, ${c.glassHighlight} 0%, transparent 42%, transparent 78%, ${c.glassHighlight} 100%)`,
+        },
+      ]}
+    />
+  );
 
   if (mode === 'liquid') {
     return (
@@ -69,10 +83,16 @@ export function Glass({ radius, variant = 'regular', prominent = false, style, c
             { overflow: 'hidden', backgroundColor: variant === 'clear' ? c.glassClear : c.glassFill },
           ]}
         >
+          {sheen}
           {children}
         </BlurView>
       </View>
     );
   }
-  return <View style={[base, { backgroundColor: c.glassFrosted }]}>{children}</View>;
+  return (
+    <View style={[base, { backgroundColor: c.glassFrosted }]}>
+      {sheen}
+      {children}
+    </View>
+  );
 }
