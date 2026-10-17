@@ -28,6 +28,11 @@ const names = {
   more: { ios: 'ellipsis', android: 'more_horiz' },
   plus: { ios: 'plus', android: 'add' },
   check: { ios: 'checkmark', android: 'check' },
+  family: { ios: 'person.2', android: 'group' },
+  language: { ios: 'globe', android: 'language' },
+  appearance: { ios: 'circle.lefthalf.filled', android: 'contrast' },
+  signOut: { ios: 'rectangle.portrait.and.arrow.right', android: 'logout' },
+  clock: { ios: 'clock', android: 'schedule' },
 } satisfies Record<string, Names>;
 
 export type IconName = keyof typeof names;

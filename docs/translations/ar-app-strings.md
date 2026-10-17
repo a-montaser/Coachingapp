@@ -36,3 +36,75 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `dayPicker.hasTimes` | Date strip | open times |  |
 | `dayPicker.noTimes` | Date strip | no times |  |
 | `dayPicker.today` | Date strip | Today |  |
+| `common.comingSoon` | Buttons and messages | Coming soon |  |
+| `common.genericError` | Buttons and messages | Something went wrong. Check your connection and try again. |  |
+| `auth.signIn` | Sign-in and sign out | Sign in |  |
+| `auth.welcomeHeadline` | Sign-in and sign out | Learn something new in Cairo. |  |
+| `auth.welcomeBody` | Sign-in and sign out | Private, group and kids sessions in hobbies, sports, education and languages, with free cancellation up to 24 hours before. |  |
+| `auth.getStarted` | Sign-in and sign out | Get started |  |
+| `auth.heroPlaceholder` | Sign-in and sign out | Illustration coming soon |  |
+| `auth.phoneTitle` | Sign-in and sign out | Your phone number |  |
+| `auth.phoneSub` | Sign-in and sign out | We'll text you a code. Instructors see your number only after you book. |  |
+| `auth.phoneLabel` | Sign-in and sign out | Phone number |  |
+| `auth.phonePrefix` | Sign-in and sign out | EG +20 |  |
+| `auth.phoneInvalid` | Sign-in and sign out | Enter the 10 digits after +20, like 100 234 5678. |  |
+| `auth.sendCode` | Sign-in and sign out | Send code |  |
+| `auth.legal` | Sign-in and sign out | By continuing you agree to the Terms and Privacy Policy. |  |
+| `auth.codeTitle` | Sign-in and sign out | Enter the code |  |
+| `auth.sentTo` | Sign-in and sign out | Sent to {{phone}} |  |
+| `auth.changeNumber` | Sign-in and sign out | Change number |  |
+| `auth.codeLabel` | Sign-in and sign out | 6-digit code |  |
+| `auth.wrongCode` | Sign-in and sign out | That code isn't right. Try again. |  |
+| `auth.tooMany` | Sign-in and sign out | Too many tries. Wait a minute and try again. |  |
+| `auth.genericError` | Sign-in and sign out | Something went wrong. Check your connection and try again. |  |
+| `auth.notConfigured` | Sign-in and sign out | The app isn't connected to Supabase yet: add the keys to .env. |  |
+| `auth.resendIn` | Sign-in and sign out | Resend code in {{time}} |  |
+| `auth.resend` | Sign-in and sign out | Resend code |  |
+| `auth.verifying` | Sign-in and sign out | Checking |  |
+| `auth.signOut` | Sign-in and sign out | Sign out |  |
+| `auth.signOutTitle` | Sign-in and sign out | Sign out? |  |
+| `auth.signOutBody` | Sign-in and sign out | You can sign back in with your phone number any time. |  |
+| `auth.keepSignedIn` | Sign-in and sign out | Stay signed in |  |
+| `messages.title` | Messages tab | Messages |  |
+| `messages.emptyTitle` | Messages tab | No messages yet |  |
+| `messages.emptyBody` | Messages tab | Chat with your instructors after you book. |  |
+| `messages.emptyAction` | Messages tab | Explore |  |
+| `profile.photo` | Profile | Profile photo |  |
+| `profile.memberSince` | Profile | {{area}} · member since {{year}} |  |
+| `profile.memberSinceNoArea` | Profile | Member since {{year}} |  |
+| `profile.levelsTitle` | Profile | Levels, set by your instructors |  |
+| `profile.levelSelf` | Profile | {{level}} · self-rated |  |
+| `profile.levelInstructor` | Profile | {{level}} · your instructor, {{date}} |  |
+| `profile.levelNotSet` | Profile | Level not set |  |
+| `profile.noInterests` | Profile | No interests picked yet |  |
+| `profile.changeInterests` | Profile | Change interests and levels |  |
+| `profile.settings` | Profile | Settings |  |
+| `profile.family` | Profile | Family & kids |  |
+| `profile.language` | Profile | Language |  |
+| `profile.appearance` | Profile | Appearance |  |
+| `level.beginner` | Profile levels | Beginner |  |
+| `level.intermediate` | Profile levels | Intermediate |  |
+| `level.advanced` | Profile levels | Advanced |  |
+| `level.pro` | Profile levels | Pro |  |
+| `appearance.light` | Appearance sheet | Light |  |
+| `appearance.dark` | Appearance sheet | Dark |  |
+| `appearance.system` | Appearance sheet | System |  |
+| `family.title` | Family & kids and its sheet | Family & kids |  |
+| `family.explainer` | Family & kids and its sheet | Book and pay for your children from your account. Instructors see their first name and age only. |  |
+| `family.child` | Family & kids and its sheet | {{name}} · {{age}} |  |
+| `family.edit` | Family & kids and its sheet | Edit |  |
+| `family.editLabel` | Family & kids and its sheet | Edit {{name}} |  |
+| `family.pending` | Family & kids and its sheet | {{title}} · {{when}} · waiting for the instructor to confirm |  |
+| `family.bookFor` | Family & kids and its sheet | Book a session for {{name}} |  |
+| `family.add` | Family & kids and its sheet | Add a family member |  |
+| `family.infoLength` | Family & kids and its sheet | Kids sessions are 45 minutes, for ages 6–14 |  |
+| `family.infoGuardian` | Family & kids and its sheet | A guardian stays on site |  |
+| `family.editTitle` | Family & kids and its sheet | Edit {{name}} |  |
+| `family.firstName` | Family & kids and its sheet | First name |  |
+| `family.age` | Family & kids and its sheet | Age |  |
+| `family.agePlaceholder` | Family & kids and its sheet | 6–14 |  |
+| `family.nameRequired` | Family & kids and its sheet | Enter their first name. |  |
+| `family.nameTooLong` | Family & kids and its sheet | Keep the first name to 40 letters or fewer. |  |
+| `family.ageRange` | Family & kids and its sheet | Kids sessions are for ages 6 to 14. |  |
+| `family.addButton` | Family & kids and its sheet | Add to family |  |
+| `family.saveButton` | Family & kids and its sheet | Save changes |  |

@@ -4,7 +4,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 
 ## Gate items carried over from Phase 0 (need you)
 - [ ] **G1 GitHub push**, then CI green on `phase-0` and a pull request into `main`.
-- [ ] **G2 Supabase keys** in `.env`, then `supabase link` and `db push` of the baseline.
+- [x] **G2 Supabase keys** in `.env`, then `supabase link` and `db push` of the baseline.
 
 ## A. Data (`data`)
 - [ ] **T1 Schema migration.** Tables and RLS from design.md §2; the `my_bookings` view; the profile trigger.
@@ -17,13 +17,13 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: 1 of 20 succeeds.
 
 ## B. App foundations (`auth`, `shell`)
-- [ ] **T5 Data layer.** Supabase client, QueryClient, AsyncStorage persistence of the settings store.
+- [x] **T5 Data layer.** Supabase client, QueryClient, AsyncStorage persistence of the settings store.
   - Verify: unit tests for persistence.
-- [ ] **T6 Auth screens.** Welcome, Sign up, Verify; the auth gate in `_layout`; sign-out sheet.
+- [x] **T6 Auth screens.** Welcome, Sign up, Verify; the auth gate in `_layout`; sign-out sheet.
   - Verify: RNTL tests; manual sign-in on the iPhone with the test number.
-- [ ] **T7 Tab shell.** `(tabs)` with the TabBar, the Messages empty state, push-hides-tabs behaviour.
+- [x] **T7 Tab shell.** `(tabs)` with the TabBar, the Messages empty state, push-hides-tabs behaviour.
   - Verify: RNTL.
-- [ ] **T8 Profile, Family & kids, Language / Appearance sheets.**
+- [x] **T8 Profile, Family & kids, Language / Appearance sheets.**
   - Verify: RNTL tests, including family-member validation.
 
 ## C. Onboarding

@@ -37,6 +37,11 @@ function RootNavigator() {
       </Stack.Protected>
       <Stack.Protected guard={signedIn && onboarded}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="family" />
+        <Stack.Screen name="family-member" options={sheet} />
+        <Stack.Screen name="language" options={sheet} />
+        <Stack.Screen name="appearance" options={sheet} />
+        <Stack.Screen name="sign-out" options={sheet} />
       </Stack.Protected>
       <Stack.Screen name="gallery" />
       <Stack.Screen name="gallery-sheet" options={sheet} />

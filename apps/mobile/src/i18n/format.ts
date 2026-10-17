@@ -37,3 +37,7 @@ export const isSameCairoDay = (a: Date, b: Date) => {
 
 export const formatMonthYear = (date: Date, lang: Lang) =>
   dateFormat(lang, { month: 'long', year: 'numeric' }).format(date);
+
+export const formatYear = (date: Date, lang: Lang) => dateFormat(lang, { year: 'numeric' }).format(date);
+export const formatDayMonth = (date: Date, lang: Lang) =>
+  dateFormat(lang, { day: 'numeric', month: 'short' }).format(date);

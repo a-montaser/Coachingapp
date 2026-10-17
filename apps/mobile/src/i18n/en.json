@@ -24,7 +24,8 @@
     "favourite": "Favourite",
     "more": "More",
     "close": "Close",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "genericError": "Something went wrong. Check your connection and try again."
   },
   "language": {
     "en": "English",
@@ -91,5 +92,52 @@
     "emptyTitle": "No messages yet",
     "emptyBody": "Chat with your instructors after you book.",
     "emptyAction": "Explore"
+  },
+  "profile": {
+    "photo": "Profile photo",
+    "memberSince": "{{area}} · member since {{year}}",
+    "memberSinceNoArea": "Member since {{year}}",
+    "levelsTitle": "Levels, set by your instructors",
+    "levelSelf": "{{level}} · self-rated",
+    "levelInstructor": "{{level}} · your instructor, {{date}}",
+    "levelNotSet": "Level not set",
+    "noInterests": "No interests picked yet",
+    "changeInterests": "Change interests and levels",
+    "settings": "Settings",
+    "family": "Family & kids",
+    "language": "Language",
+    "appearance": "Appearance"
+  },
+  "level": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "pro": "Pro"
+  },
+  "appearance": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "family": {
+    "title": "Family & kids",
+    "explainer": "Book and pay for your children from your account. Instructors see their first name and age only.",
+    "child": "{{name}} · {{age}}",
+    "edit": "Edit",
+    "editLabel": "Edit {{name}}",
+    "pending": "{{title}} · {{when}} · waiting for the instructor to confirm",
+    "bookFor": "Book a session for {{name}}",
+    "add": "Add a family member",
+    "infoLength": "Kids sessions are 45 minutes, for ages 6–14",
+    "infoGuardian": "A guardian stays on site",
+    "editTitle": "Edit {{name}}",
+    "firstName": "First name",
+    "age": "Age",
+    "agePlaceholder": "6–14",
+    "nameRequired": "Enter their first name.",
+    "nameTooLong": "Keep the first name to 40 letters or fewer.",
+    "ageRange": "Kids sessions are for ages 6 to 14.",
+    "addButton": "Add to family",
+    "saveButton": "Save changes"
   }
 }

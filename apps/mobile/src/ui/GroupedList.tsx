@@ -16,6 +16,8 @@ export type GroupedRow = {
   /** Replaces the chevron, e.g. a Switch. */
   trailing?: ReactNode;
   destructive?: boolean;
+  /** Option lists in sheets (Language, Appearance): a check instead of the chevron. */
+  selected?: boolean;
 };
 
 const g = component.groupedList;
@@ -41,7 +43,9 @@ export function GroupedList({ rows }: { rows: GroupedRow[] }) {
               )}
             </View>
             {row.value && <T color={c.label2}>{row.value}</T>}
-            {row.trailing ?? (row.onPress && <Icon name="forward" size={g.iconSize} color={c.label2} />)}
+            {row.selected !== undefined
+              ? row.selected && <Icon name="check" size={g.iconSize} color={c.label} />
+              : (row.trailing ?? (row.onPress && <Icon name="forward" size={g.iconSize} color={c.label2} />))}
           </View>
         );
         return (
@@ -55,7 +59,11 @@ export function GroupedList({ rows }: { rows: GroupedRow[] }) {
               />
             )}
             {row.onPress ? (
-              <Pressable accessibilityRole="button" onPress={row.onPress}>
+              <Pressable
+                accessibilityRole={row.selected !== undefined ? 'radio' : 'button'}
+                accessibilityState={row.selected !== undefined ? { checked: row.selected } : undefined}
+                onPress={row.onPress}
+              >
                 {body}
               </Pressable>
             ) : (
