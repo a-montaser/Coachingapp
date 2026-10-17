@@ -17,3 +17,7 @@
 | D13 | 2026-10-17 | Bundle ID / package `com.coachforall.app`; display name changeable any time; ID frozen at first store upload | See Q7 answer | Owner |
 | D14 | 2026-10-17 | **Expo SDK 57** now (supersedes D7's SDK 58); upgrade to SDK 58 as soon as App Store Expo Go supports it | iPhone testing in Expo Go needs it today | Owner |
 | D15 | 2026-10-17 | Phase 0 spec approved | — | Owner |
+| D16 | 2026-10-17 | On native Liquid Glass (iOS 26+) we add no CSS rim/shadow (the system draws its own); the 0.5 pt rim + `shadow-glass` apply to the blur fallback; Increase Contrast rim applies everywhere | Avoid a double rim over the real material | Pending (Phase 0 report) |
+| D17 | 2026-10-17 | No separate `GlassGroup`: grouped controls share one `Glass` shape (e.g. nav capsule) | §4.2 "one container"; less code | Pending (Phase 0 report) |
+| D18 | 2026-10-17 | Tokens package tested with Node's built-in test runner; Prettier runs as its own check (no eslint-plugin-prettier) | No extra dependencies | Pending (Phase 0 report) |
+| D19 | 2026-10-17 | App routes live in `apps/mobile/src/app` (SDK 57 default), not `app/` | Expo convention | Pending (Phase 0 report) |
