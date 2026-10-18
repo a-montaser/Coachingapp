@@ -38,6 +38,7 @@ function RootNavigator() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="family" />
         <Stack.Screen name="instructor/[id]" />
+        <Stack.Screen name="workshop/[id]" />
         <Stack.Screen name="family-member" options={sheet} />
         <Stack.Screen name="language" options={sheet} />
         <Stack.Screen name="appearance" options={sheet} />

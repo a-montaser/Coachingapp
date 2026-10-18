@@ -167,8 +167,9 @@ export default function Explore() {
               capacity: g.capacity,
               price: g.price_egp,
             }}
-            // shortcut: the Workshop screen arrives in T13; until then a card does nothing.
-            onPress={() => {}}
+            onPress={() =>
+              router.push({ pathname: '/workshop/[id]', params: { id: g.offering_id, slot: g.slot_id } })
+            }
           />
         ))}
         {people.map((p) => (

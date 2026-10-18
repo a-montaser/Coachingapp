@@ -1,7 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Share, StyleSheet, View } from 'react-native';
+import { Pressable, Share, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
@@ -99,7 +99,7 @@ export default function InstructorProfile() {
     }
     return bits.join(' · ');
   };
-  // shortcut: Book (T14) and Workshop (T13) screens are not built yet; slot chips, "All times" and Book stay inert / disabled until then.
+  // shortcut: the Book screen arrives in T14; slot chips, "All times" and Book stay inert / disabled until then.
   const toBook = () => {};
 
   return (
@@ -163,8 +163,13 @@ export default function InstructorProfile() {
                 {workshopSlots.map((s, i) => {
                   const w = workshops.find((o) => o.id === s.offering_id)!;
                   return (
-                    <View
+                    <Pressable
                       key={s.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={w.title}
+                      onPress={() =>
+                        router.push({ pathname: '/workshop/[id]', params: { id: w.id, slot: s.id } })
+                      }
                       style={[
                         styles.listRow,
                         i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: c.separator },
@@ -188,7 +193,7 @@ export default function InstructorProfile() {
                       <T variant="subheadline" weight="700" color={c.brandText}>
                         {formatPrice(w.price_egp, lang)}
                       </T>
-                    </View>
+                    </Pressable>
                   );
                 })}
               </Card>

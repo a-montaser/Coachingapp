@@ -27,6 +27,7 @@ const names = {
   share: { ios: 'square.and.arrow.up', android: 'share' },
   more: { ios: 'ellipsis', android: 'more_horiz' },
   plus: { ios: 'plus', android: 'add' },
+  minus: { ios: 'minus', android: 'remove' },
   check: { ios: 'checkmark', android: 'check' },
   family: { ios: 'person.2', android: 'group' },
   language: { ios: 'globe', android: 'language' },

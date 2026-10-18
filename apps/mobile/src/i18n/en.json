@@ -329,5 +329,26 @@
     "share": "{{name}} teaches {{discipline}} on Coach For All.",
     "notFound": "This instructor isn't taking bookings right now.",
     "loadError": "This profile didn't load. Check your connection and try again."
+  },
+  "workshop": {
+    "pill": "Workshop · {{level}}",
+    "pillPlain": "Workshop",
+    "with": "With {{name}}",
+    "pickDate": "Pick a date",
+    "left": "{{n}} left",
+    "dateLabel": "{{date}}, {{time}}, {{state}}",
+    "seats": "Seats",
+    "seatsHint": "Come with a friend, up to {{n}}",
+    "seatsFull": "This date is full. Pick another one.",
+    "fewer": "One fewer seat",
+    "more": "One more seat",
+    "included": "Included",
+    "takeHome": "You take home",
+    "seat_one": "{{n}} seat",
+    "seat_other": "{{n}} seats",
+    "reserve": "Reserve",
+    "pickDateReason": "Pick a date with seats left",
+    "noDates": "No upcoming dates yet. Check back soon.",
+    "notFound": "This workshop isn't running any more."
   }
 }

@@ -257,3 +257,22 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `instructor.share` | Instructor profile | {{name}} teaches {{discipline}} on Coach For All. |  |
 | `instructor.notFound` | Instructor profile | This instructor isn't taking bookings right now. |  |
 | `instructor.loadError` | Instructor profile | This profile didn't load. Check your connection and try again. |  |
+| `workshop.pill` | Workshop | Workshop · {{level}} |  |
+| `workshop.pillPlain` | Workshop | Workshop |  |
+| `workshop.with` | Workshop | With {{name}} |  |
+| `workshop.pickDate` | Workshop | Pick a date |  |
+| `workshop.left` | Workshop | {{n}} left |  |
+| `workshop.dateLabel` | Workshop | {{date}}, {{time}}, {{state}} |  |
+| `workshop.seats` | Workshop | Seats |  |
+| `workshop.seatsHint` | Workshop | Come with a friend, up to {{n}} |  |
+| `workshop.seatsFull` | Workshop | This date is full. Pick another one. |  |
+| `workshop.fewer` | Workshop | One fewer seat |  |
+| `workshop.more` | Workshop | One more seat |  |
+| `workshop.included` | Workshop | Included |  |
+| `workshop.takeHome` | Workshop | You take home |  |
+| `workshop.seat_one` | Workshop | {{n}} seat |  |
+| `workshop.seat_other` | Workshop | {{n}} seats |  |
+| `workshop.reserve` | Workshop | Reserve |  |
+| `workshop.pickDateReason` | Workshop | Pick a date with seats left |  |
+| `workshop.noDates` | Workshop | No upcoming dates yet. Check back soon. |  |
+| `workshop.notFound` | Workshop | This workshop isn't running any more. |  |

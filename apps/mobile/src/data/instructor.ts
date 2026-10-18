@@ -86,3 +86,58 @@ export const nextAvailable = (slots: OpenSlot[], offerings: Offering[]) => {
   const lesson = new Set(offerings.filter((o) => o.type !== 'workshop').map((o) => o.id));
   return slots.filter((s) => lesson.has(s.offering_id)).slice(0, NEXT_SLOTS);
 };
+
+export type WorkshopDetail = Offering & {
+  take_home: string | null;
+  instructor_id: string;
+  discipline_id: string;
+};
+export type WorkshopInstructor = {
+  display_name: string;
+  rating_avg: number;
+  rating_count: number;
+  area_en: string;
+  area_ar: string | null;
+};
+
+const WORKSHOP_DATES = 3;
+
+/**
+ * Workshop (§7.7): the offering, its instructor card and the next three dates. Full dates are kept
+ * (shown disabled) so the learner can see the session is popular.
+ */
+export function useWorkshop(offeringId: string) {
+  return useQuery({
+    queryKey: ['workshop', offeringId],
+    queryFn: async () => {
+      const off = await supabase
+        .from('offerings')
+        .select(
+          'id, type, title, description, level_label, duration_min, price_egp, capacity, min_age, max_age, included, take_home, what_to_bring, instructor_id, discipline_id, venue:venues(name, notes)',
+        )
+        .eq('id', offeringId)
+        .eq('published', true)
+        .single();
+      if (off.error) throw off.error;
+      const o = off.data as unknown as WorkshopDetail;
+      const [card, slots] = await Promise.all([
+        supabase
+          .from('instructor_cards')
+          .select('display_name, rating_avg, rating_count, area_en, area_ar')
+          .eq('id', o.instructor_id)
+          .eq('discipline_id', o.discipline_id)
+          .single(),
+        supabase
+          .from('slot_availability')
+          .select('id, offering_id, starts_at, ends_at, seats_free')
+          .eq('offering_id', offeringId)
+          .gt('starts_at', bookableAfter(new Date()).toISOString())
+          .order('starts_at')
+          .limit(WORKSHOP_DATES),
+      ]);
+      if (card.error) throw card.error;
+      if (slots.error) throw slots.error;
+      return { offering: o, instructor: card.data as WorkshopInstructor, slots: slots.data as OpenSlot[] };
+    },
+  });
+}

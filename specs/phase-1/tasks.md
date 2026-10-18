@@ -37,7 +37,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: filter and sort rule tests.
 - [x] **T12 Instructor profile (canvas 8).**
   - Verify: RNTL for the hobbies and sports variants.
-- [ ] **T13 Workshop (canvas 9)** with the seat stepper.
+- [x] **T13 Workshop (canvas 9)** with the seat stepper.
   - Verify: RNTL for stepper limits and full dates.
 
 ## E. Booking and payments

@@ -1,5 +1,219 @@
 [
  {
+  "at": "2026-10-18T11:49:56.289Z",
+  "commit": "7acb6b3",
+  "note": "T13 Workshop: dates with full ones disabled, seats stepper 1…min(3, left), included / take home / cancellation, total (D39)",
+  "nodes": 939,
+  "links": 2866,
+  "communities": 46,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_instructor_workshopdetail",
+    "l": "WorkshopDetail",
+    "c": 20,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_workshopinstructor",
+    "l": "WorkshopInstructor",
+    "c": 20,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_stepper_props",
+    "l": "Props",
+    "c": 25,
+    "f": "apps/mobile/src/ui/Stepper.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_useworkshop",
+    "l": "useWorkshop()",
+    "c": 20,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_workshop_id_section",
+    "l": "Section()",
+    "c": 25,
+    "f": "apps/mobile/src/app/workshop/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_workshop_id_workshop",
+    "l": "Workshop()",
+    "c": 25,
+    "f": "apps/mobile/src/app/workshop/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_clampseats",
+    "l": "clampSeats()",
+    "c": 25,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_maxworkshopseats",
+    "l": "maxWorkshopSeats()",
+    "c": 25,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_workshop_test_indays",
+    "l": "inDays()",
+    "c": 25,
+    "f": "apps/mobile/src/data/workshop.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_stepper_stepper",
+    "l": "Stepper()",
+    "c": 25,
+    "f": "apps/mobile/src/ui/Stepper.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_workshop_id",
+    "l": "workshop/[id].tsx",
+    "c": 25,
+    "f": "apps/mobile/src/app/workshop/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_workshop_id_styles",
+    "l": "styles",
+    "c": 25,
+    "f": "apps/mobile/src/app/workshop/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_rules",
+    "l": "rules.ts",
+    "c": 25,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_workshop_max_seats",
+    "l": "WORKSHOP_MAX_SEATS",
+    "c": 25,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_workshop_test",
+    "l": "workshop.test.tsx",
+    "c": 25,
+    "f": "apps/mobile/src/data/workshop.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_workshop_test_mockdata",
+    "l": "mockData",
+    "c": 25,
+    "f": "apps/mobile/src/data/workshop.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_workshop_test_mockparams",
+    "l": "mockParams",
+    "c": 25,
+    "f": "apps/mobile/src/data/workshop.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_stepper",
+    "l": "Stepper.tsx",
+    "c": 25,
+    "f": "apps/mobile/src/ui/Stepper.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_stepper_styles",
+    "l": "styles",
+    "c": 25,
+    "f": "apps/mobile/src/ui/Stepper.tsx"
+   },
+   {
+    "id": "docs_decisions_d39",
+    "l": "D39: T13 Workshop open points",
+    "c": 31,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_messages_tab_strings",
+    "l": "Arabic strings: Messages tab",
+    "c": 19,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_instructor_and_workshop_cards_strings",
+    "l": "Arabic strings: Instructor and workshop cards",
+    "c": 23,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_workshop_strings",
+    "l": "Arabic strings: Workshop",
+    "c": 31,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "docs_translations_ar_app_strings_app_string_keys",
+    "l": "i18n app string keys (tabs, category, card, slots, auth)",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_auth_strings",
+    "l": "Sign-in and sign-out strings (auth.*)",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_button_labels_strings",
+    "l": "Buttons (screen-reader labels) strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_card_strings",
+    "l": "Instructor and workshop cards strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_messages_strings",
+    "l": "Messages tab strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_placeholder_braces",
+    "l": "Double-brace placeholders kept verbatim",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_profile_family_strings",
+    "l": "Profile and Family & kids strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_decisions_cfa_design_system",
+    "l": "cfa design system artifact",
+    "c": 11,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_design_canvas",
+    "l": "Design canvas 'Coach For All · Hobbies' artifact",
+    "c": 11,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "linkDelta": 104,
+  "files": [
+   "apps/mobile/src/app/workshop/[id].tsx",
+   "apps/mobile/src/data/instructor.ts",
+   "apps/mobile/src/data/rules.ts",
+   "apps/mobile/src/data/workshop.test.tsx",
+   "apps/mobile/src/ui/Stepper.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-18T11:41:47.247Z",
   "commit": "4457120",
   "note": "T12 Instructor profile: hero, next available, workshops and lessons (Hobbies) or session types, venue and policy rows, Share (D38)",

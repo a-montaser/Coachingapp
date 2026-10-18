@@ -138,6 +138,8 @@ export const component = {
     tickInset: 12,
   }, // §7.3, canvas .pick
   hero: { instructor: 340, workshop: 260, overlap: 28, scrimHeight: 110, iconSize: 64 /* provisional */ }, // §7.6, §7.7, DS .hero .scrimtop
+  stepper: { button: 36, iconSize: icon.small, valueWidth: 22 }, // §7.7, canvas Workshop .step
+  dateButton: { padV: 10, padH: 8, daySize: 20, fullOpacity: 0.45, border: 1 }, // §7.7, canvas Workshop .date
   disciplineRail: { width: 76, tile: 64, iconSize: 28, codeSize: 17, gap: 12 }, // §7.4 item 5, canvas Main .cat
   levels: {
     iconCircle: 56,
