@@ -1,36 +1,32 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { useWorkshop } from '@/data/instructor';
 import { clampSeats, maxWorkshopSeats } from '@/data/rules';
 import { useLang } from '@/i18n';
-import {
-  formatClock,
-  formatDayMonth,
-  formatDayOfMonth,
-  formatNumber,
-  formatPrice,
-  formatWeekday,
-} from '@/i18n/format';
+import { formatClock, formatDayMonth, formatNumber, formatPrice, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
 import { Card } from '@/ui/Card';
+import { DateButton } from '@/ui/DateButton';
+import { RowCard } from '@/ui/RowCard';
+import { Section } from '@/ui/Section';
 import { EmptyState } from '@/ui/EmptyState';
 import { GroupedList } from '@/ui/GroupedList';
+import { testBanner, testPhoto } from '@/dev/testImages';
+import { Avatar } from '@/ui/Avatar';
 import { Hero } from '@/ui/Hero';
-import { Icon } from '@/ui/Icon';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Pill } from '@/ui/Pill';
 import { Stepper } from '@/ui/Stepper';
 import { T } from '@/ui/T';
 
 const hero = component.hero;
-const db = component.dateButton;
 const BAR_CLEARANCE =
   component.button.height +
   component.bottomBar.padTop +
@@ -91,7 +87,12 @@ export default function Workshop() {
         ref={scrollRef}
         contentContainerStyle={{ paddingBottom: insets.bottom + BAR_CLEARANCE }}
       >
-        <Hero height={hero.workshop} icon="hobbies" label={t('card.photoPlaceholder')} />
+        <Hero
+          height={hero.workshop}
+          icon="hobbies"
+          label={t('card.photoPlaceholder')}
+          image={testBanner(o.discipline_id, 'hobbies')}
+        />
         <View style={[styles.sheet, { backgroundColor: c.bg }]}>
           <View style={styles.intro}>
             <View style={styles.pill}>
@@ -110,29 +111,19 @@ export default function Workshop() {
             )}
           </View>
 
-          <Card
-            style={styles.who}
-            accessibilityLabel={t('workshop.with', { name: who.display_name })}
+          <RowCard
+            leading={<Avatar size={component.iconButton.size} image={testPhoto(who.display_name)} />}
+            title={t('workshop.with', { name: who.display_name })}
+            subtitle={`${n(who.rating_avg)} (${n(who.rating_count)}) · ${venue}`}
             onPress={() =>
               router.push({
                 pathname: '/instructor/[id]',
                 params: { id: o.instructor_id, discipline: o.discipline_id },
               })
             }
-          >
-            <View style={[styles.avatar, { backgroundColor: c.surface2 }]}>
-              <Icon name="profile" size={component.groupedList.iconSize} color={c.label3} />
-            </View>
-            <View style={styles.grow}>
-              <T variant="headline">{t('workshop.with', { name: who.display_name })}</T>
-              <T variant="footnote" color={c.label2}>
-                {`${n(who.rating_avg)} (${n(who.rating_count)}) · ${venue}`}
-              </T>
-            </View>
-            <Icon name="forward" size={component.groupedList.iconSize} color={c.label3} />
-          </Card>
+          />
 
-          <Section title={t('workshop.pickDate')}>
+          <Section title={t('workshop.pickDate')} variant="headline">
             {slots.length === 0 ? (
               <T variant="subheadline" color={c.label2}>
                 {t('workshop.noDates')}
@@ -144,41 +135,20 @@ export default function Workshop() {
                   const full = s.seats_free <= 0;
                   const on = s.id === selectedId;
                   const state = full ? t('card.full') : t('workshop.left', { n: n(s.seats_free) });
-                  const ink = on ? c.onBrand : c.label;
                   return (
-                    <Pressable
+                    <DateButton
                       key={s.id}
-                      accessibilityRole="radio"
-                      accessibilityState={{ checked: on, disabled: full }}
+                      date={d}
+                      state={state}
+                      selected={on}
+                      disabled={full}
+                      onPress={() => setSlotId(s.id)}
                       accessibilityLabel={t('workshop.dateLabel', {
                         date: `${formatWeekday(d, lang, 'long')} ${formatDayMonth(d, lang)}`,
                         time: formatClock(d, lang),
                         state,
                       })}
-                      disabled={full}
-                      onPress={() => setSlotId(s.id)}
-                      style={[
-                        styles.date,
-                        {
-                          borderColor: on ? c.brand : c.separator,
-                          backgroundColor: on ? c.brand : c.surface,
-                        },
-                        full && styles.full,
-                      ]}
-                    >
-                      <T fit={1} variant="caption1" weight="700" color={ink}>
-                        {formatWeekday(d, lang).toUpperCase()}
-                      </T>
-                      <T fit={1} weight="700" color={ink} style={styles.day}>
-                        {formatDayOfMonth(d, lang)}
-                      </T>
-                      <T fit={1} variant="caption1" color={ink}>
-                        {formatClock(d, lang)}
-                      </T>
-                      <T fit={1} variant="caption1" weight="600" color={ink}>
-                        {state}
-                      </T>
-                    </Pressable>
+                    />
                   );
                 })}
               </View>
@@ -251,17 +221,6 @@ export default function Workshop() {
   );
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <T variant="headline" accessibilityRole="header">
-        {title}
-      </T>
-      {children}
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   center: { justifyContent: 'center', padding: layout.sideMargin },
@@ -275,28 +234,7 @@ const styles = StyleSheet.create({
   },
   intro: { gap: space.space2 },
   pill: { flexDirection: 'row' },
-  who: { flexDirection: 'row', alignItems: 'center', gap: space.space3, padding: space.space3 },
-  avatar: {
-    width: component.iconButton.size,
-    height: component.iconButton.size,
-    borderRadius: component.iconButton.size / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  grow: { flex: 1 },
-  section: { gap: space.space3 },
   dates: { flexDirection: 'row', gap: space.space2 },
-  date: {
-    flex: 1,
-    minWidth: 0,
-    borderRadius: radius.sm,
-    borderWidth: db.border,
-    paddingVertical: db.padV,
-    paddingHorizontal: db.padH,
-    alignItems: 'center',
-    gap: space.space1 / 2,
-  },
-  full: { opacity: db.fullOpacity },
-  day: { fontSize: db.daySize },
+  grow: { flex: 1 },
   seats: { flexDirection: 'row', alignItems: 'center', gap: space.space3, padding: space.space4 },
 });

@@ -58,7 +58,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 - **AC:** A Maestro flow finishes onboarding, signs up with the test number, verifies, and lands on Home with the picks saved. Unit tests cover the phone validation and the save-after-verify step.
 
 ### R3 `shell`
-- R3.1 Five tabs (Home, Explore, Bookings, Messages, Profile), using the Phase 0 `TabBar` that minimises on scroll. Pushed screens hide the tab bar; tapping a tab returns to its root (§6.1).
+- R3.1 Five tabs (Home, Explore, Bookings, Messages, Profile), using the Phase 0 `TabBar` (the prototype's floating glass tab bar) on iOS and Android, minimising on scroll *(D43: replaces Apple's native tabs on iOS)*. Pushed screens hide the tab bar; tapping a tab returns to its root (§6.1).
 - R3.2 Theme, language and category persist across launches.
 - R3.3 Language changes take effect immediately, in JS-level RTL (D26).
 - R3.4 Profile (§7.14), limited to Phase 1 *(D31: no Edit button, no Members' Circle card)*:
@@ -70,7 +70,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
   - child cards with name, age and Edit (no per-child discipline · level: not in the schema, D31), any pending kids booking as a warning row, and "Book a session for <name>"
   - "Add a family member" dashed card, opening a sheet with first name and age 6–14, validated
   - info rows
-- R3.7 *(D33)* Navigation bar on pushed screens (canvas Instructor/Workshop artboards): a round glass back button and the trailing actions (or a text action such as "Skip") in one glass cluster with hairline dividers, 16 pt in from the sides; no inline title except on hero detail screens once the hero scrolls away (§8).
+- R3.7 *(D33, D43)* Navigation bar on pushed screens (canvas Instructor/Workshop artboards): a round glass back button and the trailing actions (or a text action such as "Skip") in one glass cluster with hairline dividers, 16 pt in from the sides; an inline centred title (and subtitle) where the prototype has one (Book: "Book with Nour" over "Padel"); on hero detail screens the title appears once the hero scrolls away (§8).
 - R3.6 Messages tab: the §5 empty state ("No messages yet · Chat with instructors after you book" [copy to confirm]). Chat is Phase 2.
 - **AC:** RNTL tests cover persistence of theme, language and category and family-member validation. Maestro switches the theme and language from Profile.
 
@@ -168,7 +168,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 
 ### R8 `manage`
 - R8.1 Bookings (§7.11):
-  - "Bookings" header with "+" (New booking → Explore). **Open (decide at T17):** handoff §7.11 and the DS "Bookings" preview use the one-capsule bar; D33 moved pushed screens to floating buttons. Bookings is a tab root, so ask the owner which one
+  - one glass capsule bar: Calendar sync · "Bookings" · Filter · "+" (New booking → Explore), with the Upcoming | Past segment under it, as in the iOS 26 prototype's Bookings artboard *(D43)*
   - segmented "Upcoming · N | Past"
   - cards with date tile, title, time · type, venue and status pill
   - actions: upcoming shows Directions + Reschedule; past shows Book again; cancelled shows Book again + Details

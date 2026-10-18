@@ -1,7 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { activeFilterCount, useExplore, useExploreResults } from '@/data/explore';
@@ -11,14 +11,16 @@ import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n
 import { cairoDaysUntil } from '@/data/home';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
+import { useMinimiseOnScroll } from '@/ui/TabBar';
+import { testBanner, testPhoto } from '@/dev/testImages';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
 import { Chip } from '@/ui/Chip';
 import { EmptyState } from '@/ui/EmptyState';
-import { Icon } from '@/ui/Icon';
 import { InstructorCard } from '@/ui/InstructorCard';
 import { SearchField } from '@/ui/SearchField';
 import { SegmentedControl } from '@/ui/SegmentedControl';
 import { T } from '@/ui/T';
+import { TextLink } from '@/ui/TextLink';
 import { WorkshopCard } from '@/ui/WorkshopCard';
 
 /**
@@ -28,6 +30,7 @@ import { WorkshopCard } from '@/ui/WorkshopCard';
  */
 export default function Explore() {
   const { c } = useTheme();
+  const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const lang = useLang();
   const insets = useSafeAreaInsets();
@@ -66,6 +69,8 @@ export default function Explore() {
   return (
     <View style={[styles.screen, { backgroundColor: c.bg }]}>
       <ScrollView
+        onScroll={tabScroll}
+        scrollEventThrottle={16}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         contentContainerStyle={[
@@ -134,17 +139,13 @@ export default function Explore() {
             </T>
             {filters.maxKm ? ` ${t('explore.within', { km: formatNumber(filters.maxKm, lang) })}` : ''}
           </T>
-          <Pressable
-            accessibilityRole="button"
+          <TextLink
+            tone="plain"
+            role="button"
+            icon="chevronDown"
+            label={t('explore.sortBy', { name: t(`explore.sort.${sort}`) })}
             onPress={() => router.push('/sort')}
-            hitSlop={space.space3}
-            style={styles.sort}
-          >
-            <T variant="footnote" weight="600">
-              {t('explore.sortBy', { name: t(`explore.sort.${sort}`) })}
-            </T>
-            <Icon name="chevronDown" size={component.categoryButton.chevronSize} color={c.label} />
-          </Pressable>
+          />
         </View>
 
         {empty && (
@@ -160,6 +161,7 @@ export default function Explore() {
           <WorkshopCard
             key={g.slot_id}
             workshop={{
+              banner: testBanner(g.discipline_id, category),
               title: g.title,
               when: `${formatWeekday(new Date(g.starts_at), lang)} ${formatDayMonth(new Date(g.starts_at), lang)} · ${formatClock(new Date(g.starts_at), lang)}`,
               area: (ar && g.area_ar) || g.area_en,
@@ -176,6 +178,7 @@ export default function Explore() {
           <InstructorCard
             key={`${p.id}-${p.discipline_id}`}
             instructor={{
+              photo: testPhoto(p.display_name),
               name: p.display_name,
               discipline: (ar && p.discipline_ar) || p.discipline_en,
               levels: p.levels ?? undefined,
@@ -211,5 +214,4 @@ const styles = StyleSheet.create({
   bleed: { marginHorizontal: -layout.sideMargin, flexGrow: 0 },
   chips: { paddingHorizontal: layout.sideMargin, gap: space.space2 },
   resultRow: { flexDirection: 'row', alignItems: 'center', gap: space.space3 },
-  sort: { flexDirection: 'row', alignItems: 'center', gap: space.space1 },
 });

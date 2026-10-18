@@ -4,16 +4,20 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { layout, space } from '@cfa/tokens';
 import { useTheme } from '@/theme/useTheme';
+import { useMinimiseOnScroll } from '@/ui/TabBar';
 import { EmptyState } from '@/ui/EmptyState';
 import { T } from '@/ui/T';
 
 /** §7.13 Messages. Chat arrives in Phase 2; until then the tab explains itself (R3.6). */
 export default function Messages() {
   const { c } = useTheme();
+  const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   return (
     <ScrollView
+      onScroll={tabScroll}
+      scrollEventThrottle={16}
       style={{ backgroundColor: c.bg }}
       contentContainerStyle={[styles.body, { paddingTop: insets.top + space.space4 }]}
     >

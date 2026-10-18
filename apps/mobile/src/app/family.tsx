@@ -2,12 +2,13 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, layout, radius, space } from '@cfa/tokens';
+import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { useFamily, usePendingKidsBookings } from '@/data/family';
 import { formatDayMonth, formatNumber } from '@/i18n/format';
 import { useLang } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
+import { Banner } from '@/ui/Banner';
 import { Button } from '@/ui/Button';
 import { Card } from '@/ui/Card';
 import { DashedCard } from '@/ui/DashedCard';
@@ -60,14 +61,13 @@ export default function Family() {
             {pending
               .filter((b) => b.family_member_id === m.id)
               .map((b) => (
-                <View key={b.ref} style={[styles.pending, { backgroundColor: c.warningTint }]}>
-                  <T variant="footnote" color={c.warning}>
-                    {t('family.pending', {
-                      title: b.title,
-                      when: formatDayMonth(new Date(b.starts_at), lang),
-                    })}
-                  </T>
-                </View>
+                <Banner
+                  key={b.ref}
+                  text={t('family.pending', {
+                    title: b.title,
+                    when: formatDayMonth(new Date(b.starts_at), lang),
+                  })}
+                />
               ))}
             <Button
               label={t('family.bookFor', { name: m.first_name })}
@@ -98,5 +98,4 @@ const styles = StyleSheet.create({
   child: { padding: space.space4, gap: space.space3 },
   childRow: { flexDirection: 'row', alignItems: 'center', gap: space.space3 },
   grow: { flex: 1 },
-  pending: { borderRadius: radius.sm, padding: space.space3 },
 });

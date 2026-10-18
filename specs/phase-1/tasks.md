@@ -62,4 +62,5 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 - [ ] **T21 Arabic pass.** Every new string goes into `docs/translations/ar-app-strings.md` for you.
   - Verify: no hard-coded English in screens (lint/grep).
 - [ ] **T22 Graphify `--update`, DECISIONS, phase report** with canvas side-by-sides.
+  - **Revert the testing aids first (D43):** `TEST_IMAGES = false` in `src/dev/testImages.ts`, then delete it and `assets/test-images/`; `component.otp.resendSeconds` back to 60.
   - Verify: CI green on the final commit. **STOP for the Phase 2 gate.**

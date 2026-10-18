@@ -9,6 +9,7 @@ import {
   type NativeSyntheticEvent,
 } from 'react-native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
+import { create } from 'zustand';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, homeIndicator, motion, radius, space } from '@cfa/tokens';
 import { useLang } from '@/i18n';
@@ -22,9 +23,24 @@ import { T } from './T';
 export type TabKey = 'home' | 'explore' | 'bookings' | 'messages' | 'profile';
 const TABS: TabKey[] = ['home', 'explore', 'bookings', 'messages', 'profile'];
 
-/** Minimise on scroll down, restore on scroll up or at the top (§4.4 tabBarMinimizeBehavior onScrollDown). */
-export function useMinimiseOnScroll(threshold = 8) {
-  const [minimised, setMinimised] = useState(false);
+/** The app's tab bar state: tab screens report their scroll here, the (tabs) layout reads it. */
+const useTabBarStore = create<{ minimised: boolean; setMinimised: (m: boolean) => void }>()((set) => ({
+  minimised: false,
+  setMinimised: (minimised) => set({ minimised }),
+}));
+export const useTabBarMinimised = () => useTabBarStore((s) => s.minimised);
+export const restoreTabBar = () => useTabBarStore.getState().setMinimised(false);
+
+/**
+ * Minimise on scroll down, restore on scroll up or at the top (§4.4 tabBarMinimizeBehavior onScrollDown).
+ * `shared`: drive the app's tab bar (tab screens); otherwise local state (the gallery demo).
+ */
+export function useMinimiseOnScroll(threshold = 8, shared = false) {
+  const [local, setLocal] = useState(false);
+  const sharedValue = useTabBarStore((s) => s.minimised);
+  const setShared = useTabBarStore((s) => s.setMinimised);
+  const setMinimised = shared ? setShared : setLocal;
+  const minimised = shared ? sharedValue : local;
   const last = useRef(0);
   const onScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -39,9 +55,9 @@ export function useMinimiseOnScroll(threshold = 8) {
       last.current = y;
       setMinimised(dy > 0);
     },
-    [threshold],
+    [threshold, setMinimised],
   );
-  return { minimised, onScroll, restore: useCallback(() => setMinimised(false), []) };
+  return { minimised, onScroll, restore: useCallback(() => setMinimised(false), [setMinimised]) };
 }
 
 type Props = {
@@ -66,7 +82,7 @@ export function useTabBarBottom() {
   return indicatorTop + tb.aboveHomeIndicator;
 }
 
-/** §4.4 floating glass tab bar (custom fallback; iOS 26 uses NativeTabs from Phase 1, design.md §7). */
+/** §4.4 floating glass tab bar (prototype "Shared · Floating glass tab bar"), on iOS and Android (D43). */
 export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false, onRestore }: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();

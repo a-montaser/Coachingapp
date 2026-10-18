@@ -133,7 +133,8 @@ test('switching type goes to the sibling offering; kids need a child aged 6–14
 
   mockFamily = [{ id: 'ali', first_name: 'Ali', age: 9 }];
   await render(<Book />);
-  expect(screen.getByText('For Ali, age 9 · A guardian stays on site')).toBeOnTheScreen();
+  expect(screen.getByText('For Ali, age 9')).toBeOnTheScreen();
+  expect(screen.getByText('A guardian stays on site')).toBeOnTheScreen();
 });
 
 test('the draft keeps the choice for Review & pay', () => {

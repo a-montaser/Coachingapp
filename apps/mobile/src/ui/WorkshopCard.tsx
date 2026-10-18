@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, type ImageSourcePropType } from 'react-native';
 import { component, space } from '@cfa/tokens';
 import { useLang } from '@/i18n';
 import { formatNumber, formatPrice } from '@/i18n/format';
@@ -10,6 +10,8 @@ import { Pill } from './Pill';
 import { T } from './T';
 
 export type Workshop = {
+  /** 2:1 banner; without one the card shows a neutral placeholder (§13). */
+  banner?: ImageSourcePropType;
   title: string;
   /** Already-formatted "Sat 17 Oct · 11:00". */
   when: string;
@@ -58,7 +60,11 @@ export function WorkshopCard({
           },
         ]}
       >
-        <Icon name="hobbies" size={w.bannerRailHeight / 3} color={c.label2} />
+        {k.banner ? (
+          <Image source={k.banner} style={StyleSheet.absoluteFill} resizeMode="cover" accessible={false} />
+        ) : (
+          <Icon name="hobbies" size={w.bannerRailHeight / 3} color={c.label2} />
+        )}
       </View>
       <View style={styles.body}>
         <T variant="headline">{k.title}</T>
@@ -78,7 +84,7 @@ export function WorkshopCard({
 
 const styles = StyleSheet.create({
   rail: { width: w.railWidth },
-  banner: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' },
+  banner: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   body: { paddingTop: w.padTop, paddingHorizontal: w.padSide, paddingBottom: w.padBottom, gap: w.gap },
   footer: {
     flexDirection: 'row',

@@ -1,7 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Share, StyleSheet, View } from 'react-native';
+import { Share, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
@@ -15,12 +14,14 @@ import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
 import { Card } from '@/ui/Card';
 import { Chip } from '@/ui/Chip';
-import { DateTile } from '@/ui/DateTile';
 import { EmptyState } from '@/ui/EmptyState';
 import { GroupedList } from '@/ui/GroupedList';
+import { testHero } from '@/dev/testImages';
 import { Hero } from '@/ui/Hero';
 import { Icon, disciplineIcon } from '@/ui/Icon';
 import { NavigationBar } from '@/ui/NavigationBar';
+import { Section } from '@/ui/Section';
+import { SessionRow } from '@/ui/SessionRow';
 import { T } from '@/ui/T';
 
 const hero = component.hero;
@@ -117,6 +118,7 @@ export default function InstructorProfile() {
           height={hero.instructor}
           icon={disciplineIcon(p.discipline_id) ?? 'profile'}
           label={t('card.photoPlaceholder')}
+          image={testHero(p.display_name)}
         />
         <View style={[styles.sheet, { backgroundColor: c.bg }]}>
           <View style={styles.intro}>
@@ -173,37 +175,23 @@ export default function InstructorProfile() {
                 {workshopSlots.map((s, i) => {
                   const w = workshops.find((o) => o.id === s.offering_id)!;
                   return (
-                    <Pressable
+                    <SessionRow
                       key={s.id}
-                      accessibilityRole="button"
-                      accessibilityLabel={w.title}
+                      divided={i > 0}
+                      date={new Date(s.starts_at)}
+                      title={w.title}
+                      meta={[
+                        `${formatClock(new Date(s.starts_at), lang)}–${formatClock(new Date(s.ends_at), lang)}`,
+                        w.level_label,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                      highlight={t('card.spotsLeft', { left: n(s.seats_free), total: n(w.capacity) })}
+                      price={formatPrice(w.price_egp, lang)}
                       onPress={() =>
                         router.push({ pathname: '/workshop/[id]', params: { id: w.id, slot: s.id } })
                       }
-                      style={[
-                        styles.listRow,
-                        i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: c.separator },
-                      ]}
-                    >
-                      <DateTile date={new Date(s.starts_at)} />
-                      <View style={styles.grow}>
-                        <T variant="headline">{w.title}</T>
-                        <T variant="footnote" color={c.label2}>
-                          {[
-                            `${formatClock(new Date(s.starts_at), lang)}–${formatClock(new Date(s.ends_at), lang)}`,
-                            w.level_label,
-                          ]
-                            .filter(Boolean)
-                            .join(' · ')}
-                        </T>
-                        <T variant="footnote" weight="600" color={c.brandText}>
-                          {t('card.spotsLeft', { left: n(s.seats_free), total: n(w.capacity) })}
-                        </T>
-                      </View>
-                      <T variant="subheadline" weight="700" color={c.brandText}>
-                        {formatPrice(w.price_egp, lang)}
-                      </T>
-                    </Pressable>
+                    />
                   );
                 })}
               </Card>
@@ -282,17 +270,6 @@ export default function InstructorProfile() {
   );
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <T variant="title3" accessibilityRole="header">
-        {title}
-      </T>
-      {children}
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   center: { justifyContent: 'center', padding: layout.sideMargin },
@@ -317,6 +294,4 @@ const styles = StyleSheet.create({
   headRow: { flexDirection: 'row', alignItems: 'center', gap: space.space3 },
   grow: { flex: 1 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space2 },
-  section: { gap: space.space3 },
-  listRow: { flexDirection: 'row', alignItems: 'center', gap: space.space3, padding: space.space3 },
 });

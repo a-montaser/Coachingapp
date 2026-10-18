@@ -364,7 +364,6 @@
       "group": "Up to {{cap}} people, {{n}} min, price per person",
       "kids": "Ages {{min}}–{{max}}, {{n}} min. A guardian stays on site."
     },
-    "child": "For {{name}}, age {{age}} · A guardian stays on site",
     "change": "Change",
     "addChild": "Add a child to book kids sessions",
     "childOutOfRange": "Kids sessions here are for ages {{min}}–{{max}}. Add a child in that range.",
@@ -375,6 +374,7 @@
     "needChild": "Add a child to continue",
     "continue": "Continue",
     "summary": "{{day}} · {{start}}–{{end}}",
-    "notFound": "These sessions aren't available any more."
+    "notFound": "These sessions aren't available any more.",
+    "childTitle": "For {{name}}, age {{age}}"
   }
 }

@@ -27,6 +27,10 @@ set -a; . ./.env; set +a; npx supabase db push --password "$SUPABASE_DB_PASSWORD
 ```
 Demo sign-in: +20 100 234 5678, code 482917 (Supabase test number; no real SMS).
 
+## Testing aids to revert before the Phase 1 report (D43)
+- `apps/mobile/src/dev/testImages.ts` (`TEST_IMAGES = true`) and `apps/mobile/assets/test-images/`: prototype illustrations standing in for photos.
+- `component.otp.resendSeconds` is 10 in `packages/tokens/src/manual.ts`; it goes back to 60 (Supabase's resend limit).
+
 ## Things that bite on this machine and setup
 - Mac is macOS 12, 8 GB RAM, no Docker, no iOS simulator, no working Android emulator. Database tests run in **CI only** (`.github/workflows/ci.yml`), or with `npx supabase db query --linked` (read-only) against the hosted project.
 - Expo Go only (no Apple Developer membership). RTL is applied in JS, not `I18nManager` (D26). Native tabs don't mirror in Arabic.

@@ -1,7 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { authErrorKey, formatEgMobile, sendCode, verifyCode } from '@/data/auth';
@@ -11,6 +11,7 @@ import { useTheme } from '@/theme/useTheme';
 import { IconButton } from '@/ui/IconButton';
 import { OtpBoxes } from '@/ui/OtpBoxes';
 import { T } from '@/ui/T';
+import { TextLink } from '@/ui/TextLink';
 
 const otp = component.otp;
 
@@ -71,11 +72,7 @@ export default function Verify() {
         <T variant="subheadline" color={c.label2}>
           {t('auth.sentTo', { phone: `+20 ${formatEgMobile(phone)}` })}
         </T>
-        <Pressable accessibilityRole="link" onPress={() => router.back()} hitSlop={space.space3}>
-          <T variant="subheadline" weight="600" color={c.brandText}>
-            {t('auth.changeNumber')}
-          </T>
-        </Pressable>
+        <TextLink label={t('auth.changeNumber')} onPress={() => router.back()} />
       </View>
       <OtpBoxes value={code} onChange={onChange} disabled={busy} />
       {error && (
@@ -93,11 +90,7 @@ export default function Verify() {
           {t('auth.resendIn', { time: clock(wait, lang) })}
         </T>
       ) : (
-        <Pressable accessibilityRole="button" onPress={resend} hitSlop={space.space3}>
-          <T variant="subheadline" weight="600" color={c.brandText}>
-            {t('auth.resend')}
-          </T>
-        </Pressable>
+        <TextLink label={t('auth.resend')} role="button" onPress={resend} />
       )}
     </ScrollView>
   );

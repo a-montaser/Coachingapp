@@ -1,8 +1,7 @@
 import Slider from '@react-native-community/slider';
 import { router } from 'expo-router';
-import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { layout, space } from '@cfa/tokens';
 import {
   DEFAULT_FILTERS,
@@ -20,6 +19,7 @@ import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
 import { Chip } from '@/ui/Chip';
+import { Section } from '@/ui/Section';
 import { SheetHeader } from '@/ui/SheetHeader';
 import { T } from '@/ui/T';
 
@@ -47,7 +47,7 @@ export default function FiltersSheet() {
         action={{ label: t('explore.reset'), onPress: () => set({ filters: DEFAULT_FILTERS }) }}
       />
 
-      <Group label={t('explore.maxPrice')}>
+      <Section title={t('explore.maxPrice')} variant="footnote" wrap>
         <T variant="headline">
           {filters.maxPrice >= PRICE.max
             ? any
@@ -64,9 +64,9 @@ export default function FiltersSheet() {
           minimumTrackTintColor={c.brand}
           maximumTrackTintColor={c.surface2}
         />
-      </Group>
+      </Section>
 
-      <Group label={t('explore.type')}>
+      <Section title={t('explore.type')} variant="footnote" wrap>
         <Chip label={any} selected={!filters.type} onPress={() => setFilter('type', null)} />
         {TYPES.map((x) => (
           <Chip
@@ -76,9 +76,9 @@ export default function FiltersSheet() {
             onPress={() => setFilter('type', x)}
           />
         ))}
-      </Group>
+      </Section>
 
-      <Group label={t('explore.gender')}>
+      <Section title={t('explore.gender')} variant="footnote" wrap>
         <Chip label={any} selected={!filters.gender} onPress={() => setFilter('gender', null)} />
         {(['female', 'male'] as const).map((g) => (
           <Chip
@@ -88,9 +88,9 @@ export default function FiltersSheet() {
             onPress={() => setFilter('gender', g)}
           />
         ))}
-      </Group>
+      </Section>
 
-      <Group label={t('explore.rating')}>
+      <Section title={t('explore.rating')} variant="footnote" wrap>
         <Chip label={any} selected={!filters.minRating} onPress={() => setFilter('minRating', null)} />
         {RATINGS.map((r) => (
           <Chip
@@ -100,9 +100,9 @@ export default function FiltersSheet() {
             onPress={() => setFilter('minRating', r)}
           />
         ))}
-      </Group>
+      </Section>
 
-      <Group label={t('explore.distance')}>
+      <Section title={t('explore.distance')} variant="footnote" wrap>
         <Chip label={any} selected={!filters.maxKm} onPress={() => setFilter('maxKm', null)} />
         {DISTANCES.map((km) => (
           <Chip
@@ -112,9 +112,9 @@ export default function FiltersSheet() {
             onPress={() => setFilter('maxKm', km)}
           />
         ))}
-      </Group>
+      </Section>
 
-      <Group label={t('explore.availability')}>
+      <Section title={t('explore.availability')} variant="footnote" wrap>
         {WHEN.map((w) => (
           <Chip
             key={w}
@@ -123,7 +123,7 @@ export default function FiltersSheet() {
             onPress={() => setFilter('availability', w)}
           />
         ))}
-      </Group>
+      </Section>
 
       {n > 0 ? (
         <Button
@@ -146,20 +146,6 @@ export default function FiltersSheet() {
   );
 }
 
-function Group({ label, children }: { label: string; children: ReactNode }) {
-  const { c } = useTheme();
-  return (
-    <View style={styles.group}>
-      <T variant="footnote" weight="600" color={c.label2} accessibilityRole="header">
-        {label}
-      </T>
-      <View style={styles.chips}>{children}</View>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   body: { padding: layout.sideMargin, paddingTop: space.space6, gap: layout.sectionGap },
-  group: { gap: space.space2 },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space2 },
 });

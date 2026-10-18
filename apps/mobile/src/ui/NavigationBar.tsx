@@ -16,7 +16,13 @@ export type NavAction = { icon?: IconName; label: string; onPress: () => void };
 
 type Props = {
   /** Shown inline only on hero detail screens once the hero scrolls away (`titleAfterHero`). */
+  /**
+   * Hero screens: shown once the hero scrolls away (`titleAfterHero`). Other screens: the page's heading,
+   * centred between the buttons (prototype Book: "Book with Nour" over "Padel").
+   */
   title?: string;
+  /** Second line under an inline title, e.g. the discipline. */
+  subtitle?: string;
   onBack?: () => void;
   /** Up to two (§4.4); extras are dropped. They share one glass cluster. */
   actions?: NavAction[];
@@ -33,7 +39,14 @@ const n = component.navBar;
  * actions share ONE glass cluster with a hairline divider (never two glass circles side by side).
  * Both float 16 pt in from the sides over the content, under a scroll-edge fade.
  */
-export function NavigationBar({ title, onBack, actions: allActions = [], scrollY, titleAfterHero }: Props) {
+export function NavigationBar({
+  title,
+  subtitle,
+  onBack,
+  actions: allActions = [],
+  scrollY,
+  titleAfterHero,
+}: Props) {
   const actions = allActions.slice(0, 2);
   const { c } = useTheme();
   const { t } = useTranslation();
@@ -92,6 +105,18 @@ export function NavigationBar({ title, onBack, actions: allActions = [], scrollY
               </T>
             </Animated.View>
           )}
+          {title && !titleAfterHero && (
+            <View style={styles.inline}>
+              <T variant="headline" accessibilityRole="header" fit={2}>
+                {title}
+              </T>
+              {subtitle && (
+                <T variant="caption1" color={c.label2} fit={1}>
+                  {subtitle}
+                </T>
+              )}
+            </View>
+          )}
         </View>
         <View style={[styles.side, styles.end]}>
           {actions.length > 0 && (
@@ -138,6 +163,7 @@ const styles = StyleSheet.create({
   side: { minWidth: component.iconButton.size, flexDirection: 'row' },
   end: { justifyContent: 'flex-end' },
   title: { flex: 1, alignItems: 'center' },
+  inline: { alignItems: 'center' },
   cluster: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: n.clusterPadding },
   hairline: { width: n.hairlineWidth, height: n.hairlineHeight },
   textAction: {

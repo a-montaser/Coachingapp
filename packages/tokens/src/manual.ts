@@ -123,6 +123,7 @@ export const component = {
   homeWordmarkSize: 22, // §7.4
   emptyState: { iconTile: 56, iconSize: 26 /* provisional */ }, // §5
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
+  avatar: { iconRatio: 0.45 }, // silhouette size inside a photo slot
   profilePhoto: { size: 64, iconSize: 28 /* provisional */ }, // §7.14
   interestTile: {
     height: 92,
@@ -150,7 +151,12 @@ export const component = {
     glyphBarGap: 2 /* provisional */,
   }, // §7.3
   dashedCard: { border: 1.5, minHeight: 64 /* provisional */ }, // §7.14 "Add a family member"
-  otp: { boxHeight: 60, ring: 2, length: 6, resendSeconds: 60 }, // §7.2; resend = Supabase's 60 s limit
+  otp: {
+    boxHeight: 60,
+    ring: 2,
+    length: 6,
+    resendSeconds: 10 /* TESTING ONLY (D43): back to 60, Supabase's limit, after testing */,
+  }, // §7.2
   categoryButton: { padStart: 10, padEnd: 12, gap: 6, iconSize: icon.small, chevronSize: icon.xsmall }, // §6.2, DS .modebtn
   tray: {
     triggerHeight: 40,

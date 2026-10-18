@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, type ImageSourcePropType } from 'react-native';
 import { component, radius, space } from '@cfa/tokens';
 import { useLang } from '@/i18n';
 import { formatDistance, formatNumber, formatPrice } from '@/i18n/format';
@@ -21,6 +21,8 @@ export type Instructor = {
   next?: string;
   fromPrice: number;
   favourite?: boolean;
+  /** 4:5 portrait; without one the card shows a neutral silhouette (§13). */
+  photo?: ImageSourcePropType;
 };
 
 const ic = component.instructorCard;
@@ -52,7 +54,11 @@ export function InstructorCard({ instructor: p, onPress }: { instructor: Instruc
   return (
     <Card onPress={onPress} accessibilityLabel={label} style={styles.card}>
       <View style={[styles.photo, { backgroundColor: c.surface2 }]}>
-        <Icon name="profile" size={ic.photoWidth / 2} color={c.label2} />
+        {p.photo ? (
+          <Image source={p.photo} style={StyleSheet.absoluteFill} resizeMode="cover" accessible={false} />
+        ) : (
+          <Icon name="profile" size={ic.photoWidth / 2} color={c.label2} />
+        )}
       </View>
       <View style={styles.body}>
         <View style={styles.titleRow}>
@@ -89,6 +95,7 @@ const styles = StyleSheet.create({
     width: ic.photoWidth,
     height: ic.photoHeight,
     borderRadius: radius.sm,
+    overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
   },

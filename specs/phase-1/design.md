@@ -10,7 +10,7 @@ apps/mobile/src/
     _layout.tsx                providers: QueryClient, settings hydration, journey gate (below), theme, direction
     (auth)/welcome.tsx  sign-up.tsx  verify.tsx
     (onboarding)/categories.tsx  interests.tsx  levels.tsx  who-where.tsx   (open to everyone, D34)
-    (tabs)/_layout.tsx         iOS: NativeTabs (Apple tab bar, minimize on scroll); Android: Tabs + Phase 0 TabBar
+    (tabs)/_layout.tsx         Tabs + the Phase 0 TabBar on iOS and Android (D43), minimising on scroll
     (tabs)/index.tsx  explore.tsx  bookings.tsx  messages.tsx  profile.tsx
     instructor/[id].tsx  workshop/[id].tsx  book/[offeringId].tsx  review.tsx
     confirmed/[ref].tsx  booking/[ref].tsx  family.tsx
@@ -131,7 +131,8 @@ interface PaymentProvider {
 - Each screen is built from its canvas artboard (D23): **Main / HomeSports / HomeEducation / HomeLanguages / HomeTray, Interests, Explore, Instructor, Workshop**. The handoff wins where they conflict, and every deviation is logged.
 - Screens with no artboard (Welcome, Sign up, Verify, Levels, Who & where, Book, Review & pay, Confirmed, Bookings, Booking detail, Profile, Family) follow the handoff §7 text, the design-system READMEs and the Phase 0 primitives.
 - **New shared pieces** (small, inside `ui/`): EmptyState (§5), Stepper (workshop seats), Hero (image + scrim + content sheet overlapping by 28), ConfirmationRing (§5, §8), OtpBoxes, LevelGlyph (4 bars), InterestTile (92 high), DashedCard (Add a family member), SheetHeader (sheets' close · title).
-- **NavigationBar** *(D33)*: floating glass back circle + one trailing glass cluster (icon or text actions), not the one-capsule `.navglass`.
+- **NavigationBar** *(D33, D43)*: floating glass back circle + one trailing glass cluster (icon or text actions), with an optional inline title + subtitle; Bookings (T17) adds the one-capsule `.navglass` variant from the prototype.
+- **Component library** *(D43)*: every visible element is an instance of a `ui/` component, and the dev Gallery (`/gallery`) shows each one in both themes and languages. Added: Avatar, IconTile, RowCard, DisciplineTile, DateButton, LevelOption, SessionRow, Banner, Section, TextField, TextLink.
 
 ## 8. Testing and CI
 

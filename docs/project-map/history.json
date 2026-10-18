@@ -1,5 +1,805 @@
 [
  {
+  "at": "2026-10-18T15:17:50.463Z",
+  "commit": "ea0bb57",
+  "note": "Prototype tab bar on iOS, inline Book title, component library completed in the Gallery; test images and 10 s resend timer for testing (D43)",
+  "nodes": 1023,
+  "links": 3226,
+  "communities": 51,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_avatar_props",
+    "l": "Props",
+    "c": 13,
+    "f": "apps/mobile/src/ui/Avatar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_datebutton_props",
+    "l": "Props",
+    "c": 20,
+    "f": "apps/mobile/src/ui/DateButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_leveloption_props",
+    "l": "Props",
+    "c": 20,
+    "f": "apps/mobile/src/ui/LevelOption.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_sessionrow_props",
+    "l": "Props",
+    "c": 20,
+    "f": "apps/mobile/src/ui/SessionRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_rowcard_props",
+    "l": "Props",
+    "c": 22,
+    "f": "apps/mobile/src/ui/RowCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textfield_props",
+    "l": "Props",
+    "c": 4,
+    "f": "apps/mobile/src/ui/TextField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_section_props",
+    "l": "Props",
+    "c": 40,
+    "f": "apps/mobile/src/ui/Section.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textlink_props",
+    "l": "Props",
+    "c": 40,
+    "f": "apps/mobile/src/ui/TextLink.tsx"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_testbanner",
+    "l": "testBanner()",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_testhero",
+    "l": "testHero()",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_testphoto",
+    "l": "testPhoto()",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_avatar_avatar",
+    "l": "Avatar()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Avatar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_datebutton_datebutton",
+    "l": "DateButton()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/DateButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_disciplinetile_disciplinetile",
+    "l": "DisciplineTile()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/DisciplineTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_icontile_icontile",
+    "l": "IconTile()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/IconTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_rowcard_rowcard",
+    "l": "RowCard()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/RowCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_section_section",
+    "l": "Section()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Section.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_sessionrow_sessionrow",
+    "l": "SessionRow()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/SessionRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textlink_textlink",
+    "l": "TextLink()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/TextLink.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_tabbar_restoretabbar",
+    "l": "restoreTabBar()",
+    "c": 16,
+    "f": "apps/mobile/src/ui/TabBar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_tabbar_usetabbarminimised",
+    "l": "useTabBarMinimised()",
+    "c": 16,
+    "f": "apps/mobile/src/ui/TabBar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textfield_textfield",
+    "l": "TextField()",
+    "c": 18,
+    "f": "apps/mobile/src/ui/TextField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_leveloption_leveloption",
+    "l": "LevelOption()",
+    "c": 2,
+    "f": "apps/mobile/src/ui/LevelOption.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_banner_banner",
+    "l": "Banner()",
+    "c": 4,
+    "f": "apps/mobile/src/ui/Banner.tsx"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages",
+    "l": "testImages.ts",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_bycategory",
+    "l": "byCategory",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_bydiscipline",
+    "l": "byDiscipline",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_heroes",
+    "l": "heroes",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_people",
+    "l": "people",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_test_images",
+    "l": "TEST_IMAGES",
+    "c": 0,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_avatar",
+    "l": "Avatar.tsx",
+    "c": 13,
+    "f": "apps/mobile/src/ui/Avatar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_avatar_styles",
+    "l": "styles",
+    "c": 13,
+    "f": "apps/mobile/src/ui/Avatar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_disciplinetile",
+    "l": "DisciplineTile.tsx",
+    "c": 13,
+    "f": "apps/mobile/src/ui/DisciplineTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_disciplinetile_styles",
+    "l": "styles",
+    "c": 13,
+    "f": "apps/mobile/src/ui/DisciplineTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_icontile",
+    "l": "IconTile.tsx",
+    "c": 13,
+    "f": "apps/mobile/src/ui/IconTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_icontile_styles",
+    "l": "styles",
+    "c": 13,
+    "f": "apps/mobile/src/ui/IconTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_tabbar_usetabbarstore",
+    "l": "useTabBarStore",
+    "c": 16,
+    "f": "apps/mobile/src/ui/TabBar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_datebutton",
+    "l": "DateButton.tsx",
+    "c": 20,
+    "f": "apps/mobile/src/ui/DateButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_datebutton_styles",
+    "l": "styles",
+    "c": 20,
+    "f": "apps/mobile/src/ui/DateButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_leveloption",
+    "l": "LevelOption.tsx",
+    "c": 20,
+    "f": "apps/mobile/src/ui/LevelOption.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_leveloption_styles",
+    "l": "styles",
+    "c": 20,
+    "f": "apps/mobile/src/ui/LevelOption.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_sessionrow",
+    "l": "SessionRow.tsx",
+    "c": 20,
+    "f": "apps/mobile/src/ui/SessionRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_sessionrow_styles",
+    "l": "styles",
+    "c": 20,
+    "f": "apps/mobile/src/ui/SessionRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_rowcard",
+    "l": "RowCard.tsx",
+    "c": 22,
+    "f": "apps/mobile/src/ui/RowCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_rowcard_styles",
+    "l": "styles",
+    "c": 22,
+    "f": "apps/mobile/src/ui/RowCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_banner",
+    "l": "Banner.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/ui/Banner.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_banner_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/ui/Banner.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textfield",
+    "l": "TextField.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/ui/TextField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textfield_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/ui/TextField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_section",
+    "l": "Section.tsx",
+    "c": 40,
+    "f": "apps/mobile/src/ui/Section.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_section_styles",
+    "l": "styles",
+    "c": 40,
+    "f": "apps/mobile/src/ui/Section.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textlink",
+    "l": "TextLink.tsx",
+    "c": 40,
+    "f": "apps/mobile/src/ui/TextLink.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_textlink_styles",
+    "l": "styles",
+    "c": 40,
+    "f": "apps/mobile/src/ui/TextLink.tsx"
+   },
+   {
+    "id": "apps_mobile_src_dev_gallery_demo_base",
+    "l": "DEMO_BASE",
+    "c": 8,
+    "f": "apps/mobile/src/dev/Gallery.tsx"
+   },
+   {
+    "id": "docs_decisions_d43",
+    "l": "D43: From iOS 26 prototype: floating glass tab bar on iOS too (su",
+    "c": 32,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_design_apply_promo",
+    "l": "apply_promo() SQL function",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_approve_booking",
+    "l": "approve_booking() / decline_booking()",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_book",
+    "l": "book() SQL function",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_booking_ref",
+    "l": "Booking ref CFA-#####",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_boundaries",
+    "l": "Boundaries",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_cancel_booking",
+    "l": "cancel_booking() SQL function",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_demo_pay",
+    "l": "demo-pay Edge Function",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_dependencies",
+    "l": "Dependencies",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_pure_rules",
+    "l": "Pure rules in data/rules.ts",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_refund",
+    "l": "refund Edge Function",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_reschedule_booking",
+    "l": "reschedule_booking() SQL function",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_schema_tables",
+    "l": "Schema tables",
+    "c": 11,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r1",
+    "l": "R1 data",
+    "c": 11,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r6",
+    "l": "R6 booking",
+    "c": 11,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r7",
+    "l": "R7 payments",
+    "c": 11,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r9",
+    "l": "R9 reminders",
+    "c": 11,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "claude_ci_only_db_tests",
+    "l": "CI-only database tests",
+    "c": 21,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_testing_aids_to_revert",
+    "l": "Testing aids to revert (D43)",
+    "c": 21,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_1_design_testing_and_ci",
+    "l": "Testing and CI",
+    "c": 21,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r10",
+    "l": "R10 e2e",
+    "c": 21,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r10_1",
+    "l": "R10.1 Maestro flows (onboarding to cancel without refund)",
+    "c": 21,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_design_app_shape_and_routes",
+    "l": "App shape and routes",
+    "c": 31,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_auth",
+    "l": "Auth (Supabase phone OTP)",
+    "c": 31,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r2",
+    "l": "R2 auth",
+    "c": 31,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r4",
+    "l": "R4 onboarding",
+    "c": 31,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_design_component_library",
+    "l": "Component library",
+    "c": 32,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_navigation_bar",
+    "l": "NavigationBar",
+    "c": 32,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r3",
+    "l": "R3 shell",
+    "c": 32,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r3_7",
+    "l": "R3.7 Navigation bar on pushed screens",
+    "c": 32,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r8",
+    "l": "R8 manage",
+    "c": 32,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_resolved_answers",
+    "l": "Resolved owner answers (17 Oct)",
+    "c": 32,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "claude_design_system",
+    "l": "cfa design system artifact",
+    "c": 41,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_1_design_screens_canvas_fidelity",
+    "l": "Screens: canvas fidelity",
+    "c": 41,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r5",
+    "l": "R5 discovery",
+    "c": 7,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r5_3",
+    "l": "R5.3 Explore search, filters and sort",
+    "c": 7,
+    "f": "specs/phase-1/requirements.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_app_family_member_fieldprops",
+    "l": "FieldProps",
+    "c": 24,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_instructor_id_section",
+    "l": "Section()",
+    "c": 0,
+    "f": "apps/mobile/src/app/instructor/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_workshop_id_section",
+    "l": "Section()",
+    "c": 0,
+    "f": "apps/mobile/src/app/workshop/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_dev_gallery_section",
+    "l": "Section()",
+    "c": 0,
+    "f": "apps/mobile/src/dev/Gallery.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_member_field",
+    "l": "Field()",
+    "c": 24,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_filters_group",
+    "l": "Group()",
+    "c": 3,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout_sf",
+    "l": "SF",
+    "c": 15,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "claude_coach_for_all",
+    "l": "Coach For All (Cairo lesson-booking app)",
+    "c": 19,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_ci_only_database_tests",
+    "l": "CI-only database tests",
+    "c": 19,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_db_tests_ci_only",
+    "l": "Database tests run in CI only",
+    "c": 19,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_expo_go_only",
+    "l": "Expo Go only, RTL in JS",
+    "c": 19,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_npm_run_check_gate",
+    "l": "npm run check gate",
+    "c": 19,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_machine_constraints",
+    "l": "Dev machine constraints (macOS 12, 8 GB, no Docker/simulator)",
+    "c": 40,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_1_design_apply_promo_function",
+    "l": "apply_promo() SQL function",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_approve_decline_booking",
+    "l": "approve_booking / decline_booking (ops)",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_book_function",
+    "l": "book() SQL function",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_bookings_table",
+    "l": "bookings table",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_cancel_booking_function",
+    "l": "cancel_booking() SQL function",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_refund_function",
+    "l": "refund Edge Function",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_reschedule_booking_function",
+    "l": "reschedule_booking() SQL function",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_rules_ts",
+    "l": "data/rules.ts pure rules",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_slots_table",
+    "l": "slots table (seats_taken check)",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_use_apply_draft_after_sign_up",
+    "l": "useApplyDraftAfterSignUp",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_navigation_bar_d33",
+    "l": "NavigationBar floating back + trailing cluster",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_schema",
+    "l": "Phase 1 Postgres schema with RLS",
+    "c": 5,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_auth",
+    "l": "auth module (R2)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_booking",
+    "l": "booking module (R6)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_data",
+    "l": "data module (R1)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_discovery",
+    "l": "discovery module (R5)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_e2e",
+    "l": "e2e module (R10, Maestro)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_manage",
+    "l": "manage module (R8)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_onboarding",
+    "l": "onboarding module (R4)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_payments",
+    "l": "payments module (R7)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_reminders",
+    "l": "reminders module (R9)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_shell",
+    "l": "shell module (R3)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_bookable_slot_rule",
+    "l": "Bookable slot rule (§9.6, 60 min ahead)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_refund_rule_24h",
+    "l": "24-hour refund rule (§9.1)",
+    "c": 5,
+    "f": "specs/phase-1/requirements.md"
+   }
+  ],
+  "linkDelta": 287,
+  "files": [
+   "CLAUDE.md",
+   "apps/mobile/src/app/(tabs)/_layout.tsx",
+   "apps/mobile/src/app/family-member.tsx",
+   "apps/mobile/src/app/filters.tsx",
+   "apps/mobile/src/app/instructor/[id].tsx",
+   "apps/mobile/src/app/workshop/[id].tsx",
+   "apps/mobile/src/dev/Gallery.tsx",
+   "apps/mobile/src/dev/testImages.ts",
+   "apps/mobile/src/ui/Avatar.tsx",
+   "apps/mobile/src/ui/Banner.tsx",
+   "apps/mobile/src/ui/DateButton.tsx",
+   "apps/mobile/src/ui/DisciplineTile.tsx",
+   "apps/mobile/src/ui/IconTile.tsx",
+   "apps/mobile/src/ui/LevelOption.tsx",
+   "apps/mobile/src/ui/RowCard.tsx",
+   "apps/mobile/src/ui/Section.tsx",
+   "apps/mobile/src/ui/SessionRow.tsx",
+   "apps/mobile/src/ui/TabBar.tsx",
+   "apps/mobile/src/ui/TextField.tsx",
+   "apps/mobile/src/ui/TextLink.tsx",
+   "docs/DECISIONS.md",
+   "specs/phase-1/design.md",
+   "specs/phase-1/requirements.md"
+  ]
+ },
+ {
   "at": "2026-10-18T12:20:41.079Z",
   "commit": "368bbd2",
   "note": "Owner fix: short labels never split a word across lines; they shrink slightly instead (D42)",

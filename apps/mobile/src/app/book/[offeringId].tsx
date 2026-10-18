@@ -1,9 +1,9 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, layout, radius, space, type as scale } from '@cfa/tokens';
+import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { firstName, useBookDraft, useBookOptions } from '@/data/book';
 import { useFamily } from '@/data/family';
@@ -13,7 +13,9 @@ import { formatMonthYear, formatNumber, formatPrice, formatTime, formatWeekday }
 import { useTheme } from '@/theme/useTheme';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
-import { Card } from '@/ui/Card';
+import { IconTile } from '@/ui/IconTile';
+import { RowCard } from '@/ui/RowCard';
+import { TextField } from '@/ui/TextField';
 import { DayPicker } from '@/ui/DayPicker';
 import { EmptyState } from '@/ui/EmptyState';
 import { NavigationBar } from '@/ui/NavigationBar';
@@ -148,15 +150,6 @@ export default function Book() {
           },
         ]}
       >
-        <View style={styles.intro}>
-          <T variant="title1" accessibilityRole="header">
-            {t('book.title', { name })}
-          </T>
-          <T variant="subheadline" color={c.label2}>
-            {discipline}
-          </T>
-        </View>
-
         {siblings.length > 1 && (
           <SegmentedControl
             accessibilityLabel={t('book.typeLabel')}
@@ -174,26 +167,28 @@ export default function Book() {
 
         {o.type === 'kids' &&
           (child ? (
-            <Card style={styles.child}>
-              <T variant="subheadline" weight="600" style={styles.grow}>
-                {t('book.child', { name: child.first_name, age: n(child.age) })}
-              </T>
-              <Button
-                label={t('book.change')}
-                size="small"
-                onPress={() => (eligible.length > 1 ? setChildIndex(childIndex + 1) : router.push('/family'))}
-              />
-            </Card>
+            <RowCard
+              leading={<IconTile icon="family" />}
+              title={t('book.childTitle', { name: child.first_name, age: n(child.age) })}
+              subtitle={t('family.infoGuardian')}
+              trailing={
+                <Button
+                  label={t('book.change')}
+                  size="small"
+                  onPress={() =>
+                    eligible.length > 1 ? setChildIndex(childIndex + 1) : router.push('/family')
+                  }
+                />
+              }
+            />
           ) : (
-            <Card
-              style={styles.child}
+            <RowCard
+              leading={<IconTile icon="plus" />}
+              title={
+                family.length ? t('book.childOutOfRange', { min: n(min), max: n(max) }) : t('book.addChild')
+              }
               onPress={() => router.push('/family-member')}
-              accessibilityLabel={t('book.addChild')}
-            >
-              <T variant="subheadline" weight="600" color={c.brandText} style={styles.grow}>
-                {family.length ? t('book.childOutOfRange', { min: n(min), max: n(max) }) : t('book.addChild')}
-              </T>
-            </Card>
+            />
           ))}
 
         <DayPicker
@@ -218,20 +213,17 @@ export default function Book() {
         )}
 
         <View style={styles.noteWrap}>
-          <TextInput
+          <TextField
             value={note}
             onChangeText={setNote}
             placeholder={t('book.note', { name })}
-            placeholderTextColor={c.label3}
-            accessibilityLabel={t('book.note', { name })}
             multiline
             maxLength={500}
-            style={[styles.note, scale.body, { backgroundColor: c.surface, color: c.label }]}
           />
         </View>
       </ScrollView>
 
-      <NavigationBar onBack={() => router.back()} />
+      <NavigationBar title={t('book.title', { name })} subtitle={discipline} onBack={() => router.back()} />
       <BottomActionBar caption={summary} price={formatPrice(o.price_egp, lang)}>
         <Button
           label={chosen ? t('book.continue') : t('book.pickTime')}
@@ -251,14 +243,5 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   center: { justifyContent: 'center', padding: layout.sideMargin },
   body: { paddingHorizontal: layout.sideMargin, gap: space.space4 },
-  intro: { gap: space.space1 },
-  grow: { flex: 1 },
-  child: { flexDirection: 'row', alignItems: 'center', gap: space.space3, padding: space.space4 },
   noteWrap: { marginTop: space.space2 },
-  note: {
-    minHeight: component.noteField.minHeight,
-    borderRadius: radius.md,
-    padding: space.space4,
-    textAlignVertical: 'top',
-  },
 });

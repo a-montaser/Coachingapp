@@ -1,9 +1,9 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, layout, radius, space } from '@cfa/tokens';
+import { component, layout, space } from '@cfa/tokens';
 import { useProfile, useSession } from '@/data/auth';
 import {
   cairoDaysUntil,
@@ -19,10 +19,16 @@ import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
-import { Card } from '@/ui/Card';
+import { useMinimiseOnScroll } from '@/ui/TabBar';
+import { testBanner, testPhoto } from '@/dev/testImages';
+import { Avatar } from '@/ui/Avatar';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
 import { DateTile } from '@/ui/DateTile';
-import { Icon, disciplineIcon } from '@/ui/Icon';
+import { DisciplineTile } from '@/ui/DisciplineTile';
+import { IconTile } from '@/ui/IconTile';
+import { RowCard } from '@/ui/RowCard';
+import { Section } from '@/ui/Section';
+import { disciplineIcon } from '@/ui/Icon';
 import { InstructorCard } from '@/ui/InstructorCard';
 import { SearchField } from '@/ui/SearchField';
 import { T } from '@/ui/T';
@@ -38,6 +44,7 @@ const GROUP_RAIL = 6;
  */
 export default function Home() {
   const { c } = useTheme();
+  const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const lang = useLang();
   const insets = useSafeAreaInsets();
@@ -86,6 +93,8 @@ export default function Home() {
   return (
     <View style={[styles.screen, { backgroundColor: c.bg }]}>
       <ScrollView
+        onScroll={tabScroll}
+        scrollEventThrottle={16}
         contentContainerStyle={[
           styles.body,
           {
@@ -119,117 +128,67 @@ export default function Home() {
         />
 
         {next ? (
-          <Card
-            style={styles.row}
+          <RowCard
+            leading={<DateTile date={new Date(next.starts_at)} />}
+            kicker={t(next.type === 'workshop' ? 'home.kickerWorkshop' : 'home.kickerSession', {
+              when: inDays(next.starts_at),
+            })}
+            title={next.title}
+            subtitle={`${formatClock(new Date(next.starts_at), lang)} · ${next.venue_name}`}
             onPress={() => router.navigate('/bookings')}
-            accessibilityLabel={next.title}
-          >
-            <DateTile date={new Date(next.starts_at)} />
-            <View style={styles.grow}>
-              <T variant="caption1" weight="600" color={c.brandText}>
-                {t(next.type === 'workshop' ? 'home.kickerWorkshop' : 'home.kickerSession', {
-                  when: inDays(next.starts_at),
-                })}
-              </T>
-              <T variant="headline">{next.title}</T>
-              <T variant="footnote" color={c.label2}>
-                {`${formatClock(new Date(next.starts_at), lang)} · ${next.venue_name}`}
-              </T>
-            </View>
-            <Icon name="forward" size={component.groupedList.iconSize} color={c.label3} />
-          </Card>
+          />
         ) : (
-          <Card style={styles.row} onPress={() => openExplore()}>
-            <View style={[styles.emptyIcon, { backgroundColor: c.brandTint }]}>
-              <Icon name={category} size={component.iconButton.iconSize} color={c.brandText} />
-            </View>
-            <View style={styles.grow}>
-              <T variant="headline">{t(`home.emptyTitle.${category}`)}</T>
-              <T variant="footnote" color={c.label2}>
-                {t(`home.emptySub.${category}`)}
-              </T>
-            </View>
-            <Icon name="forward" size={component.groupedList.iconSize} color={c.label3} />
-          </Card>
+          <RowCard
+            leading={<IconTile icon={category} />}
+            title={t(`home.emptyTitle.${category}`)}
+            subtitle={t(`home.emptySub.${category}`)}
+            onPress={() => openExplore()}
+          />
         )}
 
         {again && (
-          <Card
-            style={styles.row}
+          <RowCard
+            leading={<Avatar size={component.iconButton.size} image={testPhoto(again.instructor_name)} />}
+            kicker={t('home.bookAgain')}
+            title={t('home.bookAgainTitle', {
+              discipline: (ar && again.discipline_ar) || again.discipline_en,
+              name: again.instructor_name,
+            })}
+            subtitle={
+              againCard?.next_at
+                ? t('home.bookAgainNext', { when: when(againCard.next_at) })
+                : t('home.bookAgainNone')
+            }
             onPress={() => openProfile(again.instructor_id, again.discipline_id)}
             accessibilityLabel={t('home.bookAgain')}
-          >
-            <View style={styles.grow}>
-              <T variant="caption1" weight="600" color={c.brandText}>
-                {t('home.bookAgain')}
-              </T>
-              <T variant="headline">
-                {t('home.bookAgainTitle', {
-                  discipline: (ar && again.discipline_ar) || again.discipline_en,
-                  name: again.instructor_name,
-                })}
-              </T>
-              <T variant="footnote" color={c.label2}>
-                {againCard?.next_at
-                  ? t('home.bookAgainNext', { when: when(againCard.next_at) })
-                  : t('home.bookAgainNone')}
-              </T>
-            </View>
-            <Icon name="forward" size={component.groupedList.iconSize} color={c.label3} />
-          </Card>
+          />
         )}
 
-        <View style={styles.section}>
-          <View style={styles.sectionHead}>
-            <T variant="title2" accessibilityRole="header" style={styles.grow}>
-              {t(`home.rail.${category}`)}
-            </T>
-            <Pressable accessibilityRole="link" onPress={() => openExplore()} hitSlop={space.space3}>
-              <T variant="subheadline" weight="600" color={c.brandText}>
-                {t('home.seeAll')}
-              </T>
-            </Pressable>
-          </View>
+        <Section
+          title={t(`home.rail.${category}`)}
+          variant="title2"
+          action={{ label: t('home.seeAll'), onPress: () => openExplore() }}
+        >
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.rail}
             style={styles.bleed}
           >
-            {disciplines.map((d) => {
-              const icon = disciplineIcon(d.icon);
-              const label = disciplineName(d, lang);
-              return (
-                <Pressable
-                  key={d.id}
-                  accessibilityRole="button"
-                  accessibilityLabel={label}
-                  onPress={() => openExplore({ discipline: d.id })}
-                  style={styles.railItem}
-                >
-                  <View style={[styles.railTile, { backgroundColor: c.surface }]}>
-                    {icon ? (
-                      <Icon name={icon} size={rail.iconSize} color={c.brandText} />
-                    ) : (
-                      <T weight="700" color={c.brandText} style={styles.code}>
-                        {d.code}
-                      </T>
-                    )}
-                  </View>
-                  <T fit={2} variant="footnote" weight="600" style={styles.center}>
-                    {label}
-                  </T>
-                </Pressable>
-              );
-            })}
+            {disciplines.map((d) => (
+              <DisciplineTile
+                key={d.id}
+                label={disciplineName(d, lang)}
+                icon={disciplineIcon(d.icon)}
+                code={d.code}
+                onPress={() => openExplore({ discipline: d.id })}
+              />
+            ))}
           </ScrollView>
-        </View>
+        </Section>
 
         {category !== 'sports' && groups.length > 0 && (
-          <View style={styles.section}>
-            <T variant="title2" accessibilityRole="header">
-              {t(`home.groups.${category}`)}
-            </T>
+          <Section title={t(`home.groups.${category}`)} variant="title2">
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -241,6 +200,7 @@ export default function Home() {
                   key={g.slot_id}
                   layout="rail"
                   workshop={{
+                    banner: testBanner(g.discipline_id, category),
                     title: g.title,
                     when: `${formatWeekday(new Date(g.starts_at), lang)} ${formatDayMonth(new Date(g.starts_at), lang)} · ${formatClock(new Date(g.starts_at), lang)}`,
                     area: (ar && g.area_ar) || g.area_en,
@@ -262,13 +222,10 @@ export default function Home() {
                 />
               ))}
             </ScrollView>
-          </View>
+          </Section>
         )}
 
-        <View style={styles.section}>
-          <T variant="title2" accessibilityRole="header">
-            {t(`home.people.${category}`)}
-          </T>
+        <Section title={t(`home.people.${category}`)} variant="title2">
           {people.length === 0 && (
             <T variant="subheadline" color={c.label2}>
               {t('home.noPeople')}
@@ -278,6 +235,7 @@ export default function Home() {
             <InstructorCard
               key={`${p.id}-${p.discipline_id}`}
               instructor={{
+                photo: testPhoto(p.display_name),
                 name: p.display_name,
                 discipline: (ar && p.discipline_ar) || p.discipline_en,
                 levels: p.levels ?? undefined,
@@ -291,7 +249,7 @@ export default function Home() {
               onPress={() => openProfile(p.id, p.discipline_id)}
             />
           ))}
-        </View>
+        </Section>
       </ScrollView>
 
       <CategoryTray
@@ -310,27 +268,6 @@ const styles = StyleSheet.create({
   topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.space3 },
   wordmark: { fontSize: component.homeWordmarkSize },
   greeting: { gap: space.space1 },
-  row: { padding: space.space4, flexDirection: 'row', alignItems: 'center', gap: space.space3 },
-  grow: { flex: 1 },
-  emptyIcon: {
-    width: component.iconButton.size,
-    height: component.iconButton.size,
-    borderRadius: radius.sm,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  section: { gap: space.space3 },
-  sectionHead: { flexDirection: 'row', alignItems: 'baseline', gap: space.space3 },
   bleed: { marginHorizontal: -layout.sideMargin },
   rail: { paddingHorizontal: layout.sideMargin, gap: rail.gap },
-  railItem: { width: rail.width, alignItems: 'center', gap: space.space2 },
-  railTile: {
-    width: rail.tile,
-    height: rail.tile,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  code: { fontSize: rail.codeSize },
-  center: { textAlign: 'center' },
 });

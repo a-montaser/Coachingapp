@@ -9,8 +9,10 @@ import { formatDayMonth, formatYear } from '@/i18n/format';
 import { useLang } from '@/i18n';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
+import { useMinimiseOnScroll } from '@/ui/TabBar';
+import { Avatar } from '@/ui/Avatar';
 import { GroupedList } from '@/ui/GroupedList';
-import { Icon } from '@/ui/Icon';
+import { Section } from '@/ui/Section';
 import { T } from '@/ui/T';
 
 /**
@@ -19,6 +21,7 @@ import { T } from '@/ui/T';
  */
 export default function Profile() {
   const { c } = useTheme();
+  const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const lang = useLang();
   const insets = useSafeAreaInsets();
@@ -40,6 +43,8 @@ export default function Profile() {
 
   return (
     <ScrollView
+      onScroll={tabScroll}
+      scrollEventThrottle={16}
       style={{ backgroundColor: c.bg }}
       contentContainerStyle={[
         styles.body,
@@ -51,13 +56,7 @@ export default function Profile() {
       ]}
     >
       <View style={styles.header}>
-        <View
-          accessible
-          accessibilityLabel={t('profile.photo')}
-          style={[styles.photo, { backgroundColor: c.surface2 }]}
-        >
-          <Icon name="profile" size={component.profilePhoto.iconSize} color={c.label2} />
-        </View>
+        <Avatar size={component.profilePhoto.size} accessibilityLabel={t('profile.photo')} />
         <View style={styles.headerText}>
           <T variant="title2" accessibilityRole="header">
             {profile?.first_name ?? t('tabs.profile')}
@@ -72,10 +71,7 @@ export default function Profile() {
         </View>
       </View>
 
-      <View style={styles.section}>
-        <T variant="footnote" color={c.label2} accessibilityRole="header">
-          {t('profile.levelsTitle')}
-        </T>
+      <Section title={t('profile.levelsTitle')} variant="footnote">
         <GroupedList
           rows={[
             ...(interests.length
@@ -92,12 +88,9 @@ export default function Profile() {
             },
           ]}
         />
-      </View>
+      </Section>
 
-      <View style={styles.section}>
-        <T variant="footnote" color={c.label2} accessibilityRole="header">
-          {t('profile.settings')}
-        </T>
+      <Section title={t('profile.settings')} variant="footnote">
         <GroupedList
           rows={[
             {
@@ -122,7 +115,7 @@ export default function Profile() {
             },
           ]}
         />
-      </View>
+      </Section>
 
       <GroupedList
         rows={[
@@ -139,18 +132,8 @@ export default function Profile() {
   );
 }
 
-const p = component.profilePhoto;
-
 const styles = StyleSheet.create({
   body: { paddingHorizontal: layout.sideMargin, gap: layout.sectionGap },
   header: { flexDirection: 'row', alignItems: 'center', gap: space.space4 },
-  photo: {
-    width: p.size,
-    height: p.size,
-    borderRadius: p.size / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   headerText: { flex: 1, gap: space.space1 },
-  section: { gap: space.space2 },
 });

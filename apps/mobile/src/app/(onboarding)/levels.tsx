@@ -2,9 +2,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, layout, radius, space } from '@cfa/tokens';
+import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import {
   LEVELS,
@@ -19,7 +19,7 @@ import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
 import { GroupedList } from '@/ui/GroupedList';
 import { Icon, disciplineIcon } from '@/ui/Icon';
-import { LevelGlyph } from '@/ui/LevelGlyph';
+import { LevelOption } from '@/ui/LevelOption';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Progress } from '@/ui/Progress';
 import { T } from '@/ui/T';
@@ -147,35 +147,16 @@ export default function Levels() {
                 {t('onboarding.levelSub')}
               </T>
               <View style={styles.levels}>
-                {LEVELS.map((level, i) => {
-                  const selected = levels[current.id] === level;
-                  return (
-                    <Pressable
-                      key={level}
-                      accessibilityRole="radio"
-                      accessibilityState={{ checked: selected }}
-                      accessibilityLabel={`${t(`level.${level}`)}, ${t(`onboarding.levelDesc.${level}`)}`}
-                      onPress={() => answer(level)}
-                      style={({ pressed }) => [
-                        styles.level,
-                        { backgroundColor: c.surface },
-                        selected && {
-                          borderWidth: component.interestTile.selectedBorder,
-                          borderColor: c.brand,
-                        },
-                        pressed && styles.pressed,
-                      ]}
-                    >
-                      <LevelGlyph filled={i + 1} color={c.brandText} />
-                      <View style={styles.grow}>
-                        <T variant="headline">{t(`level.${level}`)}</T>
-                        <T variant="footnote" color={c.label2}>
-                          {t(`onboarding.levelDesc.${level}`)}
-                        </T>
-                      </View>
-                    </Pressable>
-                  );
-                })}
+                {LEVELS.map((level, i) => (
+                  <LevelOption
+                    key={level}
+                    level={(i + 1) as 1 | 2 | 3 | 4}
+                    title={t(`level.${level}`)}
+                    description={t(`onboarding.levelDesc.${level}`)}
+                    selected={levels[current.id] === level}
+                    onPress={() => answer(level)}
+                  />
+                ))}
               </View>
             </>
           )
@@ -204,15 +185,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   levels: { gap: space.space2 },
-  level: {
-    minHeight: component.groupedList.rowMinHeight,
-    borderRadius: radius.md,
-    paddingHorizontal: space.space4,
-    paddingVertical: space.space3,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.space4,
-  },
   grow: { flex: 1 },
-  pressed: { opacity: 0.7 },
 });
