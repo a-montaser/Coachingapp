@@ -1,5 +1,411 @@
 [
  {
+  "at": "2026-10-18T11:24:36.085Z",
+  "commit": "9946d30",
+  "note": "T11 Explore: live search, Workshops | 1:1 lessons on Hobbies, Filters and Sort sheets, empty state (D37)",
+  "nodes": 895,
+  "links": 2665,
+  "communities": 37,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_explore_availability",
+    "l": "Availability",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_explorestate",
+    "l": "ExploreState",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_filters",
+    "l": "Filters",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_offeringprice",
+    "l": "OfferingPrice",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_personresult",
+    "l": "PersonResult",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_point",
+    "l": "Point",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_sessiontype",
+    "l": "SessionType",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_sortkey",
+    "l": "SortKey",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_workshopresult",
+    "l": "WorkshopResult",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_filters_filterssheet",
+    "l": "FiltersSheet()",
+    "c": 2,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_filters_group",
+    "l": "Group()",
+    "c": 2,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sort_sortsheet",
+    "l": "SortSheet()",
+    "c": 2,
+    "f": "apps/mobile/src/app/sort.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_explore_explore",
+    "l": "Explore()",
+    "c": 2,
+    "f": "apps/mobile/src/app/(tabs)/explore.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_activefiltercount",
+    "l": "activeFilterCount()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_bykey",
+    "l": "byKey()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_filterpeople",
+    "l": "filterPeople()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_filterworkshops",
+    "l": "filterWorkshops()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_matchesavailability",
+    "l": "matchesAvailability()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_at",
+    "l": "at()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_card",
+    "l": "card()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_ids",
+    "l": "ids()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_text",
+    "l": "text()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_useexploreresults",
+    "l": "useExploreResults()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_useofferingprices",
+    "l": "useOfferingPrices()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_useorigin",
+    "l": "useOrigin()",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_explore_styles",
+    "l": "styles",
+    "c": 1,
+    "f": "apps/mobile/src/app/(tabs)/explore.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_filters",
+    "l": "filters.tsx",
+    "c": 2,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_filters_styles",
+    "l": "styles",
+    "c": 2,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_filters_types",
+    "l": "TYPES",
+    "c": 2,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_filters_when",
+    "l": "WHEN",
+    "c": 2,
+    "f": "apps/mobile/src/app/filters.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sort",
+    "l": "sort.tsx",
+    "c": 2,
+    "f": "apps/mobile/src/app/sort.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sort_sorts",
+    "l": "SORTS",
+    "c": 2,
+    "f": "apps/mobile/src/app/sort.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sort_styles",
+    "l": "styles",
+    "c": 2,
+    "f": "apps/mobile/src/app/sort.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore",
+    "l": "explore.ts",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_default_filters",
+    "l": "DEFAULT_FILTERS",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_distances",
+    "l": "DISTANCES",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_price",
+    "l": "PRICE",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_ratings",
+    "l": "RATINGS",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test",
+    "l": "explore.test.tsx",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_base",
+    "l": "base",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_dina",
+    "l": "dina",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_hany",
+    "l": "hany",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_mockrows",
+    "l": "mockRows",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_now",
+    "l": "NOW",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_offerings",
+    "l": "offerings",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_yasmine",
+    "l": "yasmine",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_test_zamalek",
+    "l": "zamalek",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_useexplore",
+    "l": "useExplore",
+    "c": 2,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "docs_decisions_d37",
+    "l": "D37: T11 Explore details (This week, Weekend, availability shortcut, distance source, in-memory state)",
+    "c": 27,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_appearance_strings",
+    "l": "Appearance sheet strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_button_labels_strings",
+    "l": "Buttons (screen-reader labels) strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_buttons_and_messages_strings",
+    "l": "Buttons and messages strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_card_strings",
+    "l": "Instructor and workshop cards strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_category_tray_strings",
+    "l": "Category tray and its button strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_date_strip_strings",
+    "l": "Date strip strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_family_strings",
+    "l": "Family & kids and its sheet strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_profile_levels_strings",
+    "l": "Profile levels strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_profile_strings",
+    "l": "Profile strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_signin_strings",
+    "l": "Sign-in and sign out strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_tab_bar_strings",
+    "l": "Tab bar strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_time_slots_strings",
+    "l": "Time slots strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_messages_strings",
+    "l": "Messages tab strings",
+    "c": 20,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_explore_strings",
+    "l": "Explore, Filters and Sort strings",
+    "c": 27,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_app_tabs_explore_screen",
+    "l": "Screen()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/explore.tsx"
+   }
+  ],
+  "linkDelta": 222,
+  "files": [
+   "apps/mobile/src/app/(tabs)/explore.tsx",
+   "apps/mobile/src/app/filters.tsx",
+   "apps/mobile/src/app/sort.tsx",
+   "apps/mobile/src/data/explore.test.tsx",
+   "apps/mobile/src/data/explore.ts",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-18T11:06:14.714Z",
   "commit": "597ae10",
   "note": "T10 Home for all four categories: greeting, search, next booking, disciplines and group rails, people list, Sports “Book again” (D36)",

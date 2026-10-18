@@ -2,11 +2,18 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { component, space } from '@cfa/tokens';
+import { Button } from './Button';
 import { IconButton } from './IconButton';
 import { T } from './T';
 
-/** §7.5, DS Sheet: glass close · Headline title, centred. A spacer keeps the title centred. */
-export function SheetHeader({ title }: { title: string }) {
+/** §7.5, DS Sheet: glass close · Headline title, centred · optional plain action (e.g. Reset), else a spacer. */
+export function SheetHeader({
+  title,
+  action,
+}: {
+  title: string;
+  action?: { label: string; onPress: () => void };
+}) {
   const { t } = useTranslation();
   return (
     <View style={styles.header}>
@@ -19,7 +26,11 @@ export function SheetHeader({ title }: { title: string }) {
       <T variant="headline" accessibilityRole="header" style={styles.title}>
         {title}
       </T>
-      <View style={styles.spacer} />
+      {action ? (
+        <Button label={action.label} size="small" onPress={action.onPress} />
+      ) : (
+        <View style={styles.spacer} />
+      )}
     </View>
   );
 }

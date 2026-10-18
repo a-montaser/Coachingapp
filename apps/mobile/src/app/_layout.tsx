@@ -41,6 +41,8 @@ function RootNavigator() {
         <Stack.Screen name="language" options={sheet} />
         <Stack.Screen name="appearance" options={sheet} />
         <Stack.Screen name="sign-out" options={sheet} />
+        <Stack.Screen name="filters" options={sheet} />
+        <Stack.Screen name="sort" options={sheet} />
       </Stack.Protected>
       {/* Open to everyone: new learners onboard before sign-up (D34), signed-in ones who never finished
           land here, and Profile reopens steps 1–2. Listed after the tabs so an onboarded learner lands Home. */}

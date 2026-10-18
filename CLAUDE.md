@@ -14,7 +14,7 @@ Skills in use: spec-driven-development, graphify, ponytail. Load ponytail at the
 
 ## After every task (and every owner-requested change)
 1. **Spec:** if the change alters what `specs/phase-N/` says (flow, scope, acceptance), update `requirements.md` / `design.md` / `tasks.md` in the same commit, and log it in `docs/DECISIONS.md`.
-2. **Map:** run `/graphify --update` (re-extracts changed code and docs into `graphify-out/`; app icons are excluded in `graphify-out/.graphify_build.json`).
+2. **Map:** `/graphify --update`, in three steps: `"$(cat graphify-out/.graphify_python)" docs/project-map/graph_update.py prepare` (lists the changed docs), one graphify extraction agent for those docs writing `graphify-out/.graphify_chunk_01.json` (prompt: the skill's `references/extraction-spec.md`; keep ids `docs_decisions_d<N>` and `specs_phase_1_tasks_t<N>`), then `… graph_update.py finish <tokens in> <tokens out>`. App icons and `docs/project-map/` are excluded in `graphify-out/.graphify_build.json`. Rename any auto-named group that reads badly.
 3. **Project Map page:** `node docs/project-map/build-data.mjs --note "<task or change, in plain words>"`, then republish `docs/project-map/index.html` with `files: {"map-data.json": "docs/project-map/map-data.json", "history.json": "docs/project-map/history.json"}` to https://claude.ai/artifact/GfusiNaPh1op1RCBeHZkuv (pass it as `url` from a new session). Each run adds one entry to the page's "What changed" history.
 4. Commit `graphify-out/` and `docs/project-map/` with the task.
 

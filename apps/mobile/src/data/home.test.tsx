@@ -177,10 +177,13 @@ test('Sports shows "Book again" for the last completed session with that coach\'
 test('search and the disciplines rail open Explore', async () => {
   await render(<Home />);
   await fireEvent(screen.getByPlaceholderText('Pottery, oud, photography…'), 'focus');
-  expect(mockRouter.navigate).toHaveBeenCalledWith({ pathname: '/explore', params: { focus: '1' } });
+  expect(mockRouter.navigate).toHaveBeenCalledWith({
+    pathname: '/explore',
+    params: { focus: '1', at: expect.any(String) },
+  });
   await fireEvent.press(screen.getByRole('button', { name: 'Pottery' }));
   expect(mockRouter.navigate).toHaveBeenCalledWith({
     pathname: '/explore',
-    params: { discipline: 'pottery' },
+    params: { discipline: 'pottery', at: expect.any(String) },
   });
 });

@@ -33,7 +33,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 ## D. Discovery
 - [x] **T10 Home ×4 + tray** (canvas 1–5), including Sports "Book again".
   - Verify: RNTL for 4 categories; side-by-side screenshots against canvas.
-- [ ] **T11 Explore (canvas 7)** with search, the Filters and Sort sheets, empty state.
+- [x] **T11 Explore (canvas 7)** with search, the Filters and Sort sheets, empty state.
   - Verify: filter and sort rule tests.
 - [ ] **T12 Instructor profile (canvas 8).**
   - Verify: RNTL for the hobbies and sports variants.

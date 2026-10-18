@@ -186,3 +186,48 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `home.bookAgainNext` | Home | Next open: {{when}} |  |
 | `home.bookAgainNone` | Home | No open times in the next two weeks |  |
 | `home.noPeople` | Home | No one is teaching this yet. Check back soon. |  |
+| `explore.segLabel` | Explore, Filters and Sort | Show |  |
+| `explore.segWorkshops` | Explore, Filters and Sort | Workshops |  |
+| `explore.segPeople` | Explore, Filters and Sort | 1:1 lessons |  |
+| `explore.filters` | Explore, Filters and Sort | Filters |  |
+| `explore.filtersN` | Explore, Filters and Sort | Filters · {{count}} |  |
+| `explore.all` | Explore, Filters and Sort | All |  |
+| `explore.coaches_one` | Explore, Filters and Sort | {{n}} coach |  |
+| `explore.coaches_other` | Explore, Filters and Sort | {{n}} coaches |  |
+| `explore.workshops_one` | Explore, Filters and Sort | {{n}} workshop |  |
+| `explore.workshops_other` | Explore, Filters and Sort | {{n}} workshops |  |
+| `explore.within` | Explore, Filters and Sort | within {{km}} km |  |
+| `explore.sortBy` | Explore, Filters and Sort | Sort: {{name}} |  |
+| `explore.sortTitle` | Explore, Filters and Sort | Sort by |  |
+| `explore.sort.soonest` | Explore, Filters and Sort | Soonest available |  |
+| `explore.sort.price` | Explore, Filters and Sort | Lowest price |  |
+| `explore.sort.rating` | Explore, Filters and Sort | Highest rated |  |
+| `explore.sort.nearest` | Explore, Filters and Sort | Nearest |  |
+| `explore.emptyTitle` | Explore, Filters and Sort | No matches |  |
+| `explore.emptyBody` | Explore, Filters and Sort | Loosen a filter or try another search. |  |
+| `explore.emptyAction` | Explore, Filters and Sort | Clear search and filters |  |
+| `explore.reset` | Explore, Filters and Sort | Reset |  |
+| `explore.maxPrice` | Explore, Filters and Sort | Max price |  |
+| `explore.any` | Explore, Filters and Sort | Any |  |
+| `explore.upTo` | Explore, Filters and Sort | Up to {{price}} |  |
+| `explore.type` | Explore, Filters and Sort | Session type |  |
+| `explore.types.private` | Explore, Filters and Sort | 1:1 |  |
+| `explore.types.group` | Explore, Filters and Sort | Group |  |
+| `explore.types.kids` | Explore, Filters and Sort | Kids |  |
+| `explore.types.workshop` | Explore, Filters and Sort | Workshop |  |
+| `explore.gender` | Explore, Filters and Sort | Instructor gender |  |
+| `explore.rating` | Explore, Filters and Sort | Rating |  |
+| `explore.ratingAtLeast` | Explore, Filters and Sort | {{value}}+ |  |
+| `explore.distance` | Explore, Filters and Sort | Distance |  |
+| `explore.km` | Explore, Filters and Sort | {{km}} km |  |
+| `explore.availability` | Explore, Filters and Sort | Availability |  |
+| `explore.when.any` | Explore, Filters and Sort | Any time |  |
+| `explore.when.today` | Explore, Filters and Sort | Today |  |
+| `explore.when.week` | Explore, Filters and Sort | This week |  |
+| `explore.when.weekend` | Explore, Filters and Sort | Weekend |  |
+| `explore.showCoaches_one` | Explore, Filters and Sort | Show {{n}} coach |  |
+| `explore.showCoaches_other` | Explore, Filters and Sort | Show {{n}} coaches |  |
+| `explore.showWorkshops_one` | Explore, Filters and Sort | Show {{n}} workshop |  |
+| `explore.showWorkshops_other` | Explore, Filters and Sort | Show {{n}} workshops |  |
+| `explore.noMatches` | Explore, Filters and Sort | No matches |  |
+| `explore.noMatchesReason` | Explore, Filters and Sort | Loosen a filter to see results. |  |

@@ -29,6 +29,7 @@ export function distanceKm(a: { lat: number; lng: number }, b: { lat: number; ln
 export type InstructorCardRow = {
   id: string;
   display_name: string;
+  gender: 'female' | 'male' | null;
   discipline_id: string;
   discipline_en: string;
   discipline_ar: string | null;
@@ -37,6 +38,7 @@ export type InstructorCardRow = {
   rating_count: number;
   from_price: number;
   next_at: string | null;
+  venue_name: string;
   area_en: string;
   area_ar: string | null;
   lat: number;
@@ -67,13 +69,18 @@ export type GroupSessionRow = {
   offering_id: string;
   title: string;
   price_egp: number;
+  discipline_id: string;
+  instructor_id: string;
+  instructor_name: string;
+  rating_avg: number;
+  venue_name: string;
   area_en: string;
   area_ar: string | null;
+  lat: number;
+  lng: number;
 };
 
-const GROUP_RAIL = 6;
-
-/** Group product rail (§7.4 item 6): the soonest workshops / revision / conversation groups. Not Sports (v1). */
+/** Upcoming workshops / revision / conversation groups, soonest first: Home's rail (first 6) and Explore. Not Sports (v1). */
 export function useGroupSessions(category: Category) {
   return useQuery({
     queryKey: ['groupSessions', category],
@@ -81,10 +88,11 @@ export function useGroupSessions(category: Category) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('group_sessions')
-        .select('slot_id, starts_at, capacity, seats_free, offering_id, title, price_egp, area_en, area_ar')
+        .select(
+          'slot_id, starts_at, capacity, seats_free, offering_id, title, price_egp, discipline_id, instructor_id, instructor_name, rating_avg, venue_name, area_en, area_ar, lat, lng',
+        )
         .eq('category_id', category)
-        .order('starts_at')
-        .limit(GROUP_RAIL);
+        .order('starts_at');
       if (error) throw error;
       return data as GroupSessionRow[];
     },

@@ -13,9 +13,10 @@ import {
   useInstructorCards,
   useMyCategoryBookings,
 } from '@/data/home';
-import { disciplineName, useAreas, useDisciplines } from '@/data/onboarding';
+import { useOrigin } from '@/data/explore';
+import { disciplineName, useDisciplines } from '@/data/onboarding';
 import { useLang } from '@/i18n';
-import { formatClock, formatDayMonth, formatWeekday } from '@/i18n/format';
+import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { Card } from '@/ui/Card';
@@ -28,6 +29,7 @@ import { T } from '@/ui/T';
 import { WorkshopCard } from '@/ui/WorkshopCard';
 
 const rail = component.disciplineRail;
+const GROUP_RAIL = 6;
 
 /**
  * §7.4 Home, one per category (canvas artboards Main, HomeSports, HomeEducation, HomeLanguages, HomeTray):
@@ -44,7 +46,7 @@ export default function Home() {
   const [trayOpen, setTrayOpen] = useState(false);
   const userId = useSession().session?.user.id;
   const profile = useProfile(userId).data;
-  const homeArea = useAreas().data?.find((a) => a.id === profile?.area_id);
+  const origin = useOrigin();
   const disciplines = (useDisciplines().data ?? []).filter((d) => d.category_id === category);
   const people = useInstructorCards(category).data ?? [];
   const groups = useGroupSessions(category).data ?? [];
@@ -64,10 +66,16 @@ export default function Home() {
   };
   const inDays = (iso: string) => {
     const days = cairoDaysUntil(new Date(iso), now);
-    return days === 0 ? t('home.today') : days === 1 ? t('home.tomorrow') : t('home.inDays', { count: days });
+    return days === 0
+      ? t('home.today')
+      : days === 1
+        ? t('home.tomorrow')
+        : t('home.inDays', { count: days, n: formatNumber(days, lang) });
   };
   // shortcut: instructor, workshop and booking detail screens arrive in T12, T13 and T17; until then these open Explore / Bookings.
-  const openExplore = (params?: Record<string, string>) => router.navigate({ pathname: '/explore', params });
+  // `at` makes each tap a new request, so Explore re-applies it even when the tab is already mounted.
+  const openExplore = (params?: Record<string, string>) =>
+    router.navigate({ pathname: '/explore', params: { ...params, at: String(Date.now()) } });
   const next = mine?.next;
   const again = category === 'sports' ? mine?.lastCompleted : null;
   const againCard =
@@ -226,7 +234,7 @@ export default function Home() {
               contentContainerStyle={styles.rail}
               style={styles.bleed}
             >
-              {groups.map((g) => (
+              {groups.slice(0, GROUP_RAIL).map((g) => (
                 <WorkshopCard
                   key={g.slot_id}
                   layout="rail"
@@ -263,8 +271,7 @@ export default function Home() {
                 levels: p.levels ?? undefined,
                 rating: p.rating_avg,
                 reviews: p.rating_count,
-                // Distance from the learner's area centre (requirements Resolved 9) until "Use my location" is wired to Home.
-                distanceKm: homeArea ? distanceKm(homeArea, p) : undefined,
+                distanceKm: origin ? distanceKm(origin, p) : undefined,
                 area: (ar && p.area_ar) || p.area_en,
                 next: p.next_at ? when(p.next_at) : undefined,
                 fromPrice: p.from_price,
