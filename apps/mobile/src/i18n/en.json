@@ -299,5 +299,35 @@
     "showWorkshops_other": "Show {{n}} workshops",
     "noMatches": "No matches",
     "noMatchesReason": "Loosen a filter to see results."
+  },
+  "instructor": {
+    "reviews_one": "{{n}} review",
+    "reviews_other": "{{n}} reviews",
+    "years_one": "{{n}} yr teaching",
+    "years_other": "{{n}} yrs teaching",
+    "nextAvailable": "Next available",
+    "allTimes": "All times",
+    "noTimes": "No open times in the next two weeks",
+    "upcomingWorkshops": "Upcoming workshops",
+    "privateLessons": "Private lessons",
+    "sessions": "Sessions",
+    "types": {
+      "private": "Private 1:1",
+      "group": "Small group",
+      "kids": "Kids",
+      "workshop": "Workshop"
+    },
+    "minutes": "{{n}} min",
+    "onePerson": "one person",
+    "upTo": "up to {{n}}, price per person",
+    "ages": "ages {{min}}–{{max}}",
+    "upToKids": "up to {{n}} kids",
+    "whatToBring": "What to bring",
+    "policyCancel": "Free cancellation up to 24 hours before",
+    "from": "From",
+    "book": "Book",
+    "share": "{{name}} teaches {{discipline}} on Coach For All.",
+    "notFound": "This instructor isn't taking bookings right now.",
+    "loadError": "This profile didn't load. Check your connection and try again."
   }
 }

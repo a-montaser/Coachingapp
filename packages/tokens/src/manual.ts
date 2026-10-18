@@ -137,6 +137,7 @@ export const component = {
     tickIconSize: icon.xsmall,
     tickInset: 12,
   }, // §7.3, canvas .pick
+  hero: { instructor: 340, workshop: 260, overlap: 28, scrimHeight: 110, iconSize: 64 /* provisional */ }, // §7.6, §7.7, DS .hero .scrimtop
   disciplineRail: { width: 76, tile: 64, iconSize: 28, codeSize: 17, gap: 12 }, // §7.4 item 5, canvas Main .cat
   levels: {
     iconCircle: 56,

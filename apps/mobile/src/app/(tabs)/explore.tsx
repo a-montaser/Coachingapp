@@ -185,8 +185,9 @@ export default function Explore() {
               next: p.next_at ? when(p.next_at) : undefined,
               fromPrice: p.price,
             }}
-            // shortcut: the Instructor profile arrives in T12; until then a card does nothing.
-            onPress={() => {}}
+            onPress={() =>
+              router.push({ pathname: '/instructor/[id]', params: { id: p.id, discipline: p.discipline_id } })
+            }
           />
         ))}
       </ScrollView>

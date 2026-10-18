@@ -231,3 +231,29 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `explore.showWorkshops_other` | Explore, Filters and Sort | Show {{n}} workshops |  |
 | `explore.noMatches` | Explore, Filters and Sort | No matches |  |
 | `explore.noMatchesReason` | Explore, Filters and Sort | Loosen a filter to see results. |  |
+| `instructor.reviews_one` | Instructor profile | {{n}} review |  |
+| `instructor.reviews_other` | Instructor profile | {{n}} reviews |  |
+| `instructor.years_one` | Instructor profile | {{n}} yr teaching |  |
+| `instructor.years_other` | Instructor profile | {{n}} yrs teaching |  |
+| `instructor.nextAvailable` | Instructor profile | Next available |  |
+| `instructor.allTimes` | Instructor profile | All times |  |
+| `instructor.noTimes` | Instructor profile | No open times in the next two weeks |  |
+| `instructor.upcomingWorkshops` | Instructor profile | Upcoming workshops |  |
+| `instructor.privateLessons` | Instructor profile | Private lessons |  |
+| `instructor.sessions` | Instructor profile | Sessions |  |
+| `instructor.types.private` | Instructor profile | Private 1:1 |  |
+| `instructor.types.group` | Instructor profile | Small group |  |
+| `instructor.types.kids` | Instructor profile | Kids |  |
+| `instructor.types.workshop` | Instructor profile | Workshop |  |
+| `instructor.minutes` | Instructor profile | {{n}} min |  |
+| `instructor.onePerson` | Instructor profile | one person |  |
+| `instructor.upTo` | Instructor profile | up to {{n}}, price per person |  |
+| `instructor.ages` | Instructor profile | ages {{min}}–{{max}} |  |
+| `instructor.upToKids` | Instructor profile | up to {{n}} kids |  |
+| `instructor.whatToBring` | Instructor profile | What to bring |  |
+| `instructor.policyCancel` | Instructor profile | Free cancellation up to 24 hours before |  |
+| `instructor.from` | Instructor profile | From |  |
+| `instructor.book` | Instructor profile | Book |  |
+| `instructor.share` | Instructor profile | {{name}} teaches {{discipline}} on Coach For All. |  |
+| `instructor.notFound` | Instructor profile | This instructor isn't taking bookings right now. |  |
+| `instructor.loadError` | Instructor profile | This profile didn't load. Check your connection and try again. |  |

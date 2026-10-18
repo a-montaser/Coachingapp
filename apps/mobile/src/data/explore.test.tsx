@@ -38,6 +38,7 @@ const card = (o: Partial<InstructorCardRow>): InstructorCardRow => ({
   discipline_id: 'pottery',
   discipline_en: 'Pottery',
   discipline_ar: null,
+  category_id: 'hobbies',
   levels: null,
   rating_avg: 4.7,
   rating_count: 10,

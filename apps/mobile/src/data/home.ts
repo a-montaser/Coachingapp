@@ -33,6 +33,7 @@ export type InstructorCardRow = {
   discipline_id: string;
   discipline_en: string;
   discipline_ar: string | null;
+  category_id: Category;
   levels: string | null;
   rating_avg: number;
   rating_count: number;

@@ -1,5 +1,267 @@
 [
  {
+  "at": "2026-10-18T11:41:47.247Z",
+  "commit": "4457120",
+  "note": "T12 Instructor profile: hero, next available, workshops and lessons (Hobbies) or session types, venue and policy rows, Share (D38)",
+  "nodes": 925,
+  "links": 2762,
+  "communities": 42,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_instructor_instructorextras",
+    "l": "InstructorExtras",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_offering",
+    "l": "Offering",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_openslot",
+    "l": "OpenSlot",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_instructor_id_instructorprofile",
+    "l": "InstructorProfile()",
+    "c": 16,
+    "f": "apps/mobile/src/app/instructor/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_instructor_id_section",
+    "l": "Section()",
+    "c": 16,
+    "f": "apps/mobile/src/app/instructor/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_bookableafter",
+    "l": "bookableAfter()",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_nextavailable",
+    "l": "nextAvailable()",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test_indays",
+    "l": "inDays()",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test_offering",
+    "l": "offering()",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test_slot",
+    "l": "slot()",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_useinstructor",
+    "l": "useInstructor()",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_hero_hero",
+    "l": "Hero()",
+    "c": 16,
+    "f": "apps/mobile/src/ui/Hero.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_instructor_id",
+    "l": "[id].tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/instructor/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_instructor_id_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/instructor/[id].tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_hero",
+    "l": "Hero.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Hero.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_hero_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Hero.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor",
+    "l": "instructor.ts",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test",
+    "l": "instructor.test.tsx",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test_mockparams",
+    "l": "mockParams",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test_padel",
+    "l": "padel",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_instructor_test_pottery",
+    "l": "pottery",
+    "c": 16,
+    "f": "apps/mobile/src/data/instructor.test.tsx"
+   },
+   {
+    "id": "docs_decisions_d38",
+    "l": "D38: T12 Instructor profile: (1) route instructor/[id]?discipline= (an instructor can teach…",
+    "c": 14,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_appearance_sheet_strings",
+    "l": "Appearance sheet strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_buttons_mostly_screen_reader_labels_strings",
+    "l": "Buttons (mostly screen-reader labels) strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_category_tray_and_its_button_strings",
+    "l": "Category tray and its button strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_family_kids_and_its_sheet_strings",
+    "l": "Family & kids and its sheet strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_sign_in_and_sign_out_strings",
+    "l": "Sign-in and sign out strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "claude_design_canvas",
+    "l": "Design canvas and design system artifacts",
+    "c": 11,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_explore_filters_and_sort_strings",
+    "l": "Explore, Filters and Sort strings",
+    "c": 14,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_instructor_profile_strings",
+    "l": "Instructor profile strings",
+    "c": 14,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "claude_expo_go_js_rtl",
+    "l": "Expo Go only, right-to-left applied in JS",
+    "c": 23,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_coach_for_all_app",
+    "l": "Coach For All app",
+    "c": 26,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_after_every_task_routine",
+    "l": "After-every-task routine (spec, map, Project Map page, commit)",
+    "c": 26,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_ci_only_database_tests",
+    "l": "CI-only database tests",
+    "c": 26,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_npm_run_check_gate",
+    "l": "npm run check gate",
+    "c": 26,
+    "f": "CLAUDE.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "docs_translations_ar_app_strings_appearance_strings",
+    "l": "Appearance sheet strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_category_tray_strings",
+    "l": "Category tray and its button strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_family_strings",
+    "l": "Family & kids and its sheet strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_signin_strings",
+    "l": "Sign-in and sign out strings",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_explore_strings",
+    "l": "Explore, Filters and Sort strings",
+    "c": 27,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "linkDelta": 97,
+  "files": [
+   "CLAUDE.md",
+   "apps/mobile/src/app/instructor/[id].tsx",
+   "apps/mobile/src/data/instructor.test.tsx",
+   "apps/mobile/src/data/instructor.ts",
+   "apps/mobile/src/ui/Hero.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-18T11:24:36.085Z",
   "commit": "9946d30",
   "note": "T11 Explore: live search, Workshops | 1:1 lessons on Hobbies, Filters and Sort sheets, empty state (D37)",

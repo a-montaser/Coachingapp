@@ -76,7 +76,11 @@ def finish(tokens_in, tokens_out):
           'hyperedges': list(G.graph.get('hyperedges', [])), 'input_tokens': tokens_in, 'output_tokens': tokens_out}
     old = json.loads((OUT / '.graphify_old.json').read_text())
     have = {n['id'] for n in ex['nodes']}
-    keep = {n['id']: n for n in old['nodes'] if n['id'] not in have and n.get('file_type') != 'code' and n.get('source_file') and Path(n['source_file']).exists()}
+    # Keep old doc nodes only from files NOT re-extracted this run (a re-extracted file's own new nodes
+    # replace its old ones, renames included); the shrink guard below still flags any real loss.
+    redone = {str(Path(f).resolve().relative_to(Path.cwd().resolve())) for f in unc}
+    keep = {n['id']: n for n in old['nodes'] if n['id'] not in have and n.get('file_type') != 'code'
+            and n.get('source_file') and Path(n['source_file']).exists() and n['source_file'] not in redone}
     ex['nodes'] += list(keep.values())
     allids = have | set(keep)
     ex['edges'] += [dict(e, _origin='semantic') for e in old['links'] if (e['source'] in keep or e['target'] in keep) and e['source'] in allids and e['target'] in allids]
@@ -106,8 +110,10 @@ def finish(tokens_in, tokens_out):
             name = f'{name} {i}'; i += 1
         used.add(name); labels[k] = name
     gods = god_nodes(G); sur = surprising_connections(G, com); q = suggest_questions(G, com, labels)
-    if not to_json(G, com, str(OUT / 'graph.json'), community_labels=labels):
-        raise SystemExit('REFUSED: shrink guard')
+    # GRAPH_FORCE=1 only after checking that the "missing" nodes were renamed, not lost.
+    import os
+    if not to_json(G, com, str(OUT / 'graph.json'), community_labels=labels, force=os.environ.get('GRAPH_FORCE') == '1'):
+        raise SystemExit('REFUSED: shrink guard (check the listed nodes; if they were renamed, rerun with GRAPH_FORCE=1)')
     (OUT / 'GRAPH_REPORT.md').write_text(generate(G, com, coh, labels, gods, sur, det, {'input': tokens_in, 'output': tokens_out}, '.', suggested_questions=q))
     (OUT / '.graphify_labels.json').write_text(json.dumps({str(k): v for k, v in labels.items()}, ensure_ascii=False))
     c = json.loads((OUT / 'cost.json').read_text())

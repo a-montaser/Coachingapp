@@ -35,7 +35,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: RNTL for 4 categories; side-by-side screenshots against canvas.
 - [x] **T11 Explore (canvas 7)** with search, the Filters and Sort sheets, empty state.
   - Verify: filter and sort rule tests.
-- [ ] **T12 Instructor profile (canvas 8).**
+- [x] **T12 Instructor profile (canvas 8).**
   - Verify: RNTL for the hobbies and sports variants.
 - [ ] **T13 Workshop (canvas 9)** with the seat stepper.
   - Verify: RNTL for stepper limits and full dates.

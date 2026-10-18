@@ -52,10 +52,17 @@ export function NavigationBar({ title, onBack, actions: allActions = [], scrollY
     return { opacity: p, transform: [{ translateY: reduceMotion ? 0 : (1 - p) * motion.navTitleRise }] };
   });
 
+  const fadeStyle = useAnimatedStyle(() => ({
+    opacity: scrollY
+      ? interpolate(scrollY.value, [n.titleFadeAfter - n.fadeHeight / 3, n.titleFadeAfter], [0, 1], 'clamp')
+      : 1,
+  }));
+
   return (
     <>
       {/* Scroll-edge fade (§4.4). shortcut: gradient only, no 8 pt blur yet; add if it reads too hard on device. */}
-      <View
+      {/* Over a hero the fade waits until the hero has scrolled away, so it doesn't wash the photo. */}
+      <Animated.View
         pointerEvents="none"
         style={[
           styles.fade,
@@ -63,6 +70,7 @@ export function NavigationBar({ title, onBack, actions: allActions = [], scrollY
             height: insets.top + n.fadeHeight,
             experimental_backgroundImage: `linear-gradient(${c.bg}, transparent)`,
           },
+          titleAfterHero && fadeStyle,
         ]}
       />
       <View pointerEvents="box-none" style={[styles.row, { top: insets.top + n.top }]}>
@@ -73,8 +81,13 @@ export function NavigationBar({ title, onBack, actions: allActions = [], scrollY
         </View>
         <View pointerEvents="none" style={styles.title}>
           {showTitle && (
-            <Animated.View style={titleStyle}>
-              <T variant="headline" numberOfLines={1} accessibilityRole="header">
+            // Repeats the page's own heading once the hero scrolls away: visual only, so screen readers hear it once.
+            <Animated.View
+              style={titleStyle}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+            >
+              <T variant="headline" numberOfLines={1}>
                 {title}
               </T>
             </Animated.View>

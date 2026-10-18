@@ -72,10 +72,12 @@ export default function Home() {
         ? t('home.tomorrow')
         : t('home.inDays', { count: days, n: formatNumber(days, lang) });
   };
-  // shortcut: instructor, workshop and booking detail screens arrive in T12, T13 and T17; until then these open Explore / Bookings.
+  // shortcut: workshop and booking detail screens arrive in T13 and T17; until then those cards open Explore / Bookings.
   // `at` makes each tap a new request, so Explore re-applies it even when the tab is already mounted.
   const openExplore = (params?: Record<string, string>) =>
     router.navigate({ pathname: '/explore', params: { ...params, at: String(Date.now()) } });
+  const openProfile = (id: string, discipline: string) =>
+    router.push({ pathname: '/instructor/[id]', params: { id, discipline } });
   const next = mine?.next;
   const again = category === 'sports' ? mine?.lastCompleted : null;
   const againCard =
@@ -154,7 +156,7 @@ export default function Home() {
         {again && (
           <Card
             style={styles.row}
-            onPress={() => openExplore({ discipline: again.discipline_id })}
+            onPress={() => openProfile(again.instructor_id, again.discipline_id)}
             accessibilityLabel={t('home.bookAgain')}
           >
             <View style={styles.grow}>
@@ -276,7 +278,7 @@ export default function Home() {
                 next: p.next_at ? when(p.next_at) : undefined,
                 fromPrice: p.from_price,
               }}
-              onPress={() => openExplore({ discipline: p.discipline_id })}
+              onPress={() => openProfile(p.id, p.discipline_id)}
             />
           ))}
         </View>
