@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useArea, useInterests, type Interest } from '@/data/account';
+import { galleryCopy } from '@/dev/galleryCopy';
 import { useProfile, useSession } from '@/data/auth';
 import { formatDayMonth, formatYear } from '@/i18n/format';
 import { useLang } from '@/i18n';
@@ -128,6 +129,19 @@ export default function Profile() {
           },
         ]}
       />
+      {/* Dev builds only: the component library (every ui/ component, both themes and languages). */}
+      {__DEV__ && (
+        <GroupedList
+          rows={[
+            {
+              key: 'gallery',
+              icon: 'hobbies',
+              title: galleryCopy[lang].title,
+              onPress: () => router.push('/gallery'),
+            },
+          ]}
+        />
+      )}
     </ScrollView>
   );
 }
