@@ -19,13 +19,13 @@ export function DateTile({ date, past = false }: { date: Date; past?: boolean })
       accessibilityLabel={formatFullDate(date, lang)}
       style={[styles.tile, { backgroundColor: past ? c.surface2 : c.brandTint }]}
     >
-      <T variant="caption1" color={fg} style={caps}>
+      <T fit={1} variant="caption1" color={fg} style={caps}>
         {formatWeekday(date, lang).toUpperCase()}
       </T>
-      <T variant="title2" color={fg} style={{ fontSize: d.daySize, fontWeight: d.dayWeight }}>
+      <T fit={1} variant="title2" color={fg} style={{ fontSize: d.daySize, fontWeight: d.dayWeight }}>
         {formatDayOfMonth(date, lang)}
       </T>
-      <T variant="caption1" color={fg} style={caps}>
+      <T fit={1} variant="caption1" color={fg} style={caps}>
         {formatMonth(date, lang).toUpperCase()}
       </T>
     </View>

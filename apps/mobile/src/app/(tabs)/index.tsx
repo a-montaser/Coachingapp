@@ -216,7 +216,7 @@ export default function Home() {
                       </T>
                     )}
                   </View>
-                  <T variant="footnote" weight="600" style={styles.center} numberOfLines={2}>
+                  <T fit={2} variant="footnote" weight="600" style={styles.center}>
                     {label}
                   </T>
                 </Pressable>

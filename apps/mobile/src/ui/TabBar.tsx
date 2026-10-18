@@ -94,7 +94,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
           </View>
         )}
       </View>
-      <T variant="caption1" weight={selected ? '700' : tb.labelWeight} color={c.glassLabel} numberOfLines={1}>
+      <T variant="caption1" weight={selected ? '700' : tb.labelWeight} color={c.glassLabel} fit={1}>
         {t(`tabs.${tab}`)}
       </T>
     </View>
@@ -108,7 +108,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
           <Glass radius={radius.pill}>
             <View style={[styles.minTab, { backgroundColor: c.glassSelected }]}>
               <Icon name={active} size={tb.iconSize} color={c.glassLabel} />
-              <T variant="subheadline" weight="600" color={c.glassLabel} numberOfLines={1}>
+              <T variant="subheadline" weight="600" color={c.glassLabel} fit={1}>
                 {t(`tabs.${active}`)}
               </T>
             </View>

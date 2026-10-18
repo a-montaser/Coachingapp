@@ -65,6 +65,7 @@ export function Button({
     >
       {busy && <ActivityIndicator color={color} />}
       <T
+        fit={2}
         variant={small ? 'subheadline' : 'headline'}
         weight={variant === 'primary' ? component.glass.prominentWeight : b.weight}
         color={color}

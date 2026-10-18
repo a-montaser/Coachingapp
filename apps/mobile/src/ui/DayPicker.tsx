@@ -75,10 +75,10 @@ export function DayPicker({
                 !day.hasTimes && !selected && { opacity: dp.emptyOpacity },
               ]}
             >
-              <T variant="caption1" weight="600" color={selected ? c.onBrand : c.label2}>
+              <T fit={1} variant="caption1" weight="600" color={selected ? c.onBrand : c.label2}>
                 {weekday}
               </T>
-              <T variant="title3" weight="700" color={fg}>
+              <T fit={1} variant="title3" weight="700" color={fg}>
                 {formatDayOfMonth(day.date, lang)}
               </T>
               <View

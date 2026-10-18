@@ -37,11 +37,11 @@ export function InterestTile({ label, icon, code, selected, onPress, width }: Pr
       {icon ? (
         <Icon name={icon} size={tile.iconSize} color={ink} />
       ) : (
-        <T style={styles.code} color={ink}>
+        <T fit={1} style={styles.code} color={ink}>
           {code}
         </T>
       )}
-      <T variant="subheadline" weight="600" color={ink} numberOfLines={2}>
+      <T fit={2} variant="subheadline" weight="600" color={ink}>
         {label}
       </T>
       {selected && (

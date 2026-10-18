@@ -33,7 +33,7 @@ export function CategoryButton({ category, onPress }: { category: Category; onPr
       <Glass radius={radius.pill}>
         <View style={styles.trigger}>
           <Icon name={category} size={cb.iconSize} color={c.glassLabel} />
-          <T variant="subheadline" weight="600" color={c.glassLabel}>
+          <T fit={1} variant="subheadline" weight="600" color={c.glassLabel}>
             {name}
           </T>
           <Icon name="chevronDown" size={cb.chevronSize} color={c.glassLabel} />

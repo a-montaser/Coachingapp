@@ -30,6 +30,7 @@ export const icon = { regular: 22, small: 17, xsmall: 14 } as const; // DS .ic /
 export const homeIndicator = { height: 5, fromBottom: 8 } as const;
 
 export const component = {
+  text: { minFontScale: 0.75 /* provisional: how far a label may shrink instead of breaking a word */ },
   glass: {
     rim: 0.5,
     rimProminent: 1,

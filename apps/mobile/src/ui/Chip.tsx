@@ -28,7 +28,7 @@ export function Chip({ label, onPress, selected = false, outlined = false }: Pro
         outlined && !selected && { borderWidth: chip.outline, borderColor: c.separator },
       ]}
     >
-      <T variant="subheadline" weight={chip.weight} color={selected ? c.onBrand : c.label}>
+      <T fit={1} variant="subheadline" weight={chip.weight} color={selected ? c.onBrand : c.label}>
         {label}
       </T>
     </Pressable>

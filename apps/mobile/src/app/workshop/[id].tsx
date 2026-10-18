@@ -166,16 +166,16 @@ export default function Workshop() {
                         full && styles.full,
                       ]}
                     >
-                      <T variant="caption1" weight="700" color={ink}>
+                      <T fit={1} variant="caption1" weight="700" color={ink}>
                         {formatWeekday(d, lang).toUpperCase()}
                       </T>
-                      <T weight="700" color={ink} style={styles.day}>
+                      <T fit={1} weight="700" color={ink} style={styles.day}>
                         {formatDayOfMonth(d, lang)}
                       </T>
-                      <T variant="caption1" color={ink}>
+                      <T fit={1} variant="caption1" color={ink}>
                         {formatClock(d, lang)}
                       </T>
-                      <T variant="caption1" weight="600" color={ink}>
+                      <T fit={1} variant="caption1" weight="600" color={ink}>
                         {state}
                       </T>
                     </Pressable>

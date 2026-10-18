@@ -31,6 +31,7 @@ export function SegmentedControl({ segments, selectedIndex, onChange, accessibil
               style={[styles.segment, selected && { backgroundColor: c.surface, boxShadow: shadow.thumb }]}
             >
               <T
+                fit={1}
                 variant="subheadline"
                 weight={seg.weight}
                 color={selected ? c.label : c.glassLabel}

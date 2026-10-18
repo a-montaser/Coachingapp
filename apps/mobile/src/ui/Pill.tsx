@@ -18,7 +18,7 @@ export function Pill({ label, tone = 'neutral' }: { label: string; tone?: PillTo
   }[tone];
   return (
     <View style={[styles.pill, { backgroundColor: bg }]}>
-      <T variant="caption1" weight={p.weight} color={fg}>
+      <T fit={1} variant="caption1" weight={p.weight} color={fg}>
         {label}
       </T>
     </View>

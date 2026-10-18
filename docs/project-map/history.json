@@ -1,5 +1,40 @@
 [
  {
+  "at": "2026-10-18T12:20:41.079Z",
+  "commit": "368bbd2",
+  "note": "Owner fix: short labels never split a word across lines; they shrink slightly instead (D42)",
+  "nodes": 970,
+  "links": 2939,
+  "communities": 41,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_t_fitlines",
+    "l": "fitLines()",
+    "c": 2,
+    "f": "apps/mobile/src/ui/T.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_fit_test",
+    "l": "fit.test.tsx",
+    "c": 2,
+    "f": "apps/mobile/src/ui/fit.test.tsx"
+   },
+   {
+    "id": "docs_decisions_d42",
+    "l": "D42 No word is ever split across lines in short labels",
+    "c": 8,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": -7,
+  "files": [
+   "apps/mobile/src/ui/T.tsx",
+   "apps/mobile/src/ui/fit.test.tsx",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-18T12:14:24.834Z",
   "commit": "e628b97",
   "note": "Owner fixes: Sign in label readable over the Welcome hero; workshop banners fill the card in Explore (D41)",
