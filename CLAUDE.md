@@ -10,7 +10,13 @@ Cairo lesson-booking app (Hobbies first, then Sports, Education, Languages). Exp
 
 Design questions the handoff leaves open: the design canvas https://claude.ai/artifact/T5HG8bjkJWWg48RsUwrGhC and its design system https://claude.ai/artifact/MEfnwmckrfLtf6ccKrnFbW (read with the Artifact tool). The handoff wins on conflict (D23).
 
-Skills in use: spec-driven-development, graphify, ponytail.
+Skills in use: spec-driven-development, graphify, ponytail. Load ponytail at the start of every task and query the graph (`graphify query "…"` or `GRAPH_REPORT.md`) before any change that crosses screens.
+
+## After every task (and every owner-requested change)
+1. **Spec:** if the change alters what `specs/phase-N/` says (flow, scope, acceptance), update `requirements.md` / `design.md` / `tasks.md` in the same commit, and log it in `docs/DECISIONS.md`.
+2. **Map:** run `/graphify --update` (re-extracts changed code and docs into `graphify-out/`; app icons are excluded in `graphify-out/.graphify_build.json`).
+3. **Project Map page:** `node docs/project-map/build-data.mjs --note "<task or change, in plain words>"`, then republish `docs/project-map/index.html` with `files: {"map-data.json": "docs/project-map/map-data.json", "history.json": "docs/project-map/history.json"}` to https://claude.ai/artifact/GfusiNaPh1op1RCBeHZkuv (pass it as `url` from a new session). Each run adds one entry to the page's "What changed" history.
+4. Commit `graphify-out/` and `docs/project-map/` with the task.
 
 ## Commands
 ```

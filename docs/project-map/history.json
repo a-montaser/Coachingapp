@@ -1,0 +1,1888 @@
+[
+ {
+  "at": "2026-10-18T10:05:49.218Z",
+  "commit": "6f36a55",
+  "note": "Map refreshed after T5–T9, the floating nav bar (D33), onboarding before sign-up (D34) and the Categories step (D35)",
+  "nodes": 788,
+  "links": 2310,
+  "communities": 31,
+  "added": [
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where_pref",
+    "l": "Pref",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where_who",
+    "l": "Who",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_account_interest",
+    "l": "Interest",
+    "c": 0,
+    "f": "apps/mobile/src/data/account.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_account_level",
+    "l": "Level",
+    "c": 0,
+    "f": "apps/mobile/src/data/account.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_profile",
+    "l": "Profile",
+    "c": 0,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_area",
+    "l": "Area",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_discipline",
+    "l": "Discipline",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_draft",
+    "l": "Draft",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_whowhere",
+    "l": "WhoWhere",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_emptystate_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/EmptyState.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_interesttile_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/InterestTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_theme_settings_lang",
+    "l": "Lang",
+    "c": 1,
+    "f": "apps/mobile/src/theme/settings.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_family_member_fieldprops",
+    "l": "FieldProps",
+    "c": 4,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_family_familymember",
+    "l": "FamilyMember",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_familymembererrors",
+    "l": "FamilyMemberErrors",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_pendingkidsbooking",
+    "l": "PendingKidsBooking",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_otpboxes_props",
+    "l": "Props",
+    "c": 5,
+    "f": "apps/mobile/src/ui/OtpBoxes.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_phonefield_props",
+    "l": "Props",
+    "c": 8,
+    "f": "apps/mobile/src/ui/PhoneField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_layout_authlayout",
+    "l": "AuthLayout()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(auth)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_welcome_welcome",
+    "l": "Welcome()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(auth)/welcome.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_family",
+    "l": "Family()",
+    "c": 0,
+    "f": "apps/mobile/src/app/family.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_categories_categories",
+    "l": "Categories()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/categories.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_interests_interests",
+    "l": "Interests()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/interests.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_layout_onboardinglayout",
+    "l": "OnboardingLayout()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_levels_levels",
+    "l": "Levels()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/levels.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where_whowherescreen",
+    "l": "WhoWhereScreen()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_messages_messages",
+    "l": "Messages()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/messages.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_profile_profile",
+    "l": "Profile()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/profile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_account_usearea",
+    "l": "useArea()",
+    "c": 0,
+    "f": "apps/mobile/src/data/account.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_account_useinterests",
+    "l": "useInterests()",
+    "c": 0,
+    "f": "apps/mobile/src/data/account.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_usesession",
+    "l": "useSession()",
+    "c": 0,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_usependingkidsbookings",
+    "l": "usePendingKidsBookings()",
+    "c": 0,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_disciplinename",
+    "l": "disciplineName()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_finishonboarding",
+    "l": "finishOnboarding()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_nearestarea",
+    "l": "nearestArea()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_saveinterests",
+    "l": "saveInterests()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_d",
+    "l": "d()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_wrap",
+    "l": "wrap()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_useapplydraftaftersignup",
+    "l": "useApplyDraftAfterSignUp()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_useareas",
+    "l": "useAreas()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_usedisciplines",
+    "l": "useDisciplines()",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_i18n_format_formatdaymonth",
+    "l": "formatDayMonth()",
+    "c": 0,
+    "f": "apps/mobile/src/i18n/format.ts"
+   },
+   {
+    "id": "apps_mobile_src_i18n_index_uselang",
+    "l": "useLang()",
+    "c": 0,
+    "f": "apps/mobile/src/i18n/index.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_dashedcard_dashedcard",
+    "l": "DashedCard()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/DashedCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_emptystate_emptystate",
+    "l": "EmptyState()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/EmptyState.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_icon_disciplineicon",
+    "l": "disciplineIcon()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Icon.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_interesttile_interesttile",
+    "l": "InterestTile()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/InterestTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_levelglyph_levelglyph",
+    "l": "LevelGlyph()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/LevelGlyph.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout_tabslayout",
+    "l": "TabsLayout()",
+    "c": 1,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_dev_seed_seedfor",
+    "l": "seedFor()",
+    "c": 1,
+    "f": "apps/mobile/src/dev/seed.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_seed_when",
+    "l": "when()",
+    "c": 1,
+    "f": "apps/mobile/src/dev/seed.ts"
+   },
+   {
+    "id": "apps_mobile_src_i18n_format_formatmonthyear",
+    "l": "formatMonthYear()",
+    "c": 1,
+    "f": "apps/mobile/src/i18n/format.ts"
+   },
+   {
+    "id": "apps_mobile_src_i18n_format_formatyear",
+    "l": "formatYear()",
+    "c": 1,
+    "f": "apps/mobile/src/i18n/format.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_layout_rootnavigator",
+    "l": "RootNavigator()",
+    "c": 19,
+    "f": "apps/mobile/src/app/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_useprofile",
+    "l": "useProfile()",
+    "c": 19,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_i18n_index_useisrtl",
+    "l": "useIsRTL()",
+    "c": 19,
+    "f": "apps/mobile/src/i18n/index.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_appearance_appearancesheet",
+    "l": "AppearanceSheet()",
+    "c": 4,
+    "f": "apps/mobile/src/app/appearance.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_member_familymembersheet",
+    "l": "FamilyMemberSheet()",
+    "c": 4,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_member_field",
+    "l": "Field()",
+    "c": 4,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_language_languagesheet",
+    "l": "LanguageSheet()",
+    "c": 4,
+    "f": "apps/mobile/src/app/language.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sign_out_signoutsheet",
+    "l": "SignOutSheet()",
+    "c": 4,
+    "f": "apps/mobile/src/app/sign-out.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_signout",
+    "l": "signOut()",
+    "c": 4,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_tolatindigits",
+    "l": "toLatinDigits()",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_usefamily",
+    "l": "useFamily()",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_usesavefamilymember",
+    "l": "useSaveFamilyMember()",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_validatefamilymember",
+    "l": "validateFamilyMember()",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_sheetheader_sheetheader",
+    "l": "SheetHeader()",
+    "c": 4,
+    "f": "apps/mobile/src/ui/SheetHeader.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings_screen",
+    "l": "Screen()",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_explore_screen",
+    "l": "Screen()",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/explore.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_index_screen",
+    "l": "Screen()",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/index.tsx"
+   },
+   {
+    "id": "supabase_tests_concurrency_b64",
+    "l": "b64()",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_call",
+    "l": "call()",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_jwt",
+    "l": "jwt()",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_sign_up_signup",
+    "l": "SignUp()",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/sign-up.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_sign_up_signup_submit",
+    "l": "submit()",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/sign-up.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_verify_clock",
+    "l": "clock()",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/verify.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_verify_verify",
+    "l": "Verify()",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/verify.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_verify_verify_onchange",
+    "l": "onChange()",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/verify.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_verify_verify_resend",
+    "l": "resend()",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/verify.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_autherrorkey",
+    "l": "authErrorKey()",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_e164",
+    "l": "e164()",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_formategmobile",
+    "l": "formatEgMobile()",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_isvalidegmobile",
+    "l": "isValidEgMobile()",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_sendcode",
+    "l": "sendCode()",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_verifycode",
+    "l": "verifyCode()",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_otpboxes_otpboxes",
+    "l": "OtpBoxes()",
+    "c": 8,
+    "f": "apps/mobile/src/ui/OtpBoxes.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_phonefield_phonefield",
+    "l": "PhoneField()",
+    "c": 8,
+    "f": "apps/mobile/src/ui/PhoneField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_layout",
+    "l": "(auth)/_layout.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(auth)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_layout_unstable_settings",
+    "l": "unstable_settings",
+    "c": 0,
+    "f": "apps/mobile/src/app/(auth)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_welcome",
+    "l": "welcome.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(auth)/welcome.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_welcome_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(auth)/welcome.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family",
+    "l": "family.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/family.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/family.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_categories",
+    "l": "categories.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/categories.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_categories_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/categories.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_interests",
+    "l": "interests.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/interests.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_interests_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/interests.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_layout",
+    "l": "(onboarding)/_layout.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_layout_unstable_settings",
+    "l": "unstable_settings",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_levels",
+    "l": "levels.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/levels.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_levels_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/levels.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where",
+    "l": "who-where.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where_area_order",
+    "l": "AREA_ORDER",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where_prefs",
+    "l": "PREFS",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_onboarding_who_where_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(onboarding)/who-where.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_messages",
+    "l": "messages.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/messages.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_messages_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/messages.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_profile",
+    "l": "profile.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/profile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_profile_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/profile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_account",
+    "l": "account.ts",
+    "c": 0,
+    "f": "apps/mobile/src/data/account.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding",
+    "l": "onboarding.ts",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_categories",
+    "l": "CATEGORIES",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_empty",
+    "l": "empty",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_levels",
+    "l": "LEVELS",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test",
+    "l": "onboarding.test.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_mockareas",
+    "l": "mockAreas",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_mockbuilder",
+    "l": "mockBuilder",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_mockcalls",
+    "l": "mockCalls",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_mockdisciplines",
+    "l": "mockDisciplines",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_test_mocksaved",
+    "l": "mockSaved",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_onboarding_useonboardingdraft",
+    "l": "useOnboardingDraft",
+    "c": 0,
+    "f": "apps/mobile/src/data/onboarding.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_supabase_supabase",
+    "l": "supabase",
+    "c": 0,
+    "f": "apps/mobile/src/data/supabase.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_emptystate",
+    "l": "EmptyState.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/EmptyState.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_emptystate_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/EmptyState.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_interesttile",
+    "l": "InterestTile.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/InterestTile.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_interesttile_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/InterestTile.tsx"
+   },
+   {
+    "id": "ref_tanstack_react_query",
+    "l": "@tanstack/react-query",
+    "c": 0,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout",
+    "l": "(tabs)/_layout.tsx",
+    "c": 1,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout_order",
+    "l": "ORDER",
+    "c": 1,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout_route",
+    "l": "ROUTE",
+    "c": 1,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout_sf",
+    "l": "SF",
+    "c": 1,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_dev_gallerycopy",
+    "l": "galleryCopy.ts",
+    "c": 1,
+    "f": "apps/mobile/src/dev/galleryCopy.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_gallerycopy_ar",
+    "l": "ar",
+    "c": 1,
+    "f": "apps/mobile/src/dev/galleryCopy.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_gallerycopy_en",
+    "l": "en",
+    "c": 1,
+    "f": "apps/mobile/src/dev/galleryCopy.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_gallerycopy_gallerycopy",
+    "l": "galleryCopy",
+    "c": 1,
+    "f": "apps/mobile/src/dev/galleryCopy.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_seed_text",
+    "l": "text",
+    "c": 1,
+    "f": "apps/mobile/src/dev/seed.ts"
+   },
+   {
+    "id": "apps_mobile_src_theme_settings_test",
+    "l": "settings.test.ts",
+    "c": 14,
+    "f": "apps/mobile/src/theme/settings.test.ts"
+   },
+   {
+    "id": "ref_react_native_async_storage_async_storage",
+    "l": "@react-native-async-storage/async-storage",
+    "c": 14,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_src_data_queryclient",
+    "l": "queryClient.ts",
+    "c": 19,
+    "f": "apps/mobile/src/data/queryClient.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_queryclient_queryclient",
+    "l": "queryClient",
+    "c": 19,
+    "f": "apps/mobile/src/data/queryClient.ts"
+   },
+   {
+    "id": "ref_expo_location",
+    "l": "expo-location",
+    "c": 2,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "ref_expo_notifications",
+    "l": "expo-notifications",
+    "c": 2,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "ref_expo_web_browser",
+    "l": "expo-web-browser",
+    "c": 2,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "ref_react_native_community_slider",
+    "l": "@react-native-community/slider",
+    "c": 2,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "ref_react_native_maps",
+    "l": "react-native-maps",
+    "c": 2,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "tsconfig",
+    "l": "tsconfig.json",
+    "c": 20,
+    "f": "tsconfig.json"
+   },
+   {
+    "id": "tsconfig_compileroptions",
+    "l": "compilerOptions",
+    "c": 20,
+    "f": "tsconfig.json"
+   },
+   {
+    "id": "tsconfig_extends",
+    "l": "extends",
+    "c": 20,
+    "f": "tsconfig.json"
+   },
+   {
+    "id": "apps_mobile_src_app_appearance",
+    "l": "appearance.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/app/appearance.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_appearance_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/app/appearance.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_appearance_themes",
+    "l": "THEMES",
+    "c": 4,
+    "f": "apps/mobile/src/app/appearance.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_member",
+    "l": "family-member.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_family_member_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/app/family-member.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_language",
+    "l": "language.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/app/language.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_language_langs",
+    "l": "LANGS",
+    "c": 4,
+    "f": "apps/mobile/src/app/language.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_language_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/app/language.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sign_out",
+    "l": "sign-out.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/app/sign-out.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_sign_out_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/app/sign-out.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_family",
+    "l": "family.ts",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_child_age",
+    "l": "CHILD_AGE",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_family_name_max",
+    "l": "NAME_MAX",
+    "c": 4,
+    "f": "apps/mobile/src/data/family.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_shell_test",
+    "l": "shell.test.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/data/shell.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_shell_test_mockparams",
+    "l": "mockParams",
+    "c": 4,
+    "f": "apps/mobile/src/data/shell.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_shell_test_mocksave",
+    "l": "mockSave",
+    "c": 4,
+    "f": "apps/mobile/src/data/shell.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_shell_test_mocksignout",
+    "l": "mockSignOut",
+    "c": 4,
+    "f": "apps/mobile/src/data/shell.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_sheetheader",
+    "l": "SheetHeader.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/ui/SheetHeader.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_sheetheader_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/ui/SheetHeader.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings",
+    "l": "bookings.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_explore",
+    "l": "explore.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/explore.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_index",
+    "l": "(tabs)/index.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/index.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_dashedcard",
+    "l": "DashedCard.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/ui/DashedCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_dashedcard_styles",
+    "l": "styles",
+    "c": 5,
+    "f": "apps/mobile/src/ui/DashedCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_levelglyph",
+    "l": "LevelGlyph.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/ui/LevelGlyph.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_levelglyph_styles",
+    "l": "styles",
+    "c": 5,
+    "f": "apps/mobile/src/ui/LevelGlyph.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_otpboxes",
+    "l": "OtpBoxes.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/ui/OtpBoxes.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_otpboxes_styles",
+    "l": "styles",
+    "c": 5,
+    "f": "apps/mobile/src/ui/OtpBoxes.tsx"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_expo_location",
+    "l": "expo-location",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_expo_notifications",
+    "l": "expo-notifications",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_expo_web_browser",
+    "l": "expo-web-browser",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_react_native_async_storage_async_storage",
+    "l": "@react-native-async-storage/async-storage",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_react_native_community_slider",
+    "l": "@react-native-community/slider",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_react_native_maps",
+    "l": "react-native-maps",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_supabase_supabase_js",
+    "l": "@supabase/supabase-js",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_tanstack_react_query",
+    "l": "@tanstack/react-query",
+    "c": 6,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "supabase_tests_concurrency",
+    "l": "concurrency.mjs",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_noseats",
+    "l": "noSeats",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_starts",
+    "l": "starts",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_wins",
+    "l": "wins",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_sign_up",
+    "l": "sign-up.tsx",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/sign-up.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_sign_up_styles",
+    "l": "styles",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/sign-up.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_verify",
+    "l": "verify.tsx",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/verify.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_auth_verify_styles",
+    "l": "styles",
+    "c": 8,
+    "f": "apps/mobile/src/app/(auth)/verify.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_auth",
+    "l": "auth.ts",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_test",
+    "l": "auth.test.tsx",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_test_mocksend",
+    "l": "mockSend",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_auth_test_mockverify",
+    "l": "mockVerify",
+    "c": 8,
+    "f": "apps/mobile/src/data/auth.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_supabase",
+    "l": "supabase.ts",
+    "c": 8,
+    "f": "apps/mobile/src/data/supabase.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_supabase_supabaseconfigured",
+    "l": "supabaseConfigured",
+    "c": 8,
+    "f": "apps/mobile/src/data/supabase.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_phonefield",
+    "l": "PhoneField.tsx",
+    "c": 8,
+    "f": "apps/mobile/src/ui/PhoneField.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_phonefield_styles",
+    "l": "styles",
+    "c": 8,
+    "f": "apps/mobile/src/ui/PhoneField.tsx"
+   },
+   {
+    "id": "ref_supabase_supabase_js",
+    "l": "@supabase/supabase-js",
+    "c": 8,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "specs_phase_0_requirements_a11y_plumbing",
+    "l": "Theme, direction and accessibility plumbing (R5)",
+    "c": 12,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_g2",
+    "l": "G2 Supabase keys and link",
+    "c": 12,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t9",
+    "l": "T9 Onboarding (Categories, Interests, Levels, Who & where)",
+    "c": 12,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "docs_decisions_d26",
+    "l": "D26 RTL applied in JS, not I18nManager",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d30",
+    "l": "D30 Hosted Supabase project linked; seed bugs fixed",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d32",
+    "l": "D32 Onboarding open details (level descriptions, question form)",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d34",
+    "l": "D34 Onboarding before sign-up",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d35",
+    "l": "D35 Categories step before Interests",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_working_agreement_locked_architecture",
+    "l": "Locked architecture (Expo, Supabase, TanStack Query, Zustand, i18next)",
+    "c": 12,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "claude_coach_for_all",
+    "l": "Coach For All (Cairo lesson-booking app)",
+    "c": 18,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_demo_sign_in",
+    "l": "Demo sign-in test number (+20 100 234 5678 / 482917)",
+    "c": 18,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_decisions_cfa_design_system",
+    "l": "cfa design system artifact",
+    "c": 18,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_design_canvas",
+    "l": "Design canvas 'Coach For All · Hobbies' artifact",
+    "c": 18,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_working_agreement_required_skills",
+    "l": "Required skills: spec-driven-development, graphify, ponytail",
+    "c": 18,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_navigation_bar_p17",
+    "l": "NavigationBar P17 (one glass capsule)",
+    "c": 18,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_design_navigation_bar_d33",
+    "l": "NavigationBar floating back + trailing cluster",
+    "c": 18,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "claude",
+    "l": "CLAUDE.md project guide",
+    "c": 18,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_working_agreement",
+    "l": "Working agreement",
+    "c": 18,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "docs_working_agreement_design_handoff",
+    "l": "DESIGN_HANDOFF.md (source of truth)",
+    "c": 18,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "docs_decisions_d33",
+    "l": "D33 Floating glass navigation bar",
+    "c": 18,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_working_agreement_atomic_booking_rule",
+    "l": "Atomic bookings / no double booking",
+    "c": 18,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "docs_working_agreement_phase_gates",
+    "l": "Phased delivery with spec gates (Phase 0-5)",
+    "c": 18,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "docs_working_agreement_stop_and_ask_rules",
+    "l": "Stop-and-ask-before rules (deps, schema, money, deletion)",
+    "c": 18,
+    "f": "docs/WORKING_AGREEMENT.md"
+   },
+   {
+    "id": "claude_npm_run_check",
+    "l": "npm run check command",
+    "c": 22,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_category_tray",
+    "l": "Category Tray (R8, handoff 6.2)",
+    "c": 22,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_design_tokens",
+    "l": "Design tokens package (packages/tokens, R4)",
+    "c": 22,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_gallery_screen",
+    "l": "Dev-only component gallery (R9)",
+    "c": 22,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_glass_material",
+    "l": "Glass material primitive (R6)",
+    "c": 22,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_primitives_p1_p21",
+    "l": "Phase 0 primitives P1-P21",
+    "c": 22,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_0_requirements_tabbar_p18",
+    "l": "TabBar P18 (minimise on scroll)",
+    "c": 22,
+    "f": "specs/phase-0/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_g1",
+    "l": "G1 GitHub push + CI green",
+    "c": 22,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_app_string_keys",
+    "l": "i18n app string keys (tabs, category, card, slots, auth)",
+    "c": 24,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "specs_phase_0_report_open_items",
+    "l": "Phase 0 [OPEN] items (Arabic copy, final copy, provisional values)",
+    "c": 24,
+    "f": "specs/phase-0/report.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t21",
+    "l": "T21 Arabic pass",
+    "c": 24,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings",
+    "l": "Arabic app strings sheet",
+    "c": 24,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "specs_phase_0_report",
+    "l": "Phase 0 report",
+    "c": 24,
+    "f": "specs/phase-0/report.md"
+   },
+   {
+    "id": "claude_machine_constraints",
+    "l": "Dev machine constraints (macOS 12, 8 GB, no Docker/simulator)",
+    "c": 24,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_decisions_d27",
+    "l": "D27 Bilingual gallery copy; app strings await owner translations",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_0_report_phase1_risks",
+    "l": "Risks carried into Phase 1",
+    "c": 24,
+    "f": "specs/phase-0/report.md"
+   },
+   {
+    "id": "_github_workflows_ci_last_seat_concurrency_step",
+    "l": "Last-seat concurrency step (20 simultaneous bookings)",
+    "c": 3,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "specs_phase_1_design_apply_promo_function",
+    "l": "apply_promo() SQL function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_approve_decline_booking",
+    "l": "approve_booking / decline_booking (ops)",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_book_function",
+    "l": "book() SQL function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_bookings_table",
+    "l": "bookings table",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_cancel_booking_function",
+    "l": "cancel_booking() SQL function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_create_checkout",
+    "l": "create-checkout Edge Function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_demo_provider",
+    "l": "demo payment provider",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_fake_provider",
+    "l": "fake provider (CI)",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_my_bookings_view",
+    "l": "my_bookings view (derived completed)",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_payment_provider",
+    "l": "PaymentProvider interface",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_payment_webhook",
+    "l": "payment-webhook Edge Function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_paymob_provider",
+    "l": "Paymob provider",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_refund_function",
+    "l": "refund Edge Function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_release_expired_holds",
+    "l": "release_expired_holds()",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_reschedule_booking_function",
+    "l": "reschedule_booking() SQL function",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_rules_ts",
+    "l": "data/rules.ts pure rules",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_slots_table",
+    "l": "slots table (seats_taken check)",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_use_apply_draft_after_sign_up",
+    "l": "useApplyDraftAfterSignUp",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_journey_gate",
+    "l": "Journey gate (_layout auth/onboarding/tabs routing)",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_onboarding_draft",
+    "l": "Onboarding draft store (useOnboardingDraft)",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_schema",
+    "l": "Phase 1 Postgres schema with RLS",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_auth",
+    "l": "auth module (R2)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_booking",
+    "l": "booking module (R6)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_data",
+    "l": "data module (R1)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_discovery",
+    "l": "discovery module (R5)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_e2e",
+    "l": "e2e module (R10, Maestro)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_manage",
+    "l": "manage module (R8)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_onboarding",
+    "l": "onboarding module (R4)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_payments",
+    "l": "payments module (R7)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_reminders",
+    "l": "reminders module (R9)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_module_shell",
+    "l": "shell module (R3)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t1",
+    "l": "T1 Schema migration",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t10",
+    "l": "T10 Home x4 + tray",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t16",
+    "l": "T16 PaymentProvider + Edge Functions",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t18",
+    "l": "T18 Cancel + refund; Reschedule",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t2",
+    "l": "T2 Booking functions",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t20",
+    "l": "T20 Maestro in CI",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t4",
+    "l": "T4 Concurrency test",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t6",
+    "l": "T6 Auth screens",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t8",
+    "l": "T8 Profile, Family & kids",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_design",
+    "l": "Phase 1 technical design",
+    "c": 3,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements",
+    "l": "Phase 1 requirements",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_tasks",
+    "l": "Phase 1 tasks",
+    "c": 3,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "docs_decisions_d29",
+    "l": "D29 Phase 1 spec approved with owner answers",
+    "c": 3,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d31",
+    "l": "D31 Phase 1 Profile scope",
+    "c": 3,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_bookable_slot_rule",
+    "l": "Bookable slot rule (§9.6, 60 min ahead)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_refund_rule_24h",
+    "l": "24-hour refund rule (§9.1)",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "packages_tokens_src_index_component",
+    "l": "packages_tokens_src_index_component",
+    "c": 0,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_layout",
+    "l": "packages_tokens_src_index_layout",
+    "c": 0,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_homeindicator",
+    "l": "packages_tokens_src_index_homeindicator",
+    "c": 1,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_light",
+    "l": "packages_tokens_src_index_light",
+    "c": 1,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_radius",
+    "l": "packages_tokens_src_index_radius",
+    "c": 1,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_motion",
+    "l": "packages_tokens_src_index_motion",
+    "c": 10,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_touch",
+    "l": "packages_tokens_src_index_touch",
+    "c": 23,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_tray",
+    "l": "packages_tokens_src_index_tray",
+    "c": 23,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_space",
+    "l": "packages_tokens_src_index_space",
+    "c": 4,
+    "f": ""
+   },
+   {
+    "id": "packages_tokens_src_index_type",
+    "l": "packages_tokens_src_index_type",
+    "c": 5,
+    "f": ""
+   },
+   {
+    "id": "ref_node_crypto",
+    "l": "ref_node_crypto",
+    "c": 7,
+    "f": ""
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_app_index_index",
+    "l": "Index()",
+    "c": 2,
+    "f": "apps/mobile/src/app/index.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_index",
+    "l": "index.tsx",
+    "c": 2,
+    "f": "apps/mobile/src/app/index.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_gallery_sheet_types",
+    "l": "TYPES",
+    "c": 4,
+    "f": "apps/mobile/src/app/gallery-sheet.tsx"
+   }
+  ],
+  "linkDelta": 1021,
+  "files": [
+   ".github/workflows/ci.yml",
+   "CLAUDE.md",
+   "apps/mobile/package.json",
+   "apps/mobile/src/app/(auth)/_layout.tsx",
+   "apps/mobile/src/app/(auth)/sign-up.tsx",
+   "apps/mobile/src/app/(auth)/verify.tsx",
+   "apps/mobile/src/app/(auth)/welcome.tsx",
+   "apps/mobile/src/app/(onboarding)/_layout.tsx",
+   "apps/mobile/src/app/(onboarding)/categories.tsx",
+   "apps/mobile/src/app/(onboarding)/interests.tsx",
+   "apps/mobile/src/app/(onboarding)/levels.tsx",
+   "apps/mobile/src/app/(onboarding)/who-where.tsx",
+   "apps/mobile/src/app/(tabs)/_layout.tsx",
+   "apps/mobile/src/app/(tabs)/bookings.tsx",
+   "apps/mobile/src/app/(tabs)/explore.tsx",
+   "apps/mobile/src/app/(tabs)/index.tsx",
+   "apps/mobile/src/app/(tabs)/messages.tsx",
+   "apps/mobile/src/app/(tabs)/profile.tsx",
+   "apps/mobile/src/app/_layout.tsx",
+   "apps/mobile/src/app/appearance.tsx",
+   "apps/mobile/src/app/family-member.tsx",
+   "apps/mobile/src/app/family.tsx",
+   "apps/mobile/src/app/gallery-sheet.tsx",
+   "apps/mobile/src/app/index.tsx",
+   "apps/mobile/src/app/language.tsx",
+   "apps/mobile/src/app/sign-out.tsx",
+   "apps/mobile/src/data/account.ts",
+   "apps/mobile/src/data/auth.test.tsx",
+   "apps/mobile/src/data/auth.ts",
+   "apps/mobile/src/data/family.ts",
+   "apps/mobile/src/data/onboarding.test.tsx",
+   "apps/mobile/src/data/onboarding.ts",
+   "apps/mobile/src/data/queryClient.ts",
+   "apps/mobile/src/data/shell.test.tsx",
+   "apps/mobile/src/data/supabase.ts",
+   "apps/mobile/src/dev/galleryCopy.ts",
+   "apps/mobile/src/dev/seed.ts",
+   "apps/mobile/src/i18n/format.ts",
+   "apps/mobile/src/i18n/index.ts",
+   "apps/mobile/src/theme/settings.test.ts",
+   "apps/mobile/src/theme/settings.ts",
+   "apps/mobile/src/ui/DashedCard.tsx",
+   "apps/mobile/src/ui/EmptyState.tsx",
+   "apps/mobile/src/ui/Icon.tsx",
+   "apps/mobile/src/ui/InterestTile.tsx",
+   "apps/mobile/src/ui/LevelGlyph.tsx",
+   "apps/mobile/src/ui/OtpBoxes.tsx",
+   "apps/mobile/src/ui/PhoneField.tsx",
+   "apps/mobile/src/ui/SheetHeader.tsx",
+   "docs/DECISIONS.md",
+   "docs/WORKING_AGREEMENT.md",
+   "docs/translations/ar-app-strings.md",
+   "specs/phase-0/report.md",
+   "specs/phase-0/requirements.md",
+   "specs/phase-1/design.md",
+   "specs/phase-1/requirements.md",
+   "specs/phase-1/tasks.md",
+   "supabase/tests/concurrency.mjs",
+   "tsconfig.json"
+  ]
+ }
+]

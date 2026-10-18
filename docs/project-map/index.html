@@ -1,0 +1,376 @@
+<title>Coach For All Project Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap">
+<style>
+/* Layout: an app shell. Header strip, then a sidebar (search · groups / changes / flows · detail)
+   beside the graph canvas; on phones the canvas sits on top and the sidebar follows. */
+:root {
+  --bg: #f2f2f7;
+  --surface: #ffffff;
+  --surface-2: #e9e9ef;
+  --ink: #111014;
+  --ink-2: #6c6c70;
+  --line: rgba(60, 60, 67, 0.22);
+  --brand: #3b0a6b;
+  --brand-ink: #3b0a6b;
+  --brand-tint: #efe7f8;
+  --gold: #b8924f;
+  --gold-tint: #f7efdf;
+  --add: #248a3d;
+  --remove: #c93400;
+  --canvas: #fbfbfd;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --ink: #f5f3f8; --ink-2: #aeaeb2;
+    --line: rgba(140, 140, 150, 0.32); --brand: #7a3fc4; --brand-ink: #c9a8f0; --brand-tint: #2a1745;
+    --gold: #d4b47a; --gold-tint: #2e2414; --add: #30d158; --remove: #ff9f0a; --canvas: #0b0a0e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --ink: #f5f3f8; --ink-2: #aeaeb2;
+  --line: rgba(140, 140, 150, 0.32); --brand: #7a3fc4; --brand-ink: #c9a8f0; --brand-tint: #2a1745;
+  --gold: #d4b47a; --gold-tint: #2e2414; --add: #30d158; --remove: #ff9f0a; --canvas: #0b0a0e;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font-sans); }
+* { box-sizing: border-box; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--brand-ink); outline-offset: 2px; }
+
+.app { height: 100%; display: grid; grid-template-rows: auto 1fr; }
+header {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px;
+  padding-block: 14px 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); background: var(--surface);
+}
+.brand { font-family: var(--font-display); font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; color: var(--brand-ink); text-wrap: balance; }
+.meta { color: var(--ink-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.meta b { color: var(--ink); font-weight: 600; }
+
+.main { min-height: 0; display: grid; grid-template-columns: minmax(300px, 360px) 1fr; }
+aside { min-height: 0; overflow: auto; border-right: 1px solid var(--line); background: var(--surface); display: flex; flex-direction: column; }
+.stage { position: relative; min-height: 0; background: var(--canvas); }
+#graph { position: absolute; inset: 0; }
+.stage-tools { position: absolute; top: 12px; right: max(12px, env(safe-area-inset-right, 0px)); display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.tool { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.tool[aria-pressed="true"] { background: var(--brand-tint); color: var(--brand-ink); border-color: transparent; }
+.status { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--ink-2); font-size: 13px; text-align: center; max-width: 280px; }
+
+.search { padding: 14px 16px 10px; position: sticky; top: 0; background: var(--surface); z-index: 2; display: grid; gap: 8px; }
+.search input { width: 100%; height: 38px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); padding: 0 12px; }
+.results { display: grid; gap: 2px; max-height: 220px; overflow: auto; }
+.tabs { display: flex; gap: 4px; background: var(--surface-2); border-radius: 999px; padding: 3px; }
+.tabs button { flex: 1; border: 0; background: transparent; border-radius: 999px; height: 30px; font-size: 13px; font-weight: 600; color: var(--ink-2); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.panel { padding: 4px 16px 16px; display: grid; gap: 4px; align-content: start; }
+
+.row { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 0; background: transparent; border-radius: 10px; padding: 7px 8px; cursor: pointer; }
+.row:hover { background: var(--bg); }
+.row[aria-pressed="true"] { background: var(--brand-tint); }
+.row .grow { flex: 1; min-width: 0; }
+.row .name { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.row .sub { display: block; color: var(--ink-2); font-size: 12px; overflow-wrap: anywhere; }
+.count { color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+.swatch { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.hint { color: var(--ink-2); font-size: 12px; padding: 6px 8px 2px; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding: 12px 8px 4px; }
+
+.change { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; }
+.change.latest { border-color: var(--gold); background: var(--gold-tint); }
+.change h3 { margin: 0; font-size: 14px; line-height: 1.35; text-wrap: balance; }
+.change .when { color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+.delta { display: flex; gap: 10px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; flex-wrap: wrap; }
+.plus { color: var(--add); } .minus { color: var(--remove); }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 2px 9px; font-size: 12px; cursor: pointer; max-width: 100%; overflow-wrap: anywhere; text-align: left; }
+.chip.gone { cursor: default; text-decoration: line-through; color: var(--ink-2); }
+.files { font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); display: grid; gap: 1px; overflow-wrap: anywhere; }
+details summary { cursor: pointer; font-size: 12px; font-weight: 600; color: var(--brand-ink); }
+
+.detail { border-top: 1px solid var(--line); padding: 14px 16px 18px; display: grid; gap: 8px; background: var(--surface); }
+.detail h2 { margin: 0; font-size: 17px; line-height: 1.3; overflow-wrap: anywhere; text-wrap: balance; }
+.pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill { font-size: 11px; font-weight: 700; letter-spacing: .03em; border-radius: 999px; padding: 2px 8px; background: var(--surface-2); color: var(--ink-2); }
+.pill.new { background: var(--gold-tint); color: var(--gold); }
+.where { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); overflow-wrap: anywhere; }
+.why { font-size: 13px; color: var(--ink); background: var(--bg); border-radius: 10px; padding: 8px 10px; }
+.rel { font-size: 12px; font-weight: 600; color: var(--ink-2); margin-top: 4px; }
+
+@media (max-width: 820px) {
+  .main { grid-template-columns: 1fr; grid-template-rows: 58vh auto; overflow: auto; }
+  .app { height: auto; min-height: 100%; }
+  aside { border-right: 0; border-top: 1px solid var(--line); overflow: visible; order: 2; }
+  .stage { order: 1; min-height: 58vh; }
+  .search { position: static; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="app">
+  <header>
+    <span class="brand">Coach For All · Project Map</span>
+    <span class="meta" id="meta">Loading the map…</span>
+  </header>
+  <div class="main">
+    <aside>
+      <div class="search">
+        <input id="q" type="search" placeholder="Find a screen, function, decision or file" aria-label="Search the map" autocomplete="off">
+        <div class="results" id="results" hidden></div>
+        <div class="tabs" role="tablist" aria-label="Sidebar">
+          <button role="tab" id="tab-changes" aria-selected="true" aria-controls="panel">What changed</button>
+          <button role="tab" id="tab-groups" aria-selected="false" aria-controls="panel">Groups</button>
+          <button role="tab" id="tab-flows" aria-selected="false" aria-controls="panel">Flows</button>
+        </div>
+      </div>
+      <div class="panel" id="panel" role="tabpanel"></div>
+      <div class="detail" id="detail" hidden></div>
+    </aside>
+    <div class="stage">
+      <div id="graph" aria-label="Project graph. Click a dot to see what it is and what it connects to."></div>
+      <div class="status" id="status">Laying out 0 nodes…</div>
+      <div class="stage-tools">
+        <button class="tool" id="t-new" aria-pressed="true">Highlight latest change</button>
+        <button class="tool" id="t-plumbing" aria-pressed="false">Show imports</button>
+        <button class="tool" id="t-fit">Fit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const isDark = () => {
+    const t = document.documentElement.getAttribute('data-theme');
+    return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const PLUMBING = new Set(['imports', 'imports_from', 'contains', 're_exports']);
+  const TYPE = { code: 'Code', concept: 'Concept', rationale: 'Decision or rule', document: 'Document', paper: 'Paper', image: 'Image' };
+  const REL = {
+    calls: 'Calls', imports: 'Imports', imports_from: 'Imports from', contains: 'Contains', references: 'References',
+    implements: 'Implements', conceptually_related_to: 'Related to', rationale_for: 'Reason for', cites: 'Cites',
+    shares_data_with: 'Shares data with', semantically_similar_to: 'Similar to', re_exports: 'Re-exports',
+  };
+
+  let data, history, net, nodesDS, edgesDS, byId, degree, adj, latestNew = new Set();
+  let state = { tab: 'changes', focus: null, focusLabel: null, selected: null, showNew: true, plumbing: false };
+
+  // One hue per group, spaced by the golden angle; lightness follows the theme.
+  const groupColor = (c, alpha = 1) => {
+    if (c < 0) return `hsla(0,0%,55%,${alpha})`;
+    const h = (c * 137.508 + 275) % 360;
+    return isDark() ? `hsla(${h},62%,66%,${alpha})` : `hsla(${h},58%,44%,${alpha})`;
+  };
+
+  Promise.all([fetch('map-data.json').then((r) => r.json()), fetch('history.json').then((r) => r.json()).catch(() => [])])
+    .then(([d, h]) => { data = d; history = h; init(); })
+    .catch(() => { $('status').textContent = 'The map data did not load. Republish the page with map-data.json and history.json beside it.'; });
+
+  function init() {
+    byId = new Map(data.nodes.map((n) => [n.id, n]));
+    degree = new Map(); adj = new Map();
+    for (const e of data.links) {
+      degree.set(e.s, (degree.get(e.s) || 0) + 1); degree.set(e.t, (degree.get(e.t) || 0) + 1);
+      if (!adj.has(e.s)) adj.set(e.s, []); if (!adj.has(e.t)) adj.set(e.t, []);
+      adj.get(e.s).push({ id: e.t, r: e.r, dir: 'out' }); adj.get(e.t).push({ id: e.s, r: e.r, dir: 'in' });
+    }
+    latestNew = new Set((history[0]?.added || []).map((n) => n.id));
+    const built = new Date(data.builtAt);
+    $('meta').innerHTML = `<b>${data.nodes.length}</b> nodes · <b>${data.links.length}</b> links · <b>${data.communities.length}</b> groups · built ${esc(built.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }))}${data.commit ? ` at commit <b>${esc(data.commit)}</b>` : ''}`;
+    $('status').textContent = `Laying out ${data.nodes.length} nodes…`;
+    if (!window.vis) { $('status').textContent = 'The graph library did not load. Check the connection and reload.'; renderPanel(); return; }
+    buildNetwork();
+    renderPanel();
+  }
+
+  function nodeStyle(n) {
+    const inFocus = !state.focus || state.focus.has(n.id);
+    const isNew = state.showNew && latestNew.has(n.id);
+    const sel = state.selected === n.id;
+    const base = groupColor(n.c, inFocus ? 1 : 0.13);
+    const size = 5 + Math.min(22, Math.sqrt(degree.get(n.id) || 1) * 2.4);
+    return {
+      id: n.id,
+      color: {
+        background: base,
+        border: sel ? css('--ink') : isNew && inFocus ? css('--gold') : base,
+        highlight: { background: base, border: css('--ink') },
+        hover: { background: base, border: css('--ink') },
+      },
+      borderWidth: sel ? 3 : isNew && inFocus ? 3 : 1,
+      size,
+      shape: n.t === 'code' ? 'dot' : 'diamond',
+      font: { color: inFocus ? css('--ink') : 'rgba(0,0,0,0)', size: 12, face: css('--font-sans'), strokeWidth: 3, strokeColor: css('--canvas') },
+    };
+  }
+  function edgeVisible(e) { return state.plumbing || !PLUMBING.has(e.r); }
+  function edgeStyle(e, i) {
+    const touchesSel = state.selected && (e.s === state.selected || e.t === state.selected);
+    const inFocus = !state.focus || (state.focus.has(e.s) && state.focus.has(e.t));
+    return {
+      id: i,
+      hidden: !edgeVisible(e) && !touchesSel,
+      color: { color: touchesSel ? css('--brand-ink') : isDark() ? `rgba(200,190,220,${inFocus ? 0.22 : 0.04})` : `rgba(40,20,70,${inFocus ? 0.16 : 0.03})`, highlight: css('--brand-ink') },
+      width: touchesSel ? 1.6 : 0.7,
+      dashes: e.k !== 'E',
+    };
+  }
+
+  function buildNetwork() {
+    nodesDS = new vis.DataSet(data.nodes.map((n) => ({ ...nodeStyle(n), label: n.l, title: undefined })));
+    edgesDS = new vis.DataSet(data.links.map((e, i) => ({ ...edgeStyle(e, i), from: e.s, to: e.t })));
+    net = new vis.Network($('graph'), { nodes: nodesDS, edges: edgesDS }, {
+      autoResize: true,
+      interaction: { hover: true, tooltipDelay: 120, hideEdgesOnDrag: true, keyboard: false },
+      nodes: { scaling: { label: { enabled: true, min: 10, max: 14, drawThreshold: 7, maxVisible: 18 } } },
+      edges: { smooth: false, selectionWidth: 0 },
+      physics: { solver: 'forceAtlas2Based', forceAtlas2Based: { gravitationalConstant: -38, springLength: 70, avoidOverlap: 0.3 }, stabilization: { iterations: 260, updateInterval: 40 } },
+      layout: { improvedLayout: false },
+    });
+    net.on('stabilizationProgress', (p) => { $('status').textContent = `Laying out ${data.nodes.length} nodes… ${Math.round((p.iterations / p.total) * 100)}%`; });
+    net.once('stabilizationIterationsDone', () => { $('status').hidden = true; net.setOptions({ physics: false }); });
+    net.on('click', (p) => { if (p.nodes.length) select(p.nodes[0], false); else if (!p.edges.length) select(null); });
+  }
+
+  function restyle() {
+    if (!net) return;
+    nodesDS.update(data.nodes.map(nodeStyle));
+    edgesDS.update(data.links.map(edgeStyle));
+  }
+
+  function setFocus(ids, label) {
+    state.focus = ids ? new Set(ids) : null;
+    state.focusLabel = ids ? label : null;
+    restyle();
+    if (ids && net && ids.length) net.fit({ nodes: ids.filter((id) => byId.has(id)), animation: animate() });
+    renderPanel();
+  }
+  const animate = () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? false : { duration: 450, easingFunction: 'easeInOutQuad' });
+
+  function select(id, center = true) {
+    state.selected = id;
+    restyle();
+    if (id && net) { net.selectNodes([id]); if (center) net.focus(id, { scale: 1.1, animation: animate() }); }
+    else if (net) net.unselectAll();
+    renderDetail();
+  }
+
+  function renderDetail() {
+    const box = $('detail');
+    const n = state.selected && byId.get(state.selected);
+    if (!n) { box.hidden = true; return; }
+    const group = data.communities.find((c) => c.id === n.c);
+    const links = adj.get(n.id) || [];
+    const byRel = {};
+    for (const l of links) (byRel[l.r] ??= []).push(l);
+    const rels = Object.entries(byRel).sort((a, b) => (PLUMBING.has(a[0]) - PLUMBING.has(b[0])) || b[1].length - a[1].length);
+    box.hidden = false;
+    box.innerHTML = `
+      <h2>${esc(n.l)}</h2>
+      <div class="pills">
+        <span class="pill">${esc(TYPE[n.t] || n.t)}</span>
+        ${group ? `<span class="pill" style="color:${groupColor(n.c)}">${esc(group.name)}</span>` : ''}
+        ${latestNew.has(n.id) ? '<span class="pill new">New in the latest change</span>' : ''}
+      </div>
+      ${n.f ? `<div class="where">${esc(n.f)}${n.s ? ' · ' + esc(n.s) : ''}</div>` : ''}
+      ${n.r ? `<div class="why">${esc(n.r)}</div>` : ''}
+      ${rels.length ? rels.map(([r, ls]) => `
+        <div class="rel">${esc(REL[r] || r)} · ${ls.length}</div>
+        <div class="chips">${ls.slice(0, 24).map((l) => `<button class="chip" data-go="${esc(l.id)}">${l.dir === 'in' ? '← ' : ''}${esc(byId.get(l.id)?.l || l.id)}</button>`).join('')}${ls.length > 24 ? `<span class="count">+${ls.length - 24} more</span>` : ''}</div>`).join('') : '<div class="hint">No connections.</div>'}
+      <div><button class="tool" data-isolate="${esc(n.id)}">Show only this and its neighbours</button></div>`;
+  }
+
+  function renderPanel() {
+    for (const t of ['changes', 'groups', 'flows']) $('tab-' + t).setAttribute('aria-selected', String(state.tab === t));
+    const p = $('panel');
+    const clear = state.focus ? `<button class="row" data-clear><span class="grow"><span class="name">Showing: ${esc(state.focusLabel)}</span><span class="sub">Tap to show the whole map again</span></span><span class="count">${state.focus.size}</span></button>` : '';
+    if (!data) { p.innerHTML = '<div class="hint">Loading…</div>'; return; }
+    if (state.tab === 'groups') {
+      p.innerHTML = clear + '<div class="hint">Groups are clusters graphify found: things that connect mostly to each other.</div>' +
+        data.communities.map((c) => `<button class="row" data-group="${c.id}" aria-pressed="${state.focusLabel === c.name}">
+          <span class="swatch" style="background:${groupColor(c.id)}"></span><span class="grow"><span class="name">${esc(c.name)}</span></span><span class="count">${c.size}</span></button>`).join('');
+    } else if (state.tab === 'flows') {
+      p.innerHTML = clear + '<div class="hint">Flows are groups of three or more things that work together across files.</div>' +
+        (data.hyperedges.length ? data.hyperedges.map((h, i) => `<button class="row" data-flow="${i}" aria-pressed="${state.focusLabel === h.label}">
+          <span class="grow"><span class="name">${esc(h.label)}</span><span class="sub">${h.nodes.slice(0, 4).map((id) => esc(byId.get(id)?.l || id)).join(' · ')}${h.nodes.length > 4 ? ' …' : ''}</span></span><span class="count">${h.nodes.length}</span></button>`).join('') : '<div class="hint">No flows yet.</div>');
+    } else {
+      p.innerHTML = clear + (history.length ? history.map((h, i) => changeCard(h, i)).join('') : '<div class="hint">No history yet. It starts with the next rebuild.</div>');
+    }
+  }
+
+  function changeCard(h, i) {
+    const when = new Date(h.at).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    const added = h.added || [], removed = h.removed || [];
+    const title = h.note || (added.length || removed.length ? `${added.length} added, ${removed.length} removed` : 'Map rebuilt, nothing structural changed');
+    const groups = {};
+    for (const n of added) (groups[n.c] ??= []).push(n);
+    const topGroups = Object.entries(groups).sort((a, b) => b[1].length - a[1].length);
+    return `<div class="change${i === 0 ? ' latest' : ''}">
+      <h3>${esc(title)}</h3>
+      <div class="when">${esc(when)}${h.commit ? ' · commit ' + esc(h.commit) : ''}${i === 0 ? ' · latest' : ''}</div>
+      <div class="delta"><span class="plus">+${added.length} nodes</span><span class="minus">−${removed.length}</span><span class="count">${h.nodes} nodes · ${h.links} links${h.linkDelta ? ` (${h.linkDelta > 0 ? '+' : ''}${h.linkDelta})` : ''}</span></div>
+      ${added.length ? `<div><button class="tool" data-added="${i}">Show what was added</button></div>` : ''}
+      ${topGroups.length ? `<div class="chips">${topGroups.slice(0, 8).map(([c, ns]) => `<span class="chip" style="cursor:default"><span class="swatch" style="display:inline-block;width:8px;height:8px;margin-right:5px;background:${groupColor(+c)}"></span>${esc(data.communities.find((x) => x.id === +c)?.name || 'Group ' + c)} +${ns.length}</span>`).join('')}</div>` : ''}
+      ${added.length ? `<details><summary>Added (${added.length})</summary><div class="chips" style="margin-top:6px">${added.slice(0, 120).map((n) => byId.has(n.id) ? `<button class="chip" data-go="${esc(n.id)}">${esc(n.l)}</button>` : `<span class="chip gone">${esc(n.l)}</span>`).join('')}</div></details>` : ''}
+      ${removed.length ? `<details><summary>Removed (${removed.length})</summary><div class="chips" style="margin-top:6px">${removed.map((n) => `<span class="chip gone">${esc(n.l)}</span>`).join('')}</div></details>` : ''}
+      ${h.files?.length ? `<details><summary>Files (${h.files.length})</summary><div class="files" style="margin-top:6px">${h.files.map(esc).join('<br>')}</div></details>` : ''}
+    </div>`;
+  }
+
+  // Search: label or file path, best matches first.
+  $('q').addEventListener('input', (ev) => {
+    const q = ev.target.value.trim().toLowerCase();
+    const box = $('results');
+    if (!data || q.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+    const hits = data.nodes
+      .map((n) => ({ n, score: n.l.toLowerCase().startsWith(q) ? 0 : n.l.toLowerCase().includes(q) ? 1 : (n.f || '').toLowerCase().includes(q) ? 2 : 9 }))
+      .filter((x) => x.score < 9).sort((a, b) => a.score - b.score || (degree.get(b.n.id) || 0) - (degree.get(a.n.id) || 0)).slice(0, 30);
+    box.hidden = false;
+    box.innerHTML = hits.length ? hits.map(({ n }) => `<button class="row" data-go="${esc(n.id)}"><span class="swatch" style="background:${groupColor(n.c)}"></span><span class="grow"><span class="name">${esc(n.l)}</span><span class="sub">${esc(n.f || TYPE[n.t])}</span></span></button>`).join('') : '<div class="hint">Nothing matches. Try part of a file name, like “who-where”.</div>';
+  });
+
+  document.addEventListener('click', (ev) => {
+    const el = ev.target.closest('button'); if (!el) return;
+    if (el.id?.startsWith('tab-')) { state.tab = el.id.slice(4); renderPanel(); return; }
+    if (el.dataset.go) { select(el.dataset.go); return; }
+    if ('clear' in el.dataset) { setFocus(null); return; }
+    if (el.dataset.group !== undefined) {
+      const c = data.communities.find((x) => x.id === +el.dataset.group);
+      if (state.focusLabel === c.name) setFocus(null); else setFocus(data.nodes.filter((n) => n.c === c.id).map((n) => n.id), c.name);
+      return;
+    }
+    if (el.dataset.flow !== undefined) {
+      const h = data.hyperedges[+el.dataset.flow];
+      if (state.focusLabel === h.label) setFocus(null); else setFocus(h.nodes, h.label);
+      return;
+    }
+    if (el.dataset.added !== undefined) {
+      const h = history[+el.dataset.added];
+      setFocus((h.added || []).map((n) => n.id).filter((id) => byId.has(id)), 'added in this change');
+      return;
+    }
+    if (el.dataset.isolate) {
+      const id = el.dataset.isolate;
+      setFocus([id, ...(adj.get(id) || []).map((l) => l.id)], (byId.get(id)?.l || id) + ' and its neighbours');
+      return;
+    }
+    if (el.id === 't-new') { state.showNew = !state.showNew; el.setAttribute('aria-pressed', String(state.showNew)); restyle(); return; }
+    if (el.id === 't-plumbing') { state.plumbing = !state.plumbing; el.setAttribute('aria-pressed', String(state.plumbing)); restyle(); return; }
+    if (el.id === 't-fit' && net) { net.fit({ animation: animate() }); }
+  });
+
+  // Recolour when the viewer's theme changes.
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { restyle(); renderPanel(); renderDetail(); });
+  new MutationObserver(() => { restyle(); renderPanel(); renderDetail(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>

@@ -3,3 +3,4 @@ graphify-out/
 docs/graphify-out/
 package-lock.json
 apps/mobile/expo-env.d.ts
+docs/project-map/*.json
