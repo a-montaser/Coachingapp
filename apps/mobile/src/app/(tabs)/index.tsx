@@ -72,7 +72,7 @@ export default function Home() {
         ? t('home.tomorrow')
         : t('home.inDays', { count: days, n: formatNumber(days, lang) });
   };
-  // shortcut: Book (T14) and Booking detail (T17) don't exist yet: group-class cards open Explore and the next-booking card opens Bookings.
+  // shortcut: Booking detail arrives in T17; until then the next-booking card opens Bookings.
   // `at` makes each tap a new request, so Explore re-applies it even when the tab is already mounted.
   const openExplore = (params?: Record<string, string>) =>
     router.navigate({ pathname: '/explore', params: { ...params, at: String(Date.now()) } });
@@ -254,7 +254,10 @@ export default function Home() {
                           pathname: '/workshop/[id]',
                           params: { id: g.offering_id, slot: g.slot_id },
                         })
-                      : openExplore()
+                      : router.push({
+                          pathname: '/book/[offeringId]',
+                          params: { offeringId: g.offering_id, slot: g.slot_id },
+                        })
                   }
                 />
               ))}

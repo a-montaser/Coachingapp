@@ -1,5 +1,175 @@
 [
  {
+  "at": "2026-10-18T11:58:37.355Z",
+  "commit": "91ffd1b",
+  "note": "T14 Book: session types offered, kids child card, two weeks of days, slots by part of day, note, summary (D40)",
+  "nodes": 964,
+  "links": 2950,
+  "communities": 45,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_book_bookdraft",
+    "l": "BookDraft",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_book_bookoffering",
+    "l": "BookOffering",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_book_offeringid_book",
+    "l": "Book()",
+    "c": 3,
+    "f": "apps/mobile/src/app/book/[offeringId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_firstname",
+    "l": "firstName()",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_iso",
+    "l": "iso()",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_offering",
+    "l": "offering()",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_usebookoptions",
+    "l": "useBookOptions()",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_cairoday",
+    "l": "cairoDay()",
+    "c": 3,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_cairohm",
+    "l": "cairoHM()",
+    "c": 3,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_isbookable",
+    "l": "isBookable()",
+    "c": 3,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_samecairoday",
+    "l": "sameCairoDay()",
+    "c": 3,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_weekdays",
+    "l": "weekDays()",
+    "c": 3,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_book_offeringid",
+    "l": "[offeringId].tsx",
+    "c": 3,
+    "f": "apps/mobile/src/app/book/[offeringId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_book_offeringid_kids_age",
+    "l": "KIDS_AGE",
+    "c": 3,
+    "f": "apps/mobile/src/app/book/[offeringId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_book_offeringid_styles",
+    "l": "styles",
+    "c": 3,
+    "f": "apps/mobile/src/app/book/[offeringId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book",
+    "l": "book.ts",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test",
+    "l": "book.test.tsx",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_days",
+    "l": "days",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_mockdata",
+    "l": "mockData",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_mockfamily",
+    "l": "mockFamily",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_mockparams",
+    "l": "mockParams",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_test_now",
+    "l": "now",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_usebookdraft",
+    "l": "useBookDraft",
+    "c": 3,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "docs_decisions_d40",
+    "l": "D40: T14 Book",
+    "c": 36,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_book_strings",
+    "l": "Arabic strings: Book",
+    "c": 36,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 84,
+  "files": [
+   "apps/mobile/src/app/book/[offeringId].tsx",
+   "apps/mobile/src/data/book.test.tsx",
+   "apps/mobile/src/data/book.ts",
+   "apps/mobile/src/data/rules.ts",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-18T11:49:56.289Z",
   "commit": "7acb6b3",
   "note": "T13 Workshop: dates with full ones disabled, seats stepper 1…min(3, left), included / take home / cancellation, total (D39)",

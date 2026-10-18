@@ -350,5 +350,31 @@
     "pickDateReason": "Pick a date with seats left",
     "noDates": "No upcoming dates yet. Check back soon.",
     "notFound": "This workshop isn't running any more."
+  },
+  "book": {
+    "title": "Book with {{name}}",
+    "typeLabel": "Session type",
+    "types": {
+      "private": "1:1",
+      "group": "Group",
+      "kids": "Kids"
+    },
+    "desc": {
+      "private": "Just you and {{name}}, {{n}} min",
+      "group": "Up to {{cap}} people, {{n}} min, price per person",
+      "kids": "Ages {{min}}–{{max}}, {{n}} min. A guardian stays on site."
+    },
+    "child": "For {{name}}, age {{age}} · A guardian stays on site",
+    "change": "Change",
+    "addChild": "Add a child to book kids sessions",
+    "childOutOfRange": "Kids sessions here are for ages {{min}}–{{max}}. Add a child in that range.",
+    "noTimes": "No times on {{day}} · {{name}} isn't coaching that day.",
+    "note": "Note for {{name}} (optional)",
+    "pickTime": "Pick a time",
+    "pickTimeReason": "Pick a time to continue",
+    "needChild": "Add a child to continue",
+    "continue": "Continue",
+    "summary": "{{day}} · {{start}}–{{end}}",
+    "notFound": "These sessions aren't available any more."
   }
 }

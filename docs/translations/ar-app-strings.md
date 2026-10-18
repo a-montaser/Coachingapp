@@ -276,3 +276,23 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `workshop.pickDateReason` | Workshop | Pick a date with seats left |  |
 | `workshop.noDates` | Workshop | No upcoming dates yet. Check back soon. |  |
 | `workshop.notFound` | Workshop | This workshop isn't running any more. |  |
+| `book.title` | Book | Book with {{name}} |  |
+| `book.typeLabel` | Book | Session type |  |
+| `book.types.private` | Book | 1:1 |  |
+| `book.types.group` | Book | Group |  |
+| `book.types.kids` | Book | Kids |  |
+| `book.desc.private` | Book | Just you and {{name}}, {{n}} min |  |
+| `book.desc.group` | Book | Up to {{cap}} people, {{n}} min, price per person |  |
+| `book.desc.kids` | Book | Ages {{min}}–{{max}}, {{n}} min. A guardian stays on site. |  |
+| `book.child` | Book | For {{name}}, age {{age}} · A guardian stays on site |  |
+| `book.change` | Book | Change |  |
+| `book.addChild` | Book | Add a child to book kids sessions |  |
+| `book.childOutOfRange` | Book | Kids sessions here are for ages {{min}}–{{max}}. Add a child in that range. |  |
+| `book.noTimes` | Book | No times on {{day}} · {{name}} isn't coaching that day. |  |
+| `book.note` | Book | Note for {{name}} (optional) |  |
+| `book.pickTime` | Book | Pick a time |  |
+| `book.pickTimeReason` | Book | Pick a time to continue |  |
+| `book.needChild` | Book | Add a child to continue |  |
+| `book.continue` | Book | Continue |  |
+| `book.summary` | Book | {{day}} · {{start}}–{{end}} |  |
+| `book.notFound` | Book | These sessions aren't available any more. |  |

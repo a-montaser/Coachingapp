@@ -161,7 +161,17 @@ test('Hobbies profile: header, next available, upcoming workshops, then private 
   expect(screen.getByText('Free cancellation up to 24 hours before')).toBeOnTheScreen();
   expect(screen.getByText('Usually replies within an hour')).toBeOnTheScreen();
   expect(screen.getAllByText('450 EGP')).toHaveLength(2); // Kids price and the bar's "From"
-  expect(screen.getByRole('button', { name: 'Book' })).toBeDisabled(); // until T14
+  // Book opens the cheapest lesson type; a slot chip opens its own offering at that time.
+  await fireEvent.press(screen.getByRole('button', { name: 'Book' }));
+  expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith({
+    pathname: '/book/[offeringId]',
+    params: { offeringId: 'kids' },
+  });
+  await fireEvent.press(screen.getAllByRole('button', { name: /^\w{3} \d{2}:\d{2}$|^Today|^Tomorrow/ })[0]!);
+  expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith({
+    pathname: '/book/[offeringId]',
+    params: { offeringId: 'wheel', slot: 'a' },
+  });
 });
 
 test('Sports profile: session types with prices and no workshop list; no open times says so', async () => {

@@ -41,7 +41,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: RNTL for stepper limits and full dates.
 
 ## E. Booking and payments
-- [ ] **T14 Book screen** (1:1, group, kids).
+- [x] **T14 Book screen** (1:1, group, kids).
   - Verify: RNTL tests; bookable-rule tests.
 - [ ] **T15 Review & pay + promo + Confirmed** (ring, Remind me sheet).
   - Verify: rule tests for the policy line and promo.

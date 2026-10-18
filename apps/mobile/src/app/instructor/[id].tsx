@@ -99,8 +99,13 @@ export default function InstructorProfile() {
     }
     return bits.join(' · ');
   };
-  // shortcut: the Book screen arrives in T14; slot chips, "All times" and Book stay inert / disabled until then.
-  const toBook = () => {};
+  // Book opens the cheapest lesson type (lessons are sorted by price); a slot chip opens its own offering at that time.
+  const toBook = (offeringId = lessons[0]?.id, slot?: string) => {
+    if (offeringId)
+      router.push({ pathname: '/book/[offeringId]', params: slot ? { offeringId, slot } : { offeringId } });
+    else if (workshopSlots[0])
+      router.push({ pathname: '/workshop/[id]', params: { id: workshopSlots[0].offering_id } });
+  };
 
   return (
     <View style={[styles.screen, { backgroundColor: c.bg }]}>
@@ -142,12 +147,17 @@ export default function InstructorProfile() {
               <T variant="headline" style={styles.grow}>
                 {t('instructor.nextAvailable')}
               </T>
-              <Button label={t('instructor.allTimes')} size="small" disabled onPress={toBook} />
+              <Button
+                label={t('instructor.allTimes')}
+                size="small"
+                disabled={!lessons.length}
+                onPress={() => toBook()}
+              />
             </View>
             {soonest.length ? (
               <View style={styles.chips}>
                 {soonest.map((s) => (
-                  <Chip key={s.id} label={when(s.starts_at)} onPress={toBook} />
+                  <Chip key={s.id} label={when(s.starts_at)} onPress={() => toBook(s.offering_id, s.id)} />
                 ))}
               </View>
             ) : (
@@ -209,6 +219,7 @@ export default function InstructorProfile() {
                   title: isHobbies ? o.title : t(`instructor.types.${o.type}`),
                   subtitle: detail(o),
                   value: formatPrice(o.price_egp, lang),
+                  onPress: () => toBook(o.id),
                 }))}
               />
             </Section>
@@ -263,9 +274,8 @@ export default function InstructorProfile() {
         <Button
           label={t('instructor.book')}
           variant="primary"
-          disabled
-          reason={t('common.comingSoon')}
-          onPress={toBook}
+          disabled={!lessons.length && !workshopSlots.length}
+          onPress={() => toBook()}
         />
       </BottomActionBar>
     </View>

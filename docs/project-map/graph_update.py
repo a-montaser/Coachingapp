@@ -104,7 +104,9 @@ def finish(tokens_in, tokens_out):
         if not name:
             name = top.replace('_', ' ').replace('-', ' ').title()
         if name in used:
-            name = f'{name} ({top})'
+            # Taken: name the group after its two main files, e.g. "Home · Home Test".
+            common = [f for f, _ in __import__('collections').Counter(files).most_common(2)]
+            name = ' · '.join(x.replace('_', ' ').replace('-', ' ').replace('.', ' ').title() for x in common) or f'Group {k}'
         i = 2
         while name in used:
             name = f'{name} {i}'; i += 1
