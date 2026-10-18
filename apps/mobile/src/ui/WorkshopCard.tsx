@@ -47,8 +47,18 @@ export function WorkshopCard({
       accessibilityLabel={[k.title, meta, spots, price].join(', ')}
       style={layout === 'rail' && styles.rail}
     >
-      <View style={[styles.banner, { backgroundColor: c.surface2 }]}>
-        <Icon name="hobbies" size={w.bannerMinHeight / 3} color={c.label2} />
+      {/* Fixed height, full card width (canvas). An aspect ratio with a max height shrank the width instead. */}
+      <View
+        testID="workshop-banner"
+        style={[
+          styles.banner,
+          {
+            backgroundColor: c.surface2,
+            height: layout === 'rail' ? w.bannerRailHeight : w.bannerFullHeight,
+          },
+        ]}
+      >
+        <Icon name="hobbies" size={w.bannerRailHeight / 3} color={c.label2} />
       </View>
       <View style={styles.body}>
         <T variant="headline">{k.title}</T>
@@ -68,13 +78,7 @@ export function WorkshopCard({
 
 const styles = StyleSheet.create({
   rail: { width: w.railWidth },
-  banner: {
-    aspectRatio: w.bannerAspect,
-    minHeight: w.bannerMinHeight,
-    maxHeight: w.bannerMaxHeight,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  banner: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' },
   body: { paddingTop: w.padTop, paddingHorizontal: w.padSide, paddingBottom: w.padBottom, gap: w.gap },
   footer: {
     flexDirection: 'row',

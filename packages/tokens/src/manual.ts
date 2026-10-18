@@ -63,10 +63,9 @@ export const component = {
   }, // §5, DS .group .li
   instructorCard: { padding: 8, photoWidth: 96, photoHeight: 120, infoGap: 3, starSize: icon.xsmall }, // §5, DS .coach
   workshopCard: {
-    bannerMinHeight: 126,
-    bannerMaxHeight: 150,
+    bannerRailHeight: 126, // canvas Main .ws img
+    bannerFullHeight: 150, // canvas Explore .wcard img
     railWidth: 252,
-    bannerAspect: 2,
     padTop: 12,
     padSide: 14,
     padBottom: 14,

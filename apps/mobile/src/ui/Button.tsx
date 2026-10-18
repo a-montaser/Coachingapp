@@ -1,7 +1,8 @@
-import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { component, radius, space, touch } from '@cfa/tokens';
+import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
-import { Glass } from './Glass';
+import { Glass, glassMode, liquidAvailable } from './Glass';
 import { T } from './T';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'plain' | 'destructive' | 'destructiveFilled';
@@ -18,6 +19,8 @@ type Props = {
   /** Inline spinner, e.g. "Processing" on Review & pay (§7.9). */
   busy?: boolean;
   accessibilityHint?: string;
+  /** Glass over a photo or a dark hero (Welcome's Sign in): clear glass and a light label, so it stays legible. */
+  overMedia?: boolean;
 };
 
 const b = component.button;
@@ -31,22 +34,29 @@ export function Button({
   reason,
   busy = false,
   accessibilityHint,
+  overMedia = false,
 }: Props) {
   const { c } = useTheme();
   const small = size === 'small';
   const height = small ? b.smallHeight : b.height;
   const inactive = disabled || busy;
   const glass = !disabled && (variant === 'primary' || variant === 'secondary');
+  const { reduceTransparency } = useA11y();
+  // Over media the label goes light only while the glass is see-through; the solid frosted fallback
+  // (Reduce Transparency, Android) keeps the normal glass label.
+  const seeThrough = glassMode(Platform.OS, liquidAvailable(), reduceTransparency) !== 'frosted';
 
   const color = disabled
     ? c.label3
-    : variant === 'primary'
-      ? c.glassTintLabel
-      : variant === 'secondary'
-        ? c.glassLabel
-        : variant === 'plain'
-          ? c.label
-          : c.danger;
+    : overMedia && glass && seeThrough
+      ? c.onBrand
+      : variant === 'primary'
+        ? c.glassTintLabel
+        : variant === 'secondary'
+          ? c.glassLabel
+          : variant === 'plain'
+            ? c.label
+            : c.danger;
   const fill = disabled || variant === 'plain' || variant === 'destructiveFilled' ? c.surface2 : undefined;
 
   const content = (
@@ -80,7 +90,11 @@ export function Button({
       ]}
     >
       {glass ? (
-        <Glass radius={radius.pill} prominent={variant === 'primary'}>
+        <Glass
+          radius={radius.pill}
+          prominent={variant === 'primary'}
+          variant={overMedia ? 'clear' : 'regular'}
+        >
           {content}
         </Glass>
       ) : (

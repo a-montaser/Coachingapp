@@ -1,5 +1,39 @@
 [
  {
+  "at": "2026-10-18T12:14:24.834Z",
+  "commit": "e628b97",
+  "note": "Owner fixes: Sign in label readable over the Welcome hero; workshop banners fill the card in Explore (D41)",
+  "nodes": 967,
+  "links": 2946,
+  "communities": 53,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_overmedia_test_labelcolor",
+    "l": "labelColor()",
+    "c": 22,
+    "f": "apps/mobile/src/ui/overMedia.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_overmedia_test",
+    "l": "overMedia.test.tsx",
+    "c": 22,
+    "f": "apps/mobile/src/ui/overMedia.test.tsx"
+   },
+   {
+    "id": "docs_decisions_d41",
+    "l": "D41 (1) Glass over a photo or dark hero (Welcome's \"Sign in\") us",
+    "c": 10,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": -4,
+  "files": [
+   "apps/mobile/src/ui/overMedia.test.tsx",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-18T11:58:37.355Z",
   "commit": "91ffd1b",
   "note": "T14 Book: session types offered, kids child card, two weeks of days, slots by part of day, note, summary (D40)",

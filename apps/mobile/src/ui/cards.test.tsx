@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { light } from '@cfa/tokens';
 import { nour, photoWalk, wheelTaster, yasmine } from '@/dev/seed';
@@ -48,4 +49,14 @@ test('GroupedList rows with an action are buttons; rows without are plain', asyn
   await fireEvent.press(screen.getByRole('button'));
   expect(onPress).toHaveBeenCalled();
   expect(screen.getAllByRole('button')).toHaveLength(1);
+});
+
+test('WorkshopCard banner spans the card at a fixed height: 150 in Explore, 126 on the Home rail', async () => {
+  const view = await render(<WorkshopCard workshop={photoWalk} onPress={() => {}} />);
+  const full = StyleSheet.flatten(screen.getByTestId('workshop-banner').props.style);
+  expect(full).toMatchObject({ height: 150, alignSelf: 'stretch' });
+  expect(full.aspectRatio).toBeUndefined(); // an aspect ratio with a max height shrank the width
+  await view.unmount();
+  await render(<WorkshopCard workshop={wheelTaster} onPress={() => {}} layout="rail" />);
+  expect(StyleSheet.flatten(screen.getByTestId('workshop-banner').props.style).height).toBe(126);
 });

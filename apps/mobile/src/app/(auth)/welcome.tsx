@@ -37,6 +37,7 @@ export default function Welcome() {
           label={t('auth.signIn')}
           size="small"
           variant="secondary"
+          overMedia
           onPress={() => router.push('/sign-up')}
         />
       </View>
