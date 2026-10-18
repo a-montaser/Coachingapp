@@ -8,15 +8,15 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, withSpring, ZoomIn } from 'react-native-reanimated';
 import { create } from 'zustand';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, homeIndicator, motion, radius, space } from '@cfa/tokens';
-import { useLang } from '@/i18n';
+import { useIsRTL, useLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
-import { Glass } from './Glass';
+import { Glass, GlassGroup, glassMode, liquidAvailable } from './Glass';
 import { Icon } from './Icon';
 import { T } from './T';
 
@@ -89,6 +89,17 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   const { reduceMotion } = useA11y();
   const lang = useLang();
   const bottom = useTabBarBottom();
+  const rtl = useIsRTL();
+  const { reduceTransparency } = useA11y();
+  const liquid = glassMode(Platform.OS, liquidAvailable(), reduceTransparency) === 'liquid';
+  const [barWidth, setBarWidth] = useState(0);
+  const tabWidth = (barWidth - tb.padding * 2) / TABS.length;
+  // Tabs run right-to-left in Arabic (JS RTL, D26), so the lens counts from the other end.
+  const slot = rtl ? TABS.length - 1 - TABS.indexOf(active) : TABS.indexOf(active);
+  const lensStyle = useAnimatedStyle(() => {
+    const x = tb.padding + slot * tabWidth;
+    return { transform: [{ translateX: reduceMotion ? x : withSpring(x, motion.lensSpring) }] };
+  });
   // Scale only: fading a parent of native glass breaks it (DECISIONS D20).
   const pop = reduceMotion ? undefined : ZoomIn.duration(motion.tabMinimiseMs);
 
@@ -121,7 +132,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
     return (
       <Animated.View key="min" entering={pop} style={[styles.wrap, { bottom }, styles.minRow]}>
         <Pressable accessibilityRole="button" accessibilityLabel={label(active)} onPress={onRestore}>
-          <Glass radius={radius.pill}>
+          <Glass radius={radius.pill} interactive>
             <View style={[styles.minTab, { backgroundColor: c.glassSelected }]}>
               <Icon name={active} size={tb.iconSize} color={c.glassLabel} />
               <T variant="subheadline" weight="600" color={c.glassLabel} fit={1}>
@@ -131,7 +142,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
           </Glass>
         </Pressable>
         <Pressable accessibilityRole="button" accessibilityLabel={label(jump)} onPress={() => onSelect(jump)}>
-          <Glass radius={radius.pill} style={styles.round}>
+          <Glass radius={radius.pill} interactive style={styles.round}>
             <Icon name={jump} size={tb.iconSize} color={c.glassLabel} />
           </Glass>
         </Pressable>
@@ -141,25 +152,45 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
 
   return (
     <Animated.View key="full" entering={pop} style={[styles.wrap, { bottom }]}>
-      <Glass radius={radius.pill}>
-        <View accessibilityRole="tablist" style={styles.bar}>
-          {TABS.map((tab) => {
-            const selected = tab === active;
-            return (
-              <Pressable
-                key={tab}
-                accessibilityRole="tab"
-                accessibilityLabel={label(tab)}
-                accessibilityState={{ selected }}
-                onPress={() => onSelect(tab)}
-                style={[styles.tab, selected && { backgroundColor: c.glassSelected }]}
-              >
-                {content(tab, selected)}
-              </Pressable>
-            );
-          })}
-        </View>
-      </Glass>
+      {/* iOS 26: a still glass bar; the selection is its own interactive glass lens that blends with
+          the bar (GlassEffectContainer) and slides between tabs. */}
+      <GlassGroup spacing={tb.padding * 2}>
+        <Glass radius={radius.pill}>
+          <View
+            testID="tab-bar"
+            accessibilityRole="tablist"
+            style={styles.bar}
+            onLayout={(e) => setBarWidth(e.nativeEvent.layout.width)}
+          >
+            {barWidth > 0 && (
+              <Animated.View pointerEvents="none" style={[styles.lens, { width: tabWidth }, lensStyle]}>
+                {liquid ? (
+                  <Glass radius={radius.pill} interactive style={styles.fill} />
+                ) : (
+                  <View
+                    style={[styles.fill, { borderRadius: radius.pill, backgroundColor: c.glassSelected }]}
+                  />
+                )}
+              </Animated.View>
+            )}
+            {TABS.map((tab) => {
+              const selected = tab === active;
+              return (
+                <Pressable
+                  key={tab}
+                  accessibilityRole="tab"
+                  accessibilityLabel={label(tab)}
+                  accessibilityState={{ selected }}
+                  onPress={() => onSelect(tab)}
+                  style={styles.tab}
+                >
+                  {content(tab, selected)}
+                </Pressable>
+              );
+            })}
+          </View>
+        </Glass>
+      </GlassGroup>
     </Animated.View>
   );
 }
@@ -168,6 +199,9 @@ const styles = StyleSheet.create({
   wrap: { position: 'absolute', start: tb.inset, end: tb.inset },
   bar: { flexDirection: 'row', minHeight: tb.height, padding: tb.padding },
   tab: { flex: 1, borderRadius: radius.pill, minHeight: tb.tabHeight, justifyContent: 'center' },
+  // A physical left edge: the slot index already accounts for right-to-left.
+  lens: { position: 'absolute', top: tb.padding, bottom: tb.padding, left: 0 },
+  fill: { flex: 1 },
   tabInner: { alignItems: 'center', gap: space.space1 / 2, paddingHorizontal: space.space1 },
   badge: {
     position: 'absolute',

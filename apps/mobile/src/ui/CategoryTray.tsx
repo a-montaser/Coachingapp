@@ -30,7 +30,7 @@ export function CategoryButton({ category, onPress }: { category: Category; onPr
       onPress={onPress}
       hitSlop={(touch - tr.triggerHeight) / 2}
     >
-      <Glass radius={radius.pill}>
+      <Glass radius={radius.pill} interactive>
         <View style={styles.trigger}>
           <Icon name={category} size={cb.iconSize} color={c.glassLabel} />
           <T fit={1} variant="subheadline" weight="600" color={c.glassLabel}>

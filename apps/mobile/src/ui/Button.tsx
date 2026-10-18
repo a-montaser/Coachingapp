@@ -95,6 +95,7 @@ export function Button({
           radius={radius.pill}
           prominent={variant === 'primary'}
           variant={overMedia ? 'clear' : 'regular'}
+          interactive
         >
           {content}
         </Glass>

@@ -45,7 +45,7 @@ export function IconButton({
       onPress={onPress}
     >
       {floating ? (
-        <Glass radius={radius.pill} variant={overMedia ? 'clear' : 'regular'} style={styles.box}>
+        <Glass radius={radius.pill} variant={overMedia ? 'clear' : 'regular'} interactive style={styles.box}>
           {glyph}
         </Glass>
       ) : (

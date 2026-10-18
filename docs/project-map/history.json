@@ -1,5 +1,46 @@
 [
  {
+  "at": "2026-10-18T17:51:34.209Z",
+  "commit": "c7d8f2d",
+  "note": "Pictures zoomed out; iOS 26 Liquid Glass properties: interactive only on controls, app theme on glass, sliding glass lens on the tab bar (D44)",
+  "nodes": 1027,
+  "links": 3223,
+  "communities": 54,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_glass_glassgroup",
+    "l": "GlassGroup()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Glass.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_liquidglass_test",
+    "l": "liquidGlass.test.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/liquidGlass.test.tsx"
+   },
+   {
+    "id": "docs_decisions_d44",
+    "l": "D44 (1) TESTING ONLY images re-rendered \"zoomed out\" (camera…",
+    "c": 3,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "packages_tokens_src_index_blur",
+    "l": "packages_tokens_src_index_blur",
+    "c": 0,
+    "f": ""
+   }
+  ],
+  "removed": [],
+  "linkDelta": -3,
+  "files": [
+   "apps/mobile/src/ui/Glass.tsx",
+   "apps/mobile/src/ui/liquidGlass.test.tsx",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-18T15:17:50.463Z",
   "commit": "ea0bb57",
   "note": "Prototype tab bar on iOS, inline Book title, component library completed in the Gallery; test images and 10 s resend timer for testing (D43)",

@@ -22,6 +22,7 @@ export const motion = {
   tabMinimiseMs: 250, // §8
   toastHoldMs: 2600, // §5, §8
   navTitleRise: 6, // §8
+  lensSpring: { damping: 18, stiffness: 220, mass: 0.8 }, // iOS 26 tab selection lens (provisional, tuned by eye)
 } as const;
 
 export const icon = { regular: 22, small: 17, xsmall: 14 } as const; // DS .ic / .ic.s / .ic.xs

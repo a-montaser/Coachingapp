@@ -1,5 +1,10 @@
 import { BlurView } from 'expo-blur';
-import { GlassView, isGlassEffectAPIAvailable, isLiquidGlassAvailable } from 'expo-glass-effect';
+import {
+  GlassContainer,
+  GlassView,
+  isGlassEffectAPIAvailable,
+  isLiquidGlassAvailable,
+} from 'expo-glass-effect';
 import type { ReactNode } from 'react';
 import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { blur, component } from '@cfa/tokens';
@@ -23,6 +28,11 @@ type Props = {
   variant?: 'regular' | 'clear';
   /** The one primary action per screen (§4.2). */
   prominent?: boolean;
+  /**
+   * iOS 26 interactive glass (scales and shimmers under the finger): only for controls you tap
+   * (buttons, the nav cluster, the tab bar's selection lens), never for bars and fields.
+   */
+  interactive?: boolean;
   style?: StyleProp<ViewStyle>;
   children?: ReactNode;
 };
@@ -31,7 +41,14 @@ type Props = {
  * The navigation-layer material (§4). Colourless: no tint, no brand colour.
  * Neighbouring controls share one Glass shape rather than nesting glass in glass (§4.2).
  */
-export function Glass({ radius, variant = 'regular', prominent = false, style, children }: Props) {
+export function Glass({
+  radius,
+  variant = 'regular',
+  prominent = false,
+  interactive = false,
+  style,
+  children,
+}: Props) {
   const { c, scheme, shadow } = useTheme();
   const a11y = useA11y();
   const mode = glassMode(Platform.OS, liquidAvailable(), a11y.reduceTransparency);
@@ -66,7 +83,8 @@ export function Glass({ radius, variant = 'regular', prominent = false, style, c
 
   if (mode === 'liquid') {
     return (
-      <GlassView glassEffectStyle={variant} isInteractive style={base}>
+      // colorScheme: follow the app's Light / Dark setting, not only the system's (Expo glass docs).
+      <GlassView glassEffectStyle={variant} isInteractive={interactive} colorScheme={scheme} style={base}>
         {children}
       </GlassView>
     );
@@ -94,5 +112,28 @@ export function Glass({ radius, variant = 'regular', prominent = false, style, c
       {sheen}
       {children}
     </View>
+  );
+}
+
+/**
+ * iOS 26 GlassEffectContainer: glass shapes inside it blend and morph into each other when they come
+ * within `spacing` (the tab bar's selection lens and its bar). A plain View elsewhere.
+ */
+export function GlassGroup({
+  spacing,
+  style,
+  children,
+}: {
+  spacing: number;
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode;
+}) {
+  const { reduceTransparency } = useA11y();
+  if (glassMode(Platform.OS, liquidAvailable(), reduceTransparency) !== 'liquid')
+    return <View style={style}>{children}</View>;
+  return (
+    <GlassContainer spacing={spacing} style={style}>
+      {children}
+    </GlassContainer>
   );
 }

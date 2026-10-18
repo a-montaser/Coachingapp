@@ -120,7 +120,7 @@ export function NavigationBar({
         </View>
         <View style={[styles.side, styles.end]}>
           {actions.length > 0 && (
-            <Glass radius={radius.pill}>
+            <Glass radius={radius.pill} interactive>
               <View style={styles.cluster}>
                 {actions.map((a, i) => (
                   <Fragment key={a.label}>
