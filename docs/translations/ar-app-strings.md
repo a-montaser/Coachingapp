@@ -143,3 +143,46 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `onboarding.showPicks` | Onboarding | Show my picks |  |
 | `onboarding.categoriesTitle` | Onboarding | What are you into? |  |
 | `onboarding.categoriesSub` | Onboarding | Pick one or more. Next, you'll choose what to learn in each. |  |
+| `common.tomorrow` | Buttons and messages | Tomorrow |  |
+| `brand.wordmark` | Buttons and messages | Coach For All |  |
+| `home.greeting.morning` | Home | Good morning, {{name}} |  |
+| `home.greeting.afternoon` | Home | Good afternoon, {{name}} |  |
+| `home.greeting.morningAnon` | Home | Good morning |  |
+| `home.greeting.afternoonAnon` | Home | Good afternoon |  |
+| `home.greeting.eveningAnon` | Home | Good evening |  |
+| `home.sub.hobbies` | Home | What will you make this week? |  |
+| `home.sub.sports` | Home | Your coaches and courts |  |
+| `home.sub.education` | Home | Tutors for school, exams and new skills |  |
+| `home.sub.languages` | Home | Speak with real teachers, in person or online |  |
+| `home.search.hobbies` | Home | Pottery, oud, photography… |  |
+| `home.search.education` | Home | Subject, exam or tutor |  |
+| `home.search.languages` | Home | Language, level or teacher |  |
+| `home.rail.hobbies` | Home | Pick up something new |  |
+| `home.rail.sports` | Home | Sports |  |
+| `home.rail.education` | Home | Subjects |  |
+| `home.rail.languages` | Home | Languages |  |
+| `home.groups.hobbies` | Home | Upcoming workshops |  |
+| `home.groups.education` | Home | Revision groups |  |
+| `home.groups.languages` | Home | Conversation groups |  |
+| `home.people.hobbies` | Home | Instructors near you |  |
+| `home.people.education` | Home | Tutors near you |  |
+| `home.people.languages` | Home | Teachers near you |  |
+| `home.emptyTitle.hobbies` | Home | Nothing booked yet |  |
+| `home.emptyTitle.sports` | Home | No sessions booked yet |  |
+| `home.emptyTitle.education` | Home | No lessons booked yet |  |
+| `home.emptyTitle.languages` | Home | No classes booked yet |  |
+| `home.emptySub.hobbies` | Home | Find a workshop to try this week |  |
+| `home.emptySub.sports` | Home | Find a coach near you |  |
+| `home.emptySub.education` | Home | Find a tutor for your next exam |  |
+| `home.emptySub.languages` | Home | Try a conversation group first |  |
+| `home.kickerWorkshop` | Home | Next workshop · {{when}} |  |
+| `home.today` | Home | today |  |
+| `home.tomorrow` | Home | tomorrow |  |
+| `home.inDays_one` | Home | in {{count}} day |  |
+| `home.inDays_other` | Home | in {{count}} days |  |
+| `home.seeAll` | Home | See all |  |
+| `home.bookAgain` | Home | Book again |  |
+| `home.bookAgainTitle` | Home | {{discipline}} with {{name}} |  |
+| `home.bookAgainNext` | Home | Next open: {{when}} |  |
+| `home.bookAgainNone` | Home | No open times in the next two weeks |  |
+| `home.noPeople` | Home | No one is teaching this yet. Check back soon. |  |

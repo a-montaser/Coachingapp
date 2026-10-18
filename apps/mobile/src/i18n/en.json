@@ -25,7 +25,8 @@
     "more": "More",
     "close": "Close",
     "comingSoon": "Coming soon",
-    "genericError": "Something went wrong. Check your connection and try again."
+    "genericError": "Something went wrong. Check your connection and try again.",
+    "tomorrow": "Tomorrow"
   },
   "language": {
     "en": "English",
@@ -182,5 +183,68 @@
     },
     "changeLater": "You can change any of this later in Profile.",
     "showPicks": "Show my picks"
+  },
+  "home": {
+    "greeting": {
+      "morning": "Good morning, {{name}}",
+      "afternoon": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}",
+      "morningAnon": "Good morning",
+      "afternoonAnon": "Good afternoon",
+      "eveningAnon": "Good evening"
+    },
+    "sub": {
+      "hobbies": "What will you make this week?",
+      "sports": "Your coaches and courts",
+      "education": "Tutors for school, exams and new skills",
+      "languages": "Speak with real teachers, in person or online"
+    },
+    "search": {
+      "hobbies": "Pottery, oud, photography…",
+      "sports": "Coach, sport or area",
+      "education": "Subject, exam or tutor",
+      "languages": "Language, level or teacher"
+    },
+    "rail": {
+      "hobbies": "Pick up something new",
+      "sports": "Sports",
+      "education": "Subjects",
+      "languages": "Languages"
+    },
+    "groups": {
+      "hobbies": "Upcoming workshops",
+      "education": "Revision groups",
+      "languages": "Conversation groups"
+    },
+    "people": {
+      "hobbies": "Instructors near you",
+      "sports": "Open today near you",
+      "education": "Tutors near you",
+      "languages": "Teachers near you"
+    },
+    "emptyTitle": {
+      "hobbies": "Nothing booked yet",
+      "sports": "No sessions booked yet",
+      "education": "No lessons booked yet",
+      "languages": "No classes booked yet"
+    },
+    "emptySub": {
+      "hobbies": "Find a workshop to try this week",
+      "sports": "Find a coach near you",
+      "education": "Find a tutor for your next exam",
+      "languages": "Try a conversation group first"
+    },
+    "kickerWorkshop": "Next workshop · {{when}}",
+    "kickerSession": "Next session · {{when}}",
+    "today": "today",
+    "tomorrow": "tomorrow",
+    "inDays_one": "in {{count}} day",
+    "inDays_other": "in {{count}} days",
+    "seeAll": "See all",
+    "bookAgain": "Book again",
+    "bookAgainTitle": "{{discipline}} with {{name}}",
+    "bookAgainNext": "Next open: {{when}}",
+    "bookAgainNone": "No open times in the next two weeks",
+    "noPeople": "No one is teaching this yet. Check back soon."
   }
 }

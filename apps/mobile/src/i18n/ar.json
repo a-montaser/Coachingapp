@@ -12,5 +12,18 @@
   },
   "card": {
     "from": "{{price}}"
+  },
+  "home": {
+    "greeting": {
+      "evening": "مساء الخير يا {{name}}"
+    },
+    "search": {
+      "sports": "مدرب أو رياضة أو منطقة"
+    },
+    "people": {
+      "sports": "متاح اليوم بالقرب منك"
+    },
+    "kickerSession": "الحصة القادمة · {{when}}",
+    "inDays_two": "بعد يومين"
   }
 }

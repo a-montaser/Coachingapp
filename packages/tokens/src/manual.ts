@@ -137,6 +137,7 @@ export const component = {
     tickIconSize: icon.xsmall,
     tickInset: 12,
   }, // §7.3, canvas .pick
+  disciplineRail: { width: 76, tile: 64, iconSize: 28, codeSize: 17, gap: 12 }, // §7.4 item 5, canvas Main .cat
   levels: {
     iconCircle: 56,
     iconSize: 28 /* provisional */,

@@ -31,7 +31,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: RNTL tests; Arabic screenshot.
 
 ## D. Discovery
-- [ ] **T10 Home ×4 + tray** (canvas 1–5), including Sports "Book again".
+- [x] **T10 Home ×4 + tray** (canvas 1–5), including Sports "Book again".
   - Verify: RNTL for 4 categories; side-by-side screenshots against canvas.
 - [ ] **T11 Explore (canvas 7)** with search, the Filters and Sort sheets, empty state.
   - Verify: filter and sort rule tests.

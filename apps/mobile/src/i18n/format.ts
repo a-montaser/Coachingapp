@@ -41,3 +41,6 @@ export const formatMonthYear = (date: Date, lang: Lang) =>
 export const formatYear = (date: Date, lang: Lang) => dateFormat(lang, { year: 'numeric' }).format(date);
 export const formatDayMonth = (date: Date, lang: Lang) =>
   dateFormat(lang, { day: 'numeric', month: 'short' }).format(date);
+/** "17:30" for an instant, in Cairo time (24-hour, §1). */
+export const formatClock = (date: Date, lang: Lang) =>
+  dateFormat(lang, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);

@@ -1,5 +1,310 @@
 [
  {
+  "at": "2026-10-18T11:06:14.714Z",
+  "commit": "597ae10",
+  "note": "T10 Home for all four categories: greeting, search, next booking, disciplines and group rails, people list, Sports “Book again” (D36)",
+  "nodes": 833,
+  "links": 2443,
+  "communities": 35,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_home_groupsessionrow",
+    "l": "GroupSessionRow",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_instructorcardrow",
+    "l": "InstructorCardRow",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_mybookingrow",
+    "l": "MyBookingRow",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_index_home",
+    "l": "Home()",
+    "c": 3,
+    "f": "apps/mobile/src/app/(tabs)/index.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_home_cairo",
+    "l": "cairo()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_cairodaysuntil",
+    "l": "cairoDaysUntil()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_distancekm",
+    "l": "distanceKm()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_greetingperiod",
+    "l": "greetingPeriod()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_test_indays",
+    "l": "inDays()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_home_usegroupsessions",
+    "l": "useGroupSessions()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_useinstructorcards",
+    "l": "useInstructorCards()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_usemycategorybookings",
+    "l": "useMyCategoryBookings()",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_i18n_format_formatclock",
+    "l": "formatClock()",
+    "c": 3,
+    "f": "apps/mobile/src/i18n/format.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_index_styles",
+    "l": "styles",
+    "c": 3,
+    "f": "apps/mobile/src/app/(tabs)/index.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_home",
+    "l": "home.ts",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_home_test",
+    "l": "home.test.tsx",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_home_test_mockbookings",
+    "l": "mockBookings",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_home_test_mockrows",
+    "l": "mockRows",
+    "c": 3,
+    "f": "apps/mobile/src/data/home.test.tsx"
+   },
+   {
+    "id": "docs_decisions_d13",
+    "l": "D13: Bundle ID com.coachforall.app",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d15",
+    "l": "D15: Phase 0 spec approved",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d2",
+    "l": "D2: Project lives at ~/Desktop/coaching app",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d28",
+    "l": "D28: Phase 0 closed; CI run and Supabase link carried as G1-G2",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d6",
+    "l": "D6: Install the toolchain (Node, Java, Android SDK, Maestro, Supabase CLI)",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d7",
+    "l": "D7: Proposed Expo SDK 58, Node 22 LTS, npm workspaces",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_home_strings",
+    "l": "Home strings (home.*)",
+    "c": 13,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t11",
+    "l": "T11: Explore with search, Filters and Sort sheets, empty state",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t12",
+    "l": "T12: Instructor profile (canvas 8)",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t13",
+    "l": "T13: Workshop (canvas 9) with seat stepper",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t14",
+    "l": "T14: Book screen (1:1, group, kids)",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t15",
+    "l": "T15: Review & pay + promo + Confirmed",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t17",
+    "l": "T17: Bookings list + Booking detail",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t19",
+    "l": "T19: Local reminders",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t3",
+    "l": "T3: Seed (handoff 14, 14 days of slots, Omar + Ali)",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t7",
+    "l": "T7: Tab shell ((tabs), TabBar, Messages empty state)",
+    "c": 13,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "docs_decisions_d36",
+    "l": "D36: T10 Home choices (Upcoming workshops rail, empty copy, distance)",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "claude_phase_branch_workflow",
+    "l": "Phase branch git workflow (commit per task)",
+    "c": 17,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t22",
+    "l": "T22: Graphify --update, DECISIONS, phase report",
+    "c": 17,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "claude_db_tests_ci_only",
+    "l": "Database tests run in CI only",
+    "c": 17,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_auth_strings",
+    "l": "Sign-in and sign-out strings (auth.*)",
+    "c": 19,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_onboarding_strings",
+    "l": "Onboarding strings (onboarding.*)",
+    "c": 19,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t5",
+    "l": "T5: Data layer (Supabase client, QueryClient, AsyncStorage settings persistence)",
+    "c": 19,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "claude_expo_go_only",
+    "l": "Expo Go only, RTL in JS",
+    "c": 20,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_decisions_d3",
+    "l": "D3: iOS via EAS cloud dev builds on physical iPhone",
+    "c": 20,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d5",
+    "l": "D5: Android testing on the emulator",
+    "c": 20,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_placeholder_braces",
+    "l": "Double-brace placeholders kept verbatim",
+    "c": 23,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_profile_family_strings",
+    "l": "Profile and Family & kids strings",
+    "c": 23,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_app_tabs_index_screen",
+    "l": "Screen()",
+    "c": 5,
+    "f": "apps/mobile/src/app/(tabs)/index.tsx"
+   }
+  ],
+  "linkDelta": 133,
+  "files": [
+   "CLAUDE.md",
+   "apps/mobile/src/app/(tabs)/index.tsx",
+   "apps/mobile/src/data/home.test.tsx",
+   "apps/mobile/src/data/home.ts",
+   "apps/mobile/src/i18n/format.ts",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md",
+   "specs/phase-1/tasks.md"
+  ]
+ },
+ {
   "at": "2026-10-18T10:05:49.218Z",
   "commit": "6f36a55",
   "note": "Map refreshed after T5–T9, the floating nav bar (D33), onboarding before sign-up (D34) and the Categories step (D35)",
