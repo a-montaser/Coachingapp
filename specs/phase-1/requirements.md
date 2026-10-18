@@ -1,12 +1,13 @@
 # Phase 1 — Requirements: MVP, the hobbies-first booking loop
 
 Status: **APPROVED 17 Oct 2026** with the answers in "Resolved" below (they override any text above).
+**Revised 18 Oct 2026** for owner changes D31–D35 (`docs/DECISIONS.md`): onboarding before sign-up, a Categories step, the floating navigation bar, Phase 1 Profile scope. Revised lines are marked *(D3x)*.
 Sources: `docs/DESIGN_HANDOFF.md` (§1 and §6–§14 win on conflict), the design canvas https://claude.ai/artifact/T5HG8bjkJWWg48RsUwrGhC (its 10 artboards are the look) and its design system https://claude.ai/artifact/MEfnwmckrfLtf6ccKrnFbW (D23, D24).
 
 ## Objective
 A new learner in Cairo can do all of the following on an iPhone in Expo Go:
-- sign up with a phone OTP
-- pick hobbies and switch categories in the tray
+- pick categories and hobbies, then sign up with a phone OTP *(D34, D35)*
+- switch categories in the tray
 - book a workshop seat and a 1:1 lesson, paying in the gateway sandbox or at the venue
 - see both bookings in Bookings, and cancel one with the correct refund
 
@@ -19,7 +20,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 | `data` | Schema, RLS, §14 seed, atomic booking/cancel/reschedule functions | — |
 | `auth` | Phone OTP sign-up and sign-in, session, sign out | data |
 | `shell` | Tab navigator, persisted settings (theme, language, category), Profile, Family & kids, Language, Appearance, Sign out | auth |
-| `onboarding` | Welcome → Sign up → Verify → Interests → Levels → Who & where | auth, shell |
+| `onboarding` | Welcome → Categories → Interests → Levels → Who & where → Sign up → Verify *(D34, D35)* | auth, shell |
 | `discovery` | Home ×4 with the tray, Explore (search, filters, sort), Instructor profile, Workshop | data, shell |
 | `booking` | Book (1:1, group, kids), workshop seats, Review & pay, promo, Confirmed | discovery |
 | `payments` | `PaymentProvider` interface: gateway sandbox + pay at the venue; Edge Functions for checkout, webhook and refund | booking |
@@ -53,21 +54,23 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
   - "Change number" goes back
 - R2.3 The session persists across launches. Sign out goes through a confirmation sheet (§7.14).
 - R2.4 Dev and CI use Supabase test numbers: `+20 100 234 5678` signs in with code `482917` (§14). No SMS is sent.
-- **AC:** A Maestro flow signs up with the test number, verifies, and lands on Interests. Unit tests cover the phone validation.
+- R2.5 *(D34)* Sign up comes after onboarding for new learners. Answers given while signed out are kept on the device and written to the account right after Verify, before Home shows; an account that is already onboarded keeps its saved answers. If that save fails, the learner lands on Categories signed in, with the picks kept. "Sign in" on Welcome goes straight to Sign up (returning learners skip onboarding).
+- **AC:** A Maestro flow finishes onboarding, signs up with the test number, verifies, and lands on Home with the picks saved. Unit tests cover the phone validation and the save-after-verify step.
 
 ### R3 `shell`
 - R3.1 Five tabs (Home, Explore, Bookings, Messages, Profile), using the Phase 0 `TabBar` that minimises on scroll. Pushed screens hide the tab bar; tapping a tab returns to its root (§6.1).
 - R3.2 Theme, language and category persist across launches.
 - R3.3 Language changes take effect immediately, in JS-level RTL (D26).
-- R3.4 Profile (§7.14), limited to Phase 1:
+- R3.4 Profile (§7.14), limited to Phase 1 *(D31: no Edit button, no Members' Circle card)*:
   - header with photo slot, name and "Area · member since 2026"
-  - "Levels" list with "Change interests and levels", which reopens onboarding steps 1–2
+  - "Levels" list with "Change interests and levels", which reopens Categories → Interests → Levels and returns to Profile *(D35)*
   - Settings: Family & kids, Language (sheet), Appearance (sheet: Light / Dark / System), Sign out
 - R3.5 Family & kids (§7.14):
   - an explainer line
-  - child cards with name, age and Edit
+  - child cards with name, age and Edit (no per-child discipline · level: not in the schema, D31), any pending kids booking as a warning row, and "Book a session for <name>"
   - "Add a family member" dashed card, opening a sheet with first name and age 6–14, validated
   - info rows
+- R3.7 *(D33)* Navigation bar on pushed screens (canvas Instructor/Workshop artboards): a round glass back button and the trailing actions (or a text action such as "Skip") in one glass cluster with hairline dividers, 16 pt in from the sides; no inline title except on hero detail screens once the hero scrolls away (§8).
 - R3.6 Messages tab: the §5 empty state ("No messages yet · Chat with instructors after you book" [copy to confirm]). Chat is Phase 2.
 - **AC:** RNTL tests cover persistence of theme, language and category and family-member validation. Maestro switches the theme and language from Profile.
 
@@ -76,22 +79,23 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
   - full-bleed hero illustration [see Open question 1]
   - Playfair wordmark and a glass "Sign in" button
   - surface panel with the brandHero headline "Learn something new in Cairo." **[OPEN: final copy]**, one line of copy, and the "Get started" primary
-- R4.2 Interests (§7.3, canvas artboard 6):
-  - progress 1 of 3
-  - four sections with "N picked"
+- R4.2 *(D35)* Categories (new first step): Hobbies, Sports, Education and Languages as their own list, multi-select, each row listing a few of its disciplines; progress fills half of segment 1; "Continue", or disabled "Pick at least one".
+- R4.3 Interests (§7.3, canvas artboard 6):
+  - progress 1 of 3; a back button
+  - only the categories picked in R4.2, together on one page, each with "N picked"; picks from an un-picked category are dropped *(D35)*
   - 3-column tiles: 92 high, brand-tint when selected, tick badge
   - sticky "Continue · N picked", or disabled "Pick at least one"
-- R4.3 Levels:
-  - glass nav capsule: back · the current pick's name · Skip
-  - per pick: a 56 pt icon, "How experienced are you with pottery?", and four level rows with 4-bar glyphs that advance on tap
-  - a "You're all set" summary
+- R4.4 Levels:
+  - floating glass back button and a glass "Skip" (R3.7) *(D33: the pick's name is in the question, not the bar)*
+  - per pick: a 56 pt icon, "How experienced are you with pottery?" (one form for every pick, D32), and four level rows with 4-bar glyphs and a one-line description that advance on tap
+  - a "You're all set" summary; tapping a pick edits it and returns to the summary
   - the progress bar fills per item answered
-- R4.4 Who & where:
+- R4.5 Who & where:
   - radio: Me / My child / Both
-  - area chips: New Cairo, Zamalek, Maadi, Sheikh Zayed, Heliopolis, Downtown ("Use my location": Open question 9)
+  - area chips: New Cairo, Zamalek, Maadi, Sheikh Zayed, Heliopolis, Downtown, and "Use my location" (nearest area; the position itself is not stored, D32)
   - instructor preference chips
-  - "Show my picks", which goes to Home
-- **AC:** Maestro covers onboarding from Welcome to Home with 2 hobbies picked. Interests, levels and preferences are saved to `interests` and `profiles`.
+  - "Show my picks": signed in → Home (and Family & kids for My child / Both); signed out → Sign up *(D34)*. "Skip" does the same with nothing set
+- **AC:** Maestro covers Welcome → Categories → Interests (2 hobbies) → Levels → Who & where → Sign up → Verify → Home *(D34)*. Interests, levels and preferences are saved to `interests` and `profiles`.
 
 ### R5 `discovery`
 - R5.1 Home per category (§7.4, canvas artboards 1–5):
@@ -164,7 +168,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 
 ### R8 `manage`
 - R8.1 Bookings (§7.11):
-  - glass nav capsule with "Bookings" and "+" (New booking → Explore)
+  - "Bookings" header with "+" (New booking → Explore). **Open (decide at T17):** handoff §7.11 and the DS "Bookings" preview use the one-capsule bar; D33 moved pushed screens to floating buttons. Bookings is a tab root, so ask the owner which one
   - segmented "Upcoming · N | Past"
   - cards with date tile, title, time · type, venue and status pill
   - actions: upcoming shows Directions + Reschedule; past shows Book again; cancelled shows Book again + Details
@@ -197,8 +201,8 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 
 ### R10 `e2e`
 - R10.1 Maestro flows in CI on an Android emulator against a debug build and local Supabase:
-  1. sign up
-  2. onboarding
+  1. onboarding (Categories → Interests → Levels → Who & where)
+  2. sign up and verify, landing on Home with the picks saved *(D34)*
   3. tray switch
   4. book workshop seats
   5. book 1:1
@@ -211,7 +215,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 
 ## Phase 1 "done when" (prompt)
 1. A new user on the iPhone (Expo Go):
-   - signs up and picks hobbies
+   - picks categories and hobbies, then signs up *(D34, D35)*
    - switches categories in the tray
    - books a workshop seat and a 1:1 lesson, paying in the sandbox
    - sees both in Bookings

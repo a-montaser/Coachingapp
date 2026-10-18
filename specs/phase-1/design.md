@@ -1,15 +1,15 @@
 # Phase 1 — Technical design
 
-Status: **APPROVED 17 Oct 2026**; the "Resolved" answers in requirements.md override this text where they differ (statuses, hold time, providers, tabs). The schema (§2) is locked once you approve this spec; changing it after that needs your sign-off (prompt rule).
+Status: **APPROVED 17 Oct 2026**; revised 18 Oct 2026 for D33–D35 (routes, journey gate, onboarding state); the "Resolved" answers in requirements.md override this text where they differ (statuses, hold time, providers, tabs). The schema (§2) is locked once you approve this spec; changing it after that needs your sign-off (prompt rule).
 
 ## 1. Shape of the app
 
 ```
 apps/mobile/src/
   app/                         Expo Router routes
-    _layout.tsx                providers: QueryClient, settings hydration, auth gate, theme, direction
+    _layout.tsx                providers: QueryClient, settings hydration, journey gate (below), theme, direction
     (auth)/welcome.tsx  sign-up.tsx  verify.tsx
-    (onboarding)/interests.tsx  levels.tsx  who-where.tsx
+    (onboarding)/categories.tsx  interests.tsx  levels.tsx  who-where.tsx   (open to everyone, D34)
     (tabs)/_layout.tsx         iOS: NativeTabs (Apple tab bar, minimize on scroll); Android: Tabs + Phase 0 TabBar
     (tabs)/index.tsx  explore.tsx  bookings.tsx  messages.tsx  profile.tsx
     instructor/[id].tsx  workshop/[id].tsx  book/[offeringId].tsx  review.tsx
@@ -27,6 +27,8 @@ supabase/
   functions/create-checkout/   functions/payment-webhook/   functions/refund/
 ```
 
+- **Journey gate** *(D34)*: signed out → `(auth)` (Welcome); signed in and onboarded → `(tabs)`; signed in, not onboarded → `(onboarding)`. `(onboarding)` is unguarded and listed after `(tabs)`, so new learners reach it from Welcome before sign-up, and Profile reopens it. Right after Verify, `useApplyDraftAfterSignUp` writes answers kept from a signed-out run (`interests` upsert, `profiles` update with `onboarded_at`) and the gate renders nothing until it finishes.
+- **Onboarding draft** (Zustand, `useOnboardingDraft`): categories, picks, levels, the saved levels (so Profile edits only rewrite what changed), and step-3 answers when finished signed out. In memory only (`shortcut:` comment): killing the app before Verify loses it.
 - **Server state:** TanStack Query only. **Client state:** Zustand only (theme, language, category, plus the Book screen's draft selection).
 - **Pure rules** (price, promo, refund outcome, policy line, availability, reminder time) live in `data/rules.ts`. The same rules are enforced in SQL. Both sides are tested against the same table of cases.
 
@@ -128,7 +130,8 @@ interface PaymentProvider {
 
 - Each screen is built from its canvas artboard (D23): **Main / HomeSports / HomeEducation / HomeLanguages / HomeTray, Interests, Explore, Instructor, Workshop**. The handoff wins where they conflict, and every deviation is logged.
 - Screens with no artboard (Welcome, Sign up, Verify, Levels, Who & where, Book, Review & pay, Confirmed, Bookings, Booking detail, Profile, Family) follow the handoff §7 text, the design-system READMEs and the Phase 0 primitives.
-- **New shared pieces** (small, inside `ui/`): EmptyState (§5), Stepper (workshop seats), Hero (image + scrim + content sheet overlapping by 28), ConfirmationRing (§5, §8), OtpBoxes, LevelGlyph (4 bars), Tile (Interests, 92 high), DashedCard (Add a family member).
+- **New shared pieces** (small, inside `ui/`): EmptyState (§5), Stepper (workshop seats), Hero (image + scrim + content sheet overlapping by 28), ConfirmationRing (§5, §8), OtpBoxes, LevelGlyph (4 bars), InterestTile (92 high), DashedCard (Add a family member), SheetHeader (sheets' close · title).
+- **NavigationBar** *(D33)*: floating glass back circle + one trailing glass cluster (icon or text actions), not the one-capsule `.navglass`.
 
 ## 8. Testing and CI
 
