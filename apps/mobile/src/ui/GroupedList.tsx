@@ -18,6 +18,8 @@ export type GroupedRow = {
   destructive?: boolean;
   /** Option lists in sheets (Language, Appearance): a check instead of the chevron. */
   selected?: boolean;
+  /** With `selected`: several can be on at once (checkbox, not radio). */
+  multiple?: boolean;
 };
 
 const g = component.groupedList;
@@ -60,7 +62,9 @@ export function GroupedList({ rows }: { rows: GroupedRow[] }) {
             )}
             {row.onPress ? (
               <Pressable
-                accessibilityRole={row.selected !== undefined ? 'radio' : 'button'}
+                accessibilityRole={
+                  row.selected === undefined ? 'button' : row.multiple ? 'checkbox' : 'radio'
+                }
                 accessibilityState={row.selected !== undefined ? { checked: row.selected } : undefined}
                 onPress={row.onPress}
               >

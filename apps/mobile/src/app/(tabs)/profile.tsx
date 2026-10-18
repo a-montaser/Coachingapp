@@ -88,7 +88,7 @@ export default function Profile() {
             {
               key: 'change',
               title: t('profile.changeInterests'),
-              onPress: () => router.push({ pathname: '/interests', params: { edit: '1' } }),
+              onPress: () => router.push({ pathname: '/categories', params: { edit: '1' } }),
             },
           ]}
         />

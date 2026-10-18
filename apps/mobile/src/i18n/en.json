@@ -142,6 +142,8 @@
   },
   "onboarding": {
     "progress": "Setup progress",
+    "categoriesTitle": "What are you into?",
+    "categoriesSub": "Pick one or more. Next, you'll choose what to learn in each.",
     "interestsTitle": "What do you want to learn?",
     "interestsSub": "Pick anything that sounds fun. You can switch between hobbies, sports, education and languages from Home at any time.",
     "picked": "{{count}} picked",

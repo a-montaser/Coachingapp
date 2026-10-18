@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 import '@/i18n';
+import Categories from '@/app/(onboarding)/categories';
 import Interests from '@/app/(onboarding)/interests';
 import Levels from '@/app/(onboarding)/levels';
 import WhoWhere from '@/app/(onboarding)/who-where';
@@ -44,7 +45,8 @@ jest.mock('./auth', () => ({
   ...jest.requireActual('./auth'),
   useSession: () => ({ session: mockUserId ? { user: { id: mockUserId } } : null, loading: false }),
 }));
-jest.mock('./account', () => ({ useInterests: () => ({ data: [] }) }));
+let mockSaved: { discipline_id: string; level: string | null }[] = [];
+jest.mock('./account', () => ({ useInterests: () => ({ data: mockSaved }) }));
 
 const mockAreas: Area[] = [
   { id: 'zamalek', name_en: 'Zamalek', name_ar: null, lat: 30.0609, lng: 31.2197 },
@@ -80,6 +82,7 @@ beforeEach(() => {
   jest.clearAllMocks();
   mockCalls.length = 0;
   mockUserId = 'u1';
+  mockSaved = [];
   useOnboardingDraft.getState().reset();
 });
 
@@ -104,14 +107,40 @@ test('saving interests removes un-picked rows and upserts only new or changed on
   ]);
 });
 
-test('Interests: disabled until something is picked, then counts picks per section and overall', async () => {
+test('Categories: the four categories as their own list; Continue once at least one is picked (D35)', async () => {
+  await render(wrap(<Categories />));
+  expect(screen.getByRole('checkbox', { name: /^Hobbies/ })).toBeOnTheScreen();
+  expect(screen.getByText('Pottery, Oud')).toBeOnTheScreen(); // what the category holds
+  expect(screen.getByRole('button', { name: 'Pick at least one' })).toBeDisabled();
+  await fireEvent.press(screen.getByRole('checkbox', { name: /^Hobbies/ }));
+  await fireEvent.press(screen.getByRole('checkbox', { name: /^Languages/ }));
+  expect(screen.getByRole('checkbox', { name: /^Languages/ })).toBeChecked();
+  expect(screen.getByRole('checkbox', { name: /^Sports/ })).not.toBeChecked();
+  await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+  expect(useOnboardingDraft.getState().categories).toEqual(['hobbies', 'languages']);
+  expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/interests', params: {} });
+});
+
+test('Categories from Profile start from the categories of the saved picks', async () => {
+  mockSaved = [{ discipline_id: 'padel', level: 'pro' }];
+  await render(wrap(<Categories />));
+  expect(screen.getByRole('checkbox', { name: /^Sports/ })).toBeChecked();
+  expect(useOnboardingDraft.getState()).toMatchObject({ picks: ['padel'], levels: { padel: 'pro' } });
+});
+
+test('Interests shows only the picked categories; dropped categories lose their picks', async () => {
+  useOnboardingDraft.setState({ categories: ['hobbies', 'languages'], picks: ['padel'] });
   await render(wrap(<Interests />));
+  expect(screen.getByRole('header', { name: 'Hobbies' })).toBeOnTheScreen();
+  expect(screen.queryByRole('header', { name: 'Sports' })).toBeNull();
+  expect(screen.queryByRole('checkbox', { name: 'Padel' })).toBeNull();
   expect(screen.getByRole('button', { name: 'Pick at least one' })).toBeDisabled();
   await fireEvent.press(screen.getByRole('checkbox', { name: 'Pottery' }));
   await fireEvent.press(screen.getByRole('checkbox', { name: 'French' }));
   expect(screen.getByRole('checkbox', { name: 'Pottery' })).toBeChecked();
   expect(screen.getAllByText('1 picked')).toHaveLength(2);
   await fireEvent.press(screen.getByRole('button', { name: 'Continue · 2 picked' }));
+  expect(useOnboardingDraft.getState().picks).toEqual(['pottery', 'french']);
   expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/levels', params: {} });
 });
 
@@ -165,10 +194,10 @@ describe('onboarding before sign-up (D34)', () => {
     mockUserId = undefined;
   });
 
-  test('Welcome: Get started opens Interests; Sign in goes straight to the phone number', async () => {
+  test('Welcome: Get started opens the categories; Sign in goes straight to the phone number', async () => {
     await render(wrap(<Welcome />));
     await fireEvent.press(screen.getByRole('button', { name: 'Get started' }));
-    expect(mockRouter.push).toHaveBeenCalledWith('/interests');
+    expect(mockRouter.push).toHaveBeenCalledWith('/categories');
     await fireEvent.press(screen.getByRole('button', { name: 'Sign in' }));
     expect(mockRouter.push).toHaveBeenCalledWith('/sign-up');
   });

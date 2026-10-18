@@ -1,11 +1,8 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
-import { useInterests } from '@/data/account';
-import { useSession } from '@/data/auth';
 import { CATEGORIES, disciplineName, useDisciplines, useOnboardingDraft } from '@/data/onboarding';
 import { formatNumber } from '@/i18n/format';
 import { useLang } from '@/i18n';
@@ -21,8 +18,8 @@ const COLUMNS = 3;
 const tile = component.interestTile;
 
 /**
- * §7.3 step 1 (canvas artboard 6): four sections of 3-column tiles, sticky "Continue · N picked".
- * `edit=1` when reopened from Profile: starts from the saved picks and shows a back button.
+ * §7.3 step 1 (canvas artboard 6): 3-column tiles, sticky "Continue · N picked". Only the categories
+ * picked on the previous page are shown, together on this one page (D35). `edit=1` from Profile.
  */
 export default function Interests() {
   const { c } = useTheme();
@@ -31,24 +28,17 @@ export default function Interests() {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const edit = useLocalSearchParams<{ edit?: string }>().edit === '1';
-  const userId = useSession().session?.user.id;
   const disciplines = useDisciplines().data ?? [];
-  const saved = useInterests(userId).data;
-  const { picks, toggle, load } = useOnboardingDraft();
-
-  // Start from what's saved (Profile edits, or a learner who left onboarding half-way), once per visit,
-  // so a background refetch never wipes taps made since.
-  const loaded = useRef(false);
-  useEffect(() => {
-    if (saved && !loaded.current) {
-      loaded.current = true;
-      load(Object.fromEntries(saved.map((i) => [i.discipline_id, i.level])));
-    }
-  }, [saved, load]);
+  const { categories, picks: allPicks, toggle } = useOnboardingDraft();
+  const shown = CATEGORIES.filter((cat) => categories.includes(cat));
+  // Picks from a category un-picked on the previous page don't count and are dropped on Continue.
+  const picks = allPicks.filter((id) =>
+    disciplines.some((d) => d.id === id && categories.includes(d.category_id)),
+  );
 
   const tileWidth = (width - layout.sideMargin * 2 - tile.gap * (COLUMNS - 1)) / COLUMNS;
   const count = (n: number) => formatNumber(n, lang);
-  const top = insets.top + (edit ? component.navBar.height : 0) + space.space4;
+  const top = insets.top + component.navBar.height + space.space4;
 
   return (
     <View style={[styles.screen, { backgroundColor: c.bg }]}>
@@ -68,7 +58,7 @@ export default function Interests() {
           </T>
         </View>
 
-        {CATEGORIES.map((cat) => {
+        {shown.map((cat) => {
           const items = disciplines.filter((d) => d.category_id === cat);
           const picked = items.filter((d) => picks.includes(d.id)).length;
           return (
@@ -115,13 +105,16 @@ export default function Interests() {
           <Button
             label={t('onboarding.continuePicked', { count: count(picks.length) })}
             variant="primary"
-            onPress={() => router.push({ pathname: '/levels', params: edit ? { edit: '1' } : {} })}
+            onPress={() => {
+              useOnboardingDraft.setState({ picks });
+              router.push({ pathname: '/levels', params: edit ? { edit: '1' } : {} });
+            }}
           />
         ) : (
           <Button label={t('onboarding.pickOne')} disabled onPress={() => {}} />
         )}
       </View>
-      {edit && <NavigationBar onBack={() => router.back()} />}
+      <NavigationBar onBack={() => router.back()} />
     </View>
   );
 }

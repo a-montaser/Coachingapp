@@ -49,7 +49,7 @@ export default function Welcome() {
           {t('auth.welcomeBody')}
         </T>
         {/* New learners pick interests first and create the account last (D34); "Sign in" goes straight to the phone. */}
-        <Button label={t('auth.getStarted')} variant="primary" onPress={() => router.push('/interests')} />
+        <Button label={t('auth.getStarted')} variant="primary" onPress={() => router.push('/categories')} />
       </View>
     </View>
   );

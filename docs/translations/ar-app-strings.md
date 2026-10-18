@@ -141,3 +141,5 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `onboarding.pref.male` | Onboarding | Male |  |
 | `onboarding.changeLater` | Onboarding | You can change any of this later in Profile. |  |
 | `onboarding.showPicks` | Onboarding | Show my picks |  |
+| `onboarding.categoriesTitle` | Onboarding | What are you into? |  |
+| `onboarding.categoriesSub` | Onboarding | Pick one or more. Next, you'll choose what to learn in each. |  |

@@ -63,26 +63,33 @@ export function nearestArea(areas: Area[], lat: number, lng: number): Area | nul
  * shortcut: in memory only; if the app is killed between step 3 and the code, onboarding starts again.
  */
 type Draft = {
+  /** Step 1: which of the four categories to show disciplines for. */
+  categories: Category[];
   picks: string[];
   levels: Record<string, Level | null>;
   saved: Record<string, Level | null>;
   answers: Partial<WhoWhere>;
   completed: boolean;
+  toggleCategory: (c: Category) => void;
   toggle: (id: string) => void;
   setLevel: (id: string, level: Level | null) => void;
-  load: (saved: Record<string, Level | null>) => void;
+  load: (saved: Record<string, Level | null>, categories: Category[]) => void;
   complete: (answers: Partial<WhoWhere>) => void;
   reset: () => void;
 };
 
-const empty = { picks: [], levels: {}, saved: {}, answers: {}, completed: false };
+const empty = { categories: [], picks: [], levels: {}, saved: {}, answers: {}, completed: false };
 
 export const useOnboardingDraft = create<Draft>()((set) => ({
   ...empty,
+  toggleCategory: (c) =>
+    set((s) => ({
+      categories: s.categories.includes(c) ? s.categories.filter((x) => x !== c) : [...s.categories, c],
+    })),
   toggle: (id) =>
     set((s) => ({ picks: s.picks.includes(id) ? s.picks.filter((p) => p !== id) : [...s.picks, id] })),
   setLevel: (id, level) => set((s) => ({ levels: { ...s.levels, [id]: level } })),
-  load: (saved) => set({ saved, levels: { ...saved }, picks: Object.keys(saved) }),
+  load: (saved, categories) => set({ saved, categories, levels: { ...saved }, picks: Object.keys(saved) }),
   complete: (answers) => set({ answers, completed: true }),
   reset: () => set(empty),
 }));
