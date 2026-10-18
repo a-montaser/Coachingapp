@@ -1,11 +1,18 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 import '@/i18n';
 import Interests from '@/app/(onboarding)/interests';
 import Levels from '@/app/(onboarding)/levels';
 import WhoWhere from '@/app/(onboarding)/who-where';
-import { nearestArea, saveInterests, useOnboardingDraft, type Area } from './onboarding';
+import Welcome from '@/app/(auth)/welcome';
+import {
+  nearestArea,
+  saveInterests,
+  useApplyDraftAfterSignUp,
+  useOnboardingDraft,
+  type Area,
+} from './onboarding';
 
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), replace: jest.fn(), back: jest.fn(), dismissTo: jest.fn() },
@@ -16,6 +23,7 @@ const mockRouter = jest.requireMock('expo-router').router;
 
 // A tiny stand-in for the Supabase query builder: records each call, resolves with no error.
 const mockCalls: unknown[][] = [];
+let mockUserId: string | undefined = 'u1';
 const mockBuilder: Record<string, jest.Mock> = {};
 for (const m of ['delete', 'in', 'upsert', 'update', 'eq']) {
   mockBuilder[m] = jest.fn((...a: unknown[]) => {
@@ -34,7 +42,7 @@ jest.mock('./supabase', () => ({
 }));
 jest.mock('./auth', () => ({
   ...jest.requireActual('./auth'),
-  useSession: () => ({ session: { user: { id: 'u1' } }, loading: false }),
+  useSession: () => ({ session: mockUserId ? { user: { id: mockUserId } } : null, loading: false }),
 }));
 jest.mock('./account', () => ({ useInterests: () => ({ data: [] }) }));
 
@@ -71,7 +79,8 @@ const wrap = (ui: ReactNode) => <QueryClientProvider client={new QueryClient()}>
 beforeEach(() => {
   jest.clearAllMocks();
   mockCalls.length = 0;
-  useOnboardingDraft.setState({ picks: [], levels: {}, saved: {} });
+  mockUserId = 'u1';
+  useOnboardingDraft.getState().reset();
 });
 
 test('nearest area: a point in Fifth Settlement is New Cairo, one on the Corniche is Maadi', () => {
@@ -149,4 +158,69 @@ test('Who & where: Skip still finishes onboarding, with nothing else set', async
   await waitFor(() => expect(mockRouter.replace).toHaveBeenCalledWith('/'));
   expect(mockRouter.push).not.toHaveBeenCalled();
   expect(Object.keys(mockCalls.find((c) => c[0] === 'update')![1] as object)).toEqual(['onboarded_at']);
+});
+
+describe('onboarding before sign-up (D34)', () => {
+  beforeEach(() => {
+    mockUserId = undefined;
+  });
+
+  test('Welcome: Get started opens Interests; Sign in goes straight to the phone number', async () => {
+    await render(wrap(<Welcome />));
+    await fireEvent.press(screen.getByRole('button', { name: 'Get started' }));
+    expect(mockRouter.push).toHaveBeenCalledWith('/interests');
+    await fireEvent.press(screen.getByRole('button', { name: 'Sign in' }));
+    expect(mockRouter.push).toHaveBeenCalledWith('/sign-up');
+  });
+
+  test('signed out, Levels and Who & where save nothing and end on Sign up with the answers kept', async () => {
+    useOnboardingDraft.setState({ picks: ['oud'] });
+    const levels = await render(wrap(<Levels />));
+    await fireEvent.press(screen.getByRole('radio', { name: /^Beginner/ }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(mockRouter.push).toHaveBeenCalledWith('/who-where');
+    await levels.unmount();
+
+    await render(wrap(<WhoWhere />));
+    await fireEvent.press(screen.getByRole('radio', { name: /^Me/ }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Show my picks' }));
+    expect(mockRouter.push).toHaveBeenCalledWith('/sign-up');
+    expect(mockCalls).toEqual([]);
+    expect(useOnboardingDraft.getState()).toMatchObject({
+      completed: true,
+      picks: ['oud'],
+      levels: { oud: 'beginner' },
+      answers: { who_for: 'me', instructor_pref: 'none' },
+    });
+  });
+
+  test('after the code, the gate writes the kept answers to the new account, then clears them', async () => {
+    useOnboardingDraft.setState({ picks: ['oud'], levels: { oud: 'beginner' } });
+    useOnboardingDraft.getState().complete({ who_for: 'me' });
+    const profile = { onboarded_at: null } as never;
+    const seen: boolean[] = [];
+    await renderHook(() => seen.push(useApplyDraftAfterSignUp('u2', profile)), {
+      wrapper: ({ children }) => wrap(children),
+    });
+    await waitFor(() => expect(useOnboardingDraft.getState().completed).toBe(false));
+    expect(seen[0]).toBe(true); // the gate shows nothing until the answers are saved
+    const upsert = mockCalls.find((c) => c[0] === 'upsert')![1] as {
+      user_id: string;
+      discipline_id: string;
+    }[];
+    expect(upsert).toMatchObject([{ user_id: 'u2', discipline_id: 'oud', level: 'beginner' }]);
+    expect(mockCalls.find((c) => c[0] === 'update')![1]).toMatchObject({ who_for: 'me' });
+  });
+
+  test('a returning, already onboarded account ignores answers kept from a new run', async () => {
+    useOnboardingDraft.getState().complete({});
+    const { result } = await renderHook(
+      () => useApplyDraftAfterSignUp('u1', { onboarded_at: 'x' } as never),
+      {
+        wrapper: ({ children }) => wrap(children),
+      },
+    );
+    expect(result.current).toBe(false);
+    expect(mockCalls).toEqual([]);
+  });
 });

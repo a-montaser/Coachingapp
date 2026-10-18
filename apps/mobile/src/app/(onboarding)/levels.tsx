@@ -64,7 +64,7 @@ export default function Levels() {
   };
 
   const finish = async () => {
-    if (!userId) return;
+    if (!userId) return router.push('/who-where'); // signed out: saved after sign-up (D34)
     setSaving(true);
     setError(false);
     try {

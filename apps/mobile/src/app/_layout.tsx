@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { type as typeScale } from '@cfa/tokens';
 import { useProfile, useSession } from '@/data/auth';
+import { useApplyDraftAfterSignUp } from '@/data/onboarding';
 import { queryClient } from '@/data/queryClient';
 import { useIsRTL } from '@/i18n';
 import { useSettings } from '@/theme/settings';
@@ -14,8 +15,8 @@ import { useApplyThemeOverride, useTheme } from '@/theme/useTheme';
 import { useSheetOptions } from '@/ui/Sheet';
 
 /**
- * The journey gate (§6.1): signed out → Welcome; signed in but not onboarded → Interests;
- * otherwise the tabs. Screens pushed above the tabs (instructor, workshop, book…) hide the tab bar.
+ * The journey gate: signed out → Welcome (then onboarding, then sign-up, D34); signed in but not
+ * onboarded → Interests; otherwise the tabs. Screens pushed above the tabs (instructor, workshop, book…) hide the tab bar.
  */
 function RootNavigator() {
   const { c } = useTheme();
@@ -23,7 +24,8 @@ function RootNavigator() {
   const direction = useIsRTL() ? 'rtl' : 'ltr';
   const { session, loading } = useSession();
   const profile = useProfile(session?.user.id);
-  if (loading || (session && profile.isLoading)) return null;
+  const applying = useApplyDraftAfterSignUp(session?.user.id, profile.data);
+  if (loading || (session && profile.isLoading) || applying) return null;
   const signedIn = Boolean(session);
   const onboarded = Boolean(profile.data?.onboarded_at);
 
@@ -40,10 +42,9 @@ function RootNavigator() {
         <Stack.Screen name="appearance" options={sheet} />
         <Stack.Screen name="sign-out" options={sheet} />
       </Stack.Protected>
-      {/* After the tabs, so a signed-in, onboarded learner lands Home; Profile reopens steps 1–2 from here. */}
-      <Stack.Protected guard={signedIn}>
-        <Stack.Screen name="(onboarding)" />
-      </Stack.Protected>
+      {/* Open to everyone: new learners onboard before sign-up (D34), signed-in ones who never finished
+          land here, and Profile reopens steps 1–2. Listed after the tabs so an onboarded learner lands Home. */}
+      <Stack.Screen name="(onboarding)" />
       <Stack.Screen name="gallery" />
       <Stack.Screen name="gallery-sheet" options={sheet} />
     </Stack>

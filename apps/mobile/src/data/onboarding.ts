@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { create } from 'zustand';
 import type { Category } from '@/theme/settings';
 import type { Level } from './account';
@@ -56,26 +57,34 @@ export function nearestArea(areas: Area[], lat: number, lng: number): Area | nul
 }
 
 /**
- * Picks and levels while the learner moves between Interests and Levels; saved when Levels finishes.
+ * Onboarding answers while the learner moves through the three steps, which come before sign-up (D34).
  * `saved` holds what the database had, so editing from Profile only rewrites what changed.
+ * `completed` + `answers`: finished while signed out; written to the account right after sign-up.
+ * shortcut: in memory only; if the app is killed between step 3 and the code, onboarding starts again.
  */
 type Draft = {
   picks: string[];
   levels: Record<string, Level | null>;
   saved: Record<string, Level | null>;
+  answers: Partial<WhoWhere>;
+  completed: boolean;
   toggle: (id: string) => void;
   setLevel: (id: string, level: Level | null) => void;
   load: (saved: Record<string, Level | null>) => void;
+  complete: (answers: Partial<WhoWhere>) => void;
+  reset: () => void;
 };
 
+const empty = { picks: [], levels: {}, saved: {}, answers: {}, completed: false };
+
 export const useOnboardingDraft = create<Draft>()((set) => ({
-  picks: [],
-  levels: {},
-  saved: {},
+  ...empty,
   toggle: (id) =>
     set((s) => ({ picks: s.picks.includes(id) ? s.picks.filter((p) => p !== id) : [...s.picks, id] })),
   setLevel: (id, level) => set((s) => ({ levels: { ...s.levels, [id]: level } })),
   load: (saved) => set({ saved, levels: { ...saved }, picks: Object.keys(saved) }),
+  complete: (answers) => set({ answers, completed: true }),
+  reset: () => set(empty),
 }));
 
 /** Writes the draft to `interests`: removes un-picked rows, upserts new or changed ones as self-rated. */
@@ -109,4 +118,30 @@ export async function finishOnboarding(userId: string, answers: Partial<WhoWhere
     .update({ ...answers, onboarded_at: new Date().toISOString() })
     .eq('id', userId);
   if (error) throw error;
+}
+
+/**
+ * Right after sign-up: writes onboarding finished while signed out to the new account, then lets the
+ * gate open Home. Returns true while that is pending, so the gate shows nothing in between.
+ * If saving fails, the learner lands on Interests signed in, with their picks still there, and finishes again.
+ */
+export function useApplyDraftAfterSignUp(userId: string | undefined, profile: Profile | undefined) {
+  const qc = useQueryClient();
+  const completed = useOnboardingDraft((s) => s.completed);
+  const pending = Boolean(userId && profile && !profile.onboarded_at && completed);
+  useEffect(() => {
+    if (!pending || !userId) return;
+    (async () => {
+      try {
+        await saveInterests(userId);
+        await finishOnboarding(userId, useOnboardingDraft.getState().answers);
+        await qc.invalidateQueries({ queryKey: ['profile', userId] });
+        qc.invalidateQueries({ queryKey: ['interests', userId] });
+        useOnboardingDraft.getState().reset();
+      } catch {
+        useOnboardingDraft.setState({ completed: false });
+      }
+    })();
+  }, [pending, userId, qc]);
+  return pending;
 }

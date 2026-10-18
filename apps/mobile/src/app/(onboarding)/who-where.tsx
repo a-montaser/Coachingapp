@@ -7,7 +7,13 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useSession, type Profile } from '@/data/auth';
-import { finishOnboarding, nearestArea, useAreas, type WhoWhere } from '@/data/onboarding';
+import {
+  finishOnboarding,
+  nearestArea,
+  useAreas,
+  useOnboardingDraft,
+  type WhoWhere,
+} from '@/data/onboarding';
 import { useLang } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
@@ -64,7 +70,11 @@ export default function WhoWhereScreen() {
   };
 
   const finish = async (answers: Partial<WhoWhere>) => {
-    if (!userId) return;
+    if (!userId) {
+      // Signed out: keep the answers and create the account; the gate saves them after the code (D34).
+      useOnboardingDraft.getState().complete(answers);
+      return router.push('/sign-up');
+    }
     setSaving(true);
     setError(false);
     try {

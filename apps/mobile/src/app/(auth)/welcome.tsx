@@ -48,7 +48,8 @@ export default function Welcome() {
         <T variant="callout" color={c.label2}>
           {t('auth.welcomeBody')}
         </T>
-        <Button label={t('auth.getStarted')} variant="primary" onPress={() => router.push('/sign-up')} />
+        {/* New learners pick interests first and create the account last (D34); "Sign in" goes straight to the phone. */}
+        <Button label={t('auth.getStarted')} variant="primary" onPress={() => router.push('/interests')} />
       </View>
     </View>
   );
