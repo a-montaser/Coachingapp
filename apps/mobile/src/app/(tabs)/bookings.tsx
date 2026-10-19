@@ -80,7 +80,7 @@ export default function Bookings() {
         ? [
             {
               label: t('confirmed.directions'),
-              onPress: () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng, b.venue_name)),
+              onPress: () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng)),
             },
             ...(canReschedule(b, now)
               ? [

@@ -1,5 +1,33 @@
 [
  {
+  "at": "2026-10-19T19:41:30.690Z",
+  "commit": "2851996",
+  "note": "Maps are Google: Directions open Google Maps; Booking detail shows a Google map picture once the key is set (D52)",
+  "nodes": 1182,
+  "links": 3879,
+  "communities": 56,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_bookings_staticmapurl",
+    "l": "staticMapUrl()",
+    "c": 3,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "docs_decisions_d52",
+    "l": "D52: Google maps (Directions, Static API header)",
+    "c": 25,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 3,
+  "files": [
+   "apps/mobile/src/data/bookings.ts",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-19T13:37:42.694Z",
   "commit": "206fdaa",
   "note": "T18: Cancel sheet with the refund outcome, Reschedule to another open time (same ref), app-wide toast; checked on the hosted project (D51)",

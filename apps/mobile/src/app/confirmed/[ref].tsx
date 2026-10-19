@@ -49,7 +49,7 @@ export default function Confirmed() {
       ? { title: t('confirmed.due'), value: formatPrice(b.total_egp, lang) }
       : { title: t('confirmed.paid'), value: formatPrice(b.total_egp, lang) };
   const reminderLabel = t(`remind.${typeof reminder === 'number' ? `m${reminder}` : reminder}`);
-  const directions = () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng, b.venue_name));
+  const directions = () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng));
 
   return (
     <ScrollView

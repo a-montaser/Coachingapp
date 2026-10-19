@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { Platform } from 'react-native';
 import { create } from 'zustand';
+import { component } from '@cfa/tokens';
 import type { Category } from '@/theme/settings';
 import type { PillTone } from '@/ui/Pill';
 import type { Method } from './checkout';
@@ -127,11 +127,25 @@ export function cancelOutcome(
   return { kind: 'late' };
 }
 
-/** Opens the phone's maps app with directions to the venue. */
-export function directionsUrl(lat: number, lng: number, name: string) {
-  return Platform.OS === 'ios'
-    ? `http://maps.apple.com/?daddr=${lat},${lng}`
-    : `geo:${lat},${lng}?q=${lat},${lng}(${encodeURIComponent(name)})`;
+/**
+ * Google Maps directions to the venue (owner, D52): opens the Google Maps app when it's installed,
+ * otherwise Google Maps in the browser, on iOS and Android alike.
+ */
+export const directionsUrl = (lat: number, lng: number) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+
+/**
+ * A still Google map of the venue with its pin (Maps Static API, D52), or null until the owner's key is set
+ * (`EXPO_PUBLIC_GOOGLE_MAPS_KEY`, restricted to the Static Maps API). The key ships in the app by design.
+ */
+export function staticMapUrl(lat: number, lng: number, lang: 'en' | 'ar') {
+  const key = process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  if (!key) return null;
+  const m = component.bookingMap;
+  return (
+    `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${m.zoom}` +
+    `&size=${m.width}x${m.height}&scale=2&markers=${encodeURIComponent(`${lat},${lng}`)}&language=${lang}&key=${key}`
+  );
 }
 
 /** Bookings' discipline filter (the capsule's Filter button). */

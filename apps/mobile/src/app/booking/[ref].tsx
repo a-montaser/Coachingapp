@@ -2,13 +2,20 @@ import { useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, Share, StyleSheet, View } from 'react-native';
+import { Image, Linking, Share, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
-import { bookingPolicy, canCancel, canReschedule, directionsUrl, statusPill } from '@/data/bookings';
+import {
+  bookingPolicy,
+  canCancel,
+  canReschedule,
+  directionsUrl,
+  staticMapUrl,
+  statusPill,
+} from '@/data/bookings';
 import { bookingErrorKey, runCheckout, useMyBooking, type BookingErrorKey } from '@/data/checkout';
 import { testPhoto } from '@/dev/testImages';
 import { useLang } from '@/i18n';
@@ -72,6 +79,7 @@ export default function BookingDetail() {
   const upcoming = ['pending', 'payment_due', 'awaiting_payment', 'confirmed'].includes(status);
   const policy = upcoming && status !== 'pending' ? bookingPolicy(b, now) : null;
   const amount = formatPrice(b.total_egp, lang);
+  const mapPicture = staticMapUrl(b.venue_lat, b.venue_lng, lang);
   const due = status === 'payment_due' || status === 'awaiting_payment';
   const money =
     status === 'cancelled'
@@ -115,29 +123,39 @@ export default function BookingDetail() {
         contentContainerStyle={{ paddingBottom: insets.bottom + layout.sectionGap }}
       >
         <View style={{ height: map.height }}>
-          <MapView
-            style={StyleSheet.absoluteFill}
-            initialRegion={{
-              latitude: b.venue_lat,
-              longitude: b.venue_lng,
-              latitudeDelta: map.delta,
-              longitudeDelta: map.delta,
-            }}
-            scrollEnabled={false}
-            zoomEnabled={false}
-            rotateEnabled={false}
-            pitchEnabled={false}
-            accessibilityLabel={t('booking.mapLabel', { venue: b.venue_name })}
-          >
-            <Marker coordinate={{ latitude: b.venue_lat, longitude: b.venue_lng }} title={b.venue_name} />
-          </MapView>
+          {mapPicture ? (
+            <Image
+              source={{ uri: mapPicture }}
+              style={StyleSheet.absoluteFill}
+              resizeMode="cover"
+              accessibilityLabel={t('booking.mapLabel', { venue: b.venue_name })}
+            />
+          ) : (
+            // shortcut: live Apple map until the Google key is set (D52); Expo Go on iPhone has no Google map view.
+            <MapView
+              style={StyleSheet.absoluteFill}
+              initialRegion={{
+                latitude: b.venue_lat,
+                longitude: b.venue_lng,
+                latitudeDelta: map.delta,
+                longitudeDelta: map.delta,
+              }}
+              scrollEnabled={false}
+              zoomEnabled={false}
+              rotateEnabled={false}
+              pitchEnabled={false}
+              accessibilityLabel={t('booking.mapLabel', { venue: b.venue_name })}
+            >
+              <Marker coordinate={{ latitude: b.venue_lat, longitude: b.venue_lng }} title={b.venue_name} />
+            </MapView>
+          )}
           <View style={styles.directions}>
             <Button
               label={t('confirmed.directions')}
               size="small"
               variant="secondary"
               overMedia
-              onPress={() => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng, b.venue_name))}
+              onPress={() => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng))}
             />
           </View>
         </View>

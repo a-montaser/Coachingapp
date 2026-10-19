@@ -148,7 +148,9 @@ export const component = {
     tickInset: 12,
   }, // §7.3, canvas .pick
   hero: { instructor: 340, workshop: 260, overlap: 28, scrimHeight: 110, iconSize: 64 /* provisional */ }, // §7.6, §7.7, DS .hero .scrimtop
-  bookingMap: { height: 290, delta: 0.01 }, // §7.12 map header; delta = map span in degrees around the venue
+  // §7.12 map header. Google static picture (D52): zoom, and the requested size in points (×2 scale); delta = the
+  // Apple map's span in degrees, used until a Google key is set.
+  bookingMap: { height: 290, zoom: 15, width: 640, delta: 0.01 },
   confirmRing: { size: 88, stroke: 4, tickSize: 40 /* provisional */ }, // §5 Confirmation ring
   noteField: { minHeight: 88 /* provisional */ }, // §7.8 note
   stepper: { button: 36, iconSize: icon.small, valueWidth: 22 }, // §7.7, canvas Workshop .step

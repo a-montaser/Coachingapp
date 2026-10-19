@@ -11,6 +11,8 @@ import {
   canCancel,
   canReschedule,
   cancelOutcome,
+  directionsUrl,
+  staticMapUrl,
   splitBookings,
   statusPill,
   useBookingsFilter,
@@ -247,4 +249,23 @@ test('Reschedule: other open times of the same offering; moving keeps the ref', 
   await waitFor(() => expect(mockRouter.back).toHaveBeenCalled());
   expect(mockMove).toHaveBeenCalledWith('CFA-1', 's-new');
   expect(useToast.getState().message).toMatch(/^Moved to /);
+});
+
+test('maps are Google: directions link, and a static map picture once the key is set (D52)', async () => {
+  expect(directionsUrl(30.03, 31.47)).toBe('https://www.google.com/maps/dir/?api=1&destination=30.03,31.47');
+  const saved = process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  delete process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  expect(staticMapUrl(30.03, 31.47, 'en')).toBeNull(); // the live map stays until the owner's key is set
+  process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY = 'test-key';
+  const url = staticMapUrl(30.03, 31.47, 'ar')!;
+  expect(url).toMatch(/^https:\/\/maps\.googleapis\.com\/maps\/api\/staticmap\?center=30\.03,31\.47&zoom=15/);
+  expect(url).toContain('&markers=30.03%2C31.47&language=ar&key=test-key');
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  await render(<BookingDetail />);
+  expect(screen.getByLabelText('Map showing Cedar Court Club').props.source).toEqual({
+    uri: staticMapUrl(30.03, 31.47, 'en'),
+  });
+  if (saved === undefined) delete process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  else process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY = saved;
 });

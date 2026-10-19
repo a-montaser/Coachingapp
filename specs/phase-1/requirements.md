@@ -237,7 +237,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 5. **Refunds:** cancelling more than 24 h before the start refunds the amount paid automatically through the provider. Inside 24 h, or for same-day bookings: no refund.
 6. **Reschedule:** allowed until 24 h before the start.
 7. **"The evening before":** 20:00 Cairo time, the day before.
-8. **Booking detail:** a real map header (`react-native-maps`).
+8. **Booking detail:** a real map header: a still Google map picture (Maps Static API, owner's key), the live `react-native-maps` map until the key is set; Directions open Google Maps *(D52)*.
 9. **"Use my location":** included (`expo-location`). Distance uses the device location when granted, otherwise the chosen area's centre.
 10. **Tab bar:** Apple's native tabs on iOS (`NativeTabs`, `minimizeBehavior="onScrollDown"`, Messages badge). Android keeps the Phase 0 frosted `TabBar` (locked architecture). Known limit: in Arabic under JS-level RTL (D26) the native tab order doesn't mirror inside Expo Go.
 11. **Greetings:** morning 05:00–11:59, afternoon 12:00–16:59, evening 17:00–04:59 (Cairo time).
