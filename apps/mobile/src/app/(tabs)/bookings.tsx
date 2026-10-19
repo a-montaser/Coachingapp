@@ -8,6 +8,7 @@ import { useSession } from '@/data/auth';
 import { firstName } from '@/data/book';
 import {
   canReschedule,
+  bookingTitle,
   directionsUrl,
   splitBookings,
   statusPill,
@@ -49,14 +50,8 @@ export default function Bookings() {
 
   const card = (b: MyBooking) => {
     const start = new Date(b.starts_at);
-    const subject = (lang === 'ar' && b.discipline_ar) || b.discipline_en;
     const name = firstName(b.instructor_name);
-    const title =
-      b.type === 'workshop'
-        ? b.title
-        : b.child_name
-          ? t('bookings.titleChild', { discipline: subject, child: b.child_name, name })
-          : t('bookings.title', { discipline: subject, name });
+    const title = bookingTitle(b, t, lang);
     const hours = `${formatClock(start, lang)}–${formatClock(new Date(b.ends_at), lang)}`;
     const time = [
       tab === 'upcoming' && sameCairoDay(start, now) ? t('bookings.today') : null,

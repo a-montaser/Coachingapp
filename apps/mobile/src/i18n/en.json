@@ -534,5 +534,8 @@
     "toast": "Moved to {{when}}",
     "none": "No other open times",
     "noneBody": "Nothing else is free in the next two weeks. Try again later."
+  },
+  "reminder": {
+    "body": "{{when}} at {{venue}}"
   }
 }

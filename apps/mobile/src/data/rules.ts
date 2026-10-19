@@ -40,6 +40,44 @@ export function weekDays(week: 0 | 1, now: Date): Date[] {
 
 export const sameCairoDay = (a: Date, b: Date) => cairoDay(a) === cairoDay(b);
 
+/** Cairo's offset from UTC at an instant, in ms: +2 h, or +3 h in Egypt's summer time. */
+function cairoOffset(d: Date) {
+  const p = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Africa/Cairo',
+      hourCycle: 'h23',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+      .formatToParts(d)
+      .map((x) => [x.type, Number(x.value)]),
+  ) as Record<string, number>;
+  return (
+    Date.UTC(p.year!, p.month! - 1, p.day!, p.hour!, p.minute!) - Math.floor(d.getTime() / 60_000) * 60_000
+  );
+}
+
+/** The instant of a Cairo wall-clock time, DST-safe (the offset is read at that very moment). */
+function fromCairo(y: number, m: number, d: number, h: number) {
+  const wall = Date.UTC(y, m - 1, d, h);
+  const guess = wall - cairoOffset(new Date(wall));
+  return new Date(wall - cairoOffset(new Date(guess)));
+}
+
+/**
+ * R9.1 reminder time: minutes before the start, or "the evening before" = 20:00 Cairo on the day before
+ * (D29); null when off. The caller skips times already past.
+ */
+export function reminderAt(startsAt: Date, choice: number | 'evening' | 'off'): Date | null {
+  if (choice === 'off') return null;
+  if (choice !== 'evening') return new Date(startsAt.getTime() - choice * 60_000);
+  const [y, m, d] = cairoDay(startsAt).split('-').map(Number) as [number, number, number];
+  return fromCairo(y, m, d - 1, 20);
+}
+
 /** §9.7 price: the offering's price × seats, in whole EGP (VAT included). Mirrors `book()`. */
 export const subtotal = (priceEgp: number, seats: number) => priceEgp * seats;
 

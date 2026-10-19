@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+import { useReminderSync } from '@/data/reminders';
 import { TabBar, restoreTabBar, useTabBarMinimised, type TabKey } from '@/ui/TabBar';
 import { TAB_ICON } from '@/ui/tabIcons';
 
@@ -23,6 +24,7 @@ const ORDER: TabKey[] = ['home', 'explore', 'bookings', 'messages', 'profile'];
 export default function TabsLayout() {
   const { t } = useTranslation();
   const minimised = useTabBarMinimised();
+  useReminderSync();
 
   if (Platform.OS === 'ios') {
     return (

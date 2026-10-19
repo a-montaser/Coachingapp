@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { component } from '@cfa/tokens';
 import type { Category } from '@/theme/settings';
 import type { PillTone } from '@/ui/Pill';
+import { firstName } from './book';
 import type { Method } from './checkout';
 import { supabase } from './supabase';
 
@@ -39,6 +40,20 @@ export type MyBooking = {
 
 export const MY_BOOKING_COLUMNS =
   'ref, display_status, method, seats, total_egp, refund_egp, refundable_until, same_day, pay_by, slot_id, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name';
+
+/** "Padel with Nour", "Swimming · Ali with Mariam", or a workshop's own title (§7.11). */
+export function bookingTitle(
+  b: Pick<MyBooking, 'type' | 'title' | 'child_name' | 'discipline_en' | 'discipline_ar' | 'instructor_name'>,
+  t: (key: string, o: Record<string, string>) => string,
+  lang: 'en' | 'ar',
+) {
+  const discipline = (lang === 'ar' && b.discipline_ar) || b.discipline_en;
+  const name = firstName(b.instructor_name);
+  if (b.type === 'workshop') return b.title;
+  return b.child_name
+    ? t('bookings.titleChild', { discipline, child: b.child_name, name })
+    : t('bookings.title', { discipline, name });
+}
 
 /** All of the learner's bookings, soonest first. An unpaid card hold that lapsed reads as cancelled (the view). */
 export function useMyBookings(userId: string | undefined) {

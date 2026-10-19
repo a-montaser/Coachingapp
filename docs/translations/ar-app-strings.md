@@ -429,3 +429,4 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `review.errors.reschedule_closed` | Booking errors | Rescheduling closes 24 hours before the start. |  |
 | `review.errors.pay_first` | Booking errors | Finish paying for this booking first. |  |
 | `review.errors.no_slot` | Booking errors | That time isn't available any more. Pick another. |  |
+| `reminder.body` | Reminder notification | {{when}} at {{venue}} |  |

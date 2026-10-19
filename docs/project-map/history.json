@@ -1,5 +1,115 @@
 [
  {
+  "at": "2026-10-19T20:09:10.887Z",
+  "commit": "6c49998",
+  "note": "T19: local reminders at the chosen time (evening before = 20:00 Cairo, DST-safe), kept in step with cancel and reschedule; permission asked at the first booking (D53)",
+  "nodes": 1197,
+  "links": 3944,
+  "communities": 63,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_reminders_useremindersync",
+    "l": "useReminderSync()",
+    "c": 16,
+    "f": "apps/mobile/src/data/reminders.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_syncreminders",
+    "l": "syncReminders()",
+    "c": 24,
+    "f": "apps/mobile/src/data/reminders.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_test_row",
+    "l": "row()",
+    "c": 24,
+    "f": "apps/mobile/src/data/reminders.test.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_test_z",
+    "l": "z()",
+    "c": 24,
+    "f": "apps/mobile/src/data/reminders.test.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_cairooffset",
+    "l": "cairoOffset()",
+    "c": 24,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_fromcairo",
+    "l": "fromCairo()",
+    "c": 24,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_reminderat",
+    "l": "reminderAt()",
+    "c": 24,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_askreminderpermission",
+    "l": "askReminderPermission()",
+    "c": 35,
+    "f": "apps/mobile/src/data/reminders.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_bookingtitle",
+    "l": "bookingTitle()",
+    "c": 9,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders",
+    "l": "reminders.ts",
+    "c": 19,
+    "f": "apps/mobile/src/data/reminders.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_reminded",
+    "l": "REMINDED",
+    "c": 19,
+    "f": "apps/mobile/src/data/reminders.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_test",
+    "l": "reminders.test.ts",
+    "c": 24,
+    "f": "apps/mobile/src/data/reminders.test.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_reminders_test_n",
+    "l": "N",
+    "c": 24,
+    "f": "apps/mobile/src/data/reminders.test.ts"
+   },
+   {
+    "id": "docs_decisions_d53",
+    "l": "D53: T19 Local reminders",
+    "c": 28,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_reminder_notification_strings",
+    "l": "Arabic strings: Reminder notification",
+    "c": 28,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 65,
+  "files": [
+   "apps/mobile/src/data/bookings.ts",
+   "apps/mobile/src/data/reminders.test.ts",
+   "apps/mobile/src/data/reminders.ts",
+   "apps/mobile/src/data/rules.ts",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-19T19:49:37.404Z",
   "commit": "a1873ea",
   "note": "Google Maps static picture deferred: the booking screen keeps the live Apple map; Directions open Google Maps (D52)",

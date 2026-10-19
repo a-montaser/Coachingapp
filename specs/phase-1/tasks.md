@@ -54,7 +54,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: RNTL for upcoming, past, cancelled and empty.
 - [x] **T18 Cancel sheet + refund flow; Reschedule.** (D51; sending queued refunds needs a scheduled call, owner)
   - Verify: SQL tests (T2) plus RNTL for the outcome sentences.
-- [ ] **T19 Local reminders.**
+- [x] **T19 Local reminders.** (D53; the manual notification on the iPhone is for the owner)
   - Verify: reminder-time tests; manual notification on the iPhone.
 
 ## G. End to end and close

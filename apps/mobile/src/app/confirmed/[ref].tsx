@@ -1,4 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -6,6 +7,7 @@ import { layout, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
 import { directionsUrl } from '@/data/bookings';
 import { DEFAULT_REMINDER, useMyBooking, useReminders } from '@/data/checkout';
+import { askReminderPermission } from '@/data/reminders';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatPrice, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -29,6 +31,10 @@ export default function Confirmed() {
   const { ref } = useLocalSearchParams<{ ref: string }>();
   const q = useMyBooking(ref);
   const reminder = useReminders((s) => s.byRef[ref] ?? DEFAULT_REMINDER);
+  // R9.2: the notification permission is asked here, at the first booking, not at launch.
+  useEffect(() => {
+    askReminderPermission().catch(() => {});
+  }, []);
 
   if (q.isLoading) return <View style={[styles.screen, { backgroundColor: c.bg }]} />;
   if (!q.data) {

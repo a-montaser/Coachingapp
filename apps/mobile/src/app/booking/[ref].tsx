@@ -12,6 +12,7 @@ import {
   bookingPolicy,
   canCancel,
   canReschedule,
+  bookingTitle,
   directionsUrl,
   staticMapUrl,
   statusPill,
@@ -67,12 +68,7 @@ export default function BookingDetail() {
   const now = new Date();
   const name = firstName(b.instructor_name);
   const subject = (lang === 'ar' && b.discipline_ar) || b.discipline_en;
-  const title =
-    b.type === 'workshop'
-      ? b.title
-      : b.child_name
-        ? t('bookings.titleChild', { discipline: subject, child: b.child_name, name })
-        : t('bookings.title', { discipline: subject, name });
+  const title = bookingTitle(b, t, lang);
   const when = `${formatWeekday(start, lang, 'long')} ${formatDayMonth(start, lang)} · ${formatClock(start, lang)}–${formatClock(new Date(b.ends_at), lang)}`;
   const status = b.display_status;
   const pill = statusPill(status);
