@@ -1,5 +1,26 @@
 [
  {
+  "at": "2026-10-19T09:12:17.636Z",
+  "commit": "a4b7041",
+  "note": "T16 deployed: payment Edge Functions live; demo card payment verified end to end (D46)",
+  "nodes": 1118,
+  "links": 3521,
+  "communities": 60,
+  "added": [
+   {
+    "id": "docs_decisions_d46",
+    "l": "D46: Edge Functions deployed",
+    "c": 45,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": -1,
+  "files": [
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-19T08:23:49.279Z",
   "commit": "4842157",
   "note": "T15 Review & pay, promo, Confirmed and Remind me; T16 payment providers and Edge Functions with Deno tests (deploy waiting on a Supabase token) (D45)",
