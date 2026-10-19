@@ -1,13 +1,13 @@
 # Graph Report - Coaching app  (2026-10-19)
 
 ## Corpus Check
-- 8 files · ~98,652 words
+- 2 files · ~98,696 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 - 1182 nodes · 3882 edges · 56 communities (53 shown, 3 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 124 edges (avg confidence: 0.85)
-- Token cost: 15,000 input · 3,000 output
+- Token cost: 8,000 input · 2,000 output
 
 ## Community Hubs (Navigation)
 - Onboarding Screens & Draft
@@ -24,7 +24,7 @@
 - Mobile Runtime Dependencies
 - Token Generator Script
 - Expo App Config
-- Button · Chip
+- Buttons & Chips
 - Tab Screens
 - Mobile Package Manifest
 - Root Layout & Profile
@@ -32,22 +32,22 @@
 - Handoff Component Specs
 - Demo Checkout & Checkout Tests
 - Instructor & Booking Data
-- Family · Shell Test
+- Family Member Sheet
 - Root Package & Scripts
 - Category Tray
 - CI Jobs
 - Phase 1 Design Notes
-- Generated · Searchfield
+- Search Field, Switch & Tokens
 - Selection Lens & Segmented Control
-- Navigationbar · Dashedcard
+- Nav Bar & Dashed Card
 - Root Stack
 - Phase 1 Tasks & Home Decisions
-- Usea11Y · Theme Test
+- Accessibility & Theme
 - i18n & Gallery Copy
 - Mobile TypeScript Config
 - Task Plan & Handoff
-- Checkout Test · [Ref]
-- Workshop Test · [Id]
+- Confirmed & Checkout Tests
+- Workshop Seats
 - App Shape, Auth & Journey Gate
 - Mobile Dev Dependencies
 - Tokens Package Manifest
@@ -58,7 +58,7 @@
 - Mobile Scripts
 - Design Tokens Pipeline
 - Design Handoff Rules
-- Ci · Design
+- CI Design & Tokens Package
 - ESLint Config
 - Handoff in Design
 - Jest Config
@@ -80,16 +80,16 @@
 10. `Phase 1 technical design` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Arabic strings: Onboarding` --references--> `T9: Onboarding (Categories, Interests, Levels, Who & where)`  [INFERRED]
-  docs/translations/ar-app-strings.md → specs/phase-1/tasks.md
 - `Gallery flow: Arabic/RTL screenshots` --conceptually_related_to--> `setLanguage RTL switch (forceRTL + reload)`  [AMBIGUOUS]
   apps/mobile/e2e/gallery.yaml → specs/phase-0/design.md
+- `Arabic strings: Onboarding` --references--> `T9: Onboarding (Categories, Interests, Levels, Who & where)`  [INFERRED]
+  docs/translations/ar-app-strings.md → specs/phase-1/tasks.md
 - `Assumption: Expo Go on iPhone, SDK 57` --references--> `D9: iOS testing in Expo Go`  [INFERRED]
   specs/phase-0/requirements.md → docs/DECISIONS.md
-- `npm run check gate` --conceptually_related_to--> `Testing and CI`  [INFERRED]
-  CLAUDE.md → specs/phase-1/design.md
-- `CI-only database tests` --conceptually_related_to--> `Testing and CI`  [INFERRED]
-  CLAUDE.md → specs/phase-1/design.md
+- `CI supabase job (db reset, lint, pgTAP)` --references--> `T1: Schema migration`  [INFERRED]
+  .github/workflows/ci.yml → specs/phase-1/tasks.md
+- `CI supabase job (db reset, lint, pgTAP)` --references--> `T2: Booking functions`  [INFERRED]
+  .github/workflows/ci.yml → specs/phase-1/tasks.md
 
 ## Import Cycles
 - None detected.
@@ -326,18 +326,18 @@ Nodes (4): InstructorProfile(), testHero(), Hero(), SessionRow()
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react-native` connect `Button · Chip` to `Onboarding Screens & Draft`, `Seed Data & Gallery Copy`, `Explore Filters Sheet`, `Review & Pay Checkout`, `Family Members`, `Search Field & Generated Tokens`, `Buttons, Welcome & Demo Checkout`, `Tab Screens`, `Mobile Package Manifest`, `Root Layout & Profile`, `Instructor & Booking Data`, `Family · Shell Test`, `Category Tray`, `Generated · Searchfield`, `Selection Lens & Segmented Control`, `Navigationbar · Dashedcard`, `Root Stack`, `Usea11Y · Theme Test`, `i18n & Gallery Copy`, `Workshop Test · [Id]`?**
-  _High betweenness centrality (0.063) - this node is a cross-community bridge._
+- **Why does `react-native` connect `Buttons & Chips` to `Onboarding Screens & Draft`, `Seed Data & Gallery Copy`, `Explore Filters Sheet`, `Review & Pay Checkout`, `Family Members`, `Search Field & Generated Tokens`, `Buttons, Welcome & Demo Checkout`, `Tab Screens`, `Mobile Package Manifest`, `Root Layout & Profile`, `Instructor & Booking Data`, `Family Member Sheet`, `Category Tray`, `Search Field, Switch & Tokens`, `Selection Lens & Segmented Control`, `Nav Bar & Dashed Card`, `Root Stack`, `Accessibility & Theme`, `i18n & Gallery Copy`, `Workshop Seats`?**
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **What connects `@cfa/tokens`, `expo`, `expo-constants` to the rest of the system?**
   _25 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Onboarding Screens & Draft` be split into smaller, more focused modules?**
   _Cohesion score 0.057455540355677154 - nodes in this community are weakly interconnected._
 - **Why does `dependencies` connect `Mobile Runtime Dependencies` to `Mobile Package Manifest`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+  _High betweenness centrality (0.038) - this node is a cross-community bridge._
 - **Should `Seed Data & Gallery Copy` be split into smaller, more focused modules?**
   _Cohesion score 0.05266106442577031 - nodes in this community are weakly interconnected._
 - **Why does `Decisions log (D1–D52)` connect `Decisions Log & Expo Docs Rule` to `Task Plan & Handoff`, `Arabic Copy & Dev Machine`, `App Shape, Auth & Journey Gate`, `Working Agreement & Phase 1 Design`, `Working Agreement`, `Project Guide & Design Sources`, `CI Jobs`, `Phase 1 Design Notes`, `Phase 1 Tasks & Home Decisions`?**
-  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 
 ### Low-confidence Hints
 _AMBIGUOUS edges — the extractor was unsure. Verify before acting on these._

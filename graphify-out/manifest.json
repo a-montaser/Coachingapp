@@ -1,9 +1,9 @@
 {
   "docs/DECISIONS.md": {
-    "mtime": 1792438754.8574154,
-    "seen": 1792438872.052733,
-    "ast_hash": "ae345843311954b6adda91a2733cb773",
-    "semantic_hash": "ae345843311954b6adda91a2733cb773"
+    "mtime": 1792439334.6627069,
+    "seen": 1792439371.200626,
+    "ast_hash": "c11338dc3e5d0dfd1ca4b7bcafe100e4",
+    "semantic_hash": "c11338dc3e5d0dfd1ca4b7bcafe100e4"
   },
   "docs/DESIGN_HANDOFF.md": {
     "mtime": 1792229468.815123,
@@ -732,10 +732,10 @@
     "semantic_hash": "21f7e45eb7cc02b905c0ee56b6939f03"
   },
   "specs/phase-1/requirements.md": {
-    "mtime": 1792438754.8936882,
-    "seen": 1792438872.052737,
-    "ast_hash": "bd015a80ba1fa953b6543f4aee232f9e",
-    "semantic_hash": "bd015a80ba1fa953b6543f4aee232f9e"
+    "mtime": 1792439334.6640072,
+    "seen": 1792439371.2006311,
+    "ast_hash": "6f336d816172be875a383ce0821cfe13",
+    "semantic_hash": "6f336d816172be875a383ce0821cfe13"
   },
   "specs/phase-1/tasks.md": {
     "mtime": 1792416984.8362598,

@@ -1,5 +1,17 @@
 [
  {
+  "at": "2026-10-19T19:49:37.404Z",
+  "commit": "a1873ea",
+  "note": "Google Maps static picture deferred: the booking screen keeps the live Apple map; Directions open Google Maps (D52)",
+  "nodes": 1182,
+  "links": 3879,
+  "communities": 56,
+  "added": [],
+  "removed": [],
+  "linkDelta": 0,
+  "files": []
+ },
+ {
   "at": "2026-10-19T19:41:30.690Z",
   "commit": "2851996",
   "note": "Maps are Google: Directions open Google Maps; Booking detail shows a Google map picture once the key is set (D52)",
