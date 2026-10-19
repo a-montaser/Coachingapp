@@ -13,6 +13,7 @@ import { useIsRTL } from '@/i18n';
 import { useSettings } from '@/theme/settings';
 import { useApplyThemeOverride, useTheme } from '@/theme/useTheme';
 import { useSheetOptions } from '@/ui/Sheet';
+import { Toast, useToast } from '@/ui/Toast';
 
 /**
  * The journey gate: signed out → Welcome (then onboarding, then sign-up, D34); signed in but not
@@ -46,6 +47,8 @@ function RootNavigator() {
         <Stack.Screen name="remind/[ref]" options={sheet} />
         <Stack.Screen name="booking/[ref]" />
         <Stack.Screen name="bookings-filter" options={sheet} />
+        <Stack.Screen name="cancel/[ref]" options={sheet} />
+        <Stack.Screen name="reschedule/[ref]" />
         <Stack.Screen name="family-member" options={sheet} />
         <Stack.Screen name="language" options={sheet} />
         <Stack.Screen name="appearance" options={sheet} />
@@ -60,6 +63,11 @@ function RootNavigator() {
       <Stack.Screen name="gallery-sheet" options={sheet} />
     </Stack>
   );
+}
+
+function AppToast() {
+  const { message, hide } = useToast();
+  return <Toast message={message ?? ''} icon="check" visible={Boolean(message)} onHide={hide} />;
 }
 
 export default function RootLayout() {
@@ -78,6 +86,7 @@ export default function RootLayout() {
       <GestureHandlerRootView style={[styles.root, { direction }]}>
         <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
         <RootNavigator />
+        <AppToast />
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { create } from 'zustand';
 import { AccessibilityInfo, StyleSheet, View } from 'react-native';
 import Animated, { SlideInUp, SlideOutUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,6 +9,13 @@ import { useTheme } from '@/theme/useTheme';
 import { Glass } from './Glass';
 import { Icon, type IconName } from './Icon';
 import { T } from './T';
+
+/** The app's one toast (root layout): screens call `showToast` after an action, e.g. a cancellation. */
+export const useToast = create<{ message: string | null; hide: () => void }>()((set) => ({
+  message: null,
+  hide: () => set({ message: null }),
+}));
+export const showToast = (message: string) => useToast.setState({ message });
 
 type Props = { message: string; icon?: IconName; visible: boolean; onHide: () => void };
 

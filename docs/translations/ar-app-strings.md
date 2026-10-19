@@ -400,3 +400,32 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `booking.policyFree` | Booking detail | Free cancellation until {{when}}. After that the session is non-refundable. |  |
 | `booking.policyLate` | Booking detail | Less than 24 hours to go. Cancelling now isn't refunded. |  |
 | `booking.mapLabel` | Booking detail | Map showing {{venue}} |  |
+| `cancel.title` | Cancel sheet | Cancel this session? |  |
+| `cancel.outcome.refund` | Cancel sheet | You'll get {{amount}} back on your card [refund timing]. |  |
+| `cancel.outcome.late` | Cancel sheet | Less than 24 hours to go, so cancelling now isn't refunded. [late-cancellation policy] |  |
+| `cancel.outcome.sameDay` | Cancel sheet | Same-day bookings are final, so cancelling isn't refunded. |  |
+| `cancel.outcome.nothing` | Cancel sheet | Nothing has been charged, so there's nothing to refund. |  |
+| `cancel.reasonLabel` | Cancel sheet | Reason (optional) |  |
+| `cancel.reasons.schedule` | Cancel sheet | Schedule change |  |
+| `cancel.reasons.injury` | Cancel sheet | Injury |  |
+| `cancel.reasons.weather` | Cancel sheet | Weather |  |
+| `cancel.reasons.other` | Cancel sheet | Other |  |
+| `cancel.keep` | Cancel sheet | Keep booking |  |
+| `cancel.confirm` | Cancel sheet | Cancel booking |  |
+| `cancel.confirmRefund` | Cancel sheet | Cancel and refund {{amount}} |  |
+| `cancel.toast` | Cancel sheet | Booking cancelled |  |
+| `cancel.toastRefund` | Cancel sheet | Booking cancelled · {{amount}} on its way back |  |
+| `reschedule.title` | Reschedule | Reschedule |  |
+| `reschedule.from` | Reschedule | Now {{when}} |  |
+| `reschedule.newTime` | Reschedule | New time |  |
+| `reschedule.pick` | Reschedule | Pick a new time |  |
+| `reschedule.confirm` | Reschedule | Move booking |  |
+| `reschedule.toast` | Reschedule | Moved to {{when}} |  |
+| `reschedule.none` | Reschedule | No other open times |  |
+| `reschedule.noneBody` | Reschedule | Nothing else is free in the next two weeks. Try again later. |  |
+| `booking.reschedule` | Booking detail | Reschedule |  |
+| `booking.cancel` | Booking detail | Cancel booking |  |
+| `review.errors.not_cancellable` | Booking errors | This booking can't be changed any more. |  |
+| `review.errors.reschedule_closed` | Booking errors | Rescheduling closes 24 hours before the start. |  |
+| `review.errors.pay_first` | Booking errors | Finish paying for this booking first. |  |
+| `review.errors.no_slot` | Booking errors | That time isn't available any more. Pick another. |  |

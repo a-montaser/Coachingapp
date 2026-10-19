@@ -415,7 +415,11 @@
       "promo_invalid": "That promo code isn't valid any more. Remove it and try again.",
       "too_many_seats": "Workshops take up to 3 seats.",
       "not_signed_in": "Sign in again to book.",
-      "generic": "Something went wrong and nothing was charged. Try again."
+      "generic": "Something went wrong and nothing was charged. Try again.",
+      "not_cancellable": "This booking can't be changed any more.",
+      "reschedule_closed": "Rescheduling closes 24 hours before the start.",
+      "pay_first": "Finish paying for this booking first.",
+      "no_slot": "That time isn't available any more. Pick another."
     },
     "paymentFailed": "The payment didn't go through. Your seat is held for 5 minutes, so you can try again.",
     "notFound": "This time isn't available any more."
@@ -496,6 +500,39 @@
     "payNow": "Pay {{amount}}",
     "policyFree": "Free cancellation until {{when}}. After that the session is non-refundable.",
     "policyLate": "Less than 24 hours to go. Cancelling now isn't refunded.",
-    "mapLabel": "Map showing {{venue}}"
+    "mapLabel": "Map showing {{venue}}",
+    "reschedule": "Reschedule",
+    "cancel": "Cancel booking"
+  },
+  "cancel": {
+    "title": "Cancel this session?",
+    "outcome": {
+      "refund": "You'll get {{amount}} back on your card [refund timing].",
+      "late": "Less than 24 hours to go, so cancelling now isn't refunded. [late-cancellation policy]",
+      "sameDay": "Same-day bookings are final, so cancelling isn't refunded.",
+      "nothing": "Nothing has been charged, so there's nothing to refund."
+    },
+    "reasonLabel": "Reason (optional)",
+    "reasons": {
+      "schedule": "Schedule change",
+      "injury": "Injury",
+      "weather": "Weather",
+      "other": "Other"
+    },
+    "keep": "Keep booking",
+    "confirm": "Cancel booking",
+    "confirmRefund": "Cancel and refund {{amount}}",
+    "toast": "Booking cancelled",
+    "toastRefund": "Booking cancelled · {{amount}} on its way back"
+  },
+  "reschedule": {
+    "title": "Reschedule",
+    "from": "Now {{when}}",
+    "newTime": "New time",
+    "pick": "Pick a new time",
+    "confirm": "Move booking",
+    "toast": "Moved to {{when}}",
+    "none": "No other open times",
+    "noneBody": "Nothing else is free in the next two weeks. Try again later."
   }
 }

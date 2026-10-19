@@ -14,6 +14,7 @@ const WINDOW_DAYS = 14; // this week + next week (§7.8)
 export function useBookOptions(offeringId: string) {
   return useQuery({
     queryKey: ['book', offeringId],
+    enabled: Boolean(offeringId),
     queryFn: async () => {
       const cols =
         'id, type, title, description, level_label, duration_min, price_egp, capacity, min_age, max_age, included, what_to_bring, instructor_id, discipline_id, venue:venues(name, notes)';

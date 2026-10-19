@@ -17,6 +17,7 @@ export type MyBooking = {
   refundable_until: string | null;
   same_day: boolean;
   pay_by: string | null;
+  slot_id: string;
   starts_at: string;
   ends_at: string;
   offering_id: string;
@@ -37,7 +38,7 @@ export type MyBooking = {
 };
 
 export const MY_BOOKING_COLUMNS =
-  'ref, display_status, method, seats, total_egp, refund_egp, refundable_until, same_day, pay_by, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name';
+  'ref, display_status, method, seats, total_egp, refund_egp, refundable_until, same_day, pay_by, slot_id, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name';
 
 /** All of the learner's bookings, soonest first. An unpaid card hold that lapsed reads as cancelled (the view). */
 export function useMyBookings(userId: string | undefined) {
@@ -98,6 +99,31 @@ export function bookingPolicy(
   if (b.method === 'venue') return null;
   if (!b.same_day && b.refundable_until && Date.parse(b.refundable_until) > now.getTime())
     return { kind: 'free', until: new Date(b.refundable_until) };
+  return { kind: 'late' };
+}
+
+const HOUR = 3_600_000;
+
+/** Cancel (§9.1) while the session hasn't started; reschedule (§9.3, D29) until 24 h before it. Mirrors the SQL. */
+export const canCancel = (b: Pick<MyBooking, 'display_status' | 'starts_at'>, now: Date) =>
+  ACTIVE.includes(b.display_status) && Date.parse(b.starts_at) > now.getTime();
+export const canReschedule = (b: Pick<MyBooking, 'display_status' | 'starts_at'>, now: Date) =>
+  ['pending', 'payment_due', 'confirmed'].includes(b.display_status) &&
+  Date.parse(b.starts_at) - 24 * HOUR > now.getTime();
+
+/**
+ * The Cancel sheet's outcome (§9.1), as `cancel_booking()` decides it: a paid card booking more than
+ * 24 h out is refunded in full; inside 24 h, or booked the same day, it isn't; nothing was charged for
+ * pay-at-venue or not-yet-paid bookings.
+ */
+export function cancelOutcome(
+  b: Pick<MyBooking, 'method' | 'display_status' | 'same_day' | 'refundable_until' | 'total_egp'>,
+  now: Date,
+): { kind: 'refund'; amount: number } | { kind: 'late' } | { kind: 'sameDay' } | { kind: 'nothing' } {
+  if (b.method === 'venue' || b.display_status !== 'confirmed') return { kind: 'nothing' };
+  if (b.same_day) return { kind: 'sameDay' };
+  if (b.refundable_until && Date.parse(b.refundable_until) > now.getTime())
+    return { kind: 'refund', amount: b.total_egp };
   return { kind: 'late' };
 }
 

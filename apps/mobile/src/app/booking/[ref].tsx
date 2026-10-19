@@ -8,7 +8,7 @@ import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-rean
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
-import { bookingPolicy, directionsUrl, statusPill } from '@/data/bookings';
+import { bookingPolicy, canCancel, canReschedule, directionsUrl, statusPill } from '@/data/bookings';
 import { bookingErrorKey, runCheckout, useMyBooking, type BookingErrorKey } from '@/data/checkout';
 import { testPhoto } from '@/dev/testImages';
 import { useLang } from '@/i18n';
@@ -29,7 +29,8 @@ const map = component.bookingMap;
 /**
  * §7.12 Booking detail: map header with Directions, status pill, title, date and time, venue, payment,
  * the cancellation policy, the instructor and what to bring. A kids booking that was approved is paid
- * here (D29). Reschedule and Cancel arrive with T18; Message, Add to calendar and Rate are Phase 2.
+ * here (D29). Reschedule until 24 h before; Cancel until the start. Message, Add to calendar and Rate
+ * are Phase 2.
  */
 export default function BookingDetail() {
   const { c } = useTheme();
@@ -71,6 +72,7 @@ export default function BookingDetail() {
   const upcoming = ['pending', 'payment_due', 'awaiting_payment', 'confirmed'].includes(status);
   const policy = upcoming && status !== 'pending' ? bookingPolicy(b, now) : null;
   const amount = formatPrice(b.total_egp, lang);
+  const due = status === 'payment_due' || status === 'awaiting_payment';
   const money =
     status === 'cancelled'
       ? (b.refund_egp ?? 0) > 0
@@ -203,12 +205,26 @@ export default function BookingDetail() {
           />
 
           {error && <Banner text={t(`review.errors.${error}`)} />}
-          {(status === 'payment_due' || status === 'awaiting_payment') && (
+          {due && (
             <Button
               label={busy ? t('review.processing') : t('booking.payNow', { amount })}
               variant="primary"
               busy={busy}
               onPress={pay}
+            />
+          )}
+          {canReschedule(b, now) && (
+            <Button
+              label={t('booking.reschedule')}
+              variant={due ? 'secondary' : 'primary'}
+              onPress={() => router.push({ pathname: '/reschedule/[ref]', params: { ref: b.ref } })}
+            />
+          )}
+          {canCancel(b, now) && (
+            <Button
+              label={t('booking.cancel')}
+              variant="destructive"
+              onPress={() => router.push({ pathname: '/cancel/[ref]', params: { ref: b.ref } })}
             />
           )}
           {!upcoming && (

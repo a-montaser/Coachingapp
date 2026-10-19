@@ -52,7 +52,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 ## F. Manage and reminders
 - [x] **T17 Bookings list + Booking detail.** (D50)
   - Verify: RNTL for upcoming, past, cancelled and empty.
-- [ ] **T18 Cancel sheet + refund flow; Reschedule.**
+- [x] **T18 Cancel sheet + refund flow; Reschedule.** (D51; sending queued refunds needs a scheduled call, owner)
   - Verify: SQL tests (T2) plus RNTL for the outcome sentences.
 - [ ] **T19 Local reminders.**
   - Verify: reminder-time tests; manual notification on the iPhone.

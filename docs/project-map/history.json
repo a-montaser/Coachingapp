@@ -1,5 +1,154 @@
 [
  {
+  "at": "2026-10-19T13:37:42.694Z",
+  "commit": "206fdaa",
+  "note": "T18: Cancel sheet with the refund outcome, Reschedule to another open time (same ref), app-wide toast; checked on the hosted project (D51)",
+  "nodes": 1180,
+  "links": 3876,
+  "communities": 64,
+  "added": [
+   {
+    "id": "apps_mobile_src_app_cancel_ref_cancelsheet",
+    "l": "CancelSheet()",
+    "c": 0,
+    "f": "apps/mobile/src/app/cancel/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_reschedule_ref_reschedule",
+    "l": "Reschedule()",
+    "c": 0,
+    "f": "apps/mobile/src/app/reschedule/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_cancancel",
+    "l": "canCancel()",
+    "c": 0,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_canceloutcome",
+    "l": "cancelOutcome()",
+    "c": 0,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_canreschedule",
+    "l": "canReschedule()",
+    "c": 0,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_cancelbooking",
+    "l": "cancelBooking()",
+    "c": 0,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_reschedulebooking",
+    "l": "rescheduleBooking()",
+    "c": 0,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_toast_showtoast",
+    "l": "showToast()",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Toast.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_layout_apptoast",
+    "l": "AppToast()",
+    "c": 33,
+    "f": "apps/mobile/src/app/_layout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_cancel_ref",
+    "l": "cancel/[ref].tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/cancel/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_cancel_ref_reasons",
+    "l": "REASONS",
+    "c": 0,
+    "f": "apps/mobile/src/app/cancel/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_cancel_ref_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/cancel/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockcancel",
+    "l": "mockCancel",
+    "c": 0,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockmove",
+    "l": "mockMove",
+    "c": 0,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockslots",
+    "l": "mockSlots",
+    "c": 0,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_reschedule_ref",
+    "l": "reschedule/[ref].tsx",
+    "c": 12,
+    "f": "apps/mobile/src/app/reschedule/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_reschedule_ref_styles",
+    "l": "styles",
+    "c": 12,
+    "f": "apps/mobile/src/app/reschedule/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_toast_usetoast",
+    "l": "useToast",
+    "c": 33,
+    "f": "apps/mobile/src/ui/Toast.tsx"
+   },
+   {
+    "id": "docs_decisions_d51",
+    "l": "D51: T18 Cancel and Reschedule",
+    "c": 29,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_cancel_sheet_strings",
+    "l": "Arabic strings: Cancel sheet",
+    "c": 29,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_reschedule_strings",
+    "l": "Arabic strings: Reschedule",
+    "c": 29,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 128,
+  "files": [
+   "apps/mobile/src/app/_layout.tsx",
+   "apps/mobile/src/app/cancel/[ref].tsx",
+   "apps/mobile/src/app/reschedule/[ref].tsx",
+   "apps/mobile/src/data/bookings.test.tsx",
+   "apps/mobile/src/data/bookings.ts",
+   "apps/mobile/src/data/checkout.ts",
+   "apps/mobile/src/ui/Toast.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-19T13:30:57.061Z",
   "commit": "6401632",
   "note": "T17: Bookings list (Upcoming / Past, discipline filter) and Booking detail (map, policy, payment, pay an approved kids booking) (D50)",

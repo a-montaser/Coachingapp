@@ -7,6 +7,7 @@ import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { firstName } from '@/data/book';
 import {
+  canReschedule,
   directionsUrl,
   splitBookings,
   statusPill,
@@ -81,6 +82,14 @@ export default function Bookings() {
               label: t('confirmed.directions'),
               onPress: () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng, b.venue_name)),
             },
+            ...(canReschedule(b, now)
+              ? [
+                  {
+                    label: t('booking.reschedule'),
+                    onPress: () => router.push({ pathname: '/reschedule/[ref]', params: { ref: b.ref } }),
+                  },
+                ]
+              : []),
           ]
         : b.display_status === 'cancelled'
           ? [bookAgain, { label: t('bookings.details'), onPress: open }]

@@ -1,13 +1,25 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import '@/i18n';
 import BookingDetail from '@/app/booking/[ref]';
+import CancelSheet from '@/app/cancel/[ref]';
+import Reschedule from '@/app/reschedule/[ref]';
+import { useToast } from '@/ui/Toast';
 import Bookings from '@/app/(tabs)/bookings';
 import { useSettings } from '@/theme/settings';
-import { bookingPolicy, splitBookings, statusPill, useBookingsFilter, type MyBooking } from './bookings';
+import {
+  bookingPolicy,
+  canCancel,
+  canReschedule,
+  cancelOutcome,
+  splitBookings,
+  statusPill,
+  useBookingsFilter,
+  type MyBooking,
+} from './bookings';
 
 let mockParams: Record<string, string> = {};
 jest.mock('expo-router', () => ({
-  router: { push: jest.fn(), back: jest.fn(), navigate: jest.fn() },
+  router: { push: jest.fn(), back: jest.fn(), navigate: jest.fn(), dismissAll: jest.fn() },
   useLocalSearchParams: () => mockParams,
 }));
 const mockRouter = jest.requireMock('expo-router').router;
@@ -21,9 +33,13 @@ jest.mock('./auth', () => ({
   useSession: () => ({ session: { user: { id: 'u1' } }, loading: false }),
 }));
 const mockRun = jest.fn();
+const mockCancel = jest.fn();
+const mockMove = jest.fn();
 jest.mock('./checkout', () => ({
   ...jest.requireActual('./checkout'),
   runCheckout: (...a: unknown[]) => mockRun(...a),
+  cancelBooking: (...a: unknown[]) => mockCancel(...a),
+  rescheduleBooking: (...a: unknown[]) => mockMove(...a),
 }));
 
 const HOUR = 3_600_000;
@@ -38,6 +54,7 @@ const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
   refundable_until: at(48),
   same_day: false,
   pay_by: null,
+  slot_id: 's-now',
   starts_at: at(72),
   ends_at: at(73),
   offering_id: 'o1',
@@ -60,11 +77,16 @@ const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
 
 let mockRows: MyBooking[] = [];
 let mockOne: MyBooking | undefined;
+let mockSlots: object[] = [];
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: () => ({ invalidateQueries: jest.fn() }),
   useQuery: ({ queryKey }: { queryKey: string[] }) =>
-    queryKey[0] === 'booking' ? { data: mockOne, isLoading: false } : { data: mockRows, isLoading: false },
+    queryKey[0] === 'booking'
+      ? { data: mockOne, isLoading: false }
+      : queryKey[0] === 'book'
+        ? { data: { slots: mockSlots }, isLoading: false }
+        : { data: mockRows, isLoading: false },
 }));
 
 beforeEach(() => {
@@ -169,4 +191,60 @@ test('Booking detail: status, policy, payment and ref; payment due pays from her
   expect(screen.getByText('Private 1:1 · Cancelled · refunded 650 EGP')).toBeOnTheScreen();
   expect(screen.queryByText(/^Free cancellation/)).toBeNull();
   expect(screen.getByRole('button', { name: 'Book again' })).toBeOnTheScreen();
+});
+
+test('cancel outcome mirrors cancel_booking(); reschedule closes 24 h before, cancel at the start (§9.1, §9.3)', () => {
+  const now = new Date();
+  expect(cancelOutcome(row('a'), now)).toEqual({ kind: 'refund', amount: 650 });
+  expect(cancelOutcome(row('b', { refundable_until: at(-1) }), now)).toEqual({ kind: 'late' });
+  expect(cancelOutcome(row('c', { same_day: true }), now)).toEqual({ kind: 'sameDay' });
+  expect(cancelOutcome(row('d', { method: 'venue' }), now)).toEqual({ kind: 'nothing' });
+  expect(cancelOutcome(row('e', { display_status: 'payment_due' }), now)).toEqual({ kind: 'nothing' });
+  expect(canReschedule(row('f', { starts_at: at(30) }), now)).toBe(true);
+  expect(canReschedule(row('g', { starts_at: at(20) }), now)).toBe(false);
+  expect(canCancel(row('h', { starts_at: at(1) }), now)).toBe(true);
+  expect(canCancel(row('i', { starts_at: at(-1) }), now)).toBe(false);
+  expect(canCancel(row('j', { display_status: 'cancelled' }), now)).toBe(false);
+});
+
+test('Cancel sheet: says the refund, cancels with the reason, back to Bookings with a toast', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  mockCancel.mockResolvedValue({ ref: 'CFA-1', refund_egp: 650 });
+  await render(<CancelSheet />);
+  expect(screen.getByText("You'll get 650 EGP back on your card [refund timing].")).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Injury' }));
+  await fireEvent.press(screen.getByRole('button', { name: 'Cancel and refund 650 EGP' }));
+  await waitFor(() => expect(mockRouter.navigate).toHaveBeenCalledWith('/bookings'));
+  expect(mockCancel).toHaveBeenCalledWith('CFA-1', 'Injury');
+  expect(useToast.getState().message).toBe('Booking cancelled · 650 EGP on its way back');
+});
+
+test('Cancel sheet: inside 24 h says no refund and offers a plain cancel', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1', { refundable_until: at(-1), starts_at: at(5) });
+  await render(<CancelSheet />);
+  expect(screen.getByText(/isn't refunded/)).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Cancel booking' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Keep booking' }));
+  expect(mockRouter.back).toHaveBeenCalled();
+});
+
+test('Reschedule: other open times of the same offering; moving keeps the ref', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  mockSlots = [
+    { id: 's-now', offering_id: 'o1', starts_at: at(72), ends_at: at(73), seats_free: 1 },
+    { id: 's-full', offering_id: 'o1', starts_at: at(96), ends_at: at(97), seats_free: 0 },
+    { id: 's-new', offering_id: 'o1', starts_at: at(120), ends_at: at(121), seats_free: 1 },
+  ];
+  mockMove.mockResolvedValue(undefined);
+  await render(<Reschedule />);
+  const times = screen.getAllByRole('button', { name: /\d:\d\d/ });
+  expect(times).toHaveLength(1); // not the current time, not a full one
+  await fireEvent.press(times[0]!);
+  await fireEvent.press(screen.getByRole('button', { name: 'Move booking' }));
+  await waitFor(() => expect(mockRouter.back).toHaveBeenCalled());
+  expect(mockMove).toHaveBeenCalledWith('CFA-1', 's-new');
+  expect(useToast.getState().message).toMatch(/^Moved to /);
 });

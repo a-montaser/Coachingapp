@@ -103,6 +103,19 @@ export async function startCheckout(ref: string) {
   return data as { url: string; amountEgp: number };
 }
 
+/** SQL `cancel_booking()`: cancels, frees the seats and queues any refund (§9.1). */
+export async function cancelBooking(ref: string, reason: string | null) {
+  const { data, error } = await supabase.rpc('cancel_booking', { p_ref: ref, p_reason: reason });
+  if (error) throw error;
+  return data as { ref: string; refund_egp: number };
+}
+
+/** SQL `reschedule_booking()`: the same booking (same ref and payment) moves to another open slot (§9.3). */
+export async function rescheduleBooking(ref: string, slotId: string) {
+  const { error } = await supabase.rpc('reschedule_booking', { p_ref: ref, p_new_slot: slotId });
+  if (error) throw error;
+}
+
 /**
  * Pays for a held booking (awaiting payment, or payment due after approval): 'demo' when the in-app demo
  * checkout must open next; 'done' when it settled (fake provider) or the learner is back from Paymob's
@@ -132,6 +145,10 @@ const KNOWN = [
   'promo_invalid',
   'too_many_seats',
   'not_signed_in',
+  'not_cancellable',
+  'reschedule_closed',
+  'pay_first',
+  'no_slot',
 ] as const;
 export type BookingErrorKey = (typeof KNOWN)[number] | 'generic';
 
