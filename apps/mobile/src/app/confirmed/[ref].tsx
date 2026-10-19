@@ -1,9 +1,10 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Linking, Platform, ScrollView, Share, StyleSheet, View } from 'react-native';
+import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { layout, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
+import { directionsUrl } from '@/data/bookings';
 import { DEFAULT_REMINDER, useMyBooking, useReminders } from '@/data/checkout';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatPrice, formatWeekday } from '@/i18n/format';
@@ -17,7 +18,7 @@ import { TextLink } from '@/ui/TextLink';
 
 /**
  * §7.10 Confirmed: ring then tick, a headline per category ("Request sent." while pending), the ref,
- * When / Where / Paid, Directions and Share, "Remind me", View booking and Back to Home.
+ * When / Where / Paid, Directions and Share, "Remind me", View booking (Booking detail) and Back to Home.
  * Add to calendar is Phase 2 (R6.4).
  */
 export default function Confirmed() {
@@ -48,13 +49,7 @@ export default function Confirmed() {
       ? { title: t('confirmed.due'), value: formatPrice(b.total_egp, lang) }
       : { title: t('confirmed.paid'), value: formatPrice(b.total_egp, lang) };
   const reminderLabel = t(`remind.${typeof reminder === 'number' ? `m${reminder}` : reminder}`);
-  // Opens the phone's maps app with walking/driving directions to the venue.
-  const directions = () =>
-    Linking.openURL(
-      Platform.OS === 'ios'
-        ? `http://maps.apple.com/?daddr=${b.venue_lat},${b.venue_lng}`
-        : `geo:${b.venue_lat},${b.venue_lng}?q=${b.venue_lat},${b.venue_lng}(${encodeURIComponent(b.venue_name)})`,
-    );
+  const directions = () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng, b.venue_name));
 
   return (
     <ScrollView
@@ -112,11 +107,10 @@ export default function Confirmed() {
         ]}
       />
 
-      {/* shortcut: Booking detail arrives in T17; until then "View booking" opens the Bookings tab. */}
       <Button
         label={t('confirmed.viewBooking')}
         variant="primary"
-        onPress={() => router.replace('/bookings')}
+        onPress={() => router.replace({ pathname: '/booking/[ref]', params: { ref: b.ref } })}
       />
       <View style={styles.center}>
         <TextLink label={t('confirmed.backHome')} onPress={() => router.replace('/')} />

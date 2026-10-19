@@ -168,10 +168,10 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 
 ### R8 `manage`
 - R8.1 Bookings (§7.11):
-  - one glass capsule bar: Calendar sync · "Bookings" · Filter · "+" (New booking → Explore), with the Upcoming | Past segment under it, as in the iOS 26 prototype's Bookings artboard *(D43)*
+  - one glass capsule bar: Filter · "Bookings" · "+" (New booking → Explore); Calendar sync is Phase 2 *(D50)*, with the Upcoming | Past segment under it, as in the iOS 26 prototype's Bookings artboard *(D43)*
   - segmented "Upcoming · N | Past"
   - cards with date tile, title, time · type, venue and status pill
-  - actions: upcoming shows Directions + Reschedule; past shows Book again; cancelled shows Book again + Details
+  - actions: upcoming shows Directions + Reschedule (T18); past shows Book again; cancelled shows Book again + Details; an approved kids booking is paid from Booking detail *(D50)*
   - an empty state per tab
   - `completed` is derived once the end time passes (§9.5)
 - R8.2 Booking detail (§7.12):

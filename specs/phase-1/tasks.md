@@ -50,7 +50,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Deployed 19 Oct (D46); demo card payment verified end to end on the hosted project. Paymob sandbox payment waits for a Paymob merchant account.
 
 ## F. Manage and reminders
-- [ ] **T17 Bookings list + Booking detail.**
+- [x] **T17 Bookings list + Booking detail.** (D50)
   - Verify: RNTL for upcoming, past, cancelled and empty.
 - [ ] **T18 Cancel sheet + refund flow; Reschedule.**
   - Verify: SQL tests (T2) plus RNTL for the outcome sentences.

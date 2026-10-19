@@ -27,6 +27,7 @@ import { SessionRow } from '@/ui/SessionRow';
 import { Stepper } from '@/ui/Stepper';
 import { TextField } from '@/ui/TextField';
 import { TextLink } from '@/ui/TextLink';
+import { BookingCard } from '@/ui/BookingCard';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
@@ -287,6 +288,28 @@ export function Gallery() {
         </Section>
 
         <Section title={g.sections.blocks} variant="title2">
+          <BookingCard
+            date={new Date(DEMO_BASE)}
+            title={g.app.bookingTitle}
+            time={g.app.bookingTime}
+            venue={g.app.bookingVenue}
+            status={{ label: g.app.bookingStatus, tone: 'ok' }}
+            onPress={() => {}}
+            actions={[{ label: g.app.directions, onPress: () => {} }]}
+          />
+          <BookingCard
+            date={new Date(DEMO_BASE - 7 * 86_400_000)}
+            past
+            title={g.app.bookingTitle}
+            time={g.app.bookingTime}
+            venue={g.app.bookingVenue}
+            status={{ label: g.app.bookingPastStatus, tone: 'neutral' }}
+            onPress={() => {}}
+            actions={[
+              { label: g.app.bookAgain, onPress: () => {} },
+              { label: g.app.details, onPress: () => {} },
+            ]}
+          />
           <RowCard
             leading={<DateTile date={new Date(DEMO_BASE + 3 * 86_400_000)} />}
             kicker={g.app.nextKicker}

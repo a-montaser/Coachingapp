@@ -33,7 +33,7 @@ const mockDemoPay = jest.fn();
 jest.mock('./checkout', () => ({
   ...jest.requireActual('./checkout'),
   placeBooking: (...a: unknown[]) => mockPlace(...a),
-  startCheckout: (...a: unknown[]) => mockCheckout(...a),
+  runCheckout: (...a: unknown[]) => mockCheckout(...a),
   applyPromo: (...a: unknown[]) => mockPromo(...a),
   demoPay: (...a: unknown[]) => mockDemoPay(...a),
 }));
@@ -156,7 +156,7 @@ test('Review: a valid promo lowers the total; an invalid one explains itself', a
 
 test('Review: card holds the seat, then opens the demo checkout; a retry pays for the same hold', async () => {
   mockPlace.mockResolvedValue({ ref: 'CFA-22222', status: 'awaiting_payment' });
-  mockCheckout.mockResolvedValue({ url: 'coachforall://demo-checkout?ref=CFA-22222', amountEgp: 650 });
+  mockCheckout.mockResolvedValue('demo');
   await render(<Review />);
   await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
   await waitFor(() =>

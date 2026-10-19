@@ -135,7 +135,7 @@ export default function Home() {
             })}
             title={next.title}
             subtitle={`${formatClock(new Date(next.starts_at), lang)} · ${next.venue_name}`}
-            onPress={() => router.navigate('/bookings')}
+            onPress={() => router.push({ pathname: '/booking/[ref]', params: { ref: next.ref } })}
           />
         ) : (
           <RowCard

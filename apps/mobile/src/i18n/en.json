@@ -457,5 +457,45 @@
     "m120": "2 hours before",
     "evening": "The evening before",
     "off": "Off"
+  },
+  "bookings": {
+    "upcoming": "Upcoming · {{n}}",
+    "past": "Past",
+    "segLabel": "Show",
+    "title": "{{discipline}} with {{name}}",
+    "titleChild": "{{discipline}} · {{child}} with {{name}}",
+    "today": "Today",
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Waiting for {{name}} to confirm",
+      "paymentDue": "Payment due",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "bookAgain": "Book again",
+    "details": "Details",
+    "emptyUpcoming": "No upcoming sessions",
+    "emptyUpcomingBody": "Book a session and it shows up here.",
+    "explore": "Explore",
+    "emptyPast": "Nothing here yet",
+    "emptyPastBody": "Sessions you finish or cancel show up here.",
+    "filter": "Filter bookings",
+    "filterOn": "Filter bookings, on",
+    "filterTitle": "Show bookings for",
+    "filterAll": "All disciplines",
+    "new": "Book a new session"
+  },
+  "booking": {
+    "paid": "Paid {{amount}}",
+    "atVenue": "Pay at the venue · {{amount}}",
+    "due": "Payment due · {{amount}}",
+    "refunded": "Cancelled · refunded {{amount}}",
+    "noRefund": "Cancelled · not refunded",
+    "ref": "Booking ref {{ref}}",
+    "bring": "What to bring",
+    "payNow": "Pay {{amount}}",
+    "policyFree": "Free cancellation until {{when}}. After that the session is non-refundable.",
+    "policyLate": "Less than 24 hours to go. Cancelling now isn't refunded.",
+    "mapLabel": "Map showing {{venue}}"
   }
 }

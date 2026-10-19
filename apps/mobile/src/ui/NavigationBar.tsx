@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
@@ -30,6 +30,12 @@ type Props = {
   scrollY?: SharedValue<number>;
   /** Detail screens with a hero: the inline title appears once the hero scrolls away (~150 pt). */
   titleAfterHero?: boolean;
+  /**
+   * Tab pages (prototype Bookings, `.navglass`): ONE glass capsule holding the title between the two
+   * actions, with `below` (e.g. a segmented control) under it. No back button.
+   */
+  capsule?: boolean;
+  below?: ReactNode;
 };
 
 const n = component.navBar;
@@ -46,6 +52,8 @@ export function NavigationBar({
   actions: allActions = [],
   scrollY,
   titleAfterHero,
+  capsule,
+  below,
 }: Props) {
   const actions = allActions.slice(0, 2);
   const { c } = useTheme();
@@ -53,6 +61,17 @@ export function NavigationBar({
   const { reduceMotion } = useA11y();
   const insets = useSafeAreaInsets();
   const showTitle = Boolean(title && titleAfterHero && scrollY);
+
+  const action = (a: NavAction) =>
+    a.icon ? (
+      <IconButton icon={a.icon} accessibilityLabel={a.label} onPress={a.onPress} color={c.glassLabel} />
+    ) : (
+      <Pressable accessibilityRole="button" onPress={a.onPress} style={styles.textAction}>
+        <T variant="headline" weight="400" color={c.glassLabel}>
+          {a.label}
+        </T>
+      </Pressable>
+    );
 
   const titleStyle = useAnimatedStyle(() => {
     if (!scrollY) return { opacity: 0 };
@@ -86,66 +105,72 @@ export function NavigationBar({
           titleAfterHero && fadeStyle,
         ]}
       />
-      <View pointerEvents="box-none" style={[styles.row, { top: insets.top + n.top }]}>
-        <View style={styles.side}>
-          {onBack && (
-            <IconButton icon="back" accessibilityLabel={t('common.back')} floating onPress={onBack} />
-          )}
-        </View>
-        <View pointerEvents="none" style={styles.title}>
-          {showTitle && (
-            // Repeats the page's own heading once the hero scrolls away: visual only, so screen readers hear it once.
-            <Animated.View
-              style={titleStyle}
-              accessibilityElementsHidden
-              importantForAccessibility="no-hide-descendants"
-            >
-              <T variant="headline" numberOfLines={1}>
-                {title}
-              </T>
-            </Animated.View>
-          )}
-          {title && !titleAfterHero && (
-            <View style={styles.inline}>
-              <T variant="headline" accessibilityRole="header" fit={2}>
-                {title}
-              </T>
-              {subtitle && (
-                <T variant="caption1" color={c.label2} fit={1}>
-                  {subtitle}
+      {capsule ? (
+        <View pointerEvents="box-none" style={[styles.stack, { top: insets.top + n.top }]}>
+          <Glass radius={radius.pill}>
+            <View style={styles.capsule}>
+              <View style={styles.side}>{actions[0] && action(actions[0])}</View>
+              <View style={[styles.hairline, { backgroundColor: c.separator }]} />
+              <View style={styles.title}>
+                <T variant="headline" accessibilityRole="header" fit={1}>
+                  {title}
                 </T>
-              )}
-            </View>
-          )}
-        </View>
-        <View style={[styles.side, styles.end]}>
-          {actions.length > 0 && (
-            <Glass radius={radius.pill} interactive>
-              <View style={styles.cluster}>
-                {actions.map((a, i) => (
-                  <Fragment key={a.label}>
-                    {i > 0 && <View style={[styles.hairline, { backgroundColor: c.separator }]} />}
-                    {a.icon ? (
-                      <IconButton
-                        icon={a.icon}
-                        accessibilityLabel={a.label}
-                        onPress={a.onPress}
-                        color={c.glassLabel}
-                      />
-                    ) : (
-                      <Pressable accessibilityRole="button" onPress={a.onPress} style={styles.textAction}>
-                        <T variant="headline" weight="400" color={c.glassLabel}>
-                          {a.label}
-                        </T>
-                      </Pressable>
-                    )}
-                  </Fragment>
-                ))}
               </View>
-            </Glass>
-          )}
+              <View style={[styles.hairline, { backgroundColor: c.separator }]} />
+              <View style={[styles.side, styles.end]}>{actions[1] && action(actions[1])}</View>
+            </View>
+          </Glass>
+          {below}
         </View>
-      </View>
+      ) : (
+        <View pointerEvents="box-none" style={[styles.row, { top: insets.top + n.top }]}>
+          <View style={styles.side}>
+            {onBack && (
+              <IconButton icon="back" accessibilityLabel={t('common.back')} floating onPress={onBack} />
+            )}
+          </View>
+          <View pointerEvents="none" style={styles.title}>
+            {showTitle && (
+              // Repeats the page's own heading once the hero scrolls away: visual only, so screen readers hear it once.
+              <Animated.View
+                style={titleStyle}
+                accessibilityElementsHidden
+                importantForAccessibility="no-hide-descendants"
+              >
+                <T variant="headline" numberOfLines={1}>
+                  {title}
+                </T>
+              </Animated.View>
+            )}
+            {title && !titleAfterHero && (
+              <View style={styles.inline}>
+                <T variant="headline" accessibilityRole="header" fit={2}>
+                  {title}
+                </T>
+                {subtitle && (
+                  <T variant="caption1" color={c.label2} fit={1}>
+                    {subtitle}
+                  </T>
+                )}
+              </View>
+            )}
+          </View>
+          <View style={[styles.side, styles.end]}>
+            {actions.length > 0 && (
+              <Glass radius={radius.pill} interactive>
+                <View style={styles.cluster}>
+                  {actions.map((a, i) => (
+                    <Fragment key={a.label}>
+                      {i > 0 && <View style={[styles.hairline, { backgroundColor: c.separator }]} />}
+                      {action(a)}
+                    </Fragment>
+                  ))}
+                </View>
+              </Glass>
+            )}
+          </View>
+        </View>
+      )}
     </>
   );
 }
@@ -160,6 +185,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.space2,
   },
+  stack: { position: 'absolute', start: n.inset, end: n.inset, gap: space.space2 },
+  capsule: { flexDirection: 'row', alignItems: 'center', padding: n.clusterPadding, gap: space.space1 },
   side: { minWidth: component.iconButton.size, flexDirection: 'row' },
   end: { justifyContent: 'flex-end' },
   title: { flex: 1, alignItems: 'center' },

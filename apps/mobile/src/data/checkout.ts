@@ -1,8 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useQuery } from '@tanstack/react-query';
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import type { Category } from '@/theme/settings';
+import { MY_BOOKING_COLUMNS, type MyBooking } from './bookings';
 import type { Offering } from './instructor';
 import { supabase } from './supabase';
 
@@ -100,6 +103,19 @@ export async function startCheckout(ref: string) {
   return data as { url: string; amountEgp: number };
 }
 
+/**
+ * Pays for a held booking (awaiting payment, or payment due after approval): 'demo' when the in-app demo
+ * checkout must open next; 'done' when it settled (fake provider) or the learner is back from Paymob's
+ * hosted checkout, where the webhook records the outcome.
+ */
+export async function runCheckout(ref: string): Promise<'done' | 'demo'> {
+  const { url } = await startCheckout(ref);
+  if (url.startsWith('coachforall://payment-return')) return 'done';
+  if (url.startsWith('coachforall://')) return 'demo';
+  await WebBrowser.openAuthSessionAsync(url, Linking.createURL('payment-return'));
+  return 'done';
+}
+
 /** Edge Function demo-pay (demo provider only): records Pay / Fail through the webhook's code path. */
 export async function demoPay(ref: string, outcome: 'paid' | 'failed') {
   const { data, error } = await supabase.functions.invoke('demo-pay', { body: { ref, outcome } });
@@ -125,25 +141,7 @@ export function bookingErrorKey(error: { message?: string } | null | undefined):
   return KNOWN.find((k) => m.includes(k)) ?? 'generic';
 }
 
-export type ConfirmedBooking = {
-  ref: string;
-  display_status: string;
-  method: Method;
-  seats: number;
-  total_egp: number;
-  starts_at: string;
-  ends_at: string;
-  type: string;
-  title: string;
-  category_id: Category;
-  instructor_name: string;
-  venue_name: string;
-  venue_lat: number;
-  venue_lng: number;
-  child_name: string | null;
-};
-
-/** One of the learner's bookings by ref (RLS: own rows only). */
+/** One of the learner's bookings by ref (RLS: own rows only): Confirmed and Booking detail. */
 export function useMyBooking(ref: string | undefined) {
   return useQuery({
     queryKey: ['booking', ref],
@@ -151,13 +149,11 @@ export function useMyBooking(ref: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('my_bookings')
-        .select(
-          'ref, display_status, method, seats, total_egp, starts_at, ends_at, type, title, category_id, instructor_name, venue_name, venue_lat, venue_lng, child_name',
-        )
+        .select(MY_BOOKING_COLUMNS)
         .eq('ref', ref!)
         .single();
       if (error) throw error;
-      return data as ConfirmedBooking;
+      return data as MyBooking;
     },
   });
 }

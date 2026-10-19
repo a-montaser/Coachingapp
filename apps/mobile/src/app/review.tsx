@@ -1,7 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import * as Linking from 'expo-linking';
 import { router } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -13,7 +11,7 @@ import {
   applyPromo,
   bookingErrorKey,
   placeBooking,
-  startCheckout,
+  runCheckout,
   useReview,
   type BookingErrorKey,
   type Method,
@@ -132,16 +130,9 @@ export default function Review() {
         ref = b.ref;
         useBookDraft.getState().set({ pendingRef: ref });
       }
-      const { url } = await startCheckout(ref);
-      if (url.startsWith('coachforall://payment-return')) {
-        // Fake provider (CI): already settled.
-        goConfirmed(ref);
-      } else if (url.startsWith('coachforall://')) {
-        // Demo provider: an in-app checkout (design.md §6).
+      if ((await runCheckout(ref)) === 'demo') {
         router.push({ pathname: '/demo-checkout', params: { ref, amount: String(total) } });
       } else {
-        // Paymob: hosted checkout in the in-app browser; the webhook records the outcome.
-        await WebBrowser.openAuthSessionAsync(url, Linking.createURL('payment-return'));
         goConfirmed(ref);
       }
     } catch (e) {

@@ -1,5 +1,227 @@
 [
  {
+  "at": "2026-10-19T13:30:57.061Z",
+  "commit": "6401632",
+  "note": "T17: Bookings list (Upcoming / Past, discipline filter) and Booking detail (map, policy, payment, pay an approved kids booking) (D50)",
+  "nodes": 1159,
+  "links": 3748,
+  "communities": 61,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_bookings_mybooking",
+    "l": "MyBooking",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_bookingcard_props",
+    "l": "Props",
+    "c": 21,
+    "f": "apps/mobile/src/ui/BookingCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_booking_ref_bookingdetail",
+    "l": "BookingDetail()",
+    "c": 17,
+    "f": "apps/mobile/src/app/booking/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_bookings_filter_bookingsfilter",
+    "l": "BookingsFilter()",
+    "c": 17,
+    "f": "apps/mobile/src/app/bookings-filter.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings_bookings",
+    "l": "Bookings()",
+    "c": 17,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_bookingpolicy",
+    "l": "bookingPolicy()",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_splitbookings",
+    "l": "splitBookings()",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_statuspill",
+    "l": "statusPill()",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_at",
+    "l": "at()",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_row",
+    "l": "row()",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_usemybookings",
+    "l": "useMyBookings()",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_bookingcard_bookingcard",
+    "l": "BookingCard()",
+    "c": 17,
+    "f": "apps/mobile/src/ui/BookingCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_runcheckout",
+    "l": "runCheckout()",
+    "c": 31,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_directionsurl",
+    "l": "directionsUrl()",
+    "c": 43,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_booking_ref",
+    "l": "booking/[ref].tsx",
+    "c": 17,
+    "f": "apps/mobile/src/app/booking/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_booking_ref_styles",
+    "l": "styles",
+    "c": 17,
+    "f": "apps/mobile/src/app/booking/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings_styles",
+    "l": "styles",
+    "c": 17,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings",
+    "l": "bookings.ts",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_active",
+    "l": "ACTIVE",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_my_booking_columns",
+    "l": "MY_BOOKING_COLUMNS",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test",
+    "l": "bookings.test.tsx",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockparams",
+    "l": "mockParams",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockrows",
+    "l": "mockRows",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockrun",
+    "l": "mockRun",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_usebookingsfilter",
+    "l": "useBookingsFilter",
+    "c": 17,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_bookingcard",
+    "l": "BookingCard.tsx",
+    "c": 21,
+    "f": "apps/mobile/src/ui/BookingCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_bookingcard_styles",
+    "l": "styles",
+    "c": 21,
+    "f": "apps/mobile/src/ui/BookingCard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_bookings_filter",
+    "l": "bookings-filter.tsx",
+    "c": 8,
+    "f": "apps/mobile/src/app/bookings-filter.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_bookings_filter_styles",
+    "l": "styles",
+    "c": 8,
+    "f": "apps/mobile/src/app/bookings-filter.tsx"
+   },
+   {
+    "id": "docs_decisions_d50",
+    "l": "D50: T17 Bookings and Booking detail scope",
+    "c": 27,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_bookings_strings",
+    "l": "Arabic strings: Bookings",
+    "c": 27,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_data_checkout_confirmedbooking",
+    "l": "ConfirmedBooking",
+    "c": 24,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings_screen",
+    "l": "Screen()",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   }
+  ],
+  "linkDelta": 160,
+  "files": [
+   "apps/mobile/src/app/(tabs)/bookings.tsx",
+   "apps/mobile/src/app/booking/[ref].tsx",
+   "apps/mobile/src/app/bookings-filter.tsx",
+   "apps/mobile/src/data/bookings.test.tsx",
+   "apps/mobile/src/data/bookings.ts",
+   "apps/mobile/src/data/checkout.ts",
+   "apps/mobile/src/ui/BookingCard.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-10-19T10:21:04.439Z",
   "commit": "9c1b66b",
   "note": "Segmented control and floating tab bar get the iOS 26 Liquid Glass lens: swell, drag, stretch, spring (D49)",

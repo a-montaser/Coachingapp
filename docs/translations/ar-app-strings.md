@@ -366,3 +366,37 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `remind.m120` | Remind me sheet | 2 hours before |  |
 | `remind.evening` | Remind me sheet | The evening before |  |
 | `remind.off` | Remind me sheet | Off |  |
+| `bookings.upcoming` | Bookings | Upcoming · {{n}} |  |
+| `bookings.past` | Bookings | Past |  |
+| `bookings.segLabel` | Bookings | Show |  |
+| `bookings.title` | Bookings | {{discipline}} with {{name}} |  |
+| `bookings.titleChild` | Bookings | {{discipline}} · {{child}} with {{name}} |  |
+| `bookings.today` | Bookings | Today |  |
+| `bookings.status.confirmed` | Bookings | Confirmed |  |
+| `bookings.status.pending` | Bookings | Waiting for {{name}} to confirm |  |
+| `bookings.status.paymentDue` | Bookings | Payment due |  |
+| `bookings.status.completed` | Bookings | Completed |  |
+| `bookings.status.cancelled` | Bookings | Cancelled |  |
+| `bookings.bookAgain` | Bookings | Book again |  |
+| `bookings.details` | Bookings | Details |  |
+| `bookings.emptyUpcoming` | Bookings | No upcoming sessions |  |
+| `bookings.emptyUpcomingBody` | Bookings | Book a session and it shows up here. |  |
+| `bookings.explore` | Bookings | Explore |  |
+| `bookings.emptyPast` | Bookings | Nothing here yet |  |
+| `bookings.emptyPastBody` | Bookings | Sessions you finish or cancel show up here. |  |
+| `bookings.filter` | Bookings | Filter bookings |  |
+| `bookings.filterOn` | Bookings | Filter bookings, on |  |
+| `bookings.filterTitle` | Bookings | Show bookings for |  |
+| `bookings.filterAll` | Bookings | All disciplines |  |
+| `bookings.new` | Bookings | Book a new session |  |
+| `booking.paid` | Booking detail | Paid {{amount}} |  |
+| `booking.atVenue` | Booking detail | Pay at the venue · {{amount}} |  |
+| `booking.due` | Booking detail | Payment due · {{amount}} |  |
+| `booking.refunded` | Booking detail | Cancelled · refunded {{amount}} |  |
+| `booking.noRefund` | Booking detail | Cancelled · not refunded |  |
+| `booking.ref` | Booking detail | Booking ref {{ref}} |  |
+| `booking.bring` | Booking detail | What to bring |  |
+| `booking.payNow` | Booking detail | Pay {{amount}} |  |
+| `booking.policyFree` | Booking detail | Free cancellation until {{when}}. After that the session is non-refundable. |  |
+| `booking.policyLate` | Booking detail | Less than 24 hours to go. Cancelling now isn't refunded. |  |
+| `booking.mapLabel` | Booking detail | Map showing {{venue}} |  |
