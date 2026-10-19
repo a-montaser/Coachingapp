@@ -1,5 +1,64 @@
 [
  {
+  "at": "2026-10-19T10:21:04.439Z",
+  "commit": "9c1b66b",
+  "note": "Segmented control and floating tab bar get the iOS 26 Liquid Glass lens: swell, drag, stretch, spring (D49)",
+  "nodes": 1130,
+  "links": 3588,
+  "communities": 46,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_glasslens_lens",
+    "l": "Lens",
+    "c": 7,
+    "f": "apps/mobile/src/ui/GlassLens.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_glasslens_glasslens",
+    "l": "GlassLens()",
+    "c": 7,
+    "f": "apps/mobile/src/ui/GlassLens.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_glasslens_useglasslens",
+    "l": "useGlassLens()",
+    "c": 7,
+    "f": "apps/mobile/src/ui/GlassLens.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_glasslens",
+    "l": "GlassLens.tsx",
+    "c": 7,
+    "f": "apps/mobile/src/ui/GlassLens.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_glasslens_styles",
+    "l": "styles",
+    "c": 7,
+    "f": "apps/mobile/src/ui/GlassLens.tsx"
+   },
+   {
+    "id": "docs_decisions_d49",
+    "l": "D49: iOS 26 selection lens (GlassLens)",
+    "c": 26,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_design_selection_lens",
+    "l": "Selection lens (ui/GlassLens)",
+    "c": 26,
+    "f": "specs/phase-1/design.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 39,
+  "files": [
+   "apps/mobile/src/ui/GlassLens.tsx",
+   "docs/DECISIONS.md",
+   "specs/phase-1/design.md"
+  ]
+ },
+ {
   "at": "2026-10-19T10:11:26.011Z",
   "commit": "82dfa9b",
   "note": "Tab bar uses the prototype's own icons (Apple's bar on iOS, floating bar on Android) (D48)",

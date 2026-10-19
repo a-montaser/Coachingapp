@@ -9,15 +9,17 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from 'react-native';
-import Animated, { useAnimatedStyle, withSpring, ZoomIn } from 'react-native-reanimated';
+import { GestureDetector } from 'react-native-gesture-handler';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 import { create } from 'zustand';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, homeIndicator, motion, radius, space } from '@cfa/tokens';
-import { useIsRTL, useLang } from '@/i18n';
+import { useLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
 import { Glass, GlassGroup, glassMode, liquidAvailable } from './Glass';
+import { GlassLens, useGlassLens } from './GlassLens';
 import { T } from './T';
 import { TAB_ICON } from './tabIcons';
 
@@ -99,16 +101,14 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   const { reduceMotion } = useA11y();
   const lang = useLang();
   const bottom = useTabBarBottom();
-  const rtl = useIsRTL();
   const { reduceTransparency } = useA11y();
   const liquid = glassMode(Platform.OS, liquidAvailable(), reduceTransparency) === 'liquid';
-  const [barWidth, setBarWidth] = useState(0);
-  const tabWidth = (barWidth - tb.padding * 2) / TABS.length;
-  // Tabs run right-to-left in Arabic (JS RTL, D26), so the lens counts from the other end.
-  const slot = rtl ? TABS.length - 1 - TABS.indexOf(active) : TABS.indexOf(active);
-  const lensStyle = useAnimatedStyle(() => {
-    const x = tb.padding + slot * tabWidth;
-    return { transform: [{ translateX: reduceMotion ? x : withSpring(x, motion.lensSpring) }] };
+  // The iOS 26 lens under the finger (D49): swells, follows a drag, springs onto the tab let go on.
+  const lens = useGlassLens({
+    count: TABS.length,
+    index: TABS.indexOf(active),
+    inset: tb.padding,
+    onChange: (i) => onSelect(TABS[i]!),
   });
   // Scale only: fading a parent of native glass breaks it (DECISIONS D20).
   const pop = reduceMotion ? undefined : ZoomIn.duration(motion.tabMinimiseMs);
@@ -166,39 +166,34 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
           the bar (GlassEffectContainer) and slides between tabs. */}
       <GlassGroup spacing={tb.padding * 2}>
         <Glass radius={radius.pill}>
-          <View
-            testID="tab-bar"
-            accessibilityRole="tablist"
-            style={styles.bar}
-            onLayout={(e) => setBarWidth(e.nativeEvent.layout.width)}
-          >
-            {barWidth > 0 && (
-              <Animated.View pointerEvents="none" style={[styles.lens, { width: tabWidth }, lensStyle]}>
-                {liquid ? (
-                  <Glass radius={radius.pill} interactive style={styles.fill} />
-                ) : (
-                  <View
-                    style={[styles.fill, { borderRadius: radius.pill, backgroundColor: c.glassSelected }]}
-                  />
-                )}
-              </Animated.View>
-            )}
-            {TABS.map((tab) => {
-              const selected = tab === active;
-              return (
-                <Pressable
-                  key={tab}
-                  accessibilityRole="tab"
-                  accessibilityLabel={label(tab)}
-                  accessibilityState={{ selected }}
-                  onPress={() => onSelect(tab)}
-                  style={styles.tab}
-                >
-                  {content(tab, selected)}
-                </Pressable>
-              );
-            })}
-          </View>
+          <GestureDetector gesture={lens.gesture}>
+            <View testID="tab-bar" accessibilityRole="tablist" style={styles.bar} onLayout={lens.onLayout}>
+              <GlassLens
+                lens={lens}
+                radius={radius.pill}
+                top={tb.padding}
+                bottom={tb.padding}
+                liquid={liquid}
+                fill={liquid ? undefined : c.glassSelected}
+              />
+              {TABS.map((tab) => {
+                const selected = tab === active;
+                return (
+                  // Touch is the lens's gesture; the Pressable keeps VoiceOver and Switch Control activation.
+                  <Pressable
+                    key={tab}
+                    accessibilityRole="tab"
+                    accessibilityLabel={label(tab)}
+                    accessibilityState={{ selected }}
+                    onPress={() => onSelect(tab)}
+                    style={styles.tab}
+                  >
+                    {content(tab, selected)}
+                  </Pressable>
+                );
+              })}
+            </View>
+          </GestureDetector>
         </Glass>
       </GlassGroup>
     </Animated.View>
@@ -209,9 +204,6 @@ const styles = StyleSheet.create({
   wrap: { position: 'absolute', start: tb.inset, end: tb.inset },
   bar: { flexDirection: 'row', minHeight: tb.height, padding: tb.padding },
   tab: { flex: 1, borderRadius: radius.pill, minHeight: tb.tabHeight, justifyContent: 'center' },
-  // A physical left edge: the slot index already accounts for right-to-left.
-  lens: { position: 'absolute', top: tb.padding, bottom: tb.padding, left: 0 },
-  fill: { flex: 1 },
   tabInner: { alignItems: 'center', gap: space.space1 / 2, paddingHorizontal: space.space1 },
   badge: {
     position: 'absolute',

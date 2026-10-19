@@ -132,6 +132,7 @@ interface PaymentProvider {
 - Screens with no artboard (Welcome, Sign up, Verify, Levels, Who & where, Book, Review & pay, Confirmed, Bookings, Booking detail, Profile, Family) follow the handoff §7 text, the design-system READMEs and the Phase 0 primitives.
 - **New shared pieces** (small, inside `ui/`): EmptyState (§5), Stepper (workshop seats), Hero (image + scrim + content sheet overlapping by 28), ConfirmationRing (§5, §8), OtpBoxes, LevelGlyph (4 bars), InterestTile (92 high), DashedCard (Add a family member), SheetHeader (sheets' close · title).
 - **NavigationBar** *(D33, D43)*: floating glass back circle + one trailing glass cluster (icon or text actions), with an optional inline title + subtitle; Bookings (T17) adds the one-capsule `.navglass` variant from the prototype.
+- **Selection lens** *(D49)*: `ui/GlassLens.tsx` (`useGlassLens` + `GlassLens`) drives the sliding selection of SegmentedControl and the floating TabBar the iOS 26 way: swell on touch, follow a drag with stretch, spring onto the segment let go on; springs are `motion.lens*` tokens; Reduce Motion drops swell and stretch.
 - **Component library** *(D43)*: every visible element is an instance of a `ui/` component, and the dev Gallery (`/gallery`) shows each one in both themes and languages. Added: Avatar, IconTile, RowCard, DisciplineTile, DateButton, LevelOption, SessionRow, Banner, Section, TextField, TextLink.
 
 ## 8. Testing and CI

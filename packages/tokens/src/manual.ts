@@ -25,6 +25,12 @@ export const motion = {
   ringDrawMs: 800, // §8 confirmation ring
   tickMs: 450, // §8 confirmation tick
   lensSpring: { damping: 18, stiffness: 220, mass: 0.8 }, // iOS 26 tab selection lens (provisional, tuned by eye)
+  // iOS 26 selection lens under the finger (tab bar, segmented control; D49). Provisional, tuned by eye.
+  lensDragSpring: { damping: 26, stiffness: 520, mass: 0.6 }, // follows a drag a beat behind, so it stretches
+  lensPressSpring: { damping: 16, stiffness: 320, mass: 0.7 }, // the swell on touch down and release
+  lensPressScale: 1.18, // how much the lens swells while touched
+  lensStretch: 0.22, // extra width while travelling, at a full segment's distance
+  lensSquash: 0.12, // matching loss of height
 } as const;
 
 export const icon = { regular: 22, small: 17, xsmall: 14 } as const; // DS .ic / .ic.s / .ic.xs
