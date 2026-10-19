@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Image,
   Platform,
   Pressable,
   StyleSheet,
@@ -17,8 +18,8 @@ import { formatNumber } from '@/i18n/format';
 import { useA11y } from '@/theme/useA11y';
 import { useTheme } from '@/theme/useTheme';
 import { Glass, GlassGroup, glassMode, liquidAvailable } from './Glass';
-import { Icon } from './Icon';
 import { T } from './T';
+import { TAB_ICON } from './tabIcons';
 
 export type TabKey = 'home' | 'explore' | 'bookings' | 'messages' | 'profile';
 const TABS: TabKey[] = ['home', 'explore', 'bookings', 'messages', 'profile'];
@@ -70,6 +71,15 @@ type Props = {
 
 const tb = component.tabBar;
 
+/** The prototype's tab icon (D48), tinted like the label. */
+const TabIcon = ({ tab, color }: { tab: TabKey; color: string }) => (
+  <Image
+    source={TAB_ICON[tab]}
+    style={{ width: tb.iconSize, height: tb.iconSize, tintColor: color }}
+    accessibilityIgnoresInvertColors
+  />
+);
+
 /**
  * Distance from the screen's bottom edge to the tab bar: §4.4 "26 pt above the home indicator"
  * (DECISIONS D25). iOS: above the indicator's top (39 pt on an iPhone 16 Pro); no indicator: 26 pt.
@@ -111,7 +121,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   const content = (tab: TabKey, selected: boolean) => (
     <View style={styles.tabInner}>
       <View>
-        <Icon name={tab} size={tb.iconSize} color={c.glassLabel} />
+        <TabIcon tab={tab} color={c.glassLabel} />
         {tab === 'messages' && unreadMessages > 0 && (
           // Glass carries no colour: the badge on glass is glass-label, not danger (§4.2, DS .glass .badge).
           <View style={[styles.badge, { backgroundColor: c.glassLabel }]}>
@@ -134,7 +144,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
         <Pressable accessibilityRole="button" accessibilityLabel={label(active)} onPress={onRestore}>
           <Glass radius={radius.pill} interactive>
             <View style={[styles.minTab, { backgroundColor: c.glassSelected }]}>
-              <Icon name={active} size={tb.iconSize} color={c.glassLabel} />
+              <TabIcon tab={active} color={c.glassLabel} />
               <T variant="subheadline" weight="600" color={c.glassLabel} fit={1}>
                 {t(`tabs.${active}`)}
               </T>
@@ -143,7 +153,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
         </Pressable>
         <Pressable accessibilityRole="button" accessibilityLabel={label(jump)} onPress={() => onSelect(jump)}>
           <Glass radius={radius.pill} interactive style={styles.round}>
-            <Icon name={jump} size={tb.iconSize} color={c.glassLabel} />
+            <TabIcon tab={jump} color={c.glassLabel} />
           </Glass>
         </Pressable>
       </Animated.View>

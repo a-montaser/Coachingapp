@@ -1,5 +1,54 @@
 [
  {
+  "at": "2026-10-19T10:11:26.011Z",
+  "commit": "82dfa9b",
+  "note": "Tab bar uses the prototype's own icons (Apple's bar on iOS, floating bar on Android) (D48)",
+  "nodes": 1123,
+  "links": 3549,
+  "communities": 60,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_tabbar_tabicon",
+    "l": "TabIcon()",
+    "c": 24,
+    "f": "apps/mobile/src/ui/TabBar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_tabicons",
+    "l": "tabIcons.ts",
+    "c": 24,
+    "f": "apps/mobile/src/ui/tabIcons.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_tabicons_tab_icon",
+    "l": "TAB_ICON",
+    "c": 24,
+    "f": "apps/mobile/src/ui/tabIcons.ts"
+   },
+   {
+    "id": "docs_decisions_d48",
+    "l": "D48: Prototype tab icons",
+    "c": 41,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_app_tabs_layout_sf",
+    "l": "SF",
+    "c": 15,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   }
+  ],
+  "linkDelta": 9,
+  "files": [
+   "apps/mobile/src/app/(tabs)/_layout.tsx",
+   "apps/mobile/src/ui/TabBar.tsx",
+   "apps/mobile/src/ui/tabIcons.ts",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-19T09:31:04.902Z",
   "commit": "5b01332",
   "note": "iOS tab bar back to Apple's native Liquid Glass bar for the real animation; Android keeps the prototype bar (D47)",

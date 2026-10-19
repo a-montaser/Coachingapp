@@ -58,7 +58,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 - **AC:** A Maestro flow finishes onboarding, signs up with the test number, verifies, and lands on Home with the picks saved. Unit tests cover the phone validation and the save-after-verify step.
 
 ### R3 `shell`
-- R3.1 Five tabs (Home, Explore, Bookings, Messages, Profile), using Apple's native tab bar on iOS (system Liquid Glass and its selection animation, same SF Symbol icons) and the Phase 0 `TabBar` (the prototype's floating glass tab bar) on Android, both minimising on scroll *(D47: the native bar is back on iOS; D43 had replaced it)*. Pushed screens hide the tab bar; tapping a tab returns to its root (§6.1).
+- R3.1 Five tabs (Home, Explore, Bookings, Messages, Profile), using Apple's native tab bar on iOS (system Liquid Glass and its selection animation, with the prototype's own tab icons, D48) and the Phase 0 `TabBar` (the prototype's floating glass tab bar) on Android, both minimising on scroll *(D47: the native bar is back on iOS; D43 had replaced it)*. Pushed screens hide the tab bar; tapping a tab returns to its root (§6.1).
 - R3.2 Theme, language and category persist across launches.
 - R3.3 Language changes take effect immediately, in JS-level RTL (D26).
 - R3.4 Profile (§7.14), limited to Phase 1 *(D31: no Edit button, no Members' Circle card)*:

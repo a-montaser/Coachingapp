@@ -1,9 +1,9 @@
 {
   "docs/DECISIONS.md": {
-    "mtime": 1792402062.5485728,
-    "seen": 1792402251.060257,
-    "ast_hash": "ae3e500a7ab412e787eb53611ef1a130",
-    "semantic_hash": "ae3e500a7ab412e787eb53611ef1a130"
+    "mtime": 1792404631.9891422,
+    "seen": 1792404673.676661,
+    "ast_hash": "052db83267f99f9a07dc13d7f8bda660",
+    "semantic_hash": "052db83267f99f9a07dc13d7f8bda660"
   },
   "docs/DESIGN_HANDOFF.md": {
     "mtime": 1792229468.815123,
@@ -264,10 +264,10 @@
     "semantic_hash": "b9cb53dcd2671651f3961a99eb76b3b5"
   },
   "apps/mobile/src/ui/TabBar.tsx": {
-    "mtime": 1792345773.1454601,
-    "seen": 1792345881.86014,
-    "ast_hash": "f5b69d25e974d87dca2db5606dd2213c",
-    "semantic_hash": "f5b69d25e974d87dca2db5606dd2213c"
+    "mtime": 1792404563.5875406,
+    "seen": 1792404673.676518,
+    "ast_hash": "1d2d755aa5e24c907538acea5198e1b2",
+    "semantic_hash": "1d2d755aa5e24c907538acea5198e1b2"
   },
   "apps/mobile/src/ui/TimeSlots.tsx": {
     "mtime": 1792261056.3407514,
@@ -474,10 +474,10 @@
     "semantic_hash": "dd4e5fe656cae309e0331fe610b3e3b3"
   },
   "apps/mobile/src/app/(tabs)/_layout.tsx": {
-    "mtime": 1792402047.2379296,
-    "seen": 1792402251.0597482,
-    "ast_hash": "9e1c42a04a1d6df18e72177513f64c14",
-    "semantic_hash": "9e1c42a04a1d6df18e72177513f64c14"
+    "mtime": 1792404563.5717332,
+    "seen": 1792404673.676203,
+    "ast_hash": "5bc4cd3a3d3321d8ac152a892758167d",
+    "semantic_hash": "5bc4cd3a3d3321d8ac152a892758167d"
   },
   "apps/mobile/src/app/(tabs)/bookings.tsx": {
     "mtime": 1792326597.5965483,
@@ -732,10 +732,10 @@
     "semantic_hash": "64523d5e126f169deecac0557774d115"
   },
   "specs/phase-1/requirements.md": {
-    "mtime": 1792402062.5362535,
-    "seen": 1792402251.060263,
-    "ast_hash": "260e623682ff91a3d3ae7ebfde32a437",
-    "semantic_hash": "260e623682ff91a3d3ae7ebfde32a437"
+    "mtime": 1792404631.9920006,
+    "seen": 1792404673.676664,
+    "ast_hash": "c8de44632fa2d821fba1a3056b052f14",
+    "semantic_hash": "c8de44632fa2d821fba1a3056b052f14"
   },
   "specs/phase-1/tasks.md": {
     "mtime": 1792400942.0715349,
@@ -1042,5 +1042,11 @@
     "seen": 1792398213.439462,
     "ast_hash": "a004388050b4f9f69a7d3bef7749ae87",
     "semantic_hash": "a004388050b4f9f69a7d3bef7749ae87"
+  },
+  "apps/mobile/src/ui/tabIcons.ts": {
+    "mtime": 1792404563.5273862,
+    "seen": 1792404673.6765609,
+    "ast_hash": "91dc02c99da9ebfab5d1b4ba2e6e8481",
+    "semantic_hash": "91dc02c99da9ebfab5d1b4ba2e6e8481"
   }
 }
