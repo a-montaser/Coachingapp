@@ -1,5 +1,33 @@
 [
  {
+  "at": "2026-10-19T09:31:04.902Z",
+  "commit": "5b01332",
+  "note": "iOS tab bar back to Apple's native Liquid Glass bar for the real animation; Android keeps the prototype bar (D47)",
+  "nodes": 1120,
+  "links": 3540,
+  "communities": 58,
+  "added": [
+   {
+    "id": "apps_mobile_src_app_tabs_layout_sf",
+    "l": "SF",
+    "c": 15,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "docs_decisions_d47",
+    "l": "D47: Native tab bar back on iOS",
+    "c": 36,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 19,
+  "files": [
+   "apps/mobile/src/app/(tabs)/_layout.tsx",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-10-19T09:12:17.636Z",
   "commit": "a4b7041",
   "note": "T16 deployed: payment Edge Functions live; demo card payment verified end to end (D46)",

@@ -10,7 +10,7 @@ apps/mobile/src/
     _layout.tsx                providers: QueryClient, settings hydration, journey gate (below), theme, direction
     (auth)/welcome.tsx  sign-up.tsx  verify.tsx
     (onboarding)/categories.tsx  interests.tsx  levels.tsx  who-where.tsx   (open to everyone, D34)
-    (tabs)/_layout.tsx         Tabs + the Phase 0 TabBar on iOS and Android (D43), minimising on scroll
+    (tabs)/_layout.tsx         NativeTabs on iOS (D47); Tabs + the Phase 0 TabBar on Android (D43); minimising on scroll
     (tabs)/index.tsx  explore.tsx  bookings.tsx  messages.tsx  profile.tsx
     instructor/[id].tsx  workshop/[id].tsx  book/[offeringId].tsx  review.tsx
     confirmed/[ref].tsx  booking/[ref].tsx  family.tsx
