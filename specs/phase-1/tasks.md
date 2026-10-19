@@ -43,10 +43,11 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 ## E. Booking and payments
 - [x] **T14 Book screen** (1:1, group, kids).
   - Verify: RNTL tests; bookable-rule tests.
-- [ ] **T15 Review & pay + promo + Confirmed** (ring, Remind me sheet).
+- [x] **T15 Review & pay + promo + Confirmed** (ring, Remind me sheet).
   - Verify: rule tests for the policy line and promo.
 - [ ] **T16 PaymentProvider + Edge Functions** (create-checkout, payment-webhook, refund) with paymob and fake.
   - Verify: deno tests; one manual sandbox card payment on the iPhone.
+  - Code and Deno tests done (D45); **deploy blocked** on a Supabase token with Edge Functions write access.
 
 ## F. Manage and reminders
 - [ ] **T17 Bookings list + Booking detail.**

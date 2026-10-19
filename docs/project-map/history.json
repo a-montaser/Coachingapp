@@ -1,5 +1,581 @@
 [
  {
+  "at": "2026-10-19T08:23:49.279Z",
+  "commit": "4842157",
+  "note": "T15 Review & pay, promo, Confirmed and Remind me; T16 payment providers and Edge Functions with Deno tests (deploy waiting on a Supabase token) (D45)",
+  "nodes": 1117,
+  "links": 3522,
+  "communities": 55,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_rules_policy",
+    "l": "Policy",
+    "c": 17,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_booking",
+    "l": "Booking",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_confirmedbooking",
+    "l": "ConfirmedBooking",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_method",
+    "l": "Method",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_reminderchoice",
+    "l": "ReminderChoice",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_reviewdata",
+    "l": "ReviewData",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_bookingerrorkey",
+    "l": "BookingErrorKey",
+    "c": 38,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_obj",
+    "l": "Obj",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_checkoutinput",
+    "l": "CheckoutInput",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_paymentevent",
+    "l": "PaymentEvent",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_paymentprovider",
+    "l": "PaymentProvider",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_policyfor",
+    "l": "policyFor()",
+    "c": 17,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_confirmed_ref_confirmed",
+    "l": "Confirmed()",
+    "c": 25,
+    "f": "apps/mobile/src/app/confirmed/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_remind_ref_remindsheet",
+    "l": "RemindSheet()",
+    "c": 25,
+    "f": "apps/mobile/src/app/remind/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_usemybooking",
+    "l": "useMyBooking()",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_confirmationring_confirmationring",
+    "l": "ConfirmationRing()",
+    "c": 25,
+    "f": "apps/mobile/src/ui/ConfirmationRing.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_demo_checkout_democheckout",
+    "l": "DemoCheckout()",
+    "c": 33,
+    "f": "apps/mobile/src/app/demo-checkout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_demopay",
+    "l": "demoPay()",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_booking",
+    "l": "booking()",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_indays",
+    "l": "inDays()",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_review",
+    "l": "review()",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_review_review",
+    "l": "Review()",
+    "c": 38,
+    "f": "apps/mobile/src/app/review.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_applypromo",
+    "l": "applyPromo()",
+    "c": 38,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_placebooking",
+    "l": "placeBooking()",
+    "c": 38,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_startcheckout",
+    "l": "startCheckout()",
+    "c": 38,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_usereview",
+    "l": "useReview()",
+    "c": 38,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_promodiscount",
+    "l": "promoDiscount()",
+    "c": 38,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_subtotal",
+    "l": "subtotal()",
+    "c": 38,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_payments_test_callback",
+    "l": "callback()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/payments_test.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_at",
+    "l": "at()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_env",
+    "l": "env()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_hmacsha512",
+    "l": "hmacSha512()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_hmacstring",
+    "l": "hmacString()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_safeequal",
+    "l": "safeEqual()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_verifypaymob",
+    "l": "verifyPaymob()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_getprovider",
+    "l": "getProvider()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_paymentprovider_createcheckout",
+    "l": ".createCheckout()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_paymentprovider_refund",
+    "l": ".refund()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_paymentprovider_verifywebhook",
+    "l": ".verifyWebhook()",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_supabase_caller",
+    "l": "caller()",
+    "c": 6,
+    "f": "supabase/functions/_shared/supabase.ts"
+   },
+   {
+    "id": "supabase_functions_shared_supabase_json",
+    "l": "json()",
+    "c": 6,
+    "f": "supabase/functions/_shared/supabase.ts"
+   },
+   {
+    "id": "supabase_functions_shared_supabase_service",
+    "l": "service()",
+    "c": 6,
+    "f": "supabase/functions/_shared/supabase.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_confirmed_ref",
+    "l": "confirmed/[ref].tsx",
+    "c": 0,
+    "f": "apps/mobile/src/app/confirmed/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_confirmed_ref_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/app/confirmed/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_demo_checkout",
+    "l": "demo-checkout.tsx",
+    "c": 14,
+    "f": "apps/mobile/src/app/demo-checkout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_demo_checkout_styles",
+    "l": "styles",
+    "c": 14,
+    "f": "apps/mobile/src/app/demo-checkout.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_confirmationring",
+    "l": "ConfirmationRing.tsx",
+    "c": 2,
+    "f": "apps/mobile/src/ui/ConfirmationRing.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_confirmationring_styles",
+    "l": "styles",
+    "c": 2,
+    "f": "apps/mobile/src/ui/ConfirmationRing.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_remind_ref",
+    "l": "remind/[ref].tsx",
+    "c": 25,
+    "f": "apps/mobile/src/app/remind/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_remind_ref_styles",
+    "l": "styles",
+    "c": 25,
+    "f": "apps/mobile/src/app/remind/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout",
+    "l": "checkout.ts",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_default_reminder",
+    "l": "DEFAULT_REMINDER",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_known",
+    "l": "KNOWN",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_reminder_choices",
+    "l": "REMINDER_CHOICES",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_usereminders",
+    "l": "useReminders",
+    "c": 25,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test",
+    "l": "checkout.test.tsx",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockcheckout",
+    "l": "mockCheckout",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockdemopay",
+    "l": "mockDemoPay",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockparams",
+    "l": "mockParams",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockplace",
+    "l": "mockPlace",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockpromo",
+    "l": "mockPromo",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockreview",
+    "l": "mockReview",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_review",
+    "l": "review.tsx",
+    "c": 38,
+    "f": "apps/mobile/src/app/review.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_review_styles",
+    "l": "styles",
+    "c": 38,
+    "f": "apps/mobile/src/app/review.tsx"
+   },
+   {
+    "id": "supabase_functions_deno",
+    "l": "deno.json",
+    "c": 54,
+    "f": "supabase/functions/deno.json"
+   },
+   {
+    "id": "supabase_functions_deno_nodemodulesdir",
+    "l": "nodeModulesDir",
+    "c": 54,
+    "f": "supabase/functions/deno.json"
+   },
+   {
+    "id": "supabase_functions_create_checkout_index",
+    "l": "create-checkout/index.ts",
+    "c": 6,
+    "f": "supabase/functions/create-checkout/index.ts"
+   },
+   {
+    "id": "supabase_functions_demo_pay_index",
+    "l": "demo-pay/index.ts",
+    "c": 6,
+    "f": "supabase/functions/demo-pay/index.ts"
+   },
+   {
+    "id": "supabase_functions_payment_webhook_index",
+    "l": "payment-webhook/index.ts",
+    "c": 6,
+    "f": "supabase/functions/payment-webhook/index.ts"
+   },
+   {
+    "id": "supabase_functions_refund_index",
+    "l": "refund/index.ts",
+    "c": 6,
+    "f": "supabase/functions/refund/index.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_demo",
+    "l": "demo.ts",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/demo.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_demo_demo",
+    "l": "demo",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/demo.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_fake",
+    "l": "fake.ts",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/fake.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_fake_fake",
+    "l": "fake",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/fake.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_payments_test",
+    "l": "payments_test.ts",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/payments_test.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_payments_test_sample",
+    "l": "sample",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/payments_test.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob",
+    "l": "paymob.ts",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_hmac_fields",
+    "l": "HMAC_FIELDS",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_paymob_paymob",
+    "l": "paymob",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/paymob.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider",
+    "l": "provider.ts",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_payments_provider_providers",
+    "l": "PROVIDERS",
+    "c": 6,
+    "f": "supabase/functions/_shared/payments/provider.ts"
+   },
+   {
+    "id": "supabase_functions_shared_supabase",
+    "l": "_shared/supabase.ts",
+    "c": 6,
+    "f": "supabase/functions/_shared/supabase.ts"
+   },
+   {
+    "id": "docs_decisions_d45",
+    "l": "D45: T15/T16: test bookings and demo payment Edge Functions approved; card ",
+    "c": 18,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_confirmed_strings",
+    "l": "Arabic strings: Confirmed",
+    "c": 12,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_remind_me_sheet_strings",
+    "l": "Arabic strings: Remind me sheet",
+    "c": 12,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_review_pay_strings",
+    "l": "Arabic strings: Review & pay",
+    "c": 12,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "_github_workflows_ci_edge_functions_job",
+    "l": "CI edge-functions job (Deno check + deno test of payment providers, R7 AC)",
+    "c": 18,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_demo_payment_strings",
+    "l": "Arabic strings: Demo payment",
+    "c": 18,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "ref_jsr_std",
+    "l": "ref_jsr_std",
+    "c": 6,
+    "f": ""
+   },
+   {
+    "id": "ref_npm_supabase",
+    "l": "ref_npm_supabase",
+    "c": 6,
+    "f": ""
+   }
+  ],
+  "removed": [],
+  "linkDelta": 299,
+  "files": [
+   ".github/workflows/ci.yml",
+   "apps/mobile/src/app/confirmed/[ref].tsx",
+   "apps/mobile/src/app/demo-checkout.tsx",
+   "apps/mobile/src/app/remind/[ref].tsx",
+   "apps/mobile/src/app/review.tsx",
+   "apps/mobile/src/data/checkout.test.tsx",
+   "apps/mobile/src/data/checkout.ts",
+   "apps/mobile/src/data/rules.ts",
+   "apps/mobile/src/ui/ConfirmationRing.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md",
+   "supabase/functions/_shared/payments/demo.ts",
+   "supabase/functions/_shared/payments/fake.ts",
+   "supabase/functions/_shared/payments/payments_test.ts",
+   "supabase/functions/_shared/payments/paymob.ts",
+   "supabase/functions/_shared/payments/provider.ts",
+   "supabase/functions/_shared/supabase.ts",
+   "supabase/functions/create-checkout/index.ts",
+   "supabase/functions/demo-pay/index.ts",
+   "supabase/functions/deno.json",
+   "supabase/functions/payment-webhook/index.ts",
+   "supabase/functions/refund/index.ts"
+  ]
+ },
+ {
   "at": "2026-10-18T17:51:34.209Z",
   "commit": "c7d8f2d",
   "note": "Pictures zoomed out; iOS 26 Liquid Glass properties: interactive only on controls, app theme on glass, sliding glass lens on the tab bar (D44)",

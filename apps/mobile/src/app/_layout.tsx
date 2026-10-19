@@ -40,6 +40,10 @@ function RootNavigator() {
         <Stack.Screen name="instructor/[id]" />
         <Stack.Screen name="workshop/[id]" />
         <Stack.Screen name="book/[offeringId]" />
+        <Stack.Screen name="review" />
+        <Stack.Screen name="demo-checkout" options={sheet} />
+        <Stack.Screen name="confirmed/[ref]" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="remind/[ref]" options={sheet} />
         <Stack.Screen name="family-member" options={sheet} />
         <Stack.Screen name="language" options={sheet} />
         <Stack.Screen name="appearance" options={sheet} />

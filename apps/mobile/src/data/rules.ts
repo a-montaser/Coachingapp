@@ -39,3 +39,25 @@ export function weekDays(week: 0 | 1, now: Date): Date[] {
 }
 
 export const sameCairoDay = (a: Date, b: Date) => cairoDay(a) === cairoDay(b);
+
+/** §9.7 price: the offering's price × seats, in whole EGP (VAT included). Mirrors `book()`. */
+export const subtotal = (priceEgp: number, seats: number) => priceEgp * seats;
+
+/** §9.8 promo: percent off the subtotal, rounded to whole EGP. Mirrors SQL `apply_promo`. */
+export const promoDiscount = (subtotalEgp: number, percentOff: number) =>
+  Math.round((subtotalEgp * percentOff) / 100);
+
+export type Policy =
+  | { kind: 'free'; until: Date } // "Free cancellation until Wed 14 Oct, 18:00."
+  | { kind: 'sameDay' } // "This is a same-day booking, so it can't be refunded."
+  | { kind: 'late' }; // "Less than 24 hours to go. Cancelling now isn't refunded."
+
+/**
+ * §9.1 policy line for a booking made `now` for a session starting `startsAt`. Mirrors `book()` /
+ * `cancel_booking()`: refundable until 24 h before the start, never when booked on the start date.
+ */
+export function policyFor(startsAt: Date, now: Date): Policy {
+  if (sameCairoDay(startsAt, now)) return { kind: 'sameDay' };
+  const until = new Date(startsAt.getTime() - 24 * 60 * 60_000);
+  return now < until ? { kind: 'free', until } : { kind: 'late' };
+}

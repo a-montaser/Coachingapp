@@ -30,8 +30,6 @@ const BAR_CLEARANCE =
   component.bottomBar.inset +
   layout.sectionGap;
 const KIDS_AGE = { min: 6, max: 14 }; // §9.4 default when an offering sets no range
-// shortcut: Review & pay arrives in T15; until then Continue saves the draft but stays disabled.
-const REVIEW_PENDING = true;
 
 /**
  * §7.8 Book (1:1, group, kids): session type (only those offered), a kids child card, two weeks of days,
@@ -135,7 +133,14 @@ export default function Book() {
   const canContinue = Boolean(chosen) && !needsChild;
   const goOn = () => {
     if (!chosen || needsChild) return;
-    draft.set({ offeringId: o.id, slotId: chosen.id, childId: child?.id ?? null, note: note.trim() });
+    draft.set({
+      offeringId: o.id,
+      slotId: chosen.id,
+      seats: 1,
+      childId: child?.id ?? null,
+      note: note.trim(),
+    });
+    router.push('/review');
   };
 
   return (
@@ -228,10 +233,8 @@ export default function Book() {
         <Button
           label={chosen ? t('book.continue') : t('book.pickTime')}
           variant="primary"
-          disabled={!canContinue || REVIEW_PENDING}
-          reason={
-            !chosen ? t('book.pickTimeReason') : needsChild ? t('book.needChild') : t('common.comingSoon')
-          }
+          disabled={!canContinue}
+          reason={!chosen ? t('book.pickTimeReason') : needsChild ? t('book.needChild') : undefined}
           onPress={goOn}
         />
       </BottomActionBar>

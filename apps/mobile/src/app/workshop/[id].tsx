@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
+import { useBookDraft } from '@/data/book';
 import { useWorkshop } from '@/data/instructor';
 import { clampSeats, maxWorkshopSeats } from '@/data/rules';
 import { useLang } from '@/i18n';
@@ -208,13 +209,18 @@ export default function Workshop() {
 
       <NavigationBar title={o.title} titleAfterHero scrollY={scrollY} onBack={() => router.back()} />
       <BottomActionBar caption={summary} price={formatPrice(total, lang)}>
-        {/* shortcut: Review & pay arrives in T15; Reserve stays disabled until then. */}
         <Button
           label={t('workshop.reserve')}
           variant="primary"
-          disabled
-          reason={t('common.comingSoon')}
-          onPress={() => {}}
+          disabled={!chosen || max < 1}
+          reason={t('workshop.pickDateReason')}
+          onPress={() => {
+            if (!chosen) return;
+            useBookDraft
+              .getState()
+              .set({ offeringId: o.id, slotId: chosen.id, seats: count, childId: null, note: '' });
+            router.push('/review');
+          }}
         />
       </BottomActionBar>
     </View>

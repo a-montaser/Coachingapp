@@ -19,6 +19,20 @@ jobs:
       - run: npm test
       - run: npm run tokens:check
 
+  edge-functions:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: supabase/functions
+    steps:
+      - uses: actions/checkout@v5
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.1.4
+      - run: deno check create-checkout/index.ts demo-pay/index.ts payment-webhook/index.ts refund/index.ts
+      # R7 AC: webhook HMAC good / tampered / replayed, provider contract, demo/fake refused in production.
+      - run: deno test --allow-env _shared/payments/
+
   supabase:
     runs-on: ubuntu-latest
     steps:

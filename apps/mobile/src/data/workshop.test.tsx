@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import '@/i18n';
 import Workshop from '@/app/workshop/[id]';
 import { useSettings } from '@/theme/settings';
+import { useBookDraft } from './book';
 import { clampSeats, maxWorkshopSeats } from './rules';
 
 let mockParams: { id: string; slot?: string } = { id: 'taster' };
@@ -105,5 +106,13 @@ test('a requested date is preselected; the instructor row opens their profile', 
     pathname: '/instructor/[id]',
     params: { id: 'yasmine', discipline: 'pottery' },
   });
-  expect(screen.getByRole('button', { name: 'Reserve' })).toBeDisabled(); // until T15
+  // Reserve keeps the date and seats for Review & pay.
+  await fireEvent.press(screen.getByRole('button', { name: 'Reserve' }));
+  expect(useBookDraft.getState()).toMatchObject({
+    offeringId: 'taster',
+    slotId: 'two',
+    seats: 1,
+    childId: null,
+  });
+  expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/review');
 });

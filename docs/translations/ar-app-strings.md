@@ -296,3 +296,73 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `book.continue` | Book | Continue |  |
 | `book.summary` | Book | {{day}} · {{start}}–{{end}} |  |
 | `book.notFound` | Book | These sessions aren't available any more. |  |
+| `book.childTitle` | Book | For {{name}}, age {{age}} |  |
+| `review.title` | Review & pay | Review & pay |  |
+| `review.edit` | Review & pay | Edit |  |
+| `review.forChild` | Review & pay | for {{name}} |  |
+| `review.payWith` | Review & pay | Pay with |  |
+| `review.card` | Review & pay | Card |  |
+| `review.cardSub` | Review & pay | Debit or credit card |  |
+| `review.venue` | Review & pay | Pay at the venue |  |
+| `review.venueSub` | Review & pay | Cash or card on arrival |  |
+| `review.kidsNote` | Review & pay | Nothing is charged now. {{name}} confirms first, then you have 24 hours to pay. |  |
+| `review.promo` | Review & pay | Promo code |  |
+| `review.apply` | Review & pay | Apply |  |
+| `review.remove` | Review & pay | Remove |  |
+| `review.promoApplied` | Review & pay | {{code}} applied: {{pct}}% off this session |  |
+| `review.promoInvalid` | Review & pay | “{{code}}” isn't a valid code. Check it and try again. |  |
+| `review.session` | Review & pay | Session |  |
+| `review.sessionSeats` | Review & pay | Session × {{n}} |  |
+| `review.promoLine` | Review & pay | Promo {{code}} |  |
+| `review.venueFee` | Review & pay | Venue fee |  |
+| `review.included` | Review & pay | Included |  |
+| `review.policyFree` | Review & pay | Free cancellation until {{when}}. |  |
+| `review.policySameDay` | Review & pay | This is a same-day booking, so it can't be refunded. |  |
+| `review.policyLate` | Review & pay | Less than 24 hours to go. Cancelling isn't refunded. |  |
+| `review.total` | Review & pay | Total |  |
+| `review.dueAtVenue` | Review & pay | Due at the venue |  |
+| `review.pay` | Review & pay | Pay {{amount}} |  |
+| `review.confirm` | Review & pay | Confirm booking |  |
+| `review.request` | Review & pay | Send request |  |
+| `review.processing` | Review & pay | Processing |  |
+| `review.errors.no_seats` | Review & pay | Someone just took the last seat. Pick another time. |  |
+| `review.errors.too_soon` | Review & pay | That time starts in less than an hour. Pick a later one. |  |
+| `review.errors.slot_past` | Review & pay | That time has passed. Pick another one. |  |
+| `review.errors.child_required` | Review & pay | Add a child to book kids sessions. |  |
+| `review.errors.child_age` | Review & pay | This session is for a different age group. |  |
+| `review.errors.promo_invalid` | Review & pay | That promo code isn't valid any more. Remove it and try again. |  |
+| `review.errors.too_many_seats` | Review & pay | Workshops take up to 3 seats. |  |
+| `review.errors.not_signed_in` | Review & pay | Sign in again to book. |  |
+| `review.errors.generic` | Review & pay | Something went wrong and nothing was charged. Try again. |  |
+| `review.paymentFailed` | Review & pay | The payment didn't go through. Your seat is held for 5 minutes, so you can try again. |  |
+| `review.notFound` | Review & pay | This time isn't available any more. |  |
+| `demoPay.title` | Demo payment | Demo payment |  |
+| `demoPay.body` | Demo payment | This is a test checkout. No real money moves. |  |
+| `demoPay.pay` | Demo payment | Pay {{amount}} |  |
+| `demoPay.fail` | Demo payment | Fail the payment |  |
+| `demoPay.booking` | Demo payment | Booking {{ref}} |  |
+| `confirmed.headline.hobbies` | Confirmed | You're in. |  |
+| `confirmed.headline.sports` | Confirmed | You're on the court. |  |
+| `confirmed.headline.education` | Confirmed | Lesson booked. |  |
+| `confirmed.headline.languages` | Confirmed | See you in class. |  |
+| `confirmed.headline.pending` | Confirmed | Request sent. |  |
+| `confirmed.subConfirmed` | Confirmed | {{name}} has confirmed. Booking ref {{ref}} |  |
+| `confirmed.subPending` | Confirmed | {{name}} will confirm soon. Booking ref {{ref}} |  |
+| `confirmed.when` | Confirmed | When |  |
+| `confirmed.where` | Confirmed | Where |  |
+| `confirmed.paid` | Confirmed | Paid |  |
+| `confirmed.due` | Confirmed | Due at the venue |  |
+| `confirmed.payLater` | Confirmed | To pay after {{name}} confirms |  |
+| `confirmed.directions` | Confirmed | Directions |  |
+| `confirmed.share` | Confirmed | Share |  |
+| `confirmed.shareText` | Confirmed | {{title}} · {{when}} · {{venue}} (booked on Coach For All, ref {{ref}}) |  |
+| `confirmed.remind` | Confirmed | Remind me |  |
+| `confirmed.viewBooking` | Confirmed | View booking |  |
+| `confirmed.backHome` | Confirmed | Back to Home |  |
+| `confirmed.done` | Confirmed | Booking confirmed |  |
+| `remind.title` | Remind me sheet | Remind me |  |
+| `remind.m30` | Remind me sheet | 30 minutes before |  |
+| `remind.m60` | Remind me sheet | 1 hour before |  |
+| `remind.m120` | Remind me sheet | 2 hours before |  |
+| `remind.evening` | Remind me sheet | The evening before |  |
+| `remind.off` | Remind me sheet | Off |  |

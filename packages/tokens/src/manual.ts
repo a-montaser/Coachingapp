@@ -22,6 +22,8 @@ export const motion = {
   tabMinimiseMs: 250, // §8
   toastHoldMs: 2600, // §5, §8
   navTitleRise: 6, // §8
+  ringDrawMs: 800, // §8 confirmation ring
+  tickMs: 450, // §8 confirmation tick
   lensSpring: { damping: 18, stiffness: 220, mass: 0.8 }, // iOS 26 tab selection lens (provisional, tuned by eye)
 } as const;
 
@@ -140,6 +142,7 @@ export const component = {
     tickInset: 12,
   }, // §7.3, canvas .pick
   hero: { instructor: 340, workshop: 260, overlap: 28, scrimHeight: 110, iconSize: 64 /* provisional */ }, // §7.6, §7.7, DS .hero .scrimtop
+  confirmRing: { size: 88, stroke: 4, tickSize: 40 /* provisional */ }, // §5 Confirmation ring
   noteField: { minHeight: 88 /* provisional */ }, // §7.8 note
   stepper: { button: 36, iconSize: icon.small, valueWidth: 22 }, // §7.7, canvas Workshop .step
   dateButton: { padV: 10, padH: 8, daySize: 20, fullOpacity: 0.45, border: 1 }, // §7.7, canvas Workshop .date

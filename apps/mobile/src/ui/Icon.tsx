@@ -34,6 +34,9 @@ const names = {
   appearance: { ios: 'circle.lefthalf.filled', android: 'contrast' },
   signOut: { ios: 'rectangle.portrait.and.arrow.right', android: 'logout' },
   clock: { ios: 'clock', android: 'schedule' },
+  card: { ios: 'creditcard', android: 'credit_card' },
+  pin: { ios: 'mappin.and.ellipse', android: 'location_on' },
+  bell: { ios: 'bell', android: 'notifications' },
   // Disciplines, keyed by `disciplines.icon` (not named in the handoff; picked to match the canvas drawings).
   pottery: { ios: 'cup.and.saucer', android: 'emoji_food_beverage' },
   painting: { ios: 'paintbrush', android: 'brush' },

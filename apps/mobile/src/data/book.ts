@@ -70,15 +70,24 @@ export function useBookOptions(offeringId: string) {
 type BookDraft = {
   offeringId: string | null;
   slotId: string | null;
+  /** 1, except workshops (1–3, §9.4). */
+  seats: number;
   childId: string | null;
   note: string;
+  /** A card booking already holding seats (awaiting payment): retrying pays for it, not a new hold. */
+  pendingRef: string | null;
+  /** The last card payment failed (demo Fail, or the gateway said no). */
+  failed: boolean;
   set: (patch: Partial<Omit<BookDraft, 'set'>>) => void;
 };
 export const useBookDraft = create<BookDraft>()((set) => ({
   offeringId: null,
   slotId: null,
+  seats: 1,
   childId: null,
   note: '',
+  pendingRef: null,
+  failed: false,
   set: (patch) => set(patch),
 }));
 
