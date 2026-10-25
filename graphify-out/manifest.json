@@ -1108,5 +1108,11 @@
     "seen": 1792440532.831563,
     "ast_hash": "cdd5c6fc5817b862fb96213afe8cbcca",
     "semantic_hash": "cdd5c6fc5817b862fb96213afe8cbcca"
+  },
+  "apps/mobile/PRODUCT.md": {
+    "mtime": 1792924151.1860354,
+    "seen": 1792924208.010379,
+    "ast_hash": "ff651739147d5594a1fc39f13034a5dd",
+    "semantic_hash": "ff651739147d5594a1fc39f13034a5dd"
   }
 }

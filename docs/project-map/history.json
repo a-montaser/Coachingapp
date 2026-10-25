@@ -1,5 +1,86 @@
 [
  {
+  "at": "2026-10-25T10:30:33.939Z",
+  "commit": "824148b",
+  "note": "PRODUCT.md: the product record (adults in Cairo booking for themselves; a real directory of vetted, nearby instructors; iPhone first)",
+  "nodes": 1208,
+  "links": 3974,
+  "communities": 61,
+  "added": [
+   {
+    "id": "apps_mobile_product_brand",
+    "l": "Brand commitments",
+    "c": 19,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_accessibility",
+    "l": "Accessibility & inclusion",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_constraints",
+    "l": "Capabilities and constraints",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_evidence",
+    "l": "Evidence on hand",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_platform",
+    "l": "Platform: iPhone-first, adaptive",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_positioning",
+    "l": "Positioning",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_principles",
+    "l": "Product principles",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_purpose",
+    "l": "Product purpose: directory and booking",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_users",
+    "l": "Users: Cairo adults booking lessons",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product",
+    "l": "PRODUCT.md (product record)",
+    "c": 27,
+    "f": "apps/mobile/PRODUCT.md"
+   },
+   {
+    "id": "apps_mobile_product_operating_context",
+    "l": "Operating context: categories, journey, rules",
+    "c": 34,
+    "f": "apps/mobile/PRODUCT.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 28,
+  "files": [
+   "apps/mobile/PRODUCT.md"
+  ]
+ },
+ {
   "at": "2026-10-25T09:38:05.094Z",
   "commit": "0220acb",
   "note": "Arabic pass (T21) deferred by the owner; reminder set for before the phase report",
