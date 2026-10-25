@@ -51,7 +51,8 @@ export default function Profile() {
         styles.body,
         // Clear the floating tab bar at the end of the list.
         {
-          paddingTop: insets.top + space.space4,
+          // Clear of the status bar like the other screens' titles (owner: the name sat too high).
+          paddingTop: insets.top + component.navBar.height + space.space4,
           paddingBottom: insets.bottom + component.tabBar.tabHeight + layout.sectionGap,
         },
       ]}
@@ -85,7 +86,7 @@ export default function Profile() {
             {
               key: 'change',
               title: t('profile.changeInterests'),
-              onPress: () => router.push({ pathname: '/categories', params: { edit: '1' } }),
+              onPress: () => router.push('/preferences'),
             },
           ]}
         />

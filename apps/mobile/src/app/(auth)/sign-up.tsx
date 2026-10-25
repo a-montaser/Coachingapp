@@ -5,14 +5,22 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-na
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { layout, space } from '@cfa/tokens';
 import { authErrorKey, isValidEgMobile, sendCode } from '@/data/auth';
+import { useOnboardingDraft } from '@/data/onboarding';
 import { supabaseConfigured } from '@/data/supabase';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
 import { IconButton } from '@/ui/IconButton';
 import { PhoneField } from '@/ui/PhoneField';
 import { T } from '@/ui/T';
+import { TextField } from '@/ui/TextField';
 
-/** §7.2 Sign up. Apple/Google sign-in are out of Phase 1 scope and not shown. */
+const NAME_MAX = 40;
+
+/**
+ * §7.2 Sign up. A new learner (onboarding finished, D34) also gives their first name (owner revision
+ * D54), written to the account with the other answers after the code. Sign in asks for the number only.
+ * Apple/Google sign-in are out of Phase 1 scope and not shown.
+ */
 export default function SignUp() {
   const { c } = useTheme();
   const { t } = useTranslation();
@@ -20,14 +28,20 @@ export default function SignUp() {
   const [digits, setDigits] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const isNew = useOnboardingDraft((s) => s.completed);
+  const [name, setName] = useState('');
+  const [nameError, setNameError] = useState<string | null>(null);
 
   async function submit() {
+    const first = name.trim();
+    if (isNew && !first) return setNameError(t('auth.nameRequired'));
     if (!isValidEgMobile(digits)) return setError(t('auth.phoneInvalid'));
     if (!supabaseConfigured) return setError(t('auth.notConfigured'));
     setBusy(true);
     const { error: e } = await sendCode(digits);
     setBusy(false);
     if (e) return setError(t(authErrorKey(e) ?? 'auth.genericError'));
+    if (isNew) useOnboardingDraft.setState((s) => ({ answers: { ...s.answers, first_name: first } }));
     router.push({ pathname: '/verify', params: { phone: digits } });
   }
 
@@ -52,6 +66,21 @@ export default function SignUp() {
         <T variant="subheadline" color={c.label2}>
           {t('auth.phoneSub')}
         </T>
+        {isNew && (
+          <TextField
+            label={t('auth.nameLabel')}
+            value={name}
+            onChangeText={(v) => {
+              setName(v);
+              setNameError(null);
+            }}
+            maxLength={NAME_MAX}
+            autoCapitalize="words"
+            autoComplete="given-name"
+            textContentType="givenName"
+            error={nameError}
+          />
+        )}
         <PhoneField
           digits={digits}
           onChangeDigits={(d) => {

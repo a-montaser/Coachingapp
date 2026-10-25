@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react-native';
+import { within, fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 import '@/i18n';
 import Categories from '@/app/(onboarding)/categories';
@@ -144,28 +144,30 @@ test('Interests shows only the picked categories; dropped categories lose their 
   expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/levels', params: {} });
 });
 
-test('Levels: a tap records and advances, Skip leaves it unset, Continue saves and opens step 3', async () => {
+test('Levels on one page: a level per pick, a second tap clears it, Continue saves and opens step 3', async () => {
   useOnboardingDraft.setState({ picks: ['pottery', 'sat', 'french'] });
   await render(wrap(<Levels />));
-  expect(screen.getByText('How experienced are you with pottery?')).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('radio', { name: /^Intermediate/ }));
-  expect(screen.getByText('How experienced are you with SAT?')).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('button', { name: 'Skip' }));
-  expect(screen.getByText('How experienced are you with French?')).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('radio', { name: /^Beginner/ }));
-
-  expect(screen.getByText("You're all set")).toBeOnTheScreen();
-  expect(screen.getByText('Intermediate')).toBeOnTheScreen();
-  expect(screen.getByText('Level not set')).toBeOnTheScreen();
-  // Editing one pick from the summary comes straight back to it.
-  await fireEvent.press(screen.getByText('Pottery'));
-  await fireEvent.press(screen.getByRole('radio', { name: /^Pro/ }));
-  expect(screen.getByText("You're all set")).toBeOnTheScreen();
+  expect(screen.getByRole('header', { name: 'How experienced are you?' })).toBeOnTheScreen();
+  for (const name of ['Pottery', 'SAT', 'French']) expect(screen.getByText(name)).toBeOnTheScreen();
+  const pottery = within(screen.getByLabelText('Pottery'));
+  await fireEvent.press(pottery.getByRole('radio', { name: /^Intermediate/ }));
+  await fireEvent.press(pottery.getByRole('radio', { name: /^Pro/ }));
+  await fireEvent.press(within(screen.getByLabelText('French')).getByRole('radio', { name: /^Beginner/ }));
+  const sat = within(screen.getByLabelText('SAT'));
+  await fireEvent.press(sat.getByRole('radio', { name: /^Advanced/ }));
+  await fireEvent.press(sat.getByRole('radio', { name: /^Advanced/ })); // tapping again clears it
   expect(useOnboardingDraft.getState().levels).toEqual({ pottery: 'pro', sat: null, french: 'beginner' });
 
   await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
   await waitFor(() => expect(mockRouter.push).toHaveBeenCalledWith('/who-where'));
   expect(mockCalls).toContainEqual(['from', 'interests']);
+});
+
+test('Levels: Skip skips them all at once and moves on', async () => {
+  useOnboardingDraft.setState({ picks: ['pottery', 'sat'] });
+  await render(wrap(<Levels />));
+  await fireEvent.press(screen.getByRole('button', { name: 'Skip' }));
+  await waitFor(() => expect(mockRouter.push).toHaveBeenCalledWith('/who-where'));
 });
 
 test('Who & where saves the answers, marks onboarding done and opens Home (then Family for kids)', async () => {

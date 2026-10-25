@@ -116,7 +116,8 @@ export async function saveInterests(userId: string) {
   }
 }
 
-export type WhoWhere = Pick<Profile, 'who_for' | 'area_id' | 'instructor_pref'>;
+// first_name comes from Sign up (owner revision D54); the rest from step 3.
+export type WhoWhere = Pick<Profile, 'who_for' | 'area_id' | 'instructor_pref' | 'first_name'>;
 
 /** Step 3 saves the answers and marks onboarding done, which lets the journey gate open the tabs. */
 export async function finishOnboarding(userId: string, answers: Partial<WhoWhere>) {

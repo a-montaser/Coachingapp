@@ -59,7 +59,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 
 ## F2. Owner revision (25 Oct, D54, R11) — before T20
 - [ ] **T23 New look** (`/impeccable`): visual direction with the owner, tokens and components re-themed app-wide, DESIGN.md written. (R11.1)
-- [ ] **T24 Sign-up name, one-page levels, Skip all, Profile header and one-page preferences edit.** (R11.2–R11.4)
+- [x] **T24 Sign-up name, one-page levels, Skip all, Profile header and one-page preferences edit.** (R11.2–R11.4; Profile → Interests and levels is `app/preferences.tsx`)
 - [ ] **T25 Home and Explore:** "Classes near you", cards without price and with level, Lessons | Groups everywhere, filters in the Filters sheet as in the prototype. (R11.5–R11.8)
 - [ ] **T26 MonthCalendar; Book "Adults | Kids"; Group page (calendar, seats, one button); price only on Review.** (R11.7, R11.9–R11.11, R11.13)
 - [ ] **T27 Bookings:** time first, filter by type and time, month calendar view. (R11.12)

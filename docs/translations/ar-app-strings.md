@@ -430,3 +430,9 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `review.errors.pay_first` | Booking errors | Finish paying for this booking first. |  |
 | `review.errors.no_slot` | Booking errors | That time isn't available any more. Pick another. |  |
 | `reminder.body` | Reminder notification | {{when}} at {{venue}} |  |
+| `auth.nameLabel` | Sign up | Your first name |  |
+| `auth.nameRequired` | Sign up | Add your first name so instructors know who's coming. |  |
+| `onboarding.levelsTitle` | Onboarding levels | How experienced are you? |  |
+| `preferences.title` | Interests and levels | Interests and levels |  |
+| `preferences.sub` | Interests and levels | Pick what you want to learn and how experienced you are. Your instructor adjusts the level after your first session. |  |
+| `preferences.levelFor` | Interests and levels | Your level in {{name}} |  |

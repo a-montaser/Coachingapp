@@ -17,18 +17,19 @@ import {
 import { useLang } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
-import { GroupedList } from '@/ui/GroupedList';
-import { Icon, disciplineIcon } from '@/ui/Icon';
-import { LevelOption } from '@/ui/LevelOption';
+import { Chip } from '@/ui/Chip';
+import { IconTile } from '@/ui/IconTile';
+import { disciplineIcon } from '@/ui/Icon';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Progress } from '@/ui/Progress';
 import { T } from '@/ui/T';
 
-const g = component.levels;
+const BAR_CLEARANCE = component.button.height + space.space8;
 
 /**
- * §7.3 step 2: for each pick in turn, four level rows that record and advance; Skip leaves it unset.
- * After the last pick, a "You're all set" summary (tap to edit) and Continue, which saves to `interests`.
+ * §7.3 step 2, on one page (owner revision D54): every pick with its four levels as chips. Tapping a
+ * chosen level again clears it; Skip skips them all and moves on. Continue saves to `interests`.
+ * `?edit=1` (Profile): the same page saves and returns.
  */
 export default function Levels() {
   const { c } = useTheme();
@@ -41,27 +42,8 @@ export default function Levels() {
   const all = useDisciplines().data ?? [];
   const { picks, levels, setLevel } = useOnboardingDraft();
   const items = picks.map((id) => all.find((d) => d.id === id)).filter((d): d is Discipline => !!d);
-  const [index, setIndex] = useState(0);
-  // Set when a pick is reopened from the summary: answering returns there instead of moving on.
-  const [fromSummary, setFromSummary] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(false);
-  const current = items[index];
-  const done = index >= items.length;
-
-  const name = (d: Discipline) => disciplineName(d, lang);
-  // "pottery" mid-sentence; language names and acronyms (SAT) keep their capitals.
-  const inSentence = (d: Discipline) =>
-    lang === 'en' && d.category_id !== 'languages' && d.name_en !== d.name_en.toUpperCase()
-      ? d.name_en.toLowerCase()
-      : name(d);
-
-  const answer = (level: (typeof LEVELS)[number] | null) => {
-    if (!current) return;
-    setLevel(current.id, level);
-    setIndex(fromSummary ? items.length : index + 1);
-    setFromSummary(false);
-  };
 
   const finish = async () => {
     if (!userId) return router.push('/who-where'); // signed out: saved after sign-up (D34)
@@ -86,89 +68,58 @@ export default function Levels() {
           styles.body,
           {
             paddingTop: insets.top + component.navBar.height + space.space6,
-            paddingBottom: insets.bottom + space.space6,
+            paddingBottom: insets.bottom + BAR_CLEARANCE,
           },
         ]}
       >
-        {!edit && (
-          <Progress
-            value={1 + (items.length ? Math.min(index, items.length) / items.length : 1)}
-            accessibilityLabel={t('onboarding.progress')}
-          />
-        )}
+        {!edit && <Progress value={2} accessibilityLabel={t('onboarding.progress')} />}
+        <T variant="title1" accessibilityRole="header">
+          {t('onboarding.levelsTitle')}
+        </T>
+        <T variant="subheadline" color={c.label2}>
+          {t('onboarding.levelSub')}
+        </T>
 
-        {done ? (
-          <>
-            <T variant="title1" accessibilityRole="header">
-              {t('onboarding.allSet')}
-            </T>
-            <T variant="subheadline" color={c.label2}>
-              {t('onboarding.allSetSub')}
-            </T>
-            <GroupedList
-              rows={items.map((d, i) => ({
-                key: d.id,
-                title: name(d),
-                value: levels[d.id] ? t(`level.${levels[d.id]}`) : t('profile.levelNotSet'),
-                onPress: () => {
-                  setFromSummary(true);
-                  setIndex(i);
-                },
-              }))}
-            />
-            {error && (
-              <T variant="footnote" color={c.danger} accessibilityLiveRegion="polite">
-                {t('common.genericError')}
-              </T>
-            )}
-            <Button
-              label={edit ? t('onboarding.saveChanges') : t('onboarding.continue')}
-              variant="primary"
-              busy={saving}
-              onPress={finish}
-            />
-          </>
-        ) : (
-          current && (
-            <>
-              <View style={[styles.circle, { backgroundColor: c.brandTint }]}>
-                {disciplineIcon(current.icon) ? (
-                  <Icon name={disciplineIcon(current.icon)!} size={g.iconSize} color={c.brandText} />
-                ) : (
-                  <T variant="title2" color={c.brandText}>
-                    {current.code}
-                  </T>
-                )}
+        {items.map((d) => {
+          const icon = disciplineIcon(d.icon);
+          const name = disciplineName(d, lang);
+          return (
+            <View key={d.id} style={styles.pick}>
+              <View style={styles.pickHead}>
+                <IconTile icon={icon ?? 'hobbies'} />
+                <T variant="headline">{name}</T>
               </View>
-              <T variant="title1" accessibilityRole="header">
-                {t('onboarding.levelQuestion', { name: inSentence(current) })}
-              </T>
-              <T variant="subheadline" color={c.label2}>
-                {t('onboarding.levelSub')}
-              </T>
-              <View style={styles.levels}>
-                {LEVELS.map((level, i) => (
-                  <LevelOption
+              <View style={styles.chips} accessibilityRole="radiogroup" accessibilityLabel={name}>
+                {LEVELS.map((level) => (
+                  <Chip
                     key={level}
-                    level={(i + 1) as 1 | 2 | 3 | 4}
-                    title={t(`level.${level}`)}
-                    description={t(`onboarding.levelDesc.${level}`)}
-                    selected={levels[current.id] === level}
-                    onPress={() => answer(level)}
+                    radio
+                    label={t(`level.${level}`)}
+                    accessibilityLabel={`${t(`level.${level}`)}, ${t(`onboarding.levelDesc.${level}`)}`}
+                    selected={levels[d.id] === level}
+                    onPress={() => setLevel(d.id, levels[d.id] === level ? null : level)}
                   />
                 ))}
               </View>
-            </>
-          )
+            </View>
+          );
+        })}
+
+        {error && (
+          <T variant="footnote" color={c.danger} accessibilityLiveRegion="polite">
+            {t('common.genericError')}
+          </T>
         )}
+        <Button
+          label={edit ? t('onboarding.saveChanges') : t('onboarding.continue')}
+          variant="primary"
+          busy={saving}
+          onPress={finish}
+        />
       </ScrollView>
       <NavigationBar
-        onBack={() => (index > 0 ? setIndex(Math.min(index, items.length) - 1) : router.back())}
-        actions={
-          done || !current
-            ? []
-            : [{ label: t('onboarding.skip'), onPress: () => answer(levels[current.id] ?? null) }]
-        }
+        onBack={() => router.back()}
+        actions={edit ? [] : [{ label: t('onboarding.skip'), onPress: finish }]}
       />
     </View>
   );
@@ -177,13 +128,7 @@ export default function Levels() {
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   body: { paddingHorizontal: layout.sideMargin, gap: space.space4 },
-  circle: {
-    width: g.iconCircle,
-    height: g.iconCircle,
-    borderRadius: g.iconCircle / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  levels: { gap: space.space2 },
-  grow: { flex: 1 },
+  pick: { gap: space.space3 },
+  pickHead: { flexDirection: 'row', alignItems: 'center', gap: space.space3 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space2 },
 });

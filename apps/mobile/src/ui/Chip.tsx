@@ -9,18 +9,22 @@ type Props = {
   selected?: boolean;
   /** "Filters · N": surface with a hairline (§5). */
   outlined?: boolean;
+  /** One choice in a set (a level per interest): a radio for VoiceOver. */
+  radio?: boolean;
+  accessibilityLabel?: string;
 };
 
 const chip = component.chip;
 
-export function Chip({ label, onPress, selected = false }: Props) {
+export function Chip({ label, onPress, selected = false, radio = false, accessibilityLabel }: Props) {
   const { c } = useTheme();
   // Owner revision (D55): white with a hairline at rest, filled aubergine when chosen (prototype .chip).
   const bg = selected ? c.brand : c.bg;
   return (
     <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ selected }}
+      accessibilityRole={radio ? 'radio' : 'button'}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={radio ? { checked: selected } : { selected }}
       onPress={onPress}
       hitSlop={(touch - chip.height) / 2}
       style={[

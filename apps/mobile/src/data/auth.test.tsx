@@ -1,6 +1,7 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import '@/i18n';
 import SignUp from '@/app/(auth)/sign-up';
+import { useOnboardingDraft } from './onboarding';
 import Verify from '@/app/(auth)/verify';
 import Messages from '@/app/(tabs)/messages';
 import { authErrorKey, formatEgMobile, isValidEgMobile } from './auth';
@@ -51,6 +52,25 @@ test('Sign up sends the code and opens Verify', async () => {
   await fireEvent.press(screen.getByRole('button', { name: 'Send code' }));
   expect(mockSend).toHaveBeenCalledWith('1002345678');
   expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/verify', params: { phone: '1002345678' } });
+});
+
+test('a new learner also gives a first name, kept for the account; sign-in asks for the number only', async () => {
+  mockSend.mockResolvedValue({ error: null });
+  useOnboardingDraft.setState({ completed: true, answers: { who_for: 'me' } });
+  const view = await render(<SignUp />);
+  await fireEvent.changeText(screen.getByLabelText('Phone number'), '1002345678');
+  await fireEvent.press(screen.getByRole('button', { name: 'Send code' }));
+  expect(screen.getByText("Add your first name so instructors know who's coming.")).toBeOnTheScreen();
+  expect(mockSend).not.toHaveBeenCalled();
+  await fireEvent.changeText(screen.getByLabelText('Your first name'), '  Laila ');
+  await fireEvent.press(screen.getByRole('button', { name: 'Send code' }));
+  await waitFor(() => expect(mockSend).toHaveBeenCalledWith('1002345678'));
+  expect(useOnboardingDraft.getState().answers).toEqual({ who_for: 'me', first_name: 'Laila' });
+  await view.unmount();
+
+  useOnboardingDraft.getState().reset();
+  await render(<SignUp />);
+  expect(screen.queryByLabelText('Your first name')).toBeNull();
 });
 
 test('Verify auto-submits at 6 digits; a wrong code clears the boxes with an error', async () => {

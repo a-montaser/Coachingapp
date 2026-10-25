@@ -86,7 +86,9 @@
     "signOut": "Sign out",
     "signOutTitle": "Sign out?",
     "signOutBody": "You can sign back in with your phone number any time.",
-    "keepSignedIn": "Stay signed in"
+    "keepSignedIn": "Stay signed in",
+    "nameLabel": "Your first name",
+    "nameRequired": "Add your first name so instructors know who's coming."
   },
   "messages": {
     "title": "Messages",
@@ -182,7 +184,8 @@
       "male": "Male"
     },
     "changeLater": "You can change any of this later in Profile.",
-    "showPicks": "Show my picks"
+    "showPicks": "Show my picks",
+    "levelsTitle": "How experienced are you?"
   },
   "home": {
     "greeting": {
@@ -537,5 +540,10 @@
   },
   "reminder": {
     "body": "{{when}} at {{venue}}"
+  },
+  "preferences": {
+    "title": "Interests and levels",
+    "sub": "Pick what you want to learn and how experienced you are. Your instructor adjusts the level after your first session.",
+    "levelFor": "Your level in {{name}}"
   }
 }
