@@ -149,7 +149,7 @@ test('Hobbies profile: header, next available, upcoming workshops, then private 
   expect(screen.getByText('112 reviews')).toBeOnTheScreen();
   expect(screen.getByText(/7 yrs teaching · .*Zamalek/)).toBeOnTheScreen();
   expect(screen.getAllByRole('button', { name: /^\w{3} \d{2}:\d{2}$|^Today|^Tomorrow/ })).toHaveLength(3);
-  expect(screen.getByRole('header', { name: 'Upcoming workshops' })).toBeOnTheScreen();
+  expect(screen.getByRole('header', { name: 'Upcoming groups' })).toBeOnTheScreen();
   expect(screen.getByText('Wheel-throwing taster')).toBeOnTheScreen();
   expect(screen.getByText('3 of 8 spots left')).toBeOnTheScreen();
   expect(screen.getByRole('header', { name: 'Private lessons' })).toBeOnTheScreen();
@@ -185,7 +185,7 @@ test('Sports profile: session types with prices and no workshop list; no open ti
   expect(screen.getByText('60 min · up to 4, price per person')).toBeOnTheScreen();
   expect(screen.getByText('Private 1:1')).toBeOnTheScreen();
   expect(screen.getByText('60 min · one person')).toBeOnTheScreen();
-  expect(screen.queryByRole('header', { name: 'Upcoming workshops' })).toBeNull();
+  expect(screen.queryByRole('header', { name: 'Upcoming groups' })).toBeNull();
   expect(screen.getByText('No open times in the next two weeks')).toBeOnTheScreen();
 });
 

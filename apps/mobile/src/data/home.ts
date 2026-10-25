@@ -69,6 +69,8 @@ export type GroupSessionRow = {
   seats_free: number;
   offering_id: string;
   title: string;
+  type: 'workshop' | 'group';
+  level_label: string | null;
   price_egp: number;
   discipline_id: string;
   instructor_id: string;
@@ -81,16 +83,18 @@ export type GroupSessionRow = {
   lng: number;
 };
 
-/** Upcoming workshops / revision / conversation groups, soonest first: Home's rail (first 6) and Explore. Not Sports (v1). */
+/**
+ * Groups (owner revision D54: workshops and small groups together), soonest first: Home's rail (first 6)
+ * and Explore's Groups tab. Sports groups appear once the `group_sessions` view includes them.
+ */
 export function useGroupSessions(category: Category) {
   return useQuery({
     queryKey: ['groupSessions', category],
-    enabled: category !== 'sports',
     queryFn: async () => {
       const { data, error } = await supabase
         .from('group_sessions')
         .select(
-          'slot_id, starts_at, capacity, seats_free, offering_id, title, price_egp, discipline_id, instructor_id, instructor_name, rating_avg, venue_name, area_en, area_ar, lat, lng',
+          'slot_id, starts_at, capacity, seats_free, offering_id, title, type, level_label, price_egp, discipline_id, instructor_id, instructor_name, rating_avg, venue_name, area_en, area_ar, lat, lng',
         )
         .eq('category_id', category)
         .order('starts_at');

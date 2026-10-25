@@ -58,7 +58,7 @@ type ExploreState = {
 export const useExplore = create<ExploreState>()((set) => ({
   query: '',
   discipline: null,
-  tab: 'workshops',
+  tab: 'people', // Lessons first (owner revision D54)
   sort: 'soonest',
   filters: DEFAULT_FILTERS,
   set: (patch) => set(patch),
@@ -107,7 +107,14 @@ export function filterPeople(
   const q = s.query.trim().toLowerCase();
   const out: PersonResult[] = [];
   for (const r of rows) {
-    const mine = offerings.filter((o) => o.instructor_id === r.id && o.discipline_id === r.discipline_id);
+    // Lessons are 1:1 and Kids (owner revision D54); groups and workshops are the Groups tab.
+    const mine = offerings.filter(
+      (o) =>
+        o.instructor_id === r.id &&
+        o.discipline_id === r.discipline_id &&
+        (o.type === 'private' || o.type === 'kids'),
+    );
+    if (offerings.length && mine.length === 0) continue;
     const typed = f.type ? mine.filter((o) => o.type === f.type) : mine;
     if (f.type && typed.length === 0) continue;
     const price = typed.length ? Math.min(...typed.map((o) => o.price_egp)) : r.from_price;
@@ -248,8 +255,8 @@ export function useExploreResults(category: Category) {
   const groups = useGroupSessions(category);
   const origin = useOrigin();
   const now = new Date();
-  // Hobbies splits Workshops | 1:1 lessons (§7.5); the other categories list people only (map is Phase 2).
-  const workshopsTab = category === 'hobbies' && s.tab === 'workshops';
+  // Lessons | Groups in every category (owner revision D54); map is Phase 2.
+  const workshopsTab = s.tab === 'workshops';
   const rows = cards.data ?? [];
   const gender = new Map(rows.map((r) => [r.id, r.gender]));
   return {

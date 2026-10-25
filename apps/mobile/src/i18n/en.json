@@ -215,15 +215,15 @@
       "languages": "Languages"
     },
     "groups": {
-      "hobbies": "Upcoming workshops",
+      "hobbies": "Groups near you",
       "education": "Revision groups",
       "languages": "Conversation groups"
     },
     "people": {
-      "hobbies": "Instructors near you",
-      "sports": "Open today near you",
-      "education": "Tutors near you",
-      "languages": "Teachers near you"
+      "hobbies": "Classes near you",
+      "sports": "Classes near you",
+      "education": "Classes near you",
+      "languages": "Classes near you"
     },
     "emptyTitle": {
       "hobbies": "Nothing booked yet",
@@ -232,12 +232,12 @@
       "languages": "No classes booked yet"
     },
     "emptySub": {
-      "hobbies": "Find a workshop to try this week",
+      "hobbies": "Find a group to try this week",
       "sports": "Find a coach near you",
       "education": "Find a tutor for your next exam",
       "languages": "Try a conversation group first"
     },
-    "kickerWorkshop": "Next workshop · {{when}}",
+    "kickerWorkshop": "Next group · {{when}}",
     "kickerSession": "Next session · {{when}}",
     "today": "today",
     "tomorrow": "tomorrow",
@@ -257,10 +257,10 @@
     "filters": "Filters",
     "filtersN": "Filters · {{count}}",
     "all": "All",
-    "coaches_one": "{{n}} coach",
-    "coaches_other": "{{n}} coaches",
-    "workshops_one": "{{n}} workshop",
-    "workshops_other": "{{n}} workshops",
+    "coaches_one": "{{n}} lesson",
+    "coaches_other": "{{n}} lessons",
+    "workshops_one": "{{n}} group",
+    "workshops_other": "{{n}} groups",
     "within": "within {{km}} km",
     "sortBy": "Sort: {{name}}",
     "sortTitle": "Sort by",
@@ -282,7 +282,7 @@
       "private": "1:1",
       "group": "Group",
       "kids": "Kids",
-      "workshop": "Workshop"
+      "workshop": "Group"
     },
     "gender": "Instructor gender",
     "rating": "Rating",
@@ -296,12 +296,21 @@
       "week": "This week",
       "weekend": "Weekend"
     },
-    "showCoaches_one": "Show {{n}} coach",
-    "showCoaches_other": "Show {{n}} coaches",
-    "showWorkshops_one": "Show {{n}} workshop",
-    "showWorkshops_other": "Show {{n}} workshops",
+    "showCoaches_one": "Show {{n}} lesson",
+    "showCoaches_other": "Show {{n}} lessons",
+    "showWorkshops_one": "Show {{n}} group",
+    "showWorkshops_other": "Show {{n}} groups",
     "noMatches": "No matches",
-    "noMatchesReason": "Loosen a filter to see results."
+    "noMatchesReason": "Loosen a filter to see results.",
+    "segLessons": "Lessons",
+    "segGroups": "Groups",
+    "category": "Category",
+    "discipline": "What",
+    "who": "Who it's for",
+    "audience": {
+      "private": "Adults",
+      "kids": "Kids"
+    }
   },
   "instructor": {
     "reviews_one": "{{n}} review",
@@ -311,14 +320,14 @@
     "nextAvailable": "Next available",
     "allTimes": "All times",
     "noTimes": "No open times in the next two weeks",
-    "upcomingWorkshops": "Upcoming workshops",
+    "upcomingWorkshops": "Upcoming groups",
     "privateLessons": "Private lessons",
     "sessions": "Sessions",
     "types": {
       "private": "Private 1:1",
       "group": "Small group",
       "kids": "Kids",
-      "workshop": "Workshop"
+      "workshop": "Group"
     },
     "minutes": "{{n}} min",
     "onePerson": "one person",
@@ -334,8 +343,8 @@
     "loadError": "This profile didn't load. Check your connection and try again."
   },
   "workshop": {
-    "pill": "Workshop · {{level}}",
-    "pillPlain": "Workshop",
+    "pill": "Group · {{level}}",
+    "pillPlain": "Group",
     "with": "With {{name}}",
     "pickDate": "Pick a date",
     "left": "{{n}} left",
@@ -352,7 +361,7 @@
     "reserve": "Reserve",
     "pickDateReason": "Pick a date with seats left",
     "noDates": "No upcoming dates yet. Check back soon.",
-    "notFound": "This workshop isn't running any more."
+    "notFound": "This group isn't running any more."
   },
   "book": {
     "title": "Book with {{name}}",
@@ -416,7 +425,7 @@
       "child_required": "Add a child to book kids sessions.",
       "child_age": "This session is for a different age group.",
       "promo_invalid": "That promo code isn't valid any more. Remove it and try again.",
-      "too_many_seats": "Workshops take up to 3 seats.",
+      "too_many_seats": "Groups take up to 3 seats.",
       "not_signed_in": "Sign in again to book.",
       "generic": "Something went wrong and nothing was charged. Try again.",
       "not_cancellable": "This booking can't be changed any more.",

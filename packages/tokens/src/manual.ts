@@ -62,6 +62,7 @@ export const component = {
   iconButton: { size: 44, iconSize: icon.regular }, // §5, DS .icbtn
   chip: { height: 36, weight: '600', padding: 14, outline: 1 }, // §5, DS .chip
   pill: { height: 24, weight: '600', padding: 10 }, // §5, DS .pill
+  filterButton: { size: 44, iconSize: 20, badge: 20, badgePad: 5, badgeOffset: 6, badgeBorder: 2 }, // owner's prototype Explore
   searchField: { height: 44, padding: 14, iconSize: icon.small }, // §5, DS .search
   segmented: { height: 40, padding: 3, weight: '600' }, // §5, DS .seg
   groupedList: {
@@ -73,11 +74,12 @@ export const component = {
     iconSize: icon.small,
     separatorInset: 60,
   }, // §5, DS .group .li
-  instructorCard: { padding: 8, photoWidth: 96, photoHeight: 120, infoGap: 3, starSize: icon.xsmall }, // §5, DS .coach
+  // Owner revision D54: smaller cards, less to scroll through.
+  instructorCard: { padding: 8, photoWidth: 76, photoHeight: 92, infoGap: 3, starSize: icon.xsmall }, // §5, DS .coach
   workshopCard: {
-    bannerRailHeight: 126, // canvas Main .ws img
-    bannerFullHeight: 150, // canvas Explore .wcard img
-    railWidth: 252,
+    bannerRailHeight: 104, // owner revision D54: smaller (was 126, canvas Main .ws img)
+    bannerFullHeight: 120, // was 150 (canvas Explore .wcard img)
+    railWidth: 232,
     padTop: 12,
     padSide: 14,
     padBottom: 14,

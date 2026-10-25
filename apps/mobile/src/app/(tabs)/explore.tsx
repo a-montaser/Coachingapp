@@ -1,11 +1,11 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { activeFilterCount, useExplore, useExploreResults } from '@/data/explore';
-import { disciplineName, useDisciplines } from '@/data/onboarding';
+import { useDisciplines } from '@/data/onboarding';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { cairoDaysUntil } from '@/data/home';
@@ -13,8 +13,7 @@ import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { useMinimiseOnScroll } from '@/ui/TabBar';
 import { testBanner, testPhoto } from '@/dev/testImages';
-import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
-import { Chip } from '@/ui/Chip';
+import { FilterButton } from '@/ui/FilterButton';
 import { EmptyState } from '@/ui/EmptyState';
 import { InstructorCard } from '@/ui/InstructorCard';
 import { SearchField } from '@/ui/SearchField';
@@ -24,8 +23,9 @@ import { TextLink } from '@/ui/TextLink';
 import { WorkshopCard } from '@/ui/WorkshopCard';
 
 /**
- * §7.5 Explore (canvas artboard 7): live search, Workshops | 1:1 lessons on Hobbies, "Filters · N" and
- * discipline chips, result line with Sort, results, and the empty state. Home opens it with
+ * §7.5 Explore, as in the owner's prototype (D54): live search beside a Filters button (category and
+ * discipline are inside Filters), Lessons | Groups in every category, result line with Sort, results,
+ * and the empty state. Home opens it with
  * `discipline` and/or `focus` (plus `at`, so a repeat tap re-applies).
  */
 export default function Explore() {
@@ -35,8 +35,6 @@ export default function Explore() {
   const lang = useLang();
   const insets = useSafeAreaInsets();
   const category = useSettings((s) => s.category);
-  const setCategory = useSettings((s) => s.setCategory);
-  const [trayOpen, setTrayOpen] = useState(false);
   const params = useLocalSearchParams<{ discipline?: string; focus?: string; at?: string }>();
   const { query, discipline, tab, sort, filters, set, clear } = useExplore();
   const disciplines = (useDisciplines().data ?? []).filter((d) => d.category_id === category);
@@ -85,49 +83,28 @@ export default function Explore() {
           <T variant="largeTitle" accessibilityRole="header" style={styles.grow}>
             {t('tabs.explore')}
           </T>
-          <CategoryButton category={category} onPress={() => setTrayOpen(true)} />
         </View>
 
-        <SearchField
-          key={params.focus ? params.at : 'search'}
-          value={query}
-          onChangeText={(q) => set({ query: q })}
-          placeholder={t(`home.search.${category}`)}
-          autoFocus={Boolean(params.focus)}
-        />
-
-        {category === 'hobbies' && (
-          <SegmentedControl
-            accessibilityLabel={t('explore.segLabel')}
-            segments={[t('explore.segWorkshops'), t('explore.segPeople')]}
-            selectedIndex={tab === 'workshops' ? 0 : 1}
-            onChange={(i) => set({ tab: i === 0 ? 'workshops' : 'people' })}
-          />
-        )}
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.bleed}
-          contentContainerStyle={styles.chips}
-        >
-          <Chip
-            outlined
-            label={
-              nFilters ? t('explore.filtersN', { count: formatNumber(nFilters, lang) }) : t('explore.filters')
-            }
-            onPress={() => router.push('/filters')}
-          />
-          <Chip label={t('explore.all')} selected={!discipline} onPress={() => set({ discipline: null })} />
-          {disciplines.map((d) => (
-            <Chip
-              key={d.id}
-              label={disciplineName(d, lang)}
-              selected={discipline === d.id}
-              onPress={() => set({ discipline: discipline === d.id ? null : d.id })}
+        {/* Prototype Explore: search beside a filled Filters button; category and discipline live in Filters. */}
+        <View style={styles.searchRow}>
+          <View style={styles.grow}>
+            <SearchField
+              key={params.focus ? params.at : 'search'}
+              value={query}
+              onChangeText={(q) => set({ query: q })}
+              placeholder={t(`home.search.${category}`)}
+              autoFocus={Boolean(params.focus)}
             />
-          ))}
-        </ScrollView>
+          </View>
+          <FilterButton count={nFilters + (discipline ? 1 : 0)} onPress={() => router.push('/filters')} />
+        </View>
+
+        <SegmentedControl
+          accessibilityLabel={t('explore.segLabel')}
+          segments={[t('explore.segLessons'), t('explore.segGroups')]}
+          selectedIndex={tab === 'workshops' ? 1 : 0}
+          onChange={(i) => set({ tab: i === 1 ? 'workshops' : 'people' })}
+        />
 
         <View style={styles.resultRow}>
           <T variant="footnote" color={c.label2} style={styles.grow} accessibilityLiveRegion="polite">
@@ -167,7 +144,8 @@ export default function Explore() {
               area: (ar && g.area_ar) || g.area_en,
               spotsLeft: g.seats_free,
               capacity: g.capacity,
-              price: g.price_egp,
+              instructor: g.instructor_name,
+              level: g.level_label,
             }}
             onPress={() =>
               router.push({ pathname: '/workshop/[id]', params: { id: g.offering_id, slot: g.slot_id } })
@@ -195,13 +173,6 @@ export default function Explore() {
           />
         ))}
       </ScrollView>
-
-      <CategoryTray
-        visible={trayOpen}
-        selected={category}
-        onSelect={setCategory}
-        onClose={() => setTrayOpen(false)}
-      />
     </View>
   );
 }
@@ -211,7 +182,6 @@ const styles = StyleSheet.create({
   body: { paddingHorizontal: layout.sideMargin, gap: space.space4 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: space.space3 },
   grow: { flex: 1 },
-  bleed: { marginHorizontal: -layout.sideMargin, flexGrow: 0 },
-  chips: { paddingHorizontal: layout.sideMargin, gap: space.space2 },
+  searchRow: { flexDirection: 'row', alignItems: 'center', gap: space.space2 },
   resultRow: { flexDirection: 'row', alignItems: 'center', gap: space.space3 },
 });

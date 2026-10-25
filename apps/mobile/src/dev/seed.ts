@@ -31,6 +31,8 @@ const text = {
     downtown: 'Downtown',
     today: 'Today 17:30',
     taster: 'Wheel-throwing taster',
+    beginners: 'Beginners',
+    allLevels: 'All levels',
     photoWalk: 'Photo walk on Al-Muizz Street',
   },
   ar: {
@@ -43,6 +45,8 @@ const text = {
     downtown: 'وسط البلد',
     today: 'النهارده ١٧:٣٠',
     taster: 'تجربة التشكيل على العجلة',
+    beginners: 'للمبتدئين',
+    allLevels: 'كل المستويات',
     photoWalk: 'جولة تصوير في شارع المعز',
   },
 };
@@ -74,7 +78,8 @@ export function seedFor(lang: Lang) {
     area: t.zamalek,
     spotsLeft: 3,
     capacity: 8,
-    price: 650,
+    instructor: 'Yasmine Fathy',
+    level: t.beginners,
   };
   const photoWalk: Workshop = {
     title: t.photoWalk,
@@ -82,7 +87,8 @@ export function seedFor(lang: Lang) {
     area: t.downtown,
     spotsLeft: 0,
     capacity: 12,
-    price: 350,
+    instructor: 'Hany Adel',
+    level: t.allLevels,
   };
   return { yasmine, nour, wheelTaster, photoWalk };
 }

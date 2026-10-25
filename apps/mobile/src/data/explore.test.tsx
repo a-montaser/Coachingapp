@@ -87,7 +87,8 @@ const offerings: OfferingPrice[] = [
   { instructor_id: 'yasmine', discipline_id: 'pottery', type: 'private', price_egp: 900 },
   { instructor_id: 'yasmine', discipline_id: 'pottery', type: 'kids', price_egp: 450 },
   { instructor_id: 'dina', discipline_id: 'oud', type: 'private', price_egp: 500 },
-  { instructor_id: 'hany', discipline_id: 'photography', type: 'group', price_egp: 350 },
+  { instructor_id: 'hany', discipline_id: 'photography', type: 'private', price_egp: 350 },
+  { instructor_id: 'hany', discipline_id: 'photography', type: 'group', price_egp: 200 },
 ];
 const zamalek = { lat: 30.0609, lng: 31.2197 };
 const base = { query: '', discipline: null, sort: 'soonest' as const, filters: DEFAULT_FILTERS };
@@ -112,6 +113,19 @@ test('search matches name, discipline, area and venue; discipline chips narrow t
   expect(run({ query: 'heliop' })).toEqual(['dina']);
   expect(run({ query: 'clay room' })).toEqual(['yasmine']);
   expect(run({ discipline: 'photography' })).toEqual(['hany']);
+});
+
+test('Lessons list only instructors who teach 1:1 or Kids; groups are the Groups tab (D54)', () => {
+  const groupOnly: OfferingPrice[] = [
+    ...offerings.filter((o) => o.instructor_id !== 'hany'),
+    { instructor_id: 'hany', discipline_id: 'photography', type: 'group', price_egp: 200 },
+  ];
+  expect(ids(filterPeople([yasmine, dina, hany], groupOnly, base, null, NOW)).sort()).toEqual([
+    'dina',
+    'yasmine',
+  ]);
+  // A group price never becomes a lesson's "From".
+  expect(filterPeople([hany], offerings, base, null, NOW)[0]!.price).toBe(350);
 });
 
 test('session type sets the "From" price and drops instructors without it (§9.7)', () => {
@@ -168,6 +182,8 @@ test('workshops use the same rules, with gender looked up from the instructor', 
     seats_free: 3,
     offering_id: 'o',
     title: 'Wheel-throwing taster',
+    type: 'workshop',
+    level_label: 'beginners',
     price_egp: 650,
     discipline_id: 'pottery',
     instructor_id: 'yasmine',
@@ -233,30 +249,41 @@ beforeEach(() => {
   });
 });
 
-test('Explore: live search, discipline chips, result line, then the empty state and its reset', async () => {
+test('Explore: live search, Lessons | Groups, Filters button, result line, then the empty state and its reset', async () => {
   await render(<Explore />);
-  expect(screen.getByText('3 coaches')).toBeOnTheScreen();
+  expect(screen.getByText('3 lessons')).toBeOnTheScreen();
+  expect(screen.getByRole('tab', { name: 'Lessons' })).toBeSelected();
   await fireEvent.changeText(screen.getByPlaceholderText('Pottery, oud, photography…'), 'yasm');
-  expect(screen.getByText('1 coach')).toBeOnTheScreen();
+  expect(screen.getByText('1 lesson')).toBeOnTheScreen();
   await fireEvent.changeText(screen.getByPlaceholderText('Pottery, oud, photography…'), 'nobody');
   expect(screen.getByText('No matches')).toBeOnTheScreen();
   await fireEvent.press(screen.getByRole('button', { name: 'Clear search and filters' }));
-  expect(screen.getByText('3 coaches')).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('button', { name: 'Oud' }));
-  expect(screen.getByText('1 coach')).toBeOnTheScreen();
+  expect(screen.getByText('3 lessons')).toBeOnTheScreen();
+  // Categories and disciplines live in the Filters sheet, not as chips here.
+  expect(screen.queryByRole('button', { name: 'Oud' })).toBeNull();
+  await fireEvent.press(screen.getByRole('button', { name: 'Filters' }));
+  expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/filters');
+  await fireEvent.press(screen.getByRole('tab', { name: 'Groups' }));
+  expect(useExplore.getState().tab).toBe('workshops');
   await fireEvent.press(screen.getByRole('button', { name: 'Sort: Soonest available' }));
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/sort');
 });
 
 test('Filters sheet: chips update the live count; nothing left shows a disabled "No matches"', async () => {
   await render(<Filters />);
-  expect(screen.getByRole('button', { name: 'Show 3 coaches' })).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Show 3 lessons' })).toBeOnTheScreen();
   await fireEvent.press(screen.getByRole('button', { name: 'Male' }));
-  expect(screen.getByRole('button', { name: 'Show 1 coach' })).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Show 1 lesson' })).toBeOnTheScreen();
   await fireEvent.press(screen.getByRole('button', { name: 'Kids' }));
   expect(screen.getByRole('button', { name: 'No matches' })).toBeDisabled();
   await fireEvent.press(screen.getByRole('button', { name: 'Reset' }));
-  expect(screen.getByRole('button', { name: 'Show 3 coaches' })).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Show 3 lessons' })).toBeOnTheScreen();
+  // The discipline is chosen here now (D54); the category chips switch the whole tab.
+  await fireEvent.press(screen.getByRole('button', { name: 'Oud' }));
+  expect(screen.getByRole('button', { name: 'Show 1 lesson' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Sports' }));
+  expect(useSettings.getState().category).toBe('sports');
+  expect(useExplore.getState().discipline).toBeNull();
 });
 
 test('Sort sheet: a choice sets the order and closes', async () => {

@@ -68,7 +68,7 @@ test('seat rules: 1 to min(3, left); a smaller date pulls the count down (§9.4)
 
 test('Workshop: details, dates with a disabled full one, and the stepper capped at 3 (§7.7)', async () => {
   await render(<Workshop />);
-  expect(screen.getByText('Workshop · beginners')).toBeOnTheScreen();
+  expect(screen.getByText('Group · beginners')).toBeOnTheScreen();
   expect(screen.getByRole('header', { name: 'Wheel-throwing taster' })).toBeOnTheScreen();
   expect(screen.getByText('With Yasmine Fathy')).toBeOnTheScreen();
   expect(screen.getByText('4.9 (112) · The Clay Room, Zamalek')).toBeOnTheScreen();

@@ -47,7 +47,8 @@ test('the gallery switches its demo copy, seed and digits to Arabic', async () =
   await fireEvent.press(screen.getByRole('tab', { name: 'العربية' }));
   expect(screen.getByRole('header', { name: 'الأزرار' })).toBeOnTheScreen();
   expect(screen.getByText('ياسمين فتحي')).toBeOnTheScreen();
-  expect(screen.getByText('٤٥٠ ج.م')).toBeOnTheScreen(); // "From" dropped in Arabic (D25)
+  // Cards carry no price now (D54); Arabic-Indic digits still show in the rating.
+  expect(screen.getAllByText(/٤٫٩/).length).toBeGreaterThan(0);
   await fireEvent.press(screen.getByRole('tab', { name: 'English' }));
   expect(screen.getByRole('header', { name: 'Buttons' })).toBeOnTheScreen();
 });

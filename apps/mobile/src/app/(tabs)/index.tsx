@@ -231,7 +231,8 @@ export default function Home() {
                     area: (ar && g.area_ar) || g.area_en,
                     spotsLeft: g.seats_free,
                     capacity: g.capacity,
-                    price: g.price_egp,
+                    instructor: g.instructor_name,
+                    level: g.level_label,
                   }}
                   onPress={() =>
                     category === 'hobbies'

@@ -15,6 +15,7 @@ import {
 } from '@/data/explore';
 import { useIsRTL, useLang } from '@/i18n';
 import { formatNumber, formatPrice } from '@/i18n/format';
+import { CATEGORIES, disciplineName, useDisciplines } from '@/data/onboarding';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
@@ -23,16 +24,23 @@ import { Section } from '@/ui/Section';
 import { SheetHeader } from '@/ui/SheetHeader';
 import { T } from '@/ui/T';
 
-const TYPES: SessionType[] = ['private', 'group', 'kids', 'workshop'];
+// Lessons only (owner revision D54): Adults (1:1) or Kids. Groups need no type filter.
+const TYPES: SessionType[] = ['private', 'kids'];
 const WHEN: Availability[] = ['any', 'today', 'week', 'weekend'];
 
-/** §7.5 Filters sheet: ✕ · Filters · Reset; price slider and chip groups; results update live. */
+/**
+ * §7.5 Filters sheet: ✕ · Filters · Reset; category and discipline first (owner revision D54: they live
+ * here, not as chips on Explore), then price and the chip groups; results update live.
+ */
 export default function FiltersSheet() {
   const { c } = useTheme();
   const { t } = useTranslation();
   const lang = useLang();
   const rtl = useIsRTL();
   const category = useSettings((s) => s.category);
+  const setCategory = useSettings((s) => s.setCategory);
+  const discipline = useExplore((s) => s.discipline);
+  const disciplines = (useDisciplines().data ?? []).filter((d) => d.category_id === category);
   const filters = useExplore((s) => s.filters);
   const setFilter = useExplore((s) => s.setFilter);
   const set = useExplore((s) => s.set);
@@ -46,6 +54,32 @@ export default function FiltersSheet() {
         title={t('explore.filters')}
         action={{ label: t('explore.reset'), onPress: () => set({ filters: DEFAULT_FILTERS }) }}
       />
+
+      <Section title={t('explore.category')} variant="footnote" wrap>
+        {CATEGORIES.map((cat) => (
+          <Chip
+            key={cat}
+            label={t(`category.${cat}`)}
+            selected={category === cat}
+            onPress={() => {
+              setCategory(cat);
+              set({ discipline: null });
+            }}
+          />
+        ))}
+      </Section>
+
+      <Section title={t('explore.discipline')} variant="footnote" wrap>
+        <Chip label={t('explore.all')} selected={!discipline} onPress={() => set({ discipline: null })} />
+        {disciplines.map((d) => (
+          <Chip
+            key={d.id}
+            label={disciplineName(d, lang)}
+            selected={discipline === d.id}
+            onPress={() => set({ discipline: discipline === d.id ? null : d.id })}
+          />
+        ))}
+      </Section>
 
       <Section title={t('explore.maxPrice')} variant="footnote" wrap>
         <T variant="headline">
@@ -66,17 +100,19 @@ export default function FiltersSheet() {
         />
       </Section>
 
-      <Section title={t('explore.type')} variant="footnote" wrap>
-        <Chip label={any} selected={!filters.type} onPress={() => setFilter('type', null)} />
-        {TYPES.map((x) => (
-          <Chip
-            key={x}
-            label={t(`explore.types.${x}`)}
-            selected={filters.type === x}
-            onPress={() => setFilter('type', x)}
-          />
-        ))}
-      </Section>
+      {!workshopsTab && (
+        <Section title={t('explore.who')} variant="footnote" wrap>
+          <Chip label={any} selected={!filters.type} onPress={() => setFilter('type', null)} />
+          {TYPES.map((x) => (
+            <Chip
+              key={x}
+              label={t(`explore.audience.${x}`)}
+              selected={filters.type === x}
+              onPress={() => setFilter('type', x)}
+            />
+          ))}
+        </Section>
+      )}
 
       <Section title={t('explore.gender')} variant="footnote" wrap>
         <Chip label={any} selected={!filters.gender} onPress={() => setFilter('gender', null)} />
