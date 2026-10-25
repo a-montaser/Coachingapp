@@ -66,53 +66,59 @@ test('seat rules: 1 to min(3, left); a smaller date pulls the count down (§9.4)
   expect(clampSeats(2, 0)).toBe(0);
 });
 
-test('Workshop: details, dates with a disabled full one, and the stepper capped at 3 (§7.7)', async () => {
+test('Group page: details, the calendar on the first open date, seats unset until chosen, no price', async () => {
   await render(<Workshop />);
   expect(screen.getByText('Group · beginners')).toBeOnTheScreen();
   expect(screen.getByRole('header', { name: 'Wheel-throwing taster' })).toBeOnTheScreen();
   expect(screen.getByText('With Yasmine Fathy')).toBeOnTheScreen();
   expect(screen.getByText('4.9 (112) · The Clay Room, Zamalek')).toBeOnTheScreen();
+  // Included / Take home / Bring / Cancellation as tiles.
   expect(screen.getByText('Clay, tools, apron, glaze and firing')).toBeOnTheScreen();
   expect(screen.getByText('Two bowls, fired in about 2 weeks')).toBeOnTheScreen();
+  expect(screen.getByText('Clothes that can get a little muddy')).toBeOnTheScreen();
+  expect(screen.getByText('Free cancellation up to 24 hours before')).toBeOnTheScreen();
 
-  const dates = screen.getAllByRole('radio');
-  expect(dates).toHaveLength(3);
-  expect(dates[0]).toBeChecked(); // first date with seats
-  expect(dates[1]).toBeDisabled(); // full
+  // The first open date's only time is chosen; seats wait for the learner, and Reserve says why.
+  const time = screen.getAllByRole('radio').filter((r) => /left|Full/.test(r.props.accessibilityLabel ?? ''));
+  expect(time).toHaveLength(1);
+  expect(time[0]).toBeChecked();
   expect(screen.getByText('Come with a friend, up to 3')).toBeOnTheScreen();
-
-  const more = screen.getByRole('button', { name: 'One more seat' });
-  const fewer = screen.getByRole('button', { name: 'One fewer seat' });
-  expect(fewer).toBeDisabled(); // already at 1
-  await fireEvent.press(more);
-  await fireEvent.press(more);
-  expect(more).toBeDisabled(); // 3 is the most
+  for (const k of ['1 seat', '2 seats', '3 seats'])
+    expect(screen.getByRole('radio', { name: k })).not.toBeChecked();
+  expect(screen.queryByRole('radio', { name: '4 seats' })).toBeNull();
+  expect(screen.getByRole('button', { name: 'Reserve' })).toBeDisabled();
+  await fireEvent.press(screen.getByRole('radio', { name: '3 seats' }));
+  expect(screen.getByRole('button', { name: 'Reserve' })).toBeEnabled();
   expect(screen.getByText(/· 3 seats$/)).toBeOnTheScreen();
-  expect(screen.getByText('1,950 EGP')).toBeOnTheScreen(); // 3 × 650
-
-  // A date with 2 left caps the stepper at 2 and the total follows.
-  await fireEvent.press(dates[2]!);
-  expect(screen.getByText('Come with a friend, up to 2')).toBeOnTheScreen();
-  expect(screen.getByText(/· 2 seats$/)).toBeOnTheScreen();
-  expect(screen.getByText('1,300 EGP')).toBeOnTheScreen();
+  expect(screen.queryByText(/EGP/)).toBeNull(); // the price waits for Review & pay (D54)
 });
 
-test('a requested date is preselected; the instructor row opens their profile', async () => {
+test('a requested date is preselected with its seats cap; Reserve keeps date and seats', async () => {
   mockParams = { id: 'taster', slot: 'two' };
   await render(<Workshop />);
-  expect(screen.getAllByRole('radio')[2]).toBeChecked();
+  expect(screen.getByRole('radio', { name: /2 left$/ })).toBeChecked();
+  expect(screen.getByText('Come with a friend, up to 2')).toBeOnTheScreen();
+  expect(screen.queryByRole('radio', { name: '3 seats' })).toBeNull();
   await fireEvent.press(screen.getByRole('button', { name: 'With Yasmine Fathy' }));
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith({
     pathname: '/instructor/[id]',
     params: { id: 'yasmine', discipline: 'pottery' },
   });
-  // Reserve keeps the date and seats for Review & pay.
+  await fireEvent.press(screen.getByRole('radio', { name: '2 seats' }));
   await fireEvent.press(screen.getByRole('button', { name: 'Reserve' }));
   expect(useBookDraft.getState()).toMatchObject({
     offeringId: 'taster',
     slotId: 'two',
-    seats: 1,
+    seats: 2,
     childId: null,
   });
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/review');
+});
+
+test('the calendar marks the days with seats; a full day is not offered', async () => {
+  await render(<Workshop />);
+  const marked = screen.getAllByRole('button', { name: /Has open times/ });
+  // Two open dates (in 2 and 16 days); one may fall in next month.
+  expect(marked.length).toBeGreaterThanOrEqual(1);
+  expect(marked.length).toBeLessThanOrEqual(2);
 });

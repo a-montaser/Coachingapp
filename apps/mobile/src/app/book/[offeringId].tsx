@@ -7,16 +7,16 @@ import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { firstName, useBookDraft, useBookOptions } from '@/data/book';
 import { useFamily } from '@/data/family';
-import { cairoHM, isBookable, sameCairoDay, weekDays } from '@/data/rules';
+import { cairoHM, cairoKey, isBookable, monthsAhead, sameCairoDay } from '@/data/rules';
 import { useLang } from '@/i18n';
-import { formatMonthYear, formatNumber, formatPrice, formatTime, formatWeekday } from '@/i18n/format';
+import { formatNumber, formatTime, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
 import { IconTile } from '@/ui/IconTile';
 import { RowCard } from '@/ui/RowCard';
 import { TextField } from '@/ui/TextField';
-import { DayPicker } from '@/ui/DayPicker';
+import { MonthCalendar } from '@/ui/MonthCalendar';
 import { EmptyState } from '@/ui/EmptyState';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { SegmentedControl } from '@/ui/SegmentedControl';
@@ -32,8 +32,9 @@ const BAR_CLEARANCE =
 const KIDS_AGE = { min: 6, max: 14 }; // §9.4 default when an offering sets no range
 
 /**
- * §7.8 Book (1:1, group, kids): session type (only those offered), a kids child card, two weeks of days,
- * slots by part of day, a note, and Continue. `?slot=` preselects a time (from the instructor profile).
+ * §7.8 Book, lessons only (owner revision D54): Adults | Kids (only those offered), a kids child card,
+ * a month calendar with open days marked, slots by part of day, a note, and Continue; no price until
+ * Review & pay. `?slot=` preselects a time (from the instructor profile).
  * "Repeat weekly" is Phase 2 and hidden (R6.1).
  */
 export default function Book() {
@@ -51,12 +52,8 @@ export default function Book() {
 
   const slots = q.data?.slots ?? [];
   const wantedSlot = slots.find((s) => s.id === wanted);
-  const [weekChoice, setWeekChoice] = useState<0 | 1 | null>(null);
-  const week: 0 | 1 =
-    weekChoice ??
-    (wantedSlot && !weekDays(0, now).some((d) => sameCairoDay(d, new Date(wantedSlot.starts_at))) ? 1 : 0);
-  const days = weekDays(week, now);
-  const [dayIndex, setDayIndex] = useState<number | null>(null);
+  const [monthChoice, setMonthChoice] = useState<number | null>(null);
+  const [dayChoice, setDayChoice] = useState<string | null>(null);
   const [slotId, setSlotId] = useState<string | null>(wanted ?? null);
   const [childIndex, setChildIndex] = useState(0);
   const [note, setNote] = useState('');
@@ -75,18 +72,18 @@ export default function Book() {
   const name = firstName(instructor.display_name);
   const discipline = (lang === 'ar' && instructor.discipline_ar) || instructor.discipline_en;
   const open = (iso: string, seats: number) => seats > 0 && isBookable(new Date(iso), now);
-  const dayHasTimes = (d: Date) =>
-    slots.some((s) => sameCairoDay(new Date(s.starts_at), d) && open(s.starts_at, s.seats_free));
-  // Until a day is tapped: the requested slot's day, else the first day with open times, else today.
-  const defaultDay = Math.max(
-    0,
-    wantedSlot
-      ? days.findIndex((d) => sameCairoDay(d, new Date(wantedSlot.starts_at)))
-      : days.findIndex(dayHasTimes),
+  // Days with open times are marked on the month calendar (owner revision D54).
+  const openDays = new Set(
+    slots.filter((s) => open(s.starts_at, s.seats_free)).map((s) => cairoKey(new Date(s.starts_at))),
   );
-  const day = days[dayIndex ?? defaultDay]!;
+  // Until a day is tapped: the requested slot's day, else the first day with open times, else today.
+  const defaultDay = wantedSlot
+    ? cairoKey(new Date(wantedSlot.starts_at))
+    : ([...openDays].sort()[0] ?? cairoKey(now));
+  const dayKey = dayChoice ?? defaultDay;
+  const month = monthChoice ?? monthsAhead(dayKey, now);
   const daySlots: Slot[] = slots
-    .filter((s) => sameCairoDay(new Date(s.starts_at), day))
+    .filter((s) => cairoKey(new Date(s.starts_at)) === dayKey)
     .map((s) => ({
       id: s.id,
       start: cairoHM(new Date(s.starts_at)),
@@ -122,13 +119,9 @@ export default function Book() {
     const next = siblings[i];
     if (!next || next.id === o.id) return;
     setSlotId(null);
-    setDayIndex(null);
+    setDayChoice(null);
+    setMonthChoice(null);
     router.setParams({ offeringId: next.id, slot: undefined });
-  };
-  const showWeek = (w: 0 | 1) => {
-    setWeekChoice(w);
-    setDayIndex(null);
-    setSlotId(null);
   };
   const canContinue = Boolean(chosen) && !needsChild;
   const goOn = () => {
@@ -158,7 +151,7 @@ export default function Book() {
         {siblings.length > 1 && (
           <SegmentedControl
             accessibilityLabel={t('book.typeLabel')}
-            segments={siblings.map((s) => t(`book.types.${s.type}`))}
+            segments={siblings.map((s) => t(`book.audience.${s.type}`))}
             selectedIndex={Math.max(
               0,
               siblings.findIndex((s) => s.id === o.id),
@@ -196,16 +189,17 @@ export default function Book() {
             />
           ))}
 
-        <DayPicker
-          monthLabel={formatMonthYear(day, lang)}
-          days={days.map((d) => ({ date: d, hasTimes: dayHasTimes(d) }))}
-          selectedIndex={dayIndex ?? defaultDay}
-          onSelect={(i) => {
-            setDayIndex(i);
+        <MonthCalendar
+          offset={month}
+          onOffset={setMonthChoice}
+          maxOffset={1}
+          marked={openDays}
+          selected={dayKey}
+          onSelect={(k) => {
+            setDayChoice(k);
             setSlotId(null);
           }}
-          onPreviousWeek={week === 1 ? () => showWeek(0) : undefined}
-          onNextWeek={week === 0 ? () => showWeek(1) : undefined}
+          markedLabel={t('calendar.hasTimes')}
           now={now}
         />
 
@@ -213,7 +207,7 @@ export default function Book() {
           <TimeSlots slots={daySlots} selectedId={chosen?.id} onSelect={(s) => setSlotId(s.id)} />
         ) : (
           <T variant="subheadline" color={c.label2} accessibilityLiveRegion="polite">
-            {t('book.noTimes', { day: formatWeekday(day, lang, 'long'), name })}
+            {t('book.noTimes', { day: formatWeekday(new Date(`${dayKey}T12:00:00Z`), lang, 'long'), name })}
           </T>
         )}
 
@@ -229,7 +223,8 @@ export default function Book() {
       </ScrollView>
 
       <NavigationBar title={t('book.title', { name })} subtitle={discipline} onBack={() => router.back()} />
-      <BottomActionBar caption={summary} price={formatPrice(o.price_egp, lang)}>
+      {/* No price here: it comes at the end of the decision, on Review & pay (owner revision D54). */}
+      <BottomActionBar caption={summary}>
         <Button
           label={chosen ? t('book.continue') : t('book.pickTime')}
           variant="primary"

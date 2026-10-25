@@ -351,9 +351,6 @@
     "dateLabel": "{{date}}, {{time}}, {{state}}",
     "seats": "Seats",
     "seatsHint": "Come with a friend, up to {{n}}",
-    "seatsFull": "This date is full. Pick another one.",
-    "fewer": "One fewer seat",
-    "more": "One more seat",
     "included": "Included",
     "takeHome": "You take home",
     "seat_one": "{{n}} seat",
@@ -361,7 +358,13 @@
     "reserve": "Reserve",
     "pickDateReason": "Pick a date with seats left",
     "noDates": "No upcoming dates yet. Check back soon.",
-    "notFound": "This group isn't running any more."
+    "notFound": "This group isn't running any more.",
+    "pickTime": "Times on {{day}}",
+    "timeLabel": "{{time}}, {{state}}",
+    "seatsQuestion": "How many seats?",
+    "pickSeats": "Choose how many seats",
+    "cancellation": "Cancellation",
+    "bring": "Bring"
   },
   "book": {
     "title": "Book with {{name}}",
@@ -387,7 +390,11 @@
     "continue": "Continue",
     "summary": "{{day}} · {{start}}–{{end}}",
     "notFound": "These sessions aren't available any more.",
-    "childTitle": "For {{name}}, age {{age}}"
+    "childTitle": "For {{name}}, age {{age}}",
+    "audience": {
+      "private": "Adults",
+      "kids": "Kids"
+    }
   },
   "review": {
     "title": "Review & pay",
@@ -554,5 +561,11 @@
     "title": "Interests and levels",
     "sub": "Pick what you want to learn and how experienced you are. Your instructor adjusts the level after your first session.",
     "levelFor": "Your level in {{name}}"
+  },
+  "calendar": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "hasTimes": "Has open times",
+    "hasBookings": "Has bookings"
   }
 }

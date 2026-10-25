@@ -100,11 +100,11 @@ export type WorkshopInstructor = {
   area_ar: string | null;
 };
 
-const WORKSHOP_DATES = 3;
+const GROUP_WINDOW_DAYS = 62; // this month and next, for the month calendar (owner revision D54)
 
 /**
- * Workshop (§7.7): the offering, its instructor card and the next three dates. Full dates are kept
- * (shown disabled) so the learner can see the session is popular.
+ * Group page (§7.7, owner revision D54): the offering, its instructor card and its dates over about two
+ * months. Full dates are kept (shown disabled) so the learner can see the session is popular.
  */
 export function useWorkshop(offeringId: string) {
   return useQuery({
@@ -132,8 +132,8 @@ export function useWorkshop(offeringId: string) {
           .select('id, offering_id, starts_at, ends_at, seats_free')
           .eq('offering_id', offeringId)
           .gt('starts_at', bookableAfter(new Date()).toISOString())
-          .order('starts_at')
-          .limit(WORKSHOP_DATES),
+          .lt('starts_at', new Date(Date.now() + GROUP_WINDOW_DAYS * 86_400_000).toISOString())
+          .order('starts_at'),
       ]);
       if (card.error) throw card.error;
       if (slots.error) throw slots.error;

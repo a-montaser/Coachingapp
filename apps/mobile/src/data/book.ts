@@ -5,7 +5,7 @@ import { supabase } from './supabase';
 
 export type BookOffering = Offering & { instructor_id: string; discipline_id: string };
 
-const WINDOW_DAYS = 14; // this week + next week (§7.8)
+const WINDOW_DAYS = 62; // about two months, for the month calendar (owner revision D54)
 
 /**
  * Book (§7.8): the chosen offering, its sibling session types (same instructor and discipline,
@@ -34,7 +34,8 @@ export function useBookOptions(offeringId: string) {
           .eq('instructor_id', o.instructor_id)
           .eq('discipline_id', o.discipline_id)
           .eq('published', true)
-          .neq('type', 'workshop'),
+          // Lessons only: Adults (1:1) or Kids; groups book on the Group page (D54).
+          .in('type', ['private', 'kids']),
         supabase
           .from('instructor_cards')
           .select('display_name, discipline_en, discipline_ar')

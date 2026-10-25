@@ -7,24 +7,23 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { useBookDraft } from '@/data/book';
 import { useWorkshop } from '@/data/instructor';
-import { clampSeats, maxWorkshopSeats } from '@/data/rules';
+import { cairoKey, clampSeats, maxWorkshopSeats, monthsAhead } from '@/data/rules';
 import { useLang } from '@/i18n';
-import { formatClock, formatDayMonth, formatNumber, formatPrice, formatWeekday } from '@/i18n/format';
+import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
-import { Card } from '@/ui/Card';
-import { DateButton } from '@/ui/DateButton';
+import { Chip } from '@/ui/Chip';
+import { IconTile } from '@/ui/IconTile';
+import { MonthCalendar } from '@/ui/MonthCalendar';
 import { RowCard } from '@/ui/RowCard';
 import { Section } from '@/ui/Section';
 import { EmptyState } from '@/ui/EmptyState';
-import { GroupedList } from '@/ui/GroupedList';
 import { testBanner, testPhoto } from '@/dev/testImages';
 import { Avatar } from '@/ui/Avatar';
 import { Hero } from '@/ui/Hero';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Pill } from '@/ui/Pill';
-import { Stepper } from '@/ui/Stepper';
 import { T } from '@/ui/T';
 
 const hero = component.hero;
@@ -36,9 +35,11 @@ const BAR_CLEARANCE =
   layout.sectionGap;
 
 /**
- * §7.7 Workshop (canvas artboard 9): banner, pill, title, description, instructor row; up to three
- * dates (full ones disabled); seats 1…min(3, left); Included / Take home / cancellation; total.
- * `?slot=` preselects a date (from Home, Explore or the instructor's list).
+ * §7.7 Group page (canvas artboard 9, owner revision D54): banner, pill, title, description, instructor
+ * row; a month calendar with the days it runs marked, that day's times (full ones disabled), then "How
+ * many seats?" (1…min(3, left), nothing chosen at first, so Reserve lights up only once seats are picked);
+ * Included / Take home / Bring / Cancellation as tiles. No price until Review & pay.
+ * `?slot=` preselects that date (from Home, Explore or the instructor's list).
  */
 export default function Workshop() {
   const { c } = useTheme();
@@ -49,15 +50,26 @@ export default function Workshop() {
   const q = useWorkshop(id);
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useScrollViewOffset(scrollRef);
+  const [monthChoice, setMonthChoice] = useState<number | null>(null);
+  const [dayChoice, setDayChoice] = useState<string | null>(null);
   const [slotId, setSlotId] = useState<string | null>(null);
-  const [seats, setSeats] = useState(1);
+  const [seats, setSeats] = useState<number | null>(null);
   const n = (x: number) => formatNumber(x, lang);
+  const now = new Date();
 
   const slots = q.data?.slots ?? [];
-  // Until the learner taps a date: the requested one, else the first with seats left.
+  const dayOf = (iso: string) => cairoKey(new Date(iso));
+  // Days it runs with seats left are marked; until a day is tapped: the requested date's, else the first open.
+  const openDays = new Set(slots.filter((s) => s.seats_free > 0).map((s) => dayOf(s.starts_at)));
   const firstOpen =
     slots.find((s) => s.id === wanted && s.seats_free > 0) ?? slots.find((s) => s.seats_free > 0);
-  const selectedId = slotId ?? firstOpen?.id ?? null;
+  const dayKey = dayChoice ?? (firstOpen ? dayOf(firstOpen.starts_at) : null);
+  const month = monthChoice ?? (dayKey ? monthsAhead(dayKey, now) : 0);
+  const daySlots = dayKey ? slots.filter((s) => dayOf(s.starts_at) === dayKey) : [];
+  // One open time that day is chosen for the learner; more than one waits for a tap.
+  const dayOpen = daySlots.filter((s) => s.seats_free > 0);
+  const selectedId =
+    slotId ?? (dayChoice === null && firstOpen ? firstOpen.id : dayOpen.length === 1 ? dayOpen[0]!.id : null);
 
   if (q.isLoading) return <View style={[styles.screen, { backgroundColor: c.bg }]} />;
   if (!q.data) {
@@ -72,11 +84,36 @@ export default function Workshop() {
   const { offering: o, instructor: who } = q.data;
   const chosen = slots.find((s) => s.id === selectedId) ?? null;
   const max = chosen ? maxWorkshopSeats(chosen.seats_free) : 0;
-  const count = clampSeats(seats, max);
-  const total = o.price_egp * Math.max(count, 1);
-  const summary = chosen
-    ? `${formatWeekday(new Date(chosen.starts_at), lang)} ${formatDayMonth(new Date(chosen.starts_at), lang)} · ${formatClock(new Date(chosen.starts_at), lang)} · ${t('workshop.seat', { count, n: n(count) })}`
-    : t('workshop.pickDate');
+  const count = seats === null ? null : clampSeats(seats, max);
+  const when = chosen
+    ? `${formatWeekday(new Date(chosen.starts_at), lang)} ${formatDayMonth(new Date(chosen.starts_at), lang)} · ${formatClock(new Date(chosen.starts_at), lang)}`
+    : null;
+  const summary = !when
+    ? t('workshop.pickDate')
+    : count
+      ? `${when} · ${t('workshop.seat', { count, n: n(count) })}`
+      : when;
+  const facts = [
+    o.included && { key: 'inc', icon: 'check' as const, title: t('workshop.included'), body: o.included },
+    o.take_home && {
+      key: 'home',
+      icon: 'hobbies' as const,
+      title: t('workshop.takeHome'),
+      body: o.take_home,
+    },
+    o.what_to_bring && {
+      key: 'bring',
+      icon: 'bag' as const,
+      title: t('workshop.bring'),
+      body: o.what_to_bring,
+    },
+    {
+      key: 'cancel',
+      icon: 'clock' as const,
+      title: t('workshop.cancellation'),
+      body: t('instructor.policyCancel'),
+    },
+  ].filter((f) => !!f);
   const ar = lang === 'ar';
   const venue = o.venue
     ? [o.venue.name, (ar && who.area_ar) || who.area_en].join(', ')
@@ -130,92 +167,97 @@ export default function Workshop() {
                 {t('workshop.noDates')}
               </T>
             ) : (
-              <View style={styles.dates} accessibilityRole="radiogroup">
-                {slots.map((s) => {
-                  const d = new Date(s.starts_at);
+              <MonthCalendar
+                offset={month}
+                onOffset={setMonthChoice}
+                maxOffset={2}
+                marked={openDays}
+                selected={dayKey}
+                onSelect={(k) => {
+                  setDayChoice(k);
+                  setSlotId(null);
+                }}
+                markedLabel={t('calendar.hasTimes')}
+                now={now}
+              />
+            )}
+          </Section>
+
+          {dayKey && daySlots.length > 0 && (
+            <Section
+              title={t('workshop.pickTime', {
+                day: formatWeekday(new Date(`${dayKey}T12:00:00Z`), lang, 'long'),
+              })}
+              variant="headline"
+            >
+              <View style={styles.chips} accessibilityRole="radiogroup">
+                {daySlots.map((s) => {
+                  const time = formatClock(new Date(s.starts_at), lang);
                   const full = s.seats_free <= 0;
-                  const on = s.id === selectedId;
                   const state = full ? t('card.full') : t('workshop.left', { n: n(s.seats_free) });
                   return (
-                    <DateButton
+                    <Chip
                       key={s.id}
-                      date={d}
-                      state={state}
-                      selected={on}
+                      radio
+                      label={`${time} · ${state}`}
+                      accessibilityLabel={t('workshop.timeLabel', { time, state })}
+                      selected={s.id === selectedId}
                       disabled={full}
                       onPress={() => setSlotId(s.id)}
-                      accessibilityLabel={t('workshop.dateLabel', {
-                        date: `${formatWeekday(d, lang, 'long')} ${formatDayMonth(d, lang)}`,
-                        time: formatClock(d, lang),
-                        state,
-                      })}
                     />
                   );
                 })}
               </View>
-            )}
-          </Section>
+            </Section>
+          )}
 
-          <Card style={styles.seats}>
-            <View style={styles.grow}>
-              <T variant="headline">{t('workshop.seats')}</T>
+          {chosen && max > 0 && (
+            <Section title={t('workshop.seatsQuestion')} variant="headline">
               <T variant="footnote" color={c.label2}>
-                {max > 0 ? t('workshop.seatsHint', { n: n(max) }) : t('workshop.seatsFull')}
+                {t('workshop.seatsHint', { n: n(max) })}
               </T>
-            </View>
-            <Stepper
-              value={Math.max(count, 1)}
-              min={1}
-              max={Math.max(max, 1)}
-              onChange={setSeats}
-              accessibilityLabel={t('workshop.seats')}
-              decrementLabel={t('workshop.fewer')}
-              incrementLabel={t('workshop.more')}
-            />
-          </Card>
+              <View
+                style={styles.chips}
+                accessibilityRole="radiogroup"
+                accessibilityLabel={t('workshop.seats')}
+              >
+                {Array.from({ length: max }, (_, i) => i + 1).map((k) => (
+                  <Chip
+                    key={k}
+                    radio
+                    label={t('workshop.seat', { count: k, n: n(k) })}
+                    selected={count === k}
+                    onPress={() => setSeats(k)}
+                  />
+                ))}
+              </View>
+            </Section>
+          )}
 
-          <GroupedList
-            rows={[
-              ...(o.included
-                ? [
-                    {
-                      key: 'inc',
-                      icon: 'check' as const,
-                      title: t('workshop.included'),
-                      subtitle: o.included,
-                    },
-                  ]
-                : []),
-              ...(o.take_home
-                ? [
-                    {
-                      key: 'home',
-                      icon: 'hobbies' as const,
-                      title: t('workshop.takeHome'),
-                      subtitle: o.take_home,
-                    },
-                  ]
-                : []),
-              {
-                key: 'cancel',
-                icon: 'clock' as const,
-                title: t('instructor.policyCancel'),
-                subtitle: o.what_to_bring ?? undefined,
-              },
-            ]}
-          />
+          <View style={styles.facts}>
+            {facts.map((f) => (
+              <View key={f.key} style={[styles.fact, { backgroundColor: c.surface2 }]}>
+                <IconTile icon={f.icon} />
+                <T variant="headline">{f.title}</T>
+                <T variant="footnote" color={c.label2}>
+                  {f.body}
+                </T>
+              </View>
+            ))}
+          </View>
         </View>
       </Animated.ScrollView>
 
       <NavigationBar title={o.title} titleAfterHero scrollY={scrollY} onBack={() => router.back()} />
-      <BottomActionBar caption={summary} price={formatPrice(total, lang)}>
+      {/* No price here: it comes at the end of the decision, on Review & pay (owner revision D54). */}
+      <BottomActionBar caption={summary}>
         <Button
           label={t('workshop.reserve')}
           variant="primary"
-          disabled={!chosen || max < 1}
-          reason={t('workshop.pickDateReason')}
+          disabled={!chosen || max < 1 || !count}
+          reason={chosen && max > 0 ? t('workshop.pickSeats') : t('workshop.pickDateReason')}
           onPress={() => {
-            if (!chosen) return;
+            if (!chosen || !count) return;
             useBookDraft
               .getState()
               .set({ offeringId: o.id, slotId: chosen.id, seats: count, childId: null, note: '' });
@@ -240,7 +282,7 @@ const styles = StyleSheet.create({
   },
   intro: { gap: space.space2 },
   pill: { flexDirection: 'row' },
-  dates: { flexDirection: 'row', gap: space.space2 },
-  grow: { flex: 1 },
-  seats: { flexDirection: 'row', alignItems: 'center', gap: space.space3, padding: space.space4 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space2 },
+  facts: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space3 },
+  fact: { flexGrow: 1, flexBasis: '40%', borderRadius: radius.lg, padding: space.space4, gap: space.space1 },
 });

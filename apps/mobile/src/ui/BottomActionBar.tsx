@@ -9,7 +9,7 @@ type Props = {
   /** e.g. "Sat 17 Oct · 11:00 · 2 seats" or "From". */
   caption: string;
   /** Already formatted, e.g. "1,300 EGP". Wraps, never truncates (§3.3). */
-  price: string;
+  price?: string;
   /** The primary action, plus an optional secondary glass action before it. */
   children: ReactNode;
 };
@@ -27,9 +27,11 @@ export function BottomActionBar({ caption, price, children }: Props) {
             <T variant="caption1" color={c.glassLabel}>
               {caption}
             </T>
-            <T variant="title3" color={c.glassLabel}>
-              {price}
-            </T>
+            {price ? (
+              <T variant="title3" color={c.glassLabel}>
+                {price}
+              </T>
+            ) : null}
           </View>
           <View style={styles.actions}>{children}</View>
         </View>

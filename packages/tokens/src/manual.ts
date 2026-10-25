@@ -62,6 +62,7 @@ export const component = {
   iconButton: { size: 44, iconSize: icon.regular }, // §5, DS .icbtn
   chip: { height: 36, weight: '600', padding: 14, outline: 1 }, // §5, DS .chip
   pill: { height: 24, weight: '600', padding: 10 }, // §5, DS .pill
+  monthCalendar: { day: 40, dot: 5, dotGap: 2, cellPad: 2, todayRing: 1.5 }, // owner revision D54
   filterButton: { size: 44, iconSize: 20, badge: 20, badgePad: 5, badgeOffset: 6, badgeBorder: 2 }, // owner's prototype Explore
   searchField: { height: 44, padding: 14, iconSize: icon.small }, // §5, DS .search
   segmented: { height: 40, padding: 3, weight: '600' }, // §5, DS .seg

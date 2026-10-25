@@ -265,9 +265,6 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `workshop.dateLabel` | Workshop | {{date}}, {{time}}, {{state}} |  |
 | `workshop.seats` | Workshop | Seats |  |
 | `workshop.seatsHint` | Workshop | Come with a friend, up to {{n}} |  |
-| `workshop.seatsFull` | Workshop | This date is full. Pick another one. |  |
-| `workshop.fewer` | Workshop | One fewer seat |  |
-| `workshop.more` | Workshop | One more seat |  |
 | `workshop.included` | Workshop | Included |  |
 | `workshop.takeHome` | Workshop | You take home |  |
 | `workshop.seat_one` | Workshop | {{n}} seat |  |
@@ -436,3 +433,15 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `preferences.title` | Interests and levels | Interests and levels |  |
 | `preferences.sub` | Interests and levels | Pick what you want to learn and how experienced you are. Your instructor adjusts the level after your first session. |  |
 | `preferences.levelFor` | Interests and levels | Your level in {{name}} |  |
+| `calendar.previousMonth` | Month calendar | Previous month |  |
+| `calendar.nextMonth` | Month calendar | Next month |  |
+| `calendar.hasTimes` | Month calendar | Has open times |  |
+| `calendar.hasBookings` | Month calendar | Has bookings |  |
+| `workshop.pickTime` | Group page | Times on {{day}} |  |
+| `workshop.timeLabel` | Group page | {{time}}, {{state}} |  |
+| `workshop.seatsQuestion` | Group page | How many seats? |  |
+| `workshop.pickSeats` | Group page | Choose how many seats |  |
+| `workshop.cancellation` | Group page | Cancellation |  |
+| `workshop.bring` | Group page | Bring |  |
+| `book.audience.private` | Book | Adults |  |
+| `book.audience.kids` | Book | Kids |  |

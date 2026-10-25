@@ -9,6 +9,31 @@ export const maxWorkshopSeats = (seatsLeft: number) => Math.max(0, Math.min(WORK
 export const clampSeats = (seats: number, max: number) => (max < 1 ? 0 : Math.min(Math.max(seats, 1), max));
 
 const cairoDay = (d: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo' }).format(d);
+/** The Cairo calendar day of an instant as "YYYY-MM-DD" (month calendars key their marks by it). */
+export const cairoKey = cairoDay;
+
+/** How many months after `now`'s Cairo month a Cairo day key falls (0 = same month). */
+export function monthsAhead(dayKey: string, now: Date): number {
+  const [y, m] = cairoDay(now).split('-').map(Number) as [number, number];
+  const [ky, km] = dayKey.split('-').map(Number) as [number, number];
+  return Math.max(0, (ky - y) * 12 + (km - m));
+}
+
+/**
+ * The days of a Cairo month as a Saturday-first grid (Egyptian calendars): leading nulls, then noon UTC
+ * of each date, so each one formats on the right calendar day whatever the offset. `offset` 0 = this month.
+ */
+export function monthGrid(offset: number, now: Date): { first: Date; cells: (Date | null)[] } {
+  const [y, m] = cairoDay(now).split('-').map(Number) as [number, number];
+  const first = new Date(Date.UTC(y, m - 1 + offset, 1, 12));
+  const days = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 0, 12)).getUTCDate();
+  const lead = (first.getUTCDay() + 1) % 7; // Sat = 0 … Fri = 6
+  const cells: (Date | null)[] = Array.from({ length: lead }, () => null);
+  for (let d = 1; d <= days; d++)
+    cells.push(new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth(), d, 12)));
+  while (cells.length % 7) cells.push(null);
+  return { first, cells };
+}
 
 /**
  * Mirrors SQL `assert_bookable` (§9.6): the slot is in the future and, when it is later today in Cairo,

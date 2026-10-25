@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useBookOptions } from '@/data/book';
 import { bookingErrorKey, rescheduleBooking, useMyBooking, type BookingErrorKey } from '@/data/checkout';
-import { cairoHM, isBookable, sameCairoDay } from '@/data/rules';
+import { cairoHM, cairoKey, isBookable, monthsAhead } from '@/data/rules';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -16,7 +16,7 @@ import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
 import { EmptyState } from '@/ui/EmptyState';
 import { NavigationBar } from '@/ui/NavigationBar';
-import { Section } from '@/ui/Section';
+import { MonthCalendar } from '@/ui/MonthCalendar';
 import { TimeSlots } from '@/ui/TimeSlots';
 import { showToast } from '@/ui/Toast';
 
@@ -29,7 +29,7 @@ const BAR_CLEARANCE =
 
 /**
  * §9.3 Reschedule: the same booking (same ref and payment) moves to another open time of the same
- * offering in the next two weeks, one day per section. Allowed until 24 h before the start (D29); the
+ * offering, picked on a month calendar with the open days marked (owner revision D54). Allowed until 24 h before the start (D29); the
  * SQL decides, the app only offers times with enough seats.
  */
 export default function Reschedule() {
@@ -41,6 +41,8 @@ export default function Reschedule() {
   const { ref } = useLocalSearchParams<{ ref: string }>();
   const b = useMyBooking(ref).data;
   const q = useBookOptions(b?.offering_id ?? '');
+  const [monthChoice, setMonthChoice] = useState<number | null>(null);
+  const [dayChoice, setDayChoice] = useState<string | null>(null);
   const [slotId, setSlotId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<BookingErrorKey | null>(null);
@@ -50,9 +52,10 @@ export default function Reschedule() {
   const open = (q.data?.slots ?? []).filter(
     (s) => s.id !== b.slot_id && s.seats_free >= b.seats && isBookable(new Date(s.starts_at), now),
   );
-  const days = open.filter(
-    (s, i) => i === 0 || !sameCairoDay(new Date(s.starts_at), new Date(open[i - 1]!.starts_at)),
-  );
+  const dayOf = (iso: string) => cairoKey(new Date(iso));
+  const openDays = new Set(open.map((s) => dayOf(s.starts_at)));
+  const dayKey = dayChoice ?? (open[0] ? dayOf(open[0].starts_at) : null);
+  const month = monthChoice ?? (dayKey ? monthsAhead(dayKey, now) : 0);
   const chosen = open.find((s) => s.id === slotId) ?? null;
   const label = (iso: string) => {
     const d = new Date(iso);
@@ -87,32 +90,36 @@ export default function Reschedule() {
           },
         ]}
       >
-        {days.length === 0 ? (
+        {!dayKey ? (
           <EmptyState icon="bookings" title={t('reschedule.none')} body={t('reschedule.noneBody')} />
         ) : (
-          days.map((first) => {
-            const day = new Date(first.starts_at);
-            return (
-              <Section
-                key={first.id}
-                title={`${formatWeekday(day, lang, 'long')} ${formatDayMonth(day, lang)}`}
-                variant="headline"
-              >
-                <TimeSlots
-                  slots={open
-                    .filter((s) => sameCairoDay(new Date(s.starts_at), day))
-                    .map((s) => ({
-                      id: s.id,
-                      start: cairoHM(new Date(s.starts_at)),
-                      end: cairoHM(new Date(s.ends_at)),
-                      state: 'open' as const,
-                    }))}
-                  selectedId={chosen?.id}
-                  onSelect={(s) => setSlotId(s.id)}
-                />
-              </Section>
-            );
-          })
+          <>
+            <MonthCalendar
+              offset={month}
+              onOffset={setMonthChoice}
+              maxOffset={1}
+              marked={openDays}
+              selected={dayKey}
+              onSelect={(k) => {
+                setDayChoice(k);
+                setSlotId(null);
+              }}
+              markedLabel={t('calendar.hasTimes')}
+              now={now}
+            />
+            <TimeSlots
+              slots={open
+                .filter((s) => dayOf(s.starts_at) === dayKey)
+                .map((s) => ({
+                  id: s.id,
+                  start: cairoHM(new Date(s.starts_at)),
+                  end: cairoHM(new Date(s.ends_at)),
+                  state: 'open' as const,
+                }))}
+              selectedId={chosen?.id}
+              onSelect={(s) => setSlotId(s.id)}
+            />
+          </>
         )}
         {error && <Banner text={t(`review.errors.${error}`)} />}
       </ScrollView>
