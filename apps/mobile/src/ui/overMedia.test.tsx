@@ -30,7 +30,7 @@ test('the solid frosted fallback (Reduce Transparency) keeps the normal dark gla
   expect(labelColor()).toBe(light.glassLabel);
 });
 
-test('ordinary glass buttons are unchanged', async () => {
+test('away from media, secondary is a solid outline button with aubergine text (owner revision D55)', async () => {
   await render(<Button label="Sign in" variant="secondary" onPress={() => {}} />);
-  expect(labelColor()).toBe(light.glassLabel);
+  expect(labelColor()).toBe(light.brandText);
 });

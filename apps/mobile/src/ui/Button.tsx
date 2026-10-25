@@ -36,11 +36,12 @@ export function Button({
   accessibilityHint,
   overMedia = false,
 }: Props) {
-  const { c } = useTheme();
+  const { c, shadow } = useTheme();
   const small = size === 'small';
   const height = small ? b.smallHeight : b.height;
   const inactive = disabled || busy;
-  const glass = !disabled && (variant === 'primary' || variant === 'secondary');
+  // Owner revision (D55): solid, clearly different kinds of button; glass only over photos and heroes.
+  const glass = !disabled && overMedia && (variant === 'primary' || variant === 'secondary');
   const { reduceTransparency } = useA11y();
   // Over media the label goes light only while the glass is see-through; the solid frosted fallback
   // (Reduce Transparency, Android) keeps the normal glass label.
@@ -48,16 +49,23 @@ export function Button({
 
   const color = disabled
     ? c.label3
-    : overMedia && glass && seeThrough
-      ? c.onBrand
+    : glass
+      ? seeThrough
+        ? c.onBrand
+        : c.glassLabel
       : variant === 'primary'
-        ? c.glassTintLabel
-        : variant === 'secondary'
-          ? c.glassLabel
-          : variant === 'plain'
-            ? c.label
-            : c.danger;
-  const fill = disabled || variant === 'plain' || variant === 'destructiveFilled' ? c.surface2 : undefined;
+        ? c.onBrand
+        : variant === 'secondary' || variant === 'plain'
+          ? c.brandText
+          : c.danger;
+  const fill = disabled
+    ? c.surface2
+    : variant === 'primary'
+      ? c.brand
+      : variant === 'plain' || variant === 'destructiveFilled'
+        ? c.surface2
+        : undefined;
+  const outline = !disabled && !glass && variant === 'secondary';
 
   const content = (
     <View
@@ -67,7 +75,7 @@ export function Button({
       <T
         fit={2}
         variant={small ? 'subheadline' : 'headline'}
-        weight={variant === 'primary' ? component.glass.prominentWeight : b.weight}
+        weight={variant === 'primary' ? b.primaryWeight : b.weight}
         color={color}
         style={styles.label}
       >
@@ -87,6 +95,8 @@ export function Button({
       hitSlop={(touch - height) / 2 > 0 ? (touch - height) / 2 : undefined}
       style={({ pressed }) => [
         !glass && { backgroundColor: fill, borderRadius: radius.pill },
+        outline && { borderWidth: b.outline, borderColor: c.brandText },
+        !glass && !disabled && variant === 'primary' && { boxShadow: shadow.primary },
         pressed && !glass && styles.pressed,
       ]}
     >
@@ -127,5 +137,5 @@ const styles = StyleSheet.create({
   label: { textAlign: 'center' },
   reason: { textAlign: 'center', marginTop: b.reasonGap },
   // Never dim glass itself (expo-glass-effect: opacity < 1 breaks the material); plain fills only.
-  pressed: { opacity: 0.7 },
+  pressed: { opacity: 0.85, transform: [{ scale: 0.97 }] },
 });

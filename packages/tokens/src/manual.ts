@@ -49,9 +49,11 @@ export const component = {
     sheenOpacity: 0.35,
   }, // §4.2, §4.3, DS .glass::before
   button: {
-    height: 50,
-    smallHeight: 36,
+    height: 54, // owner revision (D55): the prototype's fuller pill
+    smallHeight: 38,
     weight: '600',
+    primaryWeight: '700',
+    outline: 1,
     padding: 24,
     smallPadding: 16,
     iconSize: icon.small,
@@ -130,6 +132,7 @@ export const component = {
   sheet: { inset: 8, radius: 34, grabberWidth: 36, grabberHeight: 5 }, // §4.4
   welcome: { heroHeight: 560, wordmarkSize: 24 }, // §7.1
   homeWordmarkSize: 22, // §7.4
+  homeBand: { overlap: 28, bounce: 600 }, // owner revision D55: next-session card overlap; pull-down cover
   emptyState: { iconTile: 56, iconSize: 26 /* provisional */ }, // §5
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
   avatar: { iconRatio: 0.45 }, // silhouette size inside a photo slot

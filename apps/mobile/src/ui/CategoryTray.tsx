@@ -18,11 +18,32 @@ export const CATEGORIES: Category[] = ['hobbies', 'sports', 'education', 'langua
 const tr = component.tray;
 const cb = component.categoryButton;
 
-/** §6.2 trigger: glass capsule, top-right of Home, "Hobbies ⌄". */
-export function CategoryButton({ category, onPress }: { category: Category; onPress: () => void }) {
+/**
+ * §6.2 trigger: glass capsule, top-right of Home, "Hobbies ⌄". `onBand`: on Home's aubergine band it is a
+ * light capsule with white text instead (owner revision D55), so it never puts black glass text on purple.
+ */
+export function CategoryButton({
+  category,
+  onPress,
+  onBand = false,
+}: {
+  category: Category;
+  onPress: () => void;
+  onBand?: boolean;
+}) {
   const { c } = useTheme();
   const { t } = useTranslation();
   const name = t(`category.${category}`);
+  const ink = onBand ? c.bandLabel : c.glassLabel;
+  const inner = (
+    <View style={styles.trigger}>
+      <Icon name={category} size={cb.iconSize} color={ink} />
+      <T fit={1} variant="subheadline" weight="600" color={ink}>
+        {name}
+      </T>
+      <Icon name="chevronDown" size={cb.chevronSize} color={ink} />
+    </View>
+  );
   return (
     <Pressable
       accessibilityRole="button"
@@ -30,15 +51,13 @@ export function CategoryButton({ category, onPress }: { category: Category; onPr
       onPress={onPress}
       hitSlop={(touch - tr.triggerHeight) / 2}
     >
-      <Glass radius={radius.pill} interactive>
-        <View style={styles.trigger}>
-          <Icon name={category} size={cb.iconSize} color={c.glassLabel} />
-          <T fit={1} variant="subheadline" weight="600" color={c.glassLabel}>
-            {name}
-          </T>
-          <Icon name="chevronDown" size={cb.chevronSize} color={c.glassLabel} />
-        </View>
-      </Glass>
+      {onBand ? (
+        <View style={{ borderRadius: radius.pill, backgroundColor: c.bandControl }}>{inner}</View>
+      ) : (
+        <Glass radius={radius.pill} interactive>
+          {inner}
+        </Glass>
+      )}
     </Pressable>
   );
 }

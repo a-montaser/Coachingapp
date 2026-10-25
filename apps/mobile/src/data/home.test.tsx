@@ -4,7 +4,10 @@ import Home from '@/app/(tabs)/index';
 import { useSettings, type Category } from '@/theme/settings';
 import { cairoDaysUntil, distanceKm, greetingPeriod } from './home';
 
-jest.mock('expo-router', () => ({ router: { navigate: jest.fn(), push: jest.fn() } }));
+jest.mock('expo-router', () => ({
+  router: { navigate: jest.fn(), push: jest.fn() },
+  useFocusEffect: jest.fn(),
+}));
 const mockRouter = jest.requireMock('expo-router').router;
 jest.mock('./supabase', () => ({ supabaseConfigured: true, supabase: {} }));
 jest.mock('./auth', () => ({
@@ -121,7 +124,7 @@ test.each<[Category, string, string, string, string | null, string]>([
   async (category, sub, search, rail, groups, people) => {
     useSettings.setState({ category });
     await render(<Home />);
-    expect(screen.getByText(/^Good (morning|afternoon|evening), Omar$/)).toBeOnTheScreen();
+    expect(screen.getByText(/^Good (morning|afternoon|evening), Omar\.?$/)).toBeOnTheScreen();
     expect(screen.getByText(sub)).toBeOnTheScreen();
     expect(screen.getByPlaceholderText(search)).toBeOnTheScreen();
     expect(screen.getByRole('header', { name: rail })).toBeOnTheScreen();
@@ -132,7 +135,7 @@ test.each<[Category, string, string, string, string | null, string]>([
   },
 );
 
-test('no upcoming booking shows the empty card; one shows date, kicker and venue', async () => {
+test('no booking shows the empty card; a session within 24 h leads with its time; a later one stays off Home', async () => {
   useSettings.setState({ category: 'education' });
   const view = await render(<Home />);
   expect(screen.getByText('No lessons booked yet')).toBeOnTheScreen();
@@ -140,19 +143,26 @@ test('no upcoming booking shows the empty card; one shows date, kicker and venue
   await view.unmount();
 
   useSettings.setState({ category: 'hobbies' });
-  mockBookings = {
+  const booking = (startsAt: string) => ({
     next: {
       ref: 'CFA-1',
       type: 'workshop',
       title: 'Wheel-throwing taster with Yasmine',
-      starts_at: inDays(3),
+      starts_at: startsAt,
       venue_name: 'The Clay Room',
     },
     lastCompleted: null,
-  };
-  await render(<Home />);
-  expect(screen.getByText('Next workshop · in 3 days')).toBeOnTheScreen();
+  });
+  mockBookings = booking(new Date(Date.now() + 5 * 3_600_000).toISOString());
+  const soon = await render(<Home />);
+  expect(screen.getByText(/\d · Wheel-throwing taster with Yasmine$/)).toBeOnTheScreen();
   expect(screen.getByText(/· The Clay Room$/)).toBeOnTheScreen();
+  await soon.unmount();
+
+  mockBookings = booking(inDays(3));
+  await render(<Home />);
+  expect(screen.queryByText(/Wheel-throwing taster with Yasmine/)).toBeNull();
+  expect(screen.queryByText('Nothing booked yet')).toBeNull();
 });
 
 test('Sports shows "Book again" for the last completed session with that coach\'s next opening', async () => {

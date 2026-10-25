@@ -47,19 +47,25 @@ Implement tokens once, in code, and reference them everywhere. No raw hex values
 
 ### 3.1 Colour
 
+Revised by the owner on 25 Oct 2026 (DECISIONS D55): the owner's purple-and-gold prototype, committed: white ground, lavender-white cards with a soft purple shadow, aubergine as the shell colour.
+
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `bg` | `#f2f2f7` | `#000000` | Grouped page background |
-| `surface` | `#ffffff` | `#1c1c1e` | Cards, list rows, solid content |
-| `surface-2` | `#e9e9ef` | `#2c2c2e` | Fills inside content: chips at rest, incoming chat bubbles, plain buttons |
-| `label` | `#000000` | `#ffffff` | Primary text and icons |
-| `label-2` | `#6c6c70` | `#aeaeb2` | Secondary text (passes 4.5:1 on surface) |
-| `label-3` | `#a1a1a6` | `#636366` | Disabled text and unavailable slots only |
-| `separator` | `rgba(60,60,67,0.29)` | `rgba(84,84,88,0.65)` | Hairlines between rows |
+| `bg` | `#ffffff` | `#0f0a16` | Page background |
+| `surface` | `#faf9fc` | `#1a1324` | Cards, list rows, solid content (lavender-white; cards carry `shadow-card`) |
+| `surface-2` | `#f1eaf8` | `#261b33` | Fills inside content: quiet buttons, incoming chat bubbles, tiles |
+| `label` | `#14101c` | `#f5f1fa` | Primary text and icons |
+| `label-2` | `#6e6878` | `#aba3b8` | Secondary text (passes 4.5:1 on surface) |
+| `label-3` | `#b9b2c2` | `#6b6276` | Disabled text and unavailable slots only |
+| `separator` | `#ece8f1` | `rgba(255,255,255,0.10)` | Hairlines between rows, chip and field outlines |
 | `brand` | `#3b0a6b` | `#7a3fc4` | Solid selected fills: chosen chip, date, slot, own chat bubble |
 | `brand-text` | `#3b0a6b` | `#c9a8f0` | Purple as text or icon: links, prices |
-| `brand-tint` | `#efe7f8` | `#2a1745` | Quiet selected backgrounds, "Next:" pill, date tile |
+| `brand-tint` | `#f1eaf8` | `#2a1745` | Quiet selected backgrounds, "Next:" pill, date tile |
 | `on-brand` | `#ffffff` | `#ffffff` | Text on `brand` |
+| `band` | `#3b0a6b` | `#24083f` | Full-strength aubergine shell: the Home header band (owner revision, D55) |
+| `band-label` | `#ffffff` | `#ffffff` | Text and icons on `band` |
+| `band-label-2` | `#d9c9ec` | `#cdb9e6` | Secondary text on `band` (passes 4.5:1) |
+| `band-control` | `rgba(255,255,255,0.16)` | `rgba(255,255,255,0.12)` | Capsules on `band`: the category button (owner revision, D55) |
 | `gold` | `#c9a96e` | `#d4b47a` | Premium accent as a fill: stars, Members' Circle mark, confirmation ring |
 | `gold-ink` | `#7a5a1e` | `#e2c58e` | Gold as readable text |
 | `gold-tint` | `#f7efdf` | `#2e2414` | Background behind gold-ink |
@@ -76,7 +82,7 @@ Implement tokens once, in code, and reference them everywhere. No raw hex values
 | `glass-stroke` | `rgba(255,255,255,0.90)` | `rgba(255,255,255,0.24)` | 0.5 pt glass rim; 1 pt on prominent glass |
 | `glass-highlight` | `rgba(255,255,255,0.95)` | `rgba(255,255,255,0.35)` | Specular sheen on glass edges |
 | `glass-selected` | `rgba(255,255,255,0.55)` | `rgba(255,255,255,0.14)` | Selected capsule inside glass (active tab) |
-| `glass-frosted` | `#f7f7fa` | `#232326` | Reduce Transparency / Android fallback fill |
+| `glass-frosted` | `#f7f5fa` | `#221a2c` | Reduce Transparency / Android fallback fill |
 | `scrim` | `rgba(0,0,0,0.28)` | `rgba(0,0,0,0.50)` | Dim behind sheets; top fade on photo heroes |
 
 The category tray uses a stronger dim of `rgba(0,0,0,0.45)` (section 6.2).
@@ -87,7 +93,8 @@ The category tray uses a stronger dim of `rgba(0,0,0,0.45)` (section 6.2).
 |---|---|
 | `shadow-glass` (light) | `0 6 22 rgba(0,0,0,0.08)` + inner top 1 pt `rgba(255,255,255,0.95)` + inner bottom 1 pt `rgba(255,255,255,0.40)` |
 | `shadow-glass` (dark) | `0 6 22 rgba(0,0,0,0.40)` + inner top 1 pt `rgba(255,255,255,0.28)` + inner bottom 1 pt `rgba(255,255,255,0.10)` |
-| `shadow-card` | none. Cards rest flat; the `bg` → `surface` tone step separates them |
+| `shadow-card` | light `0 8 24 rgba(46,16,101,0.06)`; dark `0 8 24 rgba(0,0,0,0.35)`. Cards on the white ground (owner revision, D55) |
+| `shadow-primary` | light `0 10 24 rgba(59,10,107,0.22)`; dark `0 10 24 rgba(0,0,0,0.45)`. Under the filled primary button only (owner revision, D55) |
 | `shadow-thumb` | light `0 1 2 rgba(0,0,0,0.10), 0 3 8 rgba(0,0,0,0.08)`; dark `0 1 2 rgba(0,0,0,0.50)`. Only for the segmented-control thumb |
 | `glass-blur` | 24 |
 | `glass-blur-clear` | 14 |

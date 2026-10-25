@@ -13,37 +13,47 @@ type Props = {
   placeholder: string;
   onFocus?: () => void;
   autoFocus?: boolean;
+  /** On Home's aubergine band: a solid field (owner revision D55) rather than glass over purple. */
+  onBand?: boolean;
 };
 
 const s = component.searchField;
 
-export function SearchField({ value, onChangeText, placeholder, onFocus, autoFocus }: Props) {
+export function SearchField({ value, onChangeText, placeholder, onFocus, autoFocus, onBand = false }: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();
+  const ink = onBand ? c.label : c.glassLabel;
+  const row = (
+    <View style={styles.row}>
+      <Icon name="search" size={s.iconSize} color={onBand ? c.label2 : c.glassLabel} />
+      <TextInput
+        value={value}
+        onChangeText={onChangeText}
+        onFocus={onFocus}
+        autoFocus={autoFocus}
+        placeholder={placeholder}
+        placeholderTextColor={c.label2}
+        accessibilityLabel={placeholder}
+        returnKeyType="search"
+        style={[styles.input, scale.body, { color: ink }]}
+      />
+      {value.length > 0 && (
+        <IconButton
+          icon="clear"
+          accessibilityLabel={t('common.clear')}
+          onPress={() => onChangeText('')}
+          color={c.label2}
+        />
+      )}
+    </View>
+  );
+  if (onBand)
+    return (
+      <View style={[styles.field, { borderRadius: radius.pill, backgroundColor: c.surface }]}>{row}</View>
+    );
   return (
     <Glass radius={radius.pill} style={styles.field}>
-      <View style={styles.row}>
-        <Icon name="search" size={s.iconSize} color={c.glassLabel} />
-        <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          onFocus={onFocus}
-          autoFocus={autoFocus}
-          placeholder={placeholder}
-          placeholderTextColor={c.label2}
-          accessibilityLabel={placeholder}
-          returnKeyType="search"
-          style={[styles.input, scale.body, { color: c.glassLabel }]}
-        />
-        {value.length > 0 && (
-          <IconButton
-            icon="clear"
-            accessibilityLabel={t('common.clear')}
-            onPress={() => onChangeText('')}
-            color={c.label2}
-          />
-        )}
-      </View>
+      {row}
     </Glass>
   );
 }

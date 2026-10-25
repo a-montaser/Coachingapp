@@ -12,7 +12,7 @@ test('every §3.1 colour exists in both themes with the exact handoff value', ()
     .slice(md.indexOf('### 3.1 Colour'), md.indexOf('### 3.2'))
     .split('\n')
     .filter((l) => l.startsWith('| `'));
-  assert.equal(rows.length, 29);
+  assert.equal(rows.length, 33); // 29 from the handoff + 4 band tokens (owner revision, D55)
   for (const row of rows) {
     const [token, l, d] = row
       .split('|')
@@ -55,6 +55,9 @@ test('radius, blur, touch and shadows', () => {
   assert.deepEqual(tokens.blur, { regular: 24, clear: 14 });
   assert.equal(tokens.touch, 44);
   assert.equal(tokens.shadow.dark.thumb, '0px 1px 2px rgba(0,0,0,0.50)');
+  // Owner revision (D55): cards and the filled primary button carry soft purple shadows.
+  assert.equal(tokens.shadow.light.card, '0px 8px 24px rgba(46,16,101,0.06)');
+  assert.equal(tokens.shadow.light.primary, '0px 10px 24px rgba(59,10,107,0.22)');
   assert.match(tokens.shadow.light.glass, /inset 0px -1px 1px rgba\(255,255,255,0.40\)$/);
 });
 

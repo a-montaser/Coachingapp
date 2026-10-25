@@ -20,3 +20,7 @@ graphify-out/.graphify_root
 graphify-out/cost.json
 supabase/.temp/
 /apps/mobile/.claude/
+
+# Impeccable session files (choice pages, sketches); surfaces/ and config stay tracked
+apps/mobile/.impeccable/mocks/
+apps/mobile/.impeccable/questions/

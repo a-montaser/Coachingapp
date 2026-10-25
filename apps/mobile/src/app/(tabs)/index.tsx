@@ -1,9 +1,10 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { setStatusBarStyle } from 'expo-status-bar';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, layout, space } from '@cfa/tokens';
+import { component, layout, radius, space } from '@cfa/tokens';
 import { useProfile, useSession } from '@/data/auth';
 import {
   cairoDaysUntil,
@@ -34,6 +35,8 @@ import { SearchField } from '@/ui/SearchField';
 import { T } from '@/ui/T';
 import { WorkshopCard } from '@/ui/WorkshopCard';
 
+const band = component.homeBand;
+const DAY_MS = 86_400_000;
 const rail = component.disciplineRail;
 const GROUP_RAIL = 6;
 
@@ -43,7 +46,7 @@ const GROUP_RAIL = 6;
  * group rail (not Sports, v1), people sorted by soonest availability; Sports adds "Book again".
  */
 export default function Home() {
-  const { c } = useTheme();
+  const { c, scheme } = useTheme();
   const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const lang = useLang();
@@ -58,6 +61,13 @@ export default function Home() {
   const people = useInstructorCards(category).data ?? [];
   const groups = useGroupSessions(category).data ?? [];
   const mine = useMyCategoryBookings(userId, category).data;
+  // Light status bar text over the aubergine band while Home is on screen.
+  useFocusEffect(
+    useCallback(() => {
+      setStatusBarStyle('light');
+      return () => setStatusBarStyle(scheme === 'dark' ? 'light' : 'dark');
+    }, [scheme]),
+  );
 
   const now = new Date();
   const period = greetingPeriod(now);
@@ -79,13 +89,13 @@ export default function Home() {
         ? t('home.tomorrow')
         : t('home.inDays', { count: days, n: formatNumber(days, lang) });
   };
-  // shortcut: Booking detail arrives in T17; until then the next-booking card opens Bookings.
   // `at` makes each tap a new request, so Explore re-applies it even when the tab is already mounted.
   const openExplore = (params?: Record<string, string>) =>
     router.navigate({ pathname: '/explore', params: { ...params, at: String(Date.now()) } });
   const openProfile = (id: string, discipline: string) =>
     router.push({ pathname: '/instructor/[id]', params: { id, discipline } });
   const next = mine?.next;
+  const soon = next && Date.parse(next.starts_at) - now.getTime() <= DAY_MS ? next : null;
   const again = category === 'sports' ? mine?.lastCompleted : null;
   const againCard =
     again && people.find((p) => p.id === again.instructor_id && p.discipline_id === again.discipline_id);
@@ -97,47 +107,62 @@ export default function Home() {
         scrollEventThrottle={16}
         contentContainerStyle={[
           styles.body,
-          {
-            paddingTop: insets.top + space.space3,
-            paddingBottom: insets.bottom + component.tabBar.tabHeight + layout.sectionGap,
-          },
+          { paddingBottom: insets.bottom + component.tabBar.tabHeight + layout.sectionGap },
         ]}
       >
-        <View style={styles.topRow}>
-          <T variant="brandTitle" style={styles.wordmark} accessibilityRole="header">
-            {t('brand.wordmark')}
-          </T>
-          <CategoryButton category={category} onPress={() => setTrayOpen(true)} />
-        </View>
+        {/* The aubergine band (owner revision D55): wordmark, category, greeting and search. */}
+        <View
+          style={[
+            styles.band,
+            {
+              backgroundColor: c.band,
+              paddingTop: insets.top + space.space3,
+              paddingBottom: soon ? band.overlap + space.space6 : space.space6,
+            },
+          ]}
+        >
+          {/* Covers the pull-down bounce above the band. */}
+          <View style={[styles.bounce, { backgroundColor: c.band }]} />
+          <View style={styles.topRow}>
+            <T variant="brandTitle" color={c.bandLabel} style={styles.wordmark} accessibilityRole="header">
+              {t('brand.wordmark')}
+            </T>
+            <CategoryButton category={category} onPress={() => setTrayOpen(true)} onBand />
+          </View>
 
-        <View style={styles.greeting}>
-          <T variant="title1">
-            {name ? t(`home.greeting.${period}`, { name }) : t(`home.greeting.${period}Anon`)}
-          </T>
-          <T variant="subheadline" color={c.label2}>
-            {t(`home.sub.${category}`)}
-          </T>
-        </View>
+          <View style={styles.greeting}>
+            <T variant="brandTitle" color={c.bandLabel}>
+              {name ? t(`home.greeting.${period}`, { name }) : t(`home.greeting.${period}Anon`)}
+              <T variant="brandTitle" color={c.gold}>
+                .
+              </T>
+            </T>
+            <T variant="subheadline" color={c.bandLabel2}>
+              {t(`home.sub.${category}`)}
+            </T>
+          </View>
 
-        {/* Opens Explore with the keyboard up (§7.4 item 3); typing happens there. */}
-        <SearchField
-          value=""
-          onChangeText={() => {}}
-          placeholder={t(`home.search.${category}`)}
-          onFocus={() => openExplore({ focus: '1' })}
-        />
-
-        {next ? (
-          <RowCard
-            leading={<DateTile date={new Date(next.starts_at)} />}
-            kicker={t(next.type === 'workshop' ? 'home.kickerWorkshop' : 'home.kickerSession', {
-              when: inDays(next.starts_at),
-            })}
-            title={next.title}
-            subtitle={`${formatClock(new Date(next.starts_at), lang)} · ${next.venue_name}`}
-            onPress={() => router.push({ pathname: '/booking/[ref]', params: { ref: next.ref } })}
+          {/* Opens Explore with the keyboard up (§7.4 item 3); typing happens there. */}
+          <SearchField
+            value=""
+            onChangeText={() => {}}
+            placeholder={t(`home.search.${category}`)}
+            onFocus={() => openExplore({ focus: '1' })}
+            onBand
           />
-        ) : (
+        </View>
+
+        {/* The next session leads only when it is within 24 h (owner); otherwise inspiration leads. */}
+        {soon ? (
+          <View style={styles.overlap}>
+            <RowCard
+              leading={<DateTile date={new Date(soon.starts_at)} />}
+              title={`${formatClock(new Date(soon.starts_at), lang)} · ${soon.title}`}
+              subtitle={`${inDays(soon.starts_at)} · ${soon.venue_name}`}
+              onPress={() => router.push({ pathname: '/booking/[ref]', params: { ref: soon.ref } })}
+            />
+          </View>
+        ) : next ? null : (
           <RowCard
             leading={<IconTile icon={category} />}
             title={t(`home.emptyTitle.${category}`)}
@@ -268,6 +293,15 @@ const styles = StyleSheet.create({
   topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.space3 },
   wordmark: { fontSize: component.homeWordmarkSize },
   greeting: { gap: space.space1 },
+  band: {
+    marginHorizontal: -layout.sideMargin,
+    paddingHorizontal: layout.sideMargin,
+    gap: layout.cardGap,
+    borderBottomLeftRadius: radius.lg,
+    borderBottomRightRadius: radius.lg,
+  },
+  bounce: { position: 'absolute', start: 0, end: 0, top: -band.bounce, height: band.bounce },
+  overlap: { marginTop: -(band.overlap + layout.cardGap) },
   bleed: { marginHorizontal: -layout.sideMargin },
   rail: { paddingHorizontal: layout.sideMargin, gap: rail.gap },
 });

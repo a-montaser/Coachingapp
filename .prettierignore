@@ -4,3 +4,6 @@ docs/graphify-out/
 package-lock.json
 apps/mobile/expo-env.d.ts
 docs/project-map/*.json
+
+# Impeccable design tooling (session files; the surface brief in .impeccable/surfaces is kept)
+apps/mobile/.impeccable/

@@ -83,13 +83,13 @@ export function build(md: string) {
     const value = rawValue!;
     if (token === 'shadow-glass (light)') shadow.light.glass = glassShadow(value);
     else if (token === 'shadow-glass (dark)') shadow.dark.glass = glassShadow(value);
-    else if (token === 'shadow-card')
-      continue; // "none": cards rest flat
-    else if (token === 'shadow-thumb') {
+    else if (token.startsWith('shadow-')) {
+      // shadow-card, shadow-thumb, shadow-primary: "light `…`; dark `…`".
       const m = /light `([^`]+)`; dark `([^`]+)`/.exec(value);
-      if (!m) throw new Error('Unparsed shadow-thumb');
-      shadow.light.thumb = splitShadows(m[1]!);
-      shadow.dark.thumb = splitShadows(m[2]!);
+      if (!m) throw new Error(`Unparsed ${token}`);
+      const key = camel(token.slice('shadow-'.length));
+      shadow.light[key] = splitShadows(m[1]!);
+      shadow.dark[key] = splitShadows(m[2]!);
     } else if (token.startsWith('radius-'))
       radius[camel(token.slice('radius-'.length))] = leadingNumber(value);
     else if (token === 'glass-blur') blur.regular = leadingNumber(value);

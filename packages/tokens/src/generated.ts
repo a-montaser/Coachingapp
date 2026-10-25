@@ -1,17 +1,21 @@
 // GENERATED from docs/DESIGN_HANDOFF.md §3 by scripts/generate.ts. Do not edit; run `npm run tokens`.
 
 export const light = {
-  "bg": "#f2f2f7",
-  "surface": "#ffffff",
-  "surface2": "#e9e9ef",
-  "label": "#000000",
-  "label2": "#6c6c70",
-  "label3": "#a1a1a6",
-  "separator": "rgba(60,60,67,0.29)",
+  "bg": "#ffffff",
+  "surface": "#faf9fc",
+  "surface2": "#f1eaf8",
+  "label": "#14101c",
+  "label2": "#6e6878",
+  "label3": "#b9b2c2",
+  "separator": "#ece8f1",
   "brand": "#3b0a6b",
   "brandText": "#3b0a6b",
-  "brandTint": "#efe7f8",
+  "brandTint": "#f1eaf8",
   "onBrand": "#ffffff",
+  "band": "#3b0a6b",
+  "bandLabel": "#ffffff",
+  "bandLabel2": "#d9c9ec",
+  "bandControl": "rgba(255,255,255,0.16)",
   "gold": "#c9a96e",
   "goldInk": "#7a5a1e",
   "goldTint": "#f7efdf",
@@ -28,21 +32,25 @@ export const light = {
   "glassStroke": "rgba(255,255,255,0.90)",
   "glassHighlight": "rgba(255,255,255,0.95)",
   "glassSelected": "rgba(255,255,255,0.55)",
-  "glassFrosted": "#f7f7fa",
+  "glassFrosted": "#f7f5fa",
   "scrim": "rgba(0,0,0,0.28)"
 } as const;
 export const dark = {
-  "bg": "#000000",
-  "surface": "#1c1c1e",
-  "surface2": "#2c2c2e",
-  "label": "#ffffff",
-  "label2": "#aeaeb2",
-  "label3": "#636366",
-  "separator": "rgba(84,84,88,0.65)",
+  "bg": "#0f0a16",
+  "surface": "#1a1324",
+  "surface2": "#261b33",
+  "label": "#f5f1fa",
+  "label2": "#aba3b8",
+  "label3": "#6b6276",
+  "separator": "rgba(255,255,255,0.10)",
   "brand": "#7a3fc4",
   "brandText": "#c9a8f0",
   "brandTint": "#2a1745",
   "onBrand": "#ffffff",
+  "band": "#24083f",
+  "bandLabel": "#ffffff",
+  "bandLabel2": "#cdb9e6",
+  "bandControl": "rgba(255,255,255,0.12)",
   "gold": "#d4b47a",
   "goldInk": "#e2c58e",
   "goldTint": "#2e2414",
@@ -59,16 +67,20 @@ export const dark = {
   "glassStroke": "rgba(255,255,255,0.24)",
   "glassHighlight": "rgba(255,255,255,0.35)",
   "glassSelected": "rgba(255,255,255,0.14)",
-  "glassFrosted": "#232326",
+  "glassFrosted": "#221a2c",
   "scrim": "rgba(0,0,0,0.50)"
 } as const;
 export const shadow = {
   "light": {
     "glass": "0px 6px 22px rgba(0,0,0,0.08), inset 0px 1px 1px rgba(255,255,255,0.95), inset 0px -1px 1px rgba(255,255,255,0.40)",
+    "card": "0px 8px 24px rgba(46,16,101,0.06)",
+    "primary": "0px 10px 24px rgba(59,10,107,0.22)",
     "thumb": "0px 1px 2px rgba(0,0,0,0.10), 0px 3px 8px rgba(0,0,0,0.08)"
   },
   "dark": {
     "glass": "0px 6px 22px rgba(0,0,0,0.40), inset 0px 1px 1px rgba(255,255,255,0.28), inset 0px -1px 1px rgba(255,255,255,0.10)",
+    "card": "0px 8px 24px rgba(0,0,0,0.35)",
+    "primary": "0px 10px 24px rgba(0,0,0,0.45)",
     "thumb": "0px 1px 2px rgba(0,0,0,0.50)"
   }
 } as const;

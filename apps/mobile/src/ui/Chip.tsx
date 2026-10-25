@@ -13,9 +13,10 @@ type Props = {
 
 const chip = component.chip;
 
-export function Chip({ label, onPress, selected = false, outlined = false }: Props) {
+export function Chip({ label, onPress, selected = false }: Props) {
   const { c } = useTheme();
-  const bg = selected ? c.brand : outlined ? c.surface : c.surface2;
+  // Owner revision (D55): white with a hairline at rest, filled aubergine when chosen (prototype .chip).
+  const bg = selected ? c.brand : c.bg;
   return (
     <Pressable
       accessibilityRole="button"
@@ -25,7 +26,7 @@ export function Chip({ label, onPress, selected = false, outlined = false }: Pro
       style={[
         styles.chip,
         { backgroundColor: bg },
-        outlined && !selected && { borderWidth: chip.outline, borderColor: c.separator },
+        !selected && { borderWidth: chip.outline, borderColor: c.separator },
       ]}
     >
       <T fit={1} variant="subheadline" weight={chip.weight} color={selected ? c.onBrand : c.label}>
