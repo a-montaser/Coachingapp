@@ -61,6 +61,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 - [ ] **T20 Maestro in CI** (Android debug build, local Supabase, fake provider), with the flows in R10.1.
   - Verify: CI green.
 - [ ] **T21 Arabic pass.** Every new string goes into `docs/translations/ar-app-strings.md` for you.
+  - **Deferred by the owner (25 Oct):** do it after T20; remind the owner before T22. The table has 426 rows waiting for Egyptian Arabic.
   - Verify: no hard-coded English in screens (lint/grep).
 - [ ] **T22 Graphify `--update`, DECISIONS, phase report** with canvas side-by-sides.
   - **Revert the testing aids first (D43):** `TEST_IMAGES = false` in `src/dev/testImages.ts`, then delete it and `assets/test-images/`; `component.otp.resendSeconds` back to 60.

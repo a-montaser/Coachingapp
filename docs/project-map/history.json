@@ -1,5 +1,17 @@
 [
  {
+  "at": "2026-10-25T09:38:05.094Z",
+  "commit": "0220acb",
+  "note": "Arabic pass (T21) deferred by the owner; reminder set for before the phase report",
+  "nodes": 1197,
+  "links": 3946,
+  "communities": 62,
+  "added": [],
+  "removed": [],
+  "linkDelta": 2,
+  "files": []
+ },
+ {
   "at": "2026-10-19T20:09:10.887Z",
   "commit": "6c49998",
   "note": "T19: local reminders at the chosen time (evening before = 20:00 Cairo, DST-safe), kept in step with cancel and reschedule; permission asked at the first booking (D53)",
