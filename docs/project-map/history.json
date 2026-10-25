@@ -1,5 +1,578 @@
 [
  {
+  "at": "2026-10-25T12:38:10.159Z",
+  "commit": "18372cb",
+  "note": "Month calendar on Book, the Group page, Reschedule and Bookings; Book is Adults | Kids; Group page picks date, time and seats with no price until Review & pay; Bookings show the time first and filter by type and time of day (T26, T27)",
+  "nodes": 1313,
+  "links": 4283,
+  "communities": 60,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_monthcalendar_props",
+    "l": "Props",
+    "c": 12,
+    "f": "apps/mobile/src/ui/MonthCalendar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings_tab",
+    "l": "Tab",
+    "c": 6,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_bookingkind",
+    "l": "BookingKind",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_bookingsfilter",
+    "l": "BookingsFilter",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_bookingtime",
+    "l": "BookingTime",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_preferences_preferences",
+    "l": "Preferences()",
+    "c": 0,
+    "f": "apps/mobile/src/app/preferences.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_filterbutton_filterbutton",
+    "l": "FilterButton()",
+    "c": 18,
+    "f": "apps/mobile/src/ui/FilterButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_filtercount",
+    "l": "filterCount()",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_matchesfilter",
+    "l": "matchesFilter()",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_monthgrid",
+    "l": "monthGrid()",
+    "c": 8,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_monthsahead",
+    "l": "monthsAhead()",
+    "c": 8,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_monthcalendar_monthcalendar",
+    "l": "MonthCalendar()",
+    "c": 8,
+    "f": "apps/mobile/src/ui/MonthCalendar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_preferences_test",
+    "l": "preferences.test.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/data/preferences.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_preferences_test_mocksave",
+    "l": "mockSave",
+    "c": 0,
+    "f": "apps/mobile/src/data/preferences.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_monthcalendar",
+    "l": "MonthCalendar.tsx",
+    "c": 12,
+    "f": "apps/mobile/src/ui/MonthCalendar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_monthcalendar_styles",
+    "l": "styles",
+    "c": 12,
+    "f": "apps/mobile/src/ui/MonthCalendar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_monthcalendar_week",
+    "l": "WEEK",
+    "c": 12,
+    "f": "apps/mobile/src/ui/MonthCalendar.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_filterbutton",
+    "l": "FilterButton.tsx",
+    "c": 18,
+    "f": "apps/mobile/src/ui/FilterButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_filterbutton_styles",
+    "l": "styles",
+    "c": 18,
+    "f": "apps/mobile/src/ui/FilterButton.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_preferences",
+    "l": "preferences.tsx",
+    "c": 5,
+    "f": "apps/mobile/src/app/preferences.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_preferences_styles",
+    "l": "styles",
+    "c": 5,
+    "f": "apps/mobile/src/app/preferences.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_bookings_filter_kinds",
+    "l": "KINDS",
+    "c": 6,
+    "f": "apps/mobile/src/app/bookings-filter.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_bookings_filter_times",
+    "l": "TIMES",
+    "c": 6,
+    "f": "apps/mobile/src/app/bookings-filter.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_bookings_tabs",
+    "l": "TABS",
+    "c": 6,
+    "f": "apps/mobile/src/app/(tabs)/bookings.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_default_bookings_filter",
+    "l": "DEFAULT_BOOKINGS_FILTER",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_lesson_types",
+    "l": "LESSON_TYPES",
+    "c": 6,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_cairokey",
+    "l": "cairoKey",
+    "c": 8,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "docs_decisions_cancel_booking",
+    "l": "cancel_booking() / cancelOutcome",
+    "c": 10,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_reschedule_screen",
+    "l": "Reschedule screen",
+    "c": 10,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_booking_detail_strings",
+    "l": "AR strings: Booking detail",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_booking_errors_strings",
+    "l": "AR strings: Booking errors",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_group_page_strings",
+    "l": "AR strings: Group page",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_interests_and_levels_strings",
+    "l": "AR strings: Interests and levels",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_month_calendar_strings",
+    "l": "AR strings: Month calendar",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_onboarding_levels_strings",
+    "l": "AR strings: Onboarding levels",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_sign_up_strings",
+    "l": "AR strings: Sign up",
+    "c": 10,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_design_handoff_category_icons",
+    "l": "6.3 Category icons",
+    "c": 15,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_content_style",
+    "l": "11. Content style",
+    "c": 15,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_explore",
+    "l": "7.5 Explore",
+    "c": 15,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_home_per_category",
+    "l": "7.4 Home (per category)",
+    "c": 15,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_navigation_and_category_tray",
+    "l": "6. Navigation and the category tray",
+    "c": 15,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_platform_and_look",
+    "l": "2. Platform and look",
+    "c": 15,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_decisions_home_band",
+    "l": "Home aubergine band",
+    "c": 20,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_design_handoff_band_tokens",
+    "l": "band / band-label / band-control tokens",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_brand_tokens",
+    "l": "brand / brand-text / brand-tint tokens",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_button",
+    "l": "Button",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_glass_tokens",
+    "l": "glass-* tokens",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_gold_tokens",
+    "l": "gold / gold-ink / gold-tint tokens",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_playfair_brand_type",
+    "l": "Playfair Display brand type styles",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_shadow_card",
+    "l": "shadow-card",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_shadow_primary",
+    "l": "shadow-primary",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "apps_mobile__impeccable_surfaces_src_app_tabs_index_tsx",
+    "l": "Home surface brief (app-wide look, T23)",
+    "c": 20,
+    "f": "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md"
+   },
+   {
+    "id": "docs_design_handoff_design_tokens",
+    "l": "3. Design tokens",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_shadow_blur_radius_spacing",
+    "l": "3.2 Shadow, blur, radius, spacing",
+    "c": 20,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "apps_mobile__impeccable_surfaces_src_app_tabs_index_tsx_aubergine_band_first_viewport",
+    "l": "Aubergine band first viewport",
+    "c": 20,
+    "f": "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md"
+   },
+   {
+    "id": "apps_mobile__impeccable_surfaces_src_app_tabs_index_tsx_direction_contract",
+    "l": "Direction contract",
+    "c": 20,
+    "f": "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md"
+   },
+   {
+    "id": "apps_mobile__impeccable_surfaces_src_app_tabs_index_tsx_purple_and_gold_world",
+    "l": "Purple-and-gold own world",
+    "c": 20,
+    "f": "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md"
+   },
+   {
+    "id": "docs_decisions_d55",
+    "l": "D55: T23 purple-and-gold look, first pass",
+    "c": 20,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_bottomactionbar",
+    "l": "BottomActionBar",
+    "c": 31,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_glasslens",
+    "l": "GlassLens / useGlassLens",
+    "c": 31,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_nativetabs",
+    "l": "NativeTabs (Apple native tab bar)",
+    "c": 31,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_tabbar",
+    "l": "TabBar (floating prototype tab bar)",
+    "c": 31,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_design_handoff_signature_glass_components",
+    "l": "4.4 Signature glass components",
+    "c": 31,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "apps_mobile__impeccable_surfaces_src_app_tabs_index_tsx_glass_selection_lens",
+    "l": "Liquid Glass selection lens signature interaction",
+    "c": 31,
+    "f": "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md"
+   },
+   {
+    "id": "docs_decisions_remindersync",
+    "l": "reminderAt / useReminderSync",
+    "c": 32,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_review_and_pay",
+    "l": "Review & pay",
+    "c": 32,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_design_handoff_confirmation_ring",
+    "l": "Confirmation ring",
+    "c": 32,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_review_and_pay",
+    "l": "7.9 Review & pay",
+    "c": 32,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_booking_reference",
+    "l": "Booking reference CFA-#####",
+    "c": 37,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_decisions_glassgroup",
+    "l": "GlassGroup",
+    "c": 4,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_testimages",
+    "l": "testImages.ts testing aid",
+    "c": 4,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_book_screen",
+    "l": "Book screen",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_bookingcard",
+    "l": "BookingCard (Bookings card)",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_bookings_filter_sheet",
+    "l": "Bookings Filter sheet",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_explore_filters_sheet",
+    "l": "Explore Filters sheet",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_group_page",
+    "l": "Group page",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_monthcalendar",
+    "l": "MonthCalendar",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_segmented_control",
+    "l": "Segmented control",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_design_handoff_chip",
+    "l": "Chip",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_date_tile",
+    "l": "Date tile",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_day_picker",
+    "l": "Day picker",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_instructor_card",
+    "l": "Instructor card",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_segmented_control",
+    "l": "Segmented control",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_time_slot",
+    "l": "Time slot",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_workshop_card",
+    "l": "Workshop card",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_r11",
+    "l": "R11: Owner revision requirements",
+    "c": 7,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "docs_design_handoff_book",
+    "l": "7.8 Book (1:1, group, kids)",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "docs_design_handoff_bookings",
+    "l": "7.11 Bookings",
+    "c": 7,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "apps_mobile__impeccable_surfaces_src_app_tabs_index_tsx_time_largest_on_booking_cards",
+    "l": "Time printed largest on booking cards",
+    "c": 7,
+    "f": "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md"
+   },
+   {
+    "id": "docs_decisions_d56",
+    "l": "D56: T26 MonthCalendar, Adults | Kids, Group page, price on Review only",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d57",
+    "l": "D57: T27 Bookings time first, Calendar tab, Filter sheet",
+    "c": 7,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 253,
+  "files": [
+   "apps/mobile/.impeccable/surfaces/src-app-tabs-index-tsx.md",
+   "apps/mobile/src/app/(tabs)/bookings.tsx",
+   "apps/mobile/src/app/bookings-filter.tsx",
+   "apps/mobile/src/app/preferences.tsx",
+   "apps/mobile/src/data/bookings.ts",
+   "apps/mobile/src/data/preferences.test.tsx",
+   "apps/mobile/src/data/rules.ts",
+   "apps/mobile/src/ui/FilterButton.tsx",
+   "apps/mobile/src/ui/MonthCalendar.tsx",
+   "docs/DECISIONS.md",
+   "docs/DESIGN_HANDOFF.md",
+   "docs/translations/ar-app-strings.md",
+   "specs/phase-1/tasks.md"
+  ]
+ },
+ {
   "at": "2026-10-25T11:01:43.195Z",
   "commit": "1e2e16c",
   "note": "Owner revision of Phase 1 written into the spec: R11, tasks T23–T27, decision D54",

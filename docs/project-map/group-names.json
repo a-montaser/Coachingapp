@@ -80,5 +80,13 @@
   "Design · Requirements": "Testing Strategy & Monorepo",
   "Tasks · Decisions": "Explore, Instructor & Workshop Tasks",
   "Claude · Requirements": "Testing & CI Rules",
-  "Index · Settings": "i18n Keys"
+  "Index · Settings": "i18n Keys",
+  "Who Where · Navigationbar": "Onboarding Steps & Navigation Bar",
+  "Icon · Stepper": "Small UI Pieces (Icons, Rows, Filter Button)",
+  "Index · Gallery": "Screens Using Shared Data",
+  "Design Handoff · Tasks": "Booking Rules & Database Tests",
+  "T · Section": "Text Component",
+  "Generated": "Generated Tokens (Space, Radius, Type)",
+  "Manual": "Hand-set Tokens (Components, Motion)",
+  "Eslint Config · Package": "Lint Config"
 }
