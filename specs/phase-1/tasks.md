@@ -57,6 +57,14 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 - [x] **T19 Local reminders.** (D53; the manual notification on the iPhone is for the owner)
   - Verify: reminder-time tests; manual notification on the iPhone.
 
+## F2. Owner revision (25 Oct, D54, R11) — before T20
+- [ ] **T23 New look** (`/impeccable`): visual direction with the owner, tokens and components re-themed app-wide, DESIGN.md written. (R11.1)
+- [ ] **T24 Sign-up name, one-page levels, Skip all, Profile header and one-page preferences edit.** (R11.2–R11.4)
+- [ ] **T25 Home and Explore:** "Classes near you", cards without price and with level, Lessons | Groups everywhere, filters in the Filters sheet as in the prototype. (R11.5–R11.8)
+- [ ] **T26 MonthCalendar; Book "Adults | Kids"; Group page (calendar, seats, one button); price only on Review.** (R11.7, R11.9–R11.11, R11.13)
+- [ ] **T27 Bookings:** time first, filter by type and time, month calendar view. (R11.12)
+  - Verify (each): RNTL for the changed journey; `npm run check`; both themes looked at on the iPhone.
+
 ## G. End to end and close
 - [ ] **T20 Maestro in CI** (Android debug build, local Supabase, fake provider), with the flows in R10.1.
   - Verify: CI green.

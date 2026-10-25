@@ -95,6 +95,7 @@ def finish(tokens_in, tokens_out):
     # Name each group after the old group most of its members came from; a repeated name gets the
     # group's most common file added, so every name stays unique.
     oldc = {n['id']: n.get('community_name') for n in old['nodes']}
+    ALIASES = json.loads((Path(__file__).parent / 'group-names.json').read_text())
     labels, used = {}, set()
     for k, v in sorted(com.items(), key=lambda kv: -len(kv[1])):
         names = [oldc.get(n) for n in v if oldc.get(n)]
@@ -108,6 +109,10 @@ def finish(tokens_in, tokens_out):
             common = [f for f, _ in __import__('collections').Counter(files).most_common(2)]
             name = ' · '.join(x.replace('_', ' ').replace('-', ' ').replace('.', ' ').title() for x in common) or f'Group {k}'
         i = 2
+        while name in used:
+            name = f'{name} {i}'; i += 1
+        # Owner-readable names for auto names that keep recurring (docs/project-map/group-names.json).
+        name = ALIASES.get(name, name)
         while name in used:
             name = f'{name} {i}'; i += 1
         used.add(name); labels[k] = name

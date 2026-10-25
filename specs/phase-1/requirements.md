@@ -213,6 +213,23 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 - R10.2 The concurrency test (R1 AC) runs in the Supabase CI job.
 - **AC:** Both CI jobs are green on the Phase 1 pull request.
 
+### R11 Owner revision (25 Oct 2026, D54) — overrides R2–R8 where they differ
+- R11.1 **Look:** the whole app gets more colour and a clearer hierarchy (Breadfast / noon as references); buttons and options are visibly different from each other; cards are smaller; more pictures while testing. Designed with Impeccable and recorded in `apps/mobile/DESIGN.md`.
+- R11.2 **Sign-up** asks for the first name as well as the phone number (`profiles.first_name`).
+- R11.3 **Onboarding levels** are one page: every picked interest with its level; Skip skips all of them.
+- R11.4 **Profile:** the name sits lower in the header; "Change interests and levels" is one edit page, not a rerun of onboarding.
+- R11.5 **Home:** "Classes near you" in every category (replacing "Instructors / Tutors / Teachers near you", "Open today near you").
+- R11.6 **Cards** (Home, Explore, instructor profile): no price; the skill level shows on the card; the class name leads and the instructor's name is smaller, under it.
+- R11.7 **Two kinds of class everywhere:** *Lessons* (1:1, for Adults or Kids) and *Groups* (workshops and small groups, merged). Explore shows the Lessons | Groups switch in every category. The Book screen's switch is "Adults | Kids".
+- R11.8 **Explore:** search stays at the top; categories, disciplines and the other filters live inside the Filters sheet, laid out as in the owner's iOS 26 prototype.
+- R11.9 **Month calendar** wherever a date is picked (Book, Groups, Reschedule) and in Bookings, with the days that have open times (or bookings) marked. A Group opened from a dated card opens on that date.
+- R11.10 **Group page:** only the calendar, the time, Seats and one button; the button lights up once seats are chosen. Included / Take home / Cancellation is a clearer, more visual block.
+- R11.11 **Price** appears only at the end of the decision (Review & pay).
+- R11.12 **Bookings:** the time is the most prominent thing on each card; filter by type and time; a month calendar view.
+- R11.13 **Fewest taps:** every journey is checked for steps that can go.
+- Not now (owner): a Home filter, "Top picks for you", the Book time box (item 16), where tapping a coach leads (item 22). Bookmarks stay in Phase 2.
+- **AC:** RNTL for the changed journeys (sign-up name, one-page levels, Lessons | Groups, calendar marks, seats-then-continue, price only on Review); the Impeccable craft floor and the iOS / Android platform guidance are met; both themes checked.
+
 ## Phase 1 "done when" (prompt)
 1. A new user on the iPhone (Expo Go):
    - picks categories and hobbies, then signs up *(D34, D35)*

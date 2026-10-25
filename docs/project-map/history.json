@@ -1,5 +1,107 @@
 [
  {
+  "at": "2026-10-25T11:01:43.195Z",
+  "commit": "1e2e16c",
+  "note": "Owner revision of Phase 1 written into the spec: R11, tasks T23–T27, decision D54",
+  "nodes": 1222,
+  "links": 4030,
+  "communities": 61,
+  "added": [
+   {
+    "id": "docs_decisions_d54",
+    "l": "D54: Owner revision of Phase 1 (R11, T23–T27)",
+    "c": 16,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_design_owner_revision",
+    "l": "Owner revision: Groups, MonthCalendar, Filters sheet",
+    "c": 16,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11",
+    "l": "R11 Owner revision (25 Oct)",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_1",
+    "l": "R11.1 More colour, clearer hierarchy, distinct controls",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_11",
+    "l": "R11.11 Price only at Review & pay",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_12",
+    "l": "R11.12 Bookings: time first, filters, month view",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_7",
+    "l": "R11.7 Lessons | Groups everywhere; Book Adults | Kids",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_8",
+    "l": "R11.8 Explore filters inside the Filters sheet",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_9",
+    "l": "R11.9 Month calendar wherever a date is picked",
+    "c": 16,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t23",
+    "l": "T23: New look (Impeccable)",
+    "c": 16,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t24",
+    "l": "T24: Sign-up name, one-page levels, Profile header and preferences edit",
+    "c": 16,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t25",
+    "l": "T25: Home and Explore revision",
+    "c": 16,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t26",
+    "l": "T26: MonthCalendar, Book Adults | Kids, Group page, price on Review",
+    "c": 16,
+    "f": "specs/phase-1/tasks.md"
+   },
+   {
+    "id": "specs_phase_1_tasks_t27",
+    "l": "T27: Bookings revision (time first, filters, month view)",
+    "c": 16,
+    "f": "specs/phase-1/tasks.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 56,
+  "files": [
+   "docs/DECISIONS.md",
+   "specs/phase-1/design.md",
+   "specs/phase-1/requirements.md",
+   "specs/phase-1/tasks.md"
+  ]
+ },
+ {
   "at": "2026-10-25T10:30:33.939Z",
   "commit": "824148b",
   "note": "PRODUCT.md: the product record (adults in Cairo booking for themselves; a real directory of vetted, nearby instructors; iPhone first)",

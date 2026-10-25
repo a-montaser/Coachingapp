@@ -135,6 +135,8 @@ interface PaymentProvider {
 - **Selection lens** *(D49)*: `ui/GlassLens.tsx` (`useGlassLens` + `GlassLens`) drives the sliding selection of SegmentedControl and the floating TabBar the iOS 26 way: swell on touch, follow a drag with stretch, spring onto the segment let go on; springs are `motion.lens*` tokens; Reduce Motion drops swell and stretch.
 - **Component library** *(D43)*: every visible element is an instance of a `ui/` component, and the dev Gallery (`/gallery`) shows each one in both themes and languages. Added: Avatar, IconTile, RowCard, DisciplineTile, DateButton, LevelOption, SessionRow, Banner, Section, TextField, TextLink.
 
+- **Owner revision (D54, R11):** *Groups* is a UI grouping of the `workshop` and `group` offering types (no schema change); *Lessons* are `private` and `kids`, shown as "Adults | Kids". A `MonthCalendar` component (marked days, Cairo dates) replaces the week `DayPicker` where dates are picked and adds a month view to Bookings. Explore's category and discipline choices move into the Filters sheet. Visual direction and tokens come from Impeccable (`apps/mobile/DESIGN.md`).
+
 ## 8. Testing and CI
 
 | Level | Tool | What |
