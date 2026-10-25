@@ -63,7 +63,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 - [x] **T25 Home and Explore:** "Classes near you", cards without price and with level, Lessons | Groups everywhere, filters in the Filters sheet as in the prototype. (R11.5–R11.8)
   - Sports small groups join Groups through migration `20261025120000_groups_include_all_group_types.sql` (tested in CI); **pushing it to the hosted project waits for the owner**.
 - [x] **T26 MonthCalendar; Book "Adults | Kids"; Group page (calendar, seats, one button); price only on Review.** (R11.7, R11.9–R11.11, R11.13)
-- [ ] **T27 Bookings:** time first, filter by type and time, month calendar view. (R11.12)
+- [x] **T27 Bookings:** time first, filter by type and time, month calendar view. (R11.12)
   - Verify (each): RNTL for the changed journey; `npm run check`; both themes looked at on the iPhone.
 
 ## G. End to end and close

@@ -382,9 +382,8 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `bookings.emptyPast` | Bookings | Nothing here yet |  |
 | `bookings.emptyPastBody` | Bookings | Sessions you finish or cancel show up here. |  |
 | `bookings.filter` | Bookings | Filter bookings |  |
-| `bookings.filterOn` | Bookings | Filter bookings, on |  |
-| `bookings.filterTitle` | Bookings | Show bookings for |  |
-| `bookings.filterAll` | Bookings | All disciplines |  |
+| `bookings.filterTitle` | Bookings | Filter bookings |  |
+| `bookings.filterAll` | Bookings | All |  |
 | `bookings.new` | Bookings | Book a new session |  |
 | `booking.paid` | Booking detail | Paid {{amount}} |  |
 | `booking.atVenue` | Booking detail | Pay at the venue · {{amount}} |  |
@@ -445,3 +444,22 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `workshop.bring` | Group page | Bring |  |
 | `book.audience.private` | Book | Adults |  |
 | `book.audience.kids` | Book | Kids |  |
+| `bookings.calendar` | Bookings | Calendar |  |
+| `bookings.filterDiscipline` | Bookings | Discipline |  |
+| `bookings.filterType` | Bookings | Type |  |
+| `bookings.filterTime` | Bookings | Time of day |  |
+| `bookings.kind.all` | Bookings | All |  |
+| `bookings.kind.lessons` | Bookings | Lessons |  |
+| `bookings.kind.groups` | Bookings | Groups |  |
+| `bookings.time.any` | Bookings | Any time |  |
+| `bookings.time.morning` | Bookings | Morning |  |
+| `bookings.time.afternoon` | Bookings | Afternoon |  |
+| `bookings.time.evening` | Bookings | Evening |  |
+| `bookings.filterReset` | Bookings | Reset |  |
+| `bookings.filterShow_one` | Bookings | Show {{n}} booking |  |
+| `bookings.filterShow_other` | Bookings | Show {{n}} bookings |  |
+| `bookings.filterNone` | Bookings | No bookings match |  |
+| `bookings.filterNoneReason` | Bookings | Try fewer filters |  |
+| `bookings.filterOnCount` | Bookings | Filter bookings, {{n}} on |  |
+| `bookings.noneOnDay` | Bookings | Nothing booked on {{day}} |  |
+| `bookings.noneOnDayBody` | Bookings | Days with a dot have bookings. |  |

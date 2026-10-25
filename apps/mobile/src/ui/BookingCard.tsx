@@ -13,8 +13,10 @@ type Props = {
   /** Past and cancelled bookings: grey date tile. */
   past?: boolean;
   title: string;
-  /** "17:30–18:30 · Private 1:1". */
+  /** "17:30–18:30": the biggest thing on the card (owner revision D54). */
   time: string;
+  /** "Today · Private 1:1". */
+  detail: string;
   venue: string;
   status: { label: string; tone: PillTone };
   onPress: () => void;
@@ -22,22 +24,38 @@ type Props = {
   actions?: { label: string; onPress: () => void }[];
 };
 
-/** §7.11 Bookings card (prototype Bookings): date tile, title, time, venue, status pill; two plain actions. */
-export function BookingCard({ date, past, title, time, venue, status, onPress, actions = [] }: Props) {
+/**
+ * §7.11 Bookings card (prototype Bookings, owner revision D54): date tile, then the time set largest, the
+ * title, type and venue, status pill; two plain actions.
+ */
+export function BookingCard({
+  date,
+  past,
+  title,
+  time,
+  detail,
+  venue,
+  status,
+  onPress,
+  actions = [],
+}: Props) {
   const { c } = useTheme();
   return (
     <Card style={styles.card}>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`${title}, ${time}, ${venue}, ${status.label}`}
+        accessibilityLabel={`${title}, ${time}, ${detail}, ${venue}, ${status.label}`}
         onPress={onPress}
         style={({ pressed }) => [styles.row, pressed && styles.pressed]}
       >
         <DateTile date={date} past={past} />
         <View style={styles.text}>
+          <T variant="title2" weight="700" color={past ? c.label2 : c.label}>
+            {time}
+          </T>
           <T variant="headline">{title}</T>
           <T variant="footnote" color={c.label2}>
-            {time}
+            {detail}
           </T>
           <T variant="footnote" color={c.label2} numberOfLines={1}>
             {venue}

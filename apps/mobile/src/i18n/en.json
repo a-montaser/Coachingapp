@@ -503,10 +503,32 @@
     "emptyPast": "Nothing here yet",
     "emptyPastBody": "Sessions you finish or cancel show up here.",
     "filter": "Filter bookings",
-    "filterOn": "Filter bookings, on",
-    "filterTitle": "Show bookings for",
-    "filterAll": "All disciplines",
-    "new": "Book a new session"
+    "filterTitle": "Filter bookings",
+    "filterAll": "All",
+    "new": "Book a new session",
+    "calendar": "Calendar",
+    "filterDiscipline": "Discipline",
+    "filterType": "Type",
+    "filterTime": "Time of day",
+    "kind": {
+      "all": "All",
+      "lessons": "Lessons",
+      "groups": "Groups"
+    },
+    "time": {
+      "any": "Any time",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "filterReset": "Reset",
+    "filterShow_one": "Show {{n}} booking",
+    "filterShow_other": "Show {{n}} bookings",
+    "filterNone": "No bookings match",
+    "filterNoneReason": "Try fewer filters",
+    "filterOnCount": "Filter bookings, {{n}} on",
+    "noneOnDay": "Nothing booked on {{day}}",
+    "noneOnDayBody": "Days with a dot have bookings."
   },
   "booking": {
     "paid": "Paid {{amount}}",

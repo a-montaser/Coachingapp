@@ -3,7 +3,9 @@ import { create } from 'zustand';
 import { component } from '@cfa/tokens';
 import type { Category } from '@/theme/settings';
 import type { PillTone } from '@/ui/Pill';
+import { partOfDay, type PartOfDay } from '@/ui/TimeSlots';
 import { firstName } from './book';
+import { cairoHM } from './rules';
 import type { Method } from './checkout';
 import { supabase } from './supabase';
 
@@ -77,8 +79,26 @@ const ACTIVE = ['pending', 'payment_due', 'awaiting_payment', 'confirmed'];
  * §7.11: Upcoming = still on and not yet started, soonest first; Past = finished (completed, §9.5) or
  * cancelled, latest first. `discipline` narrows both (the Filter sheet).
  */
-export function splitBookings(rows: MyBooking[], now: Date, discipline: string | null = null) {
-  const mine = discipline ? rows.filter((b) => b.discipline_id === discipline) : rows;
+/** Bookings' filter sheet (owner revision D54): discipline, Lessons or Groups, and time of day (Cairo). */
+export type BookingKind = 'all' | 'lessons' | 'groups';
+export type BookingTime = 'any' | PartOfDay;
+export type BookingsFilter = { discipline: string | null; kind: BookingKind; time: BookingTime };
+export const DEFAULT_BOOKINGS_FILTER: BookingsFilter = { discipline: null, kind: 'all', time: 'any' };
+const LESSON_TYPES = ['private', 'kids'];
+
+export function matchesFilter(b: MyBooking, f: Partial<BookingsFilter>) {
+  if (f.discipline && b.discipline_id !== f.discipline) return false;
+  if (f.kind === 'lessons' && !LESSON_TYPES.includes(b.type)) return false;
+  if (f.kind === 'groups' && LESSON_TYPES.includes(b.type)) return false;
+  if (f.time && f.time !== 'any' && partOfDay(cairoHM(new Date(b.starts_at))) !== f.time) return false;
+  return true;
+}
+
+export const filterCount = (f: BookingsFilter) =>
+  (f.discipline ? 1 : 0) + (f.kind !== 'all' ? 1 : 0) + (f.time !== 'any' ? 1 : 0);
+
+export function splitBookings(rows: MyBooking[], now: Date, filter: Partial<BookingsFilter> = {}) {
+  const mine = rows.filter((b) => matchesFilter(b, filter));
   const upcoming = mine.filter(
     (b) => ACTIVE.includes(b.display_status) && Date.parse(b.ends_at) > now.getTime(),
   );
@@ -163,7 +183,11 @@ export function staticMapUrl(lat: number, lng: number, lang: 'en' | 'ar') {
   );
 }
 
-/** Bookings' discipline filter (the capsule's Filter button). */
-export const useBookingsFilter = create<{ discipline: string | null; set: (d: string | null) => void }>()(
-  (set) => ({ discipline: null, set: (discipline) => set({ discipline }) }),
-);
+/** Bookings' filter (the capsule's Filter button), kept while the app is open. */
+export const useBookingsFilter = create<
+  BookingsFilter & { set: (patch: Partial<BookingsFilter>) => void; reset: () => void }
+>()((set) => ({
+  ...DEFAULT_BOOKINGS_FILTER,
+  set: (patch) => set(patch),
+  reset: () => set(DEFAULT_BOOKINGS_FILTER),
+}));

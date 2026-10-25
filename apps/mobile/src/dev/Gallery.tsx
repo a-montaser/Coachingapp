@@ -292,6 +292,7 @@ export function Gallery() {
             date={new Date(DEMO_BASE)}
             title={g.app.bookingTitle}
             time={g.app.bookingTime}
+            detail={g.app.bookingDetail}
             venue={g.app.bookingVenue}
             status={{ label: g.app.bookingStatus, tone: 'ok' }}
             onPress={() => {}}
@@ -302,6 +303,7 @@ export function Gallery() {
             past
             title={g.app.bookingTitle}
             time={g.app.bookingTime}
+            detail={g.app.bookingDetail}
             venue={g.app.bookingVenue}
             status={{ label: g.app.bookingPastStatus, tone: 'neutral' }}
             onPress={() => {}}

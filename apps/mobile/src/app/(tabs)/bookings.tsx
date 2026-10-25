@@ -10,29 +10,36 @@ import {
   canReschedule,
   bookingTitle,
   directionsUrl,
+  filterCount,
   splitBookings,
   statusPill,
   useBookingsFilter,
   useMyBookings,
   type MyBooking,
 } from '@/data/bookings';
-import { sameCairoDay } from '@/data/rules';
+import { cairoKey, sameCairoDay } from '@/data/rules';
 import { useLang } from '@/i18n';
-import { formatClock, formatNumber } from '@/i18n/format';
+import { formatClock, formatFullDate, formatNumber } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { BookingCard } from '@/ui/BookingCard';
 import { EmptyState } from '@/ui/EmptyState';
+import { MonthCalendar } from '@/ui/MonthCalendar';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { SegmentedControl } from '@/ui/SegmentedControl';
 import { useMinimiseOnScroll } from '@/ui/TabBar';
+
+type Tab = 'upcoming' | 'past' | 'calendar';
+const TABS: Tab[] = ['upcoming', 'past', 'calendar'];
 
 // Room for the capsule and the segmented control under it.
 const HEADER =
   component.navBar.top + component.iconButton.size + space.space2 + component.segmented.height + space.space4;
 
 /**
- * §7.11 Bookings (prototype Bookings): one glass capsule (Filter · "Bookings" · New booking) with
- * Upcoming · N | Past under it, then booking cards. Calendar sync, Message and Rate are Phase 2 (hidden).
+ * §7.11 Bookings (prototype Bookings, owner revision D54): one glass capsule (Filter · "Bookings" · New
+ * booking) with Upcoming · N | Past | Calendar under it, then booking cards with the time set largest.
+ * Calendar: a month with a dot on each day that has a booking; tapping one lists that day's. Calendar
+ * sync, Message and Rate are Phase 2 (hidden).
  */
 export default function Bookings() {
   const { c } = useTheme();
@@ -42,20 +49,28 @@ export default function Bookings() {
   const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const userId = useSession().session?.user.id;
   const q = useMyBookings(userId);
-  const discipline = useBookingsFilter((s) => s.discipline);
-  const [tab, setTab] = useState<'upcoming' | 'past'>('upcoming');
+  const filter = useBookingsFilter();
+  const on = filterCount(filter);
+  const [tab, setTab] = useState<Tab>('upcoming');
+  const [month, setMonth] = useState(0);
+  const [dayChoice, setDayChoice] = useState<string | null>(null);
   const now = new Date();
-  const { upcoming, past } = splitBookings(q.data ?? [], now, discipline);
-  const list = tab === 'upcoming' ? upcoming : past;
+  const { upcoming, past } = splitBookings(q.data ?? [], now, filter);
+  // Calendar: upcoming bookings by Cairo day; until a day is tapped, the first one with a booking (or today).
+  const dayOf = (b: MyBooking) => cairoKey(new Date(b.starts_at));
+  const booked = new Set(upcoming.map(dayOf));
+  const day = dayChoice ?? (upcoming[0] ? dayOf(upcoming[0]) : cairoKey(now));
+  const list =
+    tab === 'upcoming' ? upcoming : tab === 'past' ? past : upcoming.filter((b) => dayOf(b) === day);
+  const isPast = tab === 'past';
 
   const card = (b: MyBooking) => {
     const start = new Date(b.starts_at);
     const name = firstName(b.instructor_name);
     const title = bookingTitle(b, t, lang);
     const hours = `${formatClock(start, lang)}–${formatClock(new Date(b.ends_at), lang)}`;
-    const time = [
-      tab === 'upcoming' && sameCairoDay(start, now) ? t('bookings.today') : null,
-      hours,
+    const detail = [
+      !isPast && sameCairoDay(start, now) ? t('bookings.today') : null,
       t(`instructor.types.${b.type}`),
     ]
       .filter(Boolean)
@@ -70,32 +85,32 @@ export default function Bookings() {
           params: { id: b.instructor_id, discipline: b.discipline_id },
         }),
     };
-    const actions =
-      tab === 'upcoming'
-        ? [
-            {
-              label: t('confirmed.directions'),
-              onPress: () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng)),
-            },
-            ...(canReschedule(b, now)
-              ? [
-                  {
-                    label: t('booking.reschedule'),
-                    onPress: () => router.push({ pathname: '/reschedule/[ref]', params: { ref: b.ref } }),
-                  },
-                ]
-              : []),
-          ]
-        : b.display_status === 'cancelled'
-          ? [bookAgain, { label: t('bookings.details'), onPress: open }]
-          : [bookAgain];
+    const actions = !isPast
+      ? [
+          {
+            label: t('confirmed.directions'),
+            onPress: () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng)),
+          },
+          ...(canReschedule(b, now)
+            ? [
+                {
+                  label: t('booking.reschedule'),
+                  onPress: () => router.push({ pathname: '/reschedule/[ref]', params: { ref: b.ref } }),
+                },
+              ]
+            : []),
+        ]
+      : b.display_status === 'cancelled'
+        ? [bookAgain, { label: t('bookings.details'), onPress: open }]
+        : [bookAgain];
     return (
       <BookingCard
         key={b.ref}
         date={start}
-        past={tab === 'past'}
+        past={isPast}
         title={title}
-        time={time}
+        time={hours}
+        detail={detail}
         venue={b.venue_name}
         status={{ label: t(`bookings.status.${pill.key}`, { name }), tone: pill.tone }}
         onPress={open}
@@ -117,8 +132,27 @@ export default function Bookings() {
           },
         ]}
       >
+        {tab === 'calendar' && (
+          <MonthCalendar
+            offset={month}
+            onOffset={setMonth}
+            maxOffset={2}
+            marked={booked}
+            selected={day}
+            onSelect={setDayChoice}
+            onlyMarked={false}
+            markedLabel={t('calendar.hasBookings')}
+            now={now}
+          />
+        )}
         {q.isLoading ? null : list.length > 0 ? (
           list.map(card)
+        ) : tab === 'calendar' ? (
+          <EmptyState
+            icon="bookings"
+            title={t('bookings.noneOnDay', { day: formatFullDate(new Date(`${day}T12:00:00Z`), lang) })}
+            body={t('bookings.noneOnDayBody')}
+          />
         ) : tab === 'upcoming' ? (
           <EmptyState
             icon="bookings"
@@ -136,7 +170,7 @@ export default function Bookings() {
         actions={[
           {
             icon: 'filter',
-            label: discipline ? t('bookings.filterOn') : t('bookings.filter'),
+            label: on ? t('bookings.filterOnCount', { n: formatNumber(on, lang) }) : t('bookings.filter'),
             onPress: () => router.push('/bookings-filter'),
           },
           { icon: 'plus', label: t('bookings.new'), onPress: () => router.navigate('/explore') },
@@ -147,9 +181,10 @@ export default function Bookings() {
             segments={[
               t('bookings.upcoming', { n: formatNumber(upcoming.length, lang) }),
               t('bookings.past'),
+              t('bookings.calendar'),
             ]}
-            selectedIndex={tab === 'upcoming' ? 0 : 1}
-            onChange={(i) => setTab(i === 0 ? 'upcoming' : 'past')}
+            selectedIndex={TABS.indexOf(tab)}
+            onChange={(i) => setTab(TABS[i]!)}
           />
         }
       />

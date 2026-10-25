@@ -5,6 +5,7 @@ import CancelSheet from '@/app/cancel/[ref]';
 import Reschedule from '@/app/reschedule/[ref]';
 import { useToast } from '@/ui/Toast';
 import Bookings from '@/app/(tabs)/bookings';
+import BookingsFilter from '@/app/bookings-filter';
 import { useSettings } from '@/theme/settings';
 import {
   bookingPolicy,
@@ -12,6 +13,7 @@ import {
   canReschedule,
   cancelOutcome,
   directionsUrl,
+  matchesFilter,
   staticMapUrl,
   splitBookings,
   statusPill,
@@ -94,7 +96,7 @@ jest.mock('@tanstack/react-query', () => ({
 beforeEach(() => {
   jest.clearAllMocks();
   useSettings.setState({ lang: 'en' });
-  useBookingsFilter.setState({ discipline: null });
+  useBookingsFilter.getState().reset();
   mockParams = {};
 });
 
@@ -114,9 +116,23 @@ test('split: upcoming soonest first; finished and cancelled are past, latest fir
   const { upcoming, past } = splitBookings(rows, new Date());
   expect(upcoming.map((b) => b.ref)).toEqual(['soon', 'later']);
   expect(past.map((b) => b.ref)).toEqual(['lapsed', 'gone', 'old']);
-  expect(splitBookings(rows, new Date(), 'swimming').upcoming.map((b) => b.ref)).toEqual(['later']);
+  expect(splitBookings(rows, new Date(), { discipline: 'swimming' }).upcoming.map((b) => b.ref)).toEqual([
+    'later',
+  ]);
   expect(statusPill('payment_due')).toEqual({ key: 'paymentDue', tone: 'warn' });
   expect(statusPill('completed').tone).toBe('neutral');
+});
+
+test('filter by Lessons or Groups and by time of day (Cairo)', () => {
+  const morning = row('m', { starts_at: '2026-10-28T06:00:00Z', type: 'private' }); // 09:00 Cairo
+  const evening = row('e', { starts_at: '2026-10-28T16:00:00Z', type: 'workshop' }); // 19:00 Cairo
+  expect(matchesFilter(morning, { kind: 'lessons' })).toBe(true);
+  expect(matchesFilter(evening, { kind: 'lessons' })).toBe(false);
+  expect(matchesFilter(evening, { kind: 'groups' })).toBe(true);
+  expect(matchesFilter(row('k', { type: 'kids' }), { kind: 'groups' })).toBe(false);
+  expect(matchesFilter(morning, { time: 'morning' })).toBe(true);
+  expect(matchesFilter(evening, { time: 'morning' })).toBe(false);
+  expect(matchesFilter(evening, { time: 'evening', kind: 'groups' })).toBe(true);
 });
 
 test('policy: free until refundable_until; late inside 24 h or same-day; none at the venue (§9.1)', () => {
@@ -153,6 +169,45 @@ test('Bookings: upcoming cards with Directions, past with Book again, cancelled 
   expect(screen.getByText('Cancelled')).toBeOnTheScreen();
   expect(screen.getAllByRole('button', { name: 'Book again' })).toHaveLength(2);
   expect(screen.getByRole('button', { name: 'Details' })).toBeOnTheScreen();
+});
+
+test('Bookings: the time leads each card; the Calendar tab marks booked days and lists the chosen one', async () => {
+  mockRows = [row('CFA-1', { starts_at: at(72), ends_at: at(73) })];
+  await render(<Bookings />);
+  const hours = screen.getByText(/^\d{2}:\d{2}–\d{2}:\d{2}$/);
+  expect(hours).toBeOnTheScreen();
+  expect(screen.getByText('Private 1:1')).toBeOnTheScreen();
+
+  await fireEvent.press(screen.getByRole('tab', { name: 'Calendar' }));
+  // The month may roll over within 72 h; the booked day is marked in this month or the next.
+  if (!screen.queryAllByRole('button', { name: /Has bookings/ }).length)
+    await fireEvent.press(screen.getByRole('button', { name: 'Next month' }));
+  expect(screen.getAllByRole('button', { name: /Has bookings/ })).toHaveLength(1);
+  expect(screen.getByText('Padel with Nour')).toBeOnTheScreen(); // the first booked day is chosen
+  const empty = screen
+    .getAllByRole('button')
+    .filter(
+      (b) =>
+        /^\w+day \d+ \w+$/.test(b.props.accessibilityLabel ?? '') && !b.props.accessibilityState?.disabled,
+    );
+  await fireEvent.press(empty.at(-1)!);
+  expect(screen.getByText(/^Nothing booked on /)).toBeOnTheScreen();
+});
+
+test('Filter sheet: Type and Time of day narrow the list; Reset clears; the button counts', async () => {
+  mockRows = [
+    row('a', { starts_at: '2099-01-03T07:00:00Z', ends_at: '2099-01-03T08:00:00Z' }), // 09:00 Cairo, 1:1
+    row('b', { starts_at: '2099-01-03T17:00:00Z', ends_at: '2099-01-03T19:00:00Z', type: 'workshop' }), // 19:00
+  ];
+  await render(<BookingsFilter />);
+  expect(screen.getByRole('button', { name: 'Show 2 bookings' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('radio', { name: 'Groups' }));
+  expect(screen.getByRole('button', { name: 'Show 1 booking' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('radio', { name: 'Morning' }));
+  expect(screen.getByRole('button', { name: 'No bookings match' })).toBeDisabled();
+  expect(useBookingsFilter.getState()).toMatchObject({ kind: 'groups', time: 'morning' });
+  await fireEvent.press(screen.getByRole('button', { name: 'Reset' }));
+  expect(screen.getByRole('button', { name: 'Show 2 bookings' })).toBeOnTheScreen();
 });
 
 test('Bookings: an empty state per tab', async () => {
