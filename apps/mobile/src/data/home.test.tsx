@@ -2,7 +2,14 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import '@/i18n';
 import Home from '@/app/(tabs)/index';
 import { useSettings, type Category } from '@/theme/settings';
-import { cairoDaysUntil, distanceKm, greetingPeriod } from './home';
+import {
+  cairoDaysUntil,
+  distanceKm,
+  greetingPeriod,
+  startingSoon,
+  type GroupSessionRow,
+  type InstructorCardRow,
+} from './home';
 
 jest.mock('expo-router', () => ({
   router: { navigate: jest.fn(), push: jest.fn() },
@@ -196,4 +203,65 @@ test('search and the disciplines rail open Explore', async () => {
     pathname: '/explore',
     params: { discipline: 'pottery', at: expect.any(String) },
   });
+});
+
+test('Starting soon near you: today and tomorrow, still bookable, nearby, soonest first, at most four (D58)', () => {
+  const now = new Date('2026-01-10T08:00:00Z'); // Sat 10:00 Cairo
+  const here = { lat: 30.0074, lng: 31.4913 }; // New Cairo
+  const g = (id: string, starts_at: string, extra: Partial<GroupSessionRow> = {}) =>
+    ({ slot_id: id, starts_at, seats_free: 2, lat: 30.02, lng: 31.47, ...extra }) as GroupSessionRow;
+  const p = (id: string, next_at: string | null, extra: Partial<InstructorCardRow> = {}) =>
+    ({ id, discipline_id: 'oud', next_at, lat: 30.01, lng: 31.48, ...extra }) as InstructorCardRow;
+  const rows = startingSoon(
+    [
+      g('soon', '2026-01-10T08:30:00Z'), // 30 min away: not bookable
+      g('noon', '2026-01-10T10:00:00Z'),
+      g('full', '2026-01-10T11:00:00Z', { seats_free: 0 }),
+      g('far', '2026-01-10T12:00:00Z', { lat: 30.0609, lng: 31.2197 }), // Zamalek, ~27 km
+      g('sun', '2026-01-11T16:00:00Z'), // tomorrow
+      g('mon', '2026-01-12T08:00:00Z'), // in two days
+    ],
+    [p('dina', '2026-01-10T15:00:00Z'), p('none', null)],
+    now,
+    here,
+  );
+  expect(rows.map((r) => (r.kind === 'group' ? r.group.slot_id : r.person.id))).toEqual([
+    'noon',
+    'dina',
+    'sun',
+  ]);
+  // Without a known place, distance doesn't filter.
+  expect(
+    startingSoon([g('far', '2026-01-10T12:00:00Z', { lat: 30.06, lng: 31.22 })], [], now, null),
+  ).toHaveLength(1);
+});
+
+test('the board lists what starts soon, with gold times, and opens the class', async () => {
+  const soon = new Date(Date.now() + 3 * 3_600_000).toISOString();
+  mockRows.groupSessions = [
+    {
+      slot_id: 's2',
+      starts_at: soon,
+      capacity: 6,
+      seats_free: 1,
+      offering_id: 'o2',
+      title: "Ruq'ah calligraphy",
+      instructor_name: 'Ahmed Ezz',
+      area_en: 'New Cairo',
+      area_ar: null,
+      lat: 30.02,
+      lng: 31.47,
+    },
+    ...(mockRows.groupSessions as object[]),
+  ];
+  await render(<Home />);
+  expect(screen.getByRole('header', { name: 'Starting soon near you' })).toBeOnTheScreen();
+  await fireEvent.press(
+    screen.getByRole('button', { name: /Ruq'ah calligraphy, Ahmed Ezz · New Cairo · 1 seat left$/ }),
+  );
+  expect(mockRouter.push).toHaveBeenCalledWith({
+    pathname: '/workshop/[id]',
+    params: { id: 'o2', slot: 's2' },
+  });
+  mockRows.groupSessions = (mockRows.groupSessions as object[]).slice(1);
 });

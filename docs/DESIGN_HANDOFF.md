@@ -66,6 +66,8 @@ Revised by the owner on 25 Oct 2026 (DECISIONS D55): the owner's purple-and-gold
 | `band-label` | `#ffffff` | `#ffffff` | Text and icons on `band` |
 | `band-label-2` | `#d9c9ec` | `#cdb9e6` | Secondary text on `band` (passes 4.5:1) |
 | `band-control` | `rgba(255,255,255,0.16)` | `rgba(255,255,255,0.12)` | Capsules on `band`: the category button (owner revision, D55) |
+| `board` | `#24083f` | `#24083f` | Home's "Starting soon near you" departures board (owner's pick, D58); text uses `band-label` / `band-label-2`, times `gold` |
+| `board-line` | `rgba(255,255,255,0.08)` | `rgba(255,255,255,0.10)` | Hairlines between the board's rows, and its outline in dark mode |
 | `gold` | `#c9a96e` | `#d4b47a` | Premium accent as a fill: stars, Members' Circle mark, confirmation ring |
 | `gold-ink` | `#7a5a1e` | `#e2c58e` | Gold as readable text |
 | `gold-tint` | `#f7efdf` | `#2e2414` | Background behind gold-ink |

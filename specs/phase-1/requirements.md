@@ -218,7 +218,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 - R11.2 **Sign-up** asks for the first name as well as the phone number (`profiles.first_name`).
 - R11.3 **Onboarding levels** are one page: every picked interest with its level; Skip skips all of them.
 - R11.4 **Profile:** the name sits lower in the header; "Change interests and levels" is one edit page, not a rerun of onboarding.
-- R11.5 **Home:** "Classes near you" in every category (replacing "Instructors / Tutors / Teachers near you", "Open today near you").
+- R11.5 **Home:** "Classes near you" in every category (replacing "Instructors / Tutors / Teachers near you", "Open today near you"). Under the next session, a "Starting soon near you" departures board: classes starting today or tomorrow nearby, soonest first, times in gold (owner's pick, D58).
 - R11.6 **Cards** (Home, Explore, instructor profile): no price; the skill level shows on the card; the class name leads and the instructor's name is smaller, under it.
 - R11.7 **Two kinds of class everywhere:** *Lessons* (1:1, for Adults or Kids) and *Groups* (workshops and small groups, merged). Explore shows the Lessons | Groups switch in every category. The Book screen's switch is "Adults | Kids".
 - R11.8 **Explore:** search stays at the top; categories, disciplines and the other filters live inside the Filters sheet, laid out as in the owner's iOS 26 prototype.

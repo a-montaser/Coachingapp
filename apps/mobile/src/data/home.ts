@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { component } from '@cfa/tokens';
 import type { Category } from '@/theme/settings';
+import { isBookable } from './rules';
 import { supabase } from './supabase';
 
 const cairo = (options: Intl.DateTimeFormatOptions) =>
@@ -144,4 +146,33 @@ export function useMyCategoryBookings(userId: string | undefined, category: Cate
       };
     },
   });
+}
+
+export type Departure =
+  | { kind: 'group'; at: string; group: GroupSessionRow }
+  | { kind: 'lesson'; at: string; person: InstructorCardRow };
+
+/**
+ * Home's "Starting soon near you" board (owner's pick, D58): open groups and each instructor's next open
+ * lesson that start today or tomorrow (Cairo) and can still be booked, within 15 km when the learner's
+ * place is known, soonest first, at most four.
+ */
+export function startingSoon(
+  groups: GroupSessionRow[],
+  people: InstructorCardRow[],
+  now: Date,
+  origin: { lat: number; lng: number } | null,
+): Departure[] {
+  const d = component.departures;
+  const near = (p: { lat: number; lng: number }) => !origin || distanceKm(origin, p) <= d.nearKm;
+  const soon = (iso: string) => isBookable(new Date(iso), now) && cairoDaysUntil(new Date(iso), now) <= 1;
+  const rows: Departure[] = [
+    ...groups
+      .filter((g) => g.seats_free > 0 && soon(g.starts_at) && near(g))
+      .map((g) => ({ kind: 'group' as const, at: g.starts_at, group: g })),
+    ...people
+      .filter((p) => p.next_at && soon(p.next_at) && near(p))
+      .map((p) => ({ kind: 'lesson' as const, at: p.next_at!, person: p })),
+  ];
+  return rows.sort((a, b) => Date.parse(a.at) - Date.parse(b.at)).slice(0, d.rows);
 }

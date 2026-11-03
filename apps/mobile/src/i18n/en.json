@@ -248,7 +248,15 @@
     "bookAgainTitle": "{{discipline}} with {{name}}",
     "bookAgainNext": "Next open: {{when}}",
     "bookAgainNone": "No open times in the next two weeks",
-    "noPeople": "No one is teaching this yet. Check back soon."
+    "noPeople": "No one is teaching this yet. Check back soon.",
+    "board": {
+      "title": "Starting soon near you",
+      "lesson": "1:1 {{discipline}}",
+      "tomorrow": "Tomorrow",
+      "seatsLeft_one": "{{n}} seat left",
+      "seatsLeft_other": "{{n}} seats left",
+      "rowLabel": "{{when}}, {{title}}, {{detail}}"
+    }
   },
   "explore": {
     "segLabel": "Show",

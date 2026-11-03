@@ -12,7 +12,7 @@ test('every §3.1 colour exists in both themes with the exact handoff value', ()
     .slice(md.indexOf('### 3.1 Colour'), md.indexOf('### 3.2'))
     .split('\n')
     .filter((l) => l.startsWith('| `'));
-  assert.equal(rows.length, 33); // 29 from the handoff + 4 band tokens (owner revision, D55)
+  assert.equal(rows.length, 35); // 29 from the handoff + 4 band tokens (D55) + 2 board tokens (D58)
   for (const row of rows) {
     const [token, l, d] = row
       .split('|')

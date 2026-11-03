@@ -11,7 +11,7 @@ Mode: Operate. iPhone first (iOS 26), Android follows. Code-led (no image genera
 
 Audience and job: adults in Cairo looking for something new to try and booking it near them; returning learners checking their next session. Constraints: Apple's native tab bar and the floating Liquid Glass buttons stay (owner); SF stays the UI face because Arabic and Dynamic Type need it; no real photos yet (test images only).
 
-Chosen direction: the owner's own Coach For All prototype (deep aubergine, gold, white, Playfair display), pinned by the owner on 25 Oct, raised with the strongest lines of the dealt hand. Memorable moment: Home opens on a full-width aubergine band with the greeting in Playfair and gold dot, the next session sitting on its lower edge.
+Chosen direction: the owner's own Coach For All prototype (deep aubergine, gold, white, Playfair display), pinned by the owner on 25 Oct, raised with the strongest lines of the dealt hand. Memorable moment: Home opens on a full-width aubergine band with the greeting in Playfair and gold dot, the next session sitting on its lower edge, then the "Starting soon near you" departures board with gold times (owner picked proposal C on 3 Nov, D58).
 
 Unresolved: real photography (owner), Arabic copy (T21, deferred).
 

@@ -28,6 +28,7 @@ import { Stepper } from '@/ui/Stepper';
 import { TextField } from '@/ui/TextField';
 import { TextLink } from '@/ui/TextLink';
 import { BookingCard } from '@/ui/BookingCard';
+import { DeparturesBoard } from '@/ui/DeparturesBoard';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
@@ -311,6 +312,15 @@ export function Gallery() {
               { label: g.app.bookAgain, onPress: () => {} },
               { label: g.app.details, onPress: () => {} },
             ]}
+          />
+          <DeparturesBoard
+            title={g.app.boardTitle}
+            rows={g.app.boardRows.map((r) => ({
+              ...r,
+              key: r.title,
+              accessibilityLabel: `${r.time}, ${r.title}, ${r.detail}`,
+              onPress: () => {},
+            }))}
           />
           <RowCard
             leading={<DateTile date={new Date(DEMO_BASE + 3 * 86_400_000)} />}

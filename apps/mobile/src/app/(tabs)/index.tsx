@@ -10,6 +10,7 @@ import {
   cairoDaysUntil,
   distanceKm,
   greetingPeriod,
+  startingSoon,
   useGroupSessions,
   useInstructorCards,
   useMyCategoryBookings,
@@ -25,6 +26,7 @@ import { testBanner, testPhoto } from '@/dev/testImages';
 import { Avatar } from '@/ui/Avatar';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
 import { DateTile } from '@/ui/DateTile';
+import { DeparturesBoard, type DepartureRow } from '@/ui/DeparturesBoard';
 import { DisciplineTile } from '@/ui/DisciplineTile';
 import { IconTile } from '@/ui/IconTile';
 import { RowCard } from '@/ui/RowCard';
@@ -42,7 +44,8 @@ const GROUP_RAIL = 6;
 
 /**
  * §7.4 Home, one per category (canvas artboards Main, HomeSports, HomeEducation, HomeLanguages, HomeTray):
- * wordmark + category button, greeting, search, next booking (or empty card), disciplines rail,
+ * wordmark + category button, greeting, search, next booking (or empty card), the "Starting soon near
+ * you" departures board (D58), disciplines rail,
  * group rail (not Sports, v1), people sorted by soonest availability; Sports adds "Book again".
  */
 export default function Home() {
@@ -96,6 +99,50 @@ export default function Home() {
     router.push({ pathname: '/instructor/[id]', params: { id, discipline } });
   const next = mine?.next;
   const soon = next && Date.parse(next.starts_at) - now.getTime() <= DAY_MS ? next : null;
+  const openGroup = (offeringId: string, slot: string) =>
+    category === 'hobbies'
+      ? router.push({ pathname: '/workshop/[id]', params: { id: offeringId, slot } })
+      : router.push({ pathname: '/book/[offeringId]', params: { offeringId, slot } });
+  // "Starting soon near you" (owner's pick, D58): today and tomorrow, soonest first.
+  const board: DepartureRow[] = startingSoon(groups, people, now, origin).map((r) => {
+    const at = new Date(r.at);
+    const time = formatClock(at, lang);
+    const day = cairoDaysUntil(at, now) === 1 ? t('home.board.tomorrow') : undefined;
+    const area = (x: { area_en: string; area_ar: string | null }) => (ar && x.area_ar) || x.area_en;
+    const row =
+      r.kind === 'group'
+        ? {
+            key: r.group.slot_id,
+            title: r.group.title,
+            detail: [
+              r.group.instructor_name,
+              area(r.group),
+              t('home.board.seatsLeft', {
+                count: r.group.seats_free,
+                n: formatNumber(r.group.seats_free, lang),
+              }),
+            ].join(' · '),
+            onPress: () => openGroup(r.group.offering_id, r.group.slot_id),
+          }
+        : {
+            key: `${r.person.id}-${r.person.discipline_id}`,
+            title: t('home.board.lesson', {
+              discipline: (ar && r.person.discipline_ar) || r.person.discipline_en,
+            }),
+            detail: [r.person.display_name, area(r.person), r.person.levels].filter(Boolean).join(' · '),
+            onPress: () => openProfile(r.person.id, r.person.discipline_id),
+          };
+    return {
+      ...row,
+      time,
+      day,
+      accessibilityLabel: t('home.board.rowLabel', {
+        when: [day, time].filter(Boolean).join(' '),
+        title: row.title,
+        detail: row.detail,
+      }),
+    };
+  });
   const again = category === 'sports' ? mine?.lastCompleted : null;
   const againCard =
     again && people.find((p) => p.id === again.instructor_id && p.discipline_id === again.discipline_id);
@@ -171,6 +218,8 @@ export default function Home() {
           />
         )}
 
+        {board.length > 0 && <DeparturesBoard title={t('home.board.title')} rows={board} />}
+
         {again && (
           <RowCard
             leading={<Avatar size={component.iconButton.size} image={testPhoto(again.instructor_name)} />}
@@ -234,17 +283,7 @@ export default function Home() {
                     instructor: g.instructor_name,
                     level: g.level_label,
                   }}
-                  onPress={() =>
-                    category === 'hobbies'
-                      ? router.push({
-                          pathname: '/workshop/[id]',
-                          params: { id: g.offering_id, slot: g.slot_id },
-                        })
-                      : router.push({
-                          pathname: '/book/[offeringId]',
-                          params: { offeringId: g.offering_id, slot: g.slot_id },
-                        })
-                  }
+                  onPress={() => openGroup(g.offering_id, g.slot_id)}
                 />
               ))}
             </ScrollView>

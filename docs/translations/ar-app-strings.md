@@ -463,3 +463,9 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `bookings.filterOnCount` | Bookings | Filter bookings, {{n}} on |  |
 | `bookings.noneOnDay` | Bookings | Nothing booked on {{day}} |  |
 | `bookings.noneOnDayBody` | Bookings | Days with a dot have bookings. |  |
+| `home.board.title` | Home | Starting soon near you |  |
+| `home.board.lesson` | Home | 1:1 {{discipline}} |  |
+| `home.board.tomorrow` | Home | Tomorrow |  |
+| `home.board.seatsLeft_one` | Home | {{n}} seat left |  |
+| `home.board.seatsLeft_other` | Home | {{n}} seats left |  |
+| `home.board.rowLabel` | Home | {{when}}, {{title}}, {{detail}} |  |
