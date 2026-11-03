@@ -88,5 +88,13 @@
   "T · Section": "Text Component",
   "Generated": "Generated Tokens (Space, Radius, Type)",
   "Manual": "Hand-set Tokens (Components, Motion)",
-  "Eslint Config · Package": "Lint Config"
+  "Eslint Config · Package": "Lint Config",
+  "Bookingcard · Card": "Cards & Booking Card",
+  "Requirements · Decisions": "Phase 1 Requirements & Decisions",
+  "Auth · Onboarding": "Sign-in & Onboarding Data",
+  "Instructor · Instructor Test": "Instructor Profile Data",
+  "Format · I18N Test": "Formatting & i18n Tests",
+  "Language · Appearance": "Language & Appearance Sheets",
+  "Account · Gallerycopy": "Account Data & Gallery Copy",
+  "Usea11Y · Settings": "Accessibility & Settings"
 }

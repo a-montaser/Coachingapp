@@ -1,5 +1,127 @@
 [
  {
+  "at": "2026-11-03T17:02:16.715Z",
+  "commit": "37be7ff",
+  "note": "Home gets the owner's chosen look C: a dark purple \"Starting soon near you\" board with gold start times for classes today and tomorrow nearby (D58)",
+  "nodes": 1330,
+  "links": 4290,
+  "communities": 60,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_home_departure",
+    "l": "Departure",
+    "c": 31,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_departuresboard_departurerow",
+    "l": "DepartureRow",
+    "c": 8,
+    "f": "apps/mobile/src/ui/DeparturesBoard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_home_startingsoon",
+    "l": "startingSoon()",
+    "c": 31,
+    "f": "apps/mobile/src/data/home.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_departuresboard_departuresboard",
+    "l": "DeparturesBoard()",
+    "c": 56,
+    "f": "apps/mobile/src/ui/DeparturesBoard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_departuresboard",
+    "l": "DeparturesBoard.tsx",
+    "c": 8,
+    "f": "apps/mobile/src/ui/DeparturesBoard.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_departuresboard_styles",
+    "l": "styles",
+    "c": 8,
+    "f": "apps/mobile/src/ui/DeparturesBoard.tsx"
+   },
+   {
+    "id": "docs_decisions_departures_board",
+    "l": "Starting soon near you departures board",
+    "c": 11,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_design_handoff_board_tokens",
+    "l": "board / board-line tokens",
+    "c": 11,
+    "f": "docs/DESIGN_HANDOFF.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_5",
+    "l": "R11.5 Home: Classes near you and Starting soon board",
+    "c": 11,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_home_board_strings",
+    "l": "AR strings: Home board (home.board.*)",
+    "c": 11,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_decisions_d58",
+    "l": "D58: Departures board Home look (Starting soon near you)",
+    "c": 11,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_10",
+    "l": "R11.10 Group page",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_13",
+    "l": "R11.13 Fewest taps",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_2",
+    "l": "R11.2 Sign-up first name",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_3",
+    "l": "R11.3 One-page onboarding levels",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_4",
+    "l": "R11.4 Profile header and one-page edit",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r11_6",
+    "l": "R11.6 Cards without price, level shown",
+    "c": 3,
+    "f": "specs/phase-1/requirements.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 7,
+  "files": [
+   "apps/mobile/src/data/home.ts",
+   "apps/mobile/src/ui/DeparturesBoard.tsx",
+   "docs/DECISIONS.md",
+   "docs/DESIGN_HANDOFF.md",
+   "docs/translations/ar-app-strings.md",
+   "specs/phase-1/requirements.md"
+  ]
+ },
+ {
   "at": "2026-10-25T12:38:10.159Z",
   "commit": "18372cb",
   "note": "Month calendar on Book, the Group page, Reschedule and Bookings; Book is Adults | Kids; Group page picks date, time and seats with no price until Review & pay; Bookings show the time first and filter by type and time of day (T26, T27)",
