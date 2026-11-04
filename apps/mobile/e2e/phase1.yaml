@@ -23,6 +23,7 @@ appId: com.coachforall.app
 - scrollUntilVisible:
     element: 'Show my picks'
     direction: DOWN
+    centerElement: true
 - tapOn: 'Show my picks'
 
 # 2. Sign up and verify, landing on Home with the answers saved (D34, R11.2)
@@ -51,6 +52,7 @@ appId: com.coachforall.app
 - scrollUntilVisible:
     element: 'Wheel-throwing taster.*'
     direction: DOWN
+    centerElement: true
     timeout: 30000
 - tapOn: 'Wheel-throwing taster.*'
 - extendedWaitUntil:
@@ -78,6 +80,7 @@ appId: com.coachforall.app
 - scrollUntilVisible:
     element: '.*Dina Samir.*'
     direction: DOWN
+    centerElement: true
     timeout: 30000
 - tapOn: '.*Dina Samir.*'
 - tapOn:
@@ -104,6 +107,7 @@ appId: com.coachforall.app
 - scrollUntilVisible:
     element: 'Cancel booking'
     direction: DOWN
+    centerElement: true
 - tapOn: 'Cancel booking'
 - assertVisible: "You'll get 1,300 EGP back.*"
 - tapOn: 'Cancel and refund 1,300 EGP'
@@ -114,6 +118,7 @@ appId: com.coachforall.app
 - scrollUntilVisible:
     element: 'Cancel booking'
     direction: DOWN
+    centerElement: true
 - tapOn: 'Cancel booking'
 - assertVisible: "(Less than 24 hours to go|Same-day bookings are final).*"
 - tapOn:
