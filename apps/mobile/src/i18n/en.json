@@ -262,8 +262,6 @@
   },
   "explore": {
     "segLabel": "Show",
-    "segWorkshops": "Workshops",
-    "segPeople": "1:1 lessons",
     "filters": "Filters",
     "filtersN": "Filters · {{count}}",
     "all": "All",

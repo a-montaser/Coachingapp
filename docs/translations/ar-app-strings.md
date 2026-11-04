@@ -187,8 +187,6 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `home.bookAgainNone` | Home | No open times in the next two weeks |  |
 | `home.noPeople` | Home | No one is teaching this yet. Check back soon. |  |
 | `explore.segLabel` | Explore, Filters and Sort | Show |  |
-| `explore.segWorkshops` | Explore, Filters and Sort | Workshops |  |
-| `explore.segPeople` | Explore, Filters and Sort | 1:1 lessons |  |
 | `explore.filters` | Explore, Filters and Sort | Filters |  |
 | `explore.filtersN` | Explore, Filters and Sort | Filters · {{count}} |  |
 | `explore.all` | Explore, Filters and Sort | All |  |

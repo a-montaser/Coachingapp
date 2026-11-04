@@ -90,7 +90,10 @@ export default function Book() {
       end: cairoHM(new Date(s.ends_at)),
       state: open(s.starts_at, s.seats_free) ? 'open' : 'booked',
     }));
-  const chosen = slots.find((s) => s.id === slotId && open(s.starts_at, s.seats_free)) ?? null;
+  // Fewest taps (R11.13): a day with a single open time has it chosen for you, as on the Group page.
+  const lone = daySlots.filter((s) => s.state === 'open');
+  const pickedId = slotId ?? (lone.length === 1 ? lone[0]!.id : null);
+  const chosen = slots.find((s) => s.id === pickedId && open(s.starts_at, s.seats_free)) ?? null;
 
   // Kids: a family member in the offering's age range (§9.4).
   const min = o.min_age ?? KIDS_AGE.min;

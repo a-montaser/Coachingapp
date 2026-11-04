@@ -95,12 +95,9 @@ test('Book: Adults | Kids, starts on the first day with times, picking a time fi
   // Open days are marked on the month calendar.
   expect(screen.getAllByRole('button', { name: /Has open times/ })).toHaveLength(1);
   expect(screen.getByText('Just you and Nour, 60 min')).toBeOnTheScreen();
-  // Continue waits for a time, and says why.
-  const cont = screen.getByRole('button', { name: 'Pick a time' });
-  expect(cont).toBeDisabled();
-  const open = screen.getAllByRole('button').filter((b) => /–/.test(b.props.accessibilityLabel ?? ''));
-  await fireEvent.press(open[0]!);
+  // That day has one open time, so it is chosen for you (fewest taps, R11.13) and Continue is ready.
   expect(screen.getByText(/^\w{3} · \d{2}:\d{2}–\d{2}:\d{2}$/)).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
   // The price waits for Review & pay (D54).
   expect(screen.queryByText('650 EGP')).toBeNull();
 });
@@ -120,6 +117,27 @@ test('a too-soon slot today shows as unavailable; days without times are not off
     .filter((b) => /^\w+day \d+ \w+/.test(b.props.accessibilityLabel ?? ''));
   expect(days.length).toBeGreaterThan(27);
   for (const d of days) expect(d).toBeDisabled();
+});
+
+test('a day with two open times waits for a tap, and says why', async () => {
+  const [, tmr] = mockData.slots;
+  mockQuery = {
+    ...mockData,
+    slots: [
+      tmr,
+      {
+        ...tmr!,
+        id: 'tmr2',
+        starts_at: iso(new Date(tmr!.starts_at), 120),
+        ends_at: iso(new Date(tmr!.starts_at), 180),
+      },
+    ],
+  };
+  await render(<Book />);
+  expect(screen.getByRole('button', { name: 'Pick a time' })).toBeDisabled();
+  const open = screen.getAllByRole('button').filter((b) => /–/.test(b.props.accessibilityLabel ?? ''));
+  await fireEvent.press(open[0]!);
+  expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
 });
 
 test('switching Adults | Kids goes to the sibling offering; kids need a child aged 6–14', async () => {
