@@ -26,7 +26,8 @@
     "close": "Close",
     "comingSoon": "Coming soon",
     "genericError": "Something went wrong. Check your connection and try again.",
-    "tomorrow": "Tomorrow"
+    "tomorrow": "Tomorrow",
+    "tryAgain": "Try again"
   },
   "language": {
     "en": "English",
@@ -185,7 +186,8 @@
     },
     "changeLater": "You can change any of this later in Profile.",
     "showPicks": "Show my picks",
-    "levelsTitle": "How experienced are you?"
+    "levelsTitle": "How experienced are you?",
+    "loadErrorTitle": "Couldn't load the list"
   },
   "home": {
     "greeting": {

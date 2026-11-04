@@ -8,6 +8,7 @@ import { formatNumber } from '@/i18n/format';
 import { useLang } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
+import { EmptyState } from '@/ui/EmptyState';
 import { Icon, disciplineIcon } from '@/ui/Icon';
 import { InterestTile } from '@/ui/InterestTile';
 import { NavigationBar } from '@/ui/NavigationBar';
@@ -28,7 +29,8 @@ export default function Interests() {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const edit = useLocalSearchParams<{ edit?: string }>().edit === '1';
-  const disciplines = useDisciplines().data ?? [];
+  const q = useDisciplines();
+  const disciplines = q.data ?? [];
   const { categories, picks: allPicks, toggle } = useOnboardingDraft();
   const shown = CATEGORIES.filter((cat) => categories.includes(cat));
   // Picks from a category un-picked on the previous page don't count and are dropped on Continue.
@@ -57,6 +59,16 @@ export default function Interests() {
             {t('onboarding.interestsSub')}
           </T>
         </View>
+
+        {/* No connection (or the backend is down): say so instead of an empty page. */}
+        {q.isError && (
+          <EmptyState
+            icon="hobbies"
+            title={t('onboarding.loadErrorTitle')}
+            body={t('common.genericError')}
+            action={{ label: t('common.tryAgain'), onPress: () => q.refetch() }}
+          />
+        )}
 
         {shown.map((cat) => {
           const items = disciplines.filter((d) => d.category_id === cat);

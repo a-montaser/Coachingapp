@@ -69,11 +69,17 @@ const mockDisciplines = [
   d('sat', 'education', 'SAT'),
   d('french', 'languages', 'French', 'FR'),
 ];
+let mockOffline = false;
+const mockRefetch = jest.fn();
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
-  useQuery: ({ queryKey }: { queryKey: string[] }) => ({
-    data: queryKey[0] === 'disciplines' ? mockDisciplines : queryKey[0] === 'areas' ? mockAreas : undefined,
-  }),
+  useQuery: ({ queryKey }: { queryKey: string[] }) =>
+    mockOffline
+      ? { data: undefined, isError: true, refetch: mockRefetch }
+      : {
+          data:
+            queryKey[0] === 'disciplines' ? mockDisciplines : queryKey[0] === 'areas' ? mockAreas : undefined,
+        },
 }));
 
 const wrap = (ui: ReactNode) => <QueryClientProvider client={new QueryClient()}>{ui}</QueryClientProvider>;
@@ -83,6 +89,7 @@ beforeEach(() => {
   mockCalls.length = 0;
   mockUserId = 'u1';
   mockSaved = [];
+  mockOffline = false;
   useOnboardingDraft.getState().reset();
 });
 
@@ -142,6 +149,15 @@ test('Interests shows only the picked categories; dropped categories lose their 
   await fireEvent.press(screen.getByRole('button', { name: 'Continue · 2 picked' }));
   expect(useOnboardingDraft.getState().picks).toEqual(['pottery', 'french']);
   expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/levels', params: {} });
+});
+
+test('Interests says so when the list cannot load, and Try again reloads it', async () => {
+  mockOffline = true;
+  useOnboardingDraft.setState({ categories: ['hobbies'] });
+  await render(wrap(<Interests />));
+  expect(screen.getByText("Couldn't load the list")).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+  expect(mockRefetch).toHaveBeenCalled();
 });
 
 test('Levels on one page: a level per pick, a second tap clears it, Continue saves and opens step 3', async () => {

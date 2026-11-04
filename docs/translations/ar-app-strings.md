@@ -469,3 +469,5 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `home.board.seatsLeft_one` | Home | {{n}} seat left |  |
 | `home.board.seatsLeft_other` | Home | {{n}} seats left |  |
 | `home.board.rowLabel` | Home | {{when}}, {{title}}, {{detail}} |  |
+| `common.tryAgain` | Buttons and messages | Try again |  |
+| `onboarding.loadErrorTitle` | Onboarding | Couldn't load the list |  |
