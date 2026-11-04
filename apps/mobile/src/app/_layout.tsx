@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { LogBox, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { type as typeScale } from '@cfa/tokens';
 import { useProfile, useSession } from '@/data/auth';
@@ -14,6 +14,9 @@ import { useSettings } from '@/theme/settings';
 import { useApplyThemeOverride, useTheme } from '@/theme/useTheme';
 import { useSheetOptions } from '@/ui/Sheet';
 import { Toast, useToast } from '@/ui/Toast';
+
+// CI end-to-end runs (T20): dev warning boxes must not cover the buttons Maestro taps.
+if (process.env.EXPO_PUBLIC_E2E === '1') LogBox.ignoreAllLogs();
 
 /**
  * The journey gate: signed out → Welcome (then onboarding, then sign-up, D34); signed in but not

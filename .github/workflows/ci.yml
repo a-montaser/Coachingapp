@@ -35,6 +35,8 @@ jobs:
 
   supabase:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN: local-only # placeholder: local phone sign-in uses test numbers only
     steps:
       - uses: actions/checkout@v5
       - uses: supabase/setup-cli@v1
@@ -53,3 +55,69 @@ jobs:
           eval "$(supabase status -o env)"
           API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" JWT_SECRET="$JWT_SECRET" \
             node supabase/tests/concurrency.mjs
+
+  # R10.1: the Phase 1 journey in Maestro on an Android emulator, against a debug build, local Supabase
+  # and the fake payment provider.
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN: local-only
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: npm ci
+      - name: Local Supabase with the fake payment provider
+        run: |
+          printf 'PAYMENT_PROVIDER=fake\nAPP_ENV=test\n' > supabase/functions/.env
+          supabase start -x studio,imgproxy,inbucket,realtime,storage-api,logflare,vector,supavisor,postgres-meta
+          eval "$(supabase status -o env)"
+          psql "$DB_URL" -v ON_ERROR_STOP=1 -f apps/mobile/e2e/fixture.sql
+          printf 'EXPO_PUBLIC_SUPABASE_URL=http://10.0.2.2:54321\nEXPO_PUBLIC_SUPABASE_ANON_KEY=%s\nEXPO_PUBLIC_E2E=1\n' "$ANON_KEY" > apps/mobile/.env
+          # The Edge Functions answer (401 without a user, not 404).
+          curl -s -o /dev/null -w 'create-checkout: %{http_code}\n' -X POST "$API_URL/functions/v1/create-checkout"
+      - name: Android debug build
+        working-directory: apps/mobile
+        run: |
+          npx expo prebuild --platform android --no-install
+          cd android && ./gradlew assembleDebug -PreactNativeArchitectures=x86_64 --no-daemon
+      - name: Metro, with the bundle built ahead of the app asking for it
+        working-directory: apps/mobile
+        run: |
+          nohup npx expo start --port 8081 > ../../metro.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:8081/status && break; sleep 5; done
+          curl -sf -o /dev/null --max-time 600 "http://localhost:8081/node_modules/expo-router/entry.bundle?platform=android&dev=true&minify=false"
+      - run: curl -fsSL https://get.maestro.mobile.dev | bash
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Maestro on the emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: sh apps/mobile/e2e/ci.sh
+      - name: Keep the Maestro output and Metro log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-output
+          path: |
+            e2e-output
+            metro.log

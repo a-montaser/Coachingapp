@@ -269,6 +269,8 @@ max_frequency = "5s"
 # §14 demo learner Omar: +20 100 234 5678, code 482917. Extra numbers are for the CI concurrency test.
 [auth.sms.test_otp]
 201002345678 = "482917"
+# CI end-to-end sign-up (R10.1, T20): a new learner each run.
+201009990001 = "135790"
 
 # Configure logged in session timeouts.
 # [auth.sessions]
@@ -289,9 +291,11 @@ max_frequency = "5s"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
 [auth.sms.twilio]
-enabled = false
-account_sid = ""
-message_service_sid = ""
+# On locally only so phone sign-in works with the test numbers above (nothing is ever sent: test numbers
+# skip the provider). Placeholder values; the hosted project's SMS settings live in its dashboard.
+enabled = true
+account_sid = "local-only"
+message_service_sid = "local-only"
 # DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
 auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 

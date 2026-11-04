@@ -1,0 +1,113 @@
+# Phase 1 journey (R10.1), one run in order, on the Android debug build against local Supabase with
+# the fake payment provider. CI: .github/workflows/ci.yml (job e2e) after apps/mobile/e2e/fixture.sql.
+appId: com.coachforall.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: 'Get started'
+    timeout: 300000
+
+# 1. Onboarding: Categories → Interests → Levels → Who & where (D34, D35)
+- tapOn: 'Get started'
+- tapOn: 'Hobbies.*'
+- tapOn: 'Continue'
+- tapOn: 'Pottery'
+- tapOn: 'Continue · 1 picked'
+- assertVisible: 'How experienced are you?'
+- tapOn: 'Beginner, .*'
+- tapOn: 'Continue'
+- assertVisible: 'Who are the sessions for?'
+- tapOn: 'Me, .*'
+- tapOn: 'Heliopolis'
+- tapOn: 'Show my picks'
+
+# 2. Sign up and verify, landing on Home with the answers saved (D34, R11.2)
+- assertVisible: 'Your phone number'
+- tapOn: 'Your first name'
+- inputText: 'Salma'
+- tapOn: 'Phone number'
+- inputText: '1009990001'
+- hideKeyboard
+- tapOn: 'Send code'
+- assertVisible: 'Enter the code'
+- inputText: '135790'
+- extendedWaitUntil:
+    visible: 'Good .*, Salma.*'
+    timeout: 60000
+
+# 3. Category tray
+- tapOn: 'Category: Hobbies. Change category'
+- tapOn: 'Sports'
+- assertVisible: 'Category: Sports. Change category'
+- tapOn: 'Category: Sports. Change category'
+- tapOn: 'Hobbies'
+- assertVisible: 'Category: Hobbies. Change category'
+
+# 4 + 6. Book two workshop seats and pay by card (fake provider)
+- scrollUntilVisible:
+    element: 'Wheel-throwing taster.*'
+    direction: DOWN
+    timeout: 30000
+- tapOn: 'Wheel-throwing taster.*'
+- scrollUntilVisible:
+    element: '2 seats'
+    direction: DOWN
+- tapOn: '2 seats'
+- tapOn: 'Reserve'
+- assertVisible: 'Review & pay'
+- tapOn: 'Pay .*'
+- tapOn:
+    text: 'Allow'
+    optional: true
+- extendedWaitUntil:
+    visible: "You're in."
+    timeout: 60000
+- tapOn: 'Back to Home'
+
+# 5 + 6. Book Dina's soonest 1:1 oud time and pay
+- scrollUntilVisible:
+    element: '.*Dina Samir.*'
+    direction: DOWN
+    timeout: 30000
+- tapOn: '.*Dina Samir.*'
+- tapOn:
+    text: '(Today|Tomorrow) \d\d:\d\d'
+    index: 0
+- tapOn: 'Continue'
+- assertVisible: 'Review & pay'
+- tapOn: 'Pay .*'
+- tapOn:
+    text: 'Allow'
+    optional: true
+- extendedWaitUntil:
+    visible: "You're in."
+    timeout: 60000
+- tapOn: 'Back to Home'
+
+# 7. Both in Bookings
+- tapOn: 'Bookings'
+- assertVisible: 'Wheel-throwing taster.*'
+- assertVisible: 'Oud with Dina.*'
+
+# 8. Cancel with refund: the workshop is three days out, paid by card
+- tapOn: 'Wheel-throwing taster.*'
+- scrollUntilVisible:
+    element: 'Cancel booking'
+    direction: DOWN
+- tapOn: 'Cancel booking'
+- assertVisible: "You'll get 1,300 EGP back.*"
+- tapOn: 'Cancel and refund 1,300 EGP'
+- assertVisible: 'Booking cancelled · 1,300 EGP on its way back'
+
+# 9. Cancel without refund: the oud lesson starts within 24 h
+- tapOn: 'Oud with Dina.*'
+- scrollUntilVisible:
+    element: 'Cancel booking'
+    direction: DOWN
+- tapOn: 'Cancel booking'
+- assertVisible: "(Less than 24 hours to go|Same-day bookings are final).*"
+- tapOn:
+    text: 'Cancel booking'
+    below: 'Keep booking'
+- assertVisible: 'Booking cancelled'
