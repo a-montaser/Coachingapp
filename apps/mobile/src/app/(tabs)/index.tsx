@@ -24,6 +24,7 @@ import { useTheme } from '@/theme/useTheme';
 import { useMinimiseOnScroll } from '@/ui/TabBar';
 import { testBanner, testPhoto } from '@/dev/testImages';
 import { Avatar } from '@/ui/Avatar';
+import { Button } from '@/ui/Button';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
 import { DateTile } from '@/ui/DateTile';
 import { DeparturesBoard, type DepartureRow } from '@/ui/DeparturesBoard';
@@ -223,7 +224,6 @@ export default function Home() {
         {again && (
           <RowCard
             leading={<Avatar size={component.iconButton.size} image={testPhoto(again.instructor_name)} />}
-            kicker={t('home.bookAgain')}
             title={t('home.bookAgainTitle', {
               discipline: (ar && again.discipline_ar) || again.discipline_en,
               name: again.instructor_name,
@@ -234,7 +234,14 @@ export default function Home() {
                 : t('home.bookAgainNone')
             }
             onPress={() => openProfile(again.instructor_id, again.discipline_id)}
-            accessibilityLabel={t('home.bookAgain')}
+            // The action names itself instead of a label above the title (craft floor: no kickers).
+            trailing={
+              <Button
+                label={t('home.bookAgain')}
+                size="small"
+                onPress={() => openProfile(again.instructor_id, again.discipline_id)}
+              />
+            }
           />
         )}
 

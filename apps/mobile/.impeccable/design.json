@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T20:43:46.203720+00:00",
+  "title": "Design System: Coach For All",
+  "extensions": {
+    "colorMeta": {
+      "aubergine": {
+        "role": "primary",
+        "displayName": "Aubergine",
+        "canonical": "#3b0a6b",
+        "tonalRamp": [
+          "#14031f",
+          "#24083f",
+          "#3b0a6b",
+          "#5a2391",
+          "#7a3fc4",
+          "#a582d6",
+          "#d9c9ec",
+          "#f1eaf8"
+        ]
+      },
+      "night-aubergine": {
+        "role": "primary",
+        "displayName": "Night Aubergine",
+        "canonical": "#24083f"
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Evening Gold",
+        "canonical": "#c9a96e",
+        "tonalRamp": [
+          "#3a2a0e",
+          "#5a4318",
+          "#7a5a1e",
+          "#a5823e",
+          "#c9a96e",
+          "#dcc497",
+          "#ecdcbd",
+          "#f7efdf"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Ground",
+        "canonical": "#ffffff"
+      },
+      "lavender-paper": {
+        "role": "neutral",
+        "displayName": "Lavender Paper",
+        "canonical": "#faf9fc"
+      },
+      "lavender-tint": {
+        "role": "neutral",
+        "displayName": "Lavender Tint",
+        "canonical": "#f1eaf8"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#14101c"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display (Playfair)",
+        "purpose": "Wordmark, Home greeting, Welcome and Confirmed headlines."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Class names and card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, system font for Arabic and Dynamic Type."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 8px 24px rgba(46,16,101,0.06)",
+        "purpose": "Every card."
+      },
+      {
+        "name": "primary",
+        "value": "0 10px 24px rgba(59,10,107,0.22)",
+        "purpose": "Primary buttons only."
+      },
+      {
+        "name": "thumb",
+        "value": "0 1px 2px rgba(0,0,0,0.10), 0 3px 8px rgba(0,0,0,0.08)",
+        "purpose": "Segmented control thumb."
+      }
+    ],
+    "motion": [
+      {
+        "name": "press",
+        "value": "scale 0.97",
+        "purpose": "Pressed buttons."
+      },
+      {
+        "name": "lens",
+        "value": "spring (motion.lensDragSpring / lensPressSpring)",
+        "purpose": "Liquid Glass lens on sliding selections; none under Reduce Motion."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one thing to press on a screen.",
+      "html": "<button class=\"ds-btn-primary\">Reserve</button>",
+      "css": ".ds-btn-primary{font-family:-apple-system,system-ui,sans-serif;background:#3b0a6b;color:#fff;height:54px;padding:0 24px;border:0;border-radius:999px;font-size:17px;font-weight:700;box-shadow:0 10px 24px rgba(59,10,107,.22);transition:transform .15s} .ds-btn-primary:active{transform:scale(.97)} .ds-btn-primary:focus-visible{outline:2px solid #c9a96e;outline-offset:3px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A second, lesser action.",
+      "html": "<button class=\"ds-btn-secondary\">Reschedule</button>",
+      "css": ".ds-btn-secondary{font-family:-apple-system,system-ui,sans-serif;background:#fff;color:#3b0a6b;height:54px;padding:0 24px;border:1px solid #3b0a6b;border-radius:999px;font-size:17px;font-weight:600} .ds-btn-secondary:active{transform:scale(.97)} .ds-btn-secondary:focus-visible{outline:2px solid #c9a96e;outline-offset:3px}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "An option: filter, level, time or seat count.",
+      "html": "<span class=\"ds-chip\">Morning</span><span class=\"ds-chip ds-chip-on\">2 seats</span>",
+      "css": ".ds-chip{font-family:-apple-system,system-ui,sans-serif;display:inline-flex;align-items:center;height:36px;padding:0 14px;margin-right:8px;border-radius:999px;background:#fff;border:1px solid #ece8f1;color:#14101c;font-size:15px;font-weight:600} .ds-chip-on{background:#3b0a6b;border-color:#3b0a6b;color:#fff}"
+    },
+    {
+      "name": "Class Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Small class card: level, class first, instructor under it, no price.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-pill\">Beginners</span><div class=\"ds-card-title\">Wheel-throwing taster</div><div class=\"ds-card-sub\">Yasmine Fathy · Zamalek</div><div class=\"ds-card-when\">Sat 11:00</div></div>",
+      "css": ".ds-card{font-family:-apple-system,system-ui,sans-serif;width:220px;padding:12px;border-radius:20px;background:#faf9fc;box-shadow:0 8px 24px rgba(46,16,101,.06);color:#14101c} .ds-pill{display:inline-block;height:22px;line-height:22px;padding:0 9px;border-radius:999px;background:#f1eaf8;color:#3b0a6b;font-size:11px;font-weight:700} .ds-card-title{font-size:20px;font-weight:600;margin-top:6px} .ds-card-sub{font-size:13px;color:#6e6878} .ds-card-when{font-size:13px;font-weight:700;color:#3b0a6b;margin-top:4px}"
+    },
+    {
+      "name": "Departures Board",
+      "kind": "custom",
+      "refersTo": "departures-board",
+      "description": "Home: what starts today or tomorrow nearby, soonest first, times in gold.",
+      "html": "<div class=\"ds-board\"><div class=\"ds-board-h\">STARTING SOON NEAR YOU</div><div class=\"ds-board-row\"><b>18:00</b><span>Ruq'ah calligraphy<small>Ahmed Ezz · Downtown · 2 seats left</small></span></div><div class=\"ds-board-row\"><b>19:00</b><span>1:1 Oud<small>Dina Samir · Heliopolis</small></span></div></div>",
+      "css": ".ds-board{font-family:-apple-system,system-ui,sans-serif;width:340px;border-radius:20px;background:#24083f;color:#fff;overflow:hidden} .ds-board-h{padding:10px 14px 5px;font-size:13px;font-weight:700;letter-spacing:1.5px;color:#c9a96e} .ds-board-row{display:flex;gap:14px;align-items:center;padding:10px 14px;border-top:1px solid rgba(255,255,255,.08)} .ds-board-row b{width:58px;font-size:20px;color:#c9a96e;font-variant-numeric:tabular-nums} .ds-board-row span{font-size:15px;font-weight:700;display:flex;flex-direction:column} .ds-board-row small{font-size:13px;font-weight:400;color:#d9c9ec}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The evening class board",
+    "overview": "Coach For All is the owner's purple-and-gold prototype taken all the way through the app. Deep aubergine is the shell and the one colour you can press. Gold marks quality and time: ratings, the confirmation tick, and the start times on Home's departures board. The ground is plain white, so photos and the aubergine carry the colour, not tinted backgrounds.",
+    "keyCharacteristics": [
+      "An aubergine Home band and a night-aubergine departures board at full strength, never a pale tint.",
+      "One action colour: aubergine fills mean \"press me\"; selection uses the same aubergine.",
+      "Gold is for quality and time, never for buttons.",
+      "Playfair Display for brand moments (wordmark, greetings, confirmations); the system font for everything you read and tap.",
+      "Class name first and large, instructor small under it; price only on Review & pay."
+    ],
+    "rules": [
+      {
+        "name": "The One Action Colour Rule",
+        "body": "Aubergine fill means pressable or chosen. Never use it for decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Gold Is Earned Rule",
+        "body": "Gold marks quality (rating, verified, confirmed) and start times. It is never a button, and never text on white.",
+        "section": "colors"
+      },
+      {
+        "name": "The Full Strength Rule",
+        "body": "The band and the board are solid aubergine. Never a gradient, never a pale wash.",
+        "section": "colors"
+      },
+      {
+        "name": "The Class First Rule",
+        "body": "The class name is the large line; the instructor's name is smaller and sits under it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Time Leads Rule",
+        "body": "On booking cards and the board, the start time is the largest, boldest thing.",
+        "section": "typography"
+      },
+      {
+        "name": "The Glass Is Apple's Rule",
+        "body": "Liquid Glass is for system chrome and for controls over photos (overMedia). Content is never glass.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use aubergine (#3b0a6b) for every primary action and selection, and nothing else.",
+      "Do put the class name first and large, with the instructor smaller under it.",
+      "Do keep prices off cards, Book and the Group page. Price first appears on Review & pay.",
+      "Do mark dates on a month calendar with gold dots.",
+      "Do take every value from @cfa/tokens. Screens hold no raw hex."
+    ],
+    "donts": [
+      "Don't put a small label (kicker) above a heading. Make the heading carry it, or turn it into a button (Book again).",
+      "Don't make buttons and options look alike. Buttons are filled or outlined pills; options are chips.",
+      "Don't use gold for buttons, or as text on white.",
+      "Don't tint the ground grey or lavender. The ground stays white (#ffffff), and colour comes from the band, the board, photos and aubergine.",
+      "Don't put content in glass. Glass is for Apple's chrome and for controls over photos."
+    ]
+  }
+}

@@ -59,6 +59,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 
 ## F2. Owner revision (25 Oct, D54, R11) — before T20
 - [ ] **T23 New look** (`/impeccable`): visual direction with the owner, tokens and components re-themed app-wide, DESIGN.md written. (R11.1)
+  - Done in code (4 Nov): direction chosen (D55, look C D58), tokens and components re-themed, craft-floor pass (Book again kicker → button, board corners 20), `apps/mobile/DESIGN.md` and `.impeccable/design.json` written. **Left: the both-themes look on the iPhone, from the owner's screenshots.**
 - [x] **T24 Sign-up name, one-page levels, Skip all, Profile header and one-page preferences edit.** (R11.2–R11.4; Profile → Interests and levels is `app/preferences.tsx`)
 - [x] **T25 Home and Explore:** "Classes near you", cards without price and with level, Lessons | Groups everywhere, filters in the Filters sheet as in the prototype. (R11.5–R11.8)
   - Sports small groups join Groups through migration `20261025120000_groups_include_all_group_types.sql` (tested in CI); **pushing it to the hosted project waits for the owner**.

@@ -187,6 +187,11 @@ test('Sports shows "Book again" for the last completed session with that coach\'
   await render(<Home />);
   expect(screen.getByText('Padel with Nour')).toBeOnTheScreen();
   expect(screen.getByText(/^Next open: \w{3} \d{2}:\d{2}$/)).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Book again' }));
+  expect(mockRouter.push).toHaveBeenCalledWith({
+    pathname: '/instructor/[id]',
+    params: { id: 'nour', discipline: 'padel' },
+  });
   // The people list shows distance from the learner's area (New Cairo → Fifth Settlement court).
   expect(screen.getByText(/km · New Cairo/)).toBeOnTheScreen();
 });

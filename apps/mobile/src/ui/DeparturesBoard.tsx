@@ -79,7 +79,7 @@ export function DeparturesBoard({ title, rows }: { title: string; rows: Departur
 }
 
 const styles = StyleSheet.create({
-  board: { borderRadius: radius.lg, overflow: 'hidden' },
+  board: { borderRadius: radius.md, overflow: 'hidden' },
   title: { paddingHorizontal: d.padH, paddingTop: d.padV, paddingBottom: d.padV / 2 },
   row: {
     flexDirection: 'row',
