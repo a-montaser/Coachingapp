@@ -53,9 +53,15 @@ appId: com.coachforall.app
     direction: DOWN
     timeout: 30000
 - tapOn: 'Wheel-throwing taster.*'
+- extendedWaitUntil:
+    visible: 'How many seats\?'
+    timeout: 30000
+- takeScreenshot: e2e-output/group-page
 - scrollUntilVisible:
     element: '2 seats'
     direction: DOWN
+    visibilityPercentage: 50
+    centerElement: true
 - tapOn: '2 seats'
 - tapOn: 'Reserve'
 - assertVisible: 'Review & pay'
