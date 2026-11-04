@@ -20,6 +20,9 @@ appId: com.coachforall.app
 - assertVisible: 'Who are the sessions for?'
 - tapOn: 'Me, .*'
 - tapOn: 'Heliopolis'
+- scrollUntilVisible:
+    element: 'Show my picks'
+    direction: DOWN
 - tapOn: 'Show my picks'
 
 # 2. Sign up and verify, landing on Home with the answers saved (D34, R11.2)
