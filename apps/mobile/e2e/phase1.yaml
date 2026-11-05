@@ -78,6 +78,15 @@ appId: com.coachforall.app
 - extendedWaitUntil:
     visible: "You're in."
     timeout: 60000
+    optional: true
+# If payment didn't go through, the error is at the foot of Review & pay: photograph it, then fail.
+- runFlow:
+    when:
+      notVisible: "You're in."
+    commands:
+      - scroll
+      - takeScreenshot: e2e-output/review-error
+      - assertVisible: "You're in."
 - tapOn: 'Back to Home'
 
 # 5 + 6. Book Dina's soonest 1:1 oud time and pay
