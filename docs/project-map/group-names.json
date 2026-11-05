@@ -108,5 +108,8 @@
   "Navigationbar · Usea11Y": "Accessibility Flags & Nav Bar",
   "Gallerycopy · Gallery Sheet": "Gallery Sheet & Copy",
   "Requirements · Design Handoff": "Category Tray & Explore Specs",
-  "Sign Out · Queryclient": "Sign Out & Query Client"
+  "Sign Out · Queryclient": "Sign Out & Query Client",
+  "Iconbutton · Navigationbar": "Icon Buttons & Navigation Bar",
+  "Testimages · Gallery": "Test Images & Gallery",
+  "Index · Package": "App Entry & Package"
 }

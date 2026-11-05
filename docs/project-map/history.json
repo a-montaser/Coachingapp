@@ -1,5 +1,114 @@
 [
  {
+  "at": "2026-11-05T13:02:30.110Z",
+  "commit": "ec38427",
+  "note": "End-to-end tests green in CI (T20 done): the whole Phase 1 journey on Android. Three bugs they found are fixed. Egyptian Arabic drafts for every app string, waiting for the owner (T21)",
+  "nodes": 1378,
+  "links": 4330,
+  "communities": 67,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockinvalidate",
+    "l": "mockInvalidate",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "_github_workflows_ci_e2e_fixture_step",
+    "l": "Local Supabase with fake provider and fixture",
+    "c": 13,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "_github_workflows_ci_emulator_swangle_4gb",
+    "l": "Emulator: API 34, swangle_indirect GPU, 4 GB",
+    "c": 13,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "_github_workflows_ci_failure_diagnostics_step",
+    "l": "Edge Function log and bookings on failure",
+    "c": 13,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "_github_workflows_ci_free_disk_space_step",
+    "l": "Free disk space step",
+    "c": 13,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "_github_workflows_ci_pinned_supabase_cli",
+    "l": "Supabase CLI pinned to 2.121.0",
+    "c": 13,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "docs_decisions_e2e_fixture_sql",
+    "l": "apps/mobile/e2e/fixture.sql (pins two class times)",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_android_tab_bar_restore",
+    "l": "Android tab bar returns on landing on a tab",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_venue_panel_fallback",
+    "l": "Venue panel instead of map on Android without Maps key",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d61",
+    "l": "D61: Three app fixes found by e2e",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d62",
+    "l": "D62: T20 done: e2e journey green in CI",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_egyptian_arabic_drafts",
+    "l": "Egyptian Arabic drafts (5 Nov, await owner)",
+    "c": 2,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_explore_strings",
+    "l": "Explore strings (7)",
+    "c": 2,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_decisions_post_payment_refresh",
+    "l": "Refresh bookings, seats and board after settled payment",
+    "c": 26,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_cancel_confirm_test_id",
+    "l": "cancel-confirm test ID",
+    "c": 37,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 19,
+  "files": [
+   ".github/workflows/ci.yml",
+   "apps/mobile/e2e/phase1.yaml",
+   "apps/mobile/src/data/checkout.test.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-11-05T09:17:05.954Z",
   "commit": "ff527f0",
   "note": "End-to-end Maestro journey in CI (T20, in progress), DESIGN.md for the purple-and-gold look (T23), Book picks a lone time for you, group labels cleaned up, Supabase project restored and demo times refreshed (D59, D60)",
