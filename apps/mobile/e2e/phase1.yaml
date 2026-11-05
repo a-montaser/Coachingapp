@@ -134,7 +134,8 @@ appId: com.coachforall.app
     centerElement: true
 - tapOn: 'Cancel booking'
 - assertVisible: "You'll get 1,300 EGP back.*"
-- tapOn: 'Cancel and refund 1,300 EGP'
+- tapOn:
+    id: 'cancel-confirm'
 - assertVisible: 'Booking cancelled · 1,300 EGP on its way back'
 
 # 9. Cancel without refund: the oud lesson starts within 24 h
@@ -146,6 +147,5 @@ appId: com.coachforall.app
 - tapOn: 'Cancel booking'
 - assertVisible: "(Less than 24 hours to go|Same-day bookings are final).*"
 - tapOn:
-    text: 'Cancel booking'
-    below: 'Keep booking'
+    id: 'cancel-confirm'
 - assertVisible: 'Booking cancelled'

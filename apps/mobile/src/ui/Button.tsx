@@ -21,6 +21,8 @@ type Props = {
   accessibilityHint?: string;
   /** Glass over a photo or a dark hero (Welcome's Sign in): clear glass and a light label, so it stays legible. */
   overMedia?: boolean;
+  /** For end-to-end tests where two buttons share a label (e.g. Cancel booking on a page and its sheet). */
+  testID?: string;
 };
 
 const b = component.button;
@@ -35,6 +37,7 @@ export function Button({
   busy = false,
   accessibilityHint,
   overMedia = false,
+  testID,
 }: Props) {
   const { c, shadow } = useTheme();
   const small = size === 'small';
@@ -86,6 +89,7 @@ export function Button({
 
   const button = (
     <Pressable
+      testID={testID}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityHint={disabled && reason ? reason : accessibilityHint}

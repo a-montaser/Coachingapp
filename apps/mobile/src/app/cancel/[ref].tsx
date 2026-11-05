@@ -80,6 +80,7 @@ export default function CancelSheet() {
         variant="destructive"
         busy={busy}
         onPress={cancel}
+        testID="cancel-confirm"
       />
     </ScrollView>
   );
