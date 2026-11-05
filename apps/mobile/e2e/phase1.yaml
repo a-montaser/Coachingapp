@@ -118,7 +118,10 @@ appId: com.coachforall.app
     centerElement: true
 - tapOn: 'Back to Home'
 
-# 7. Both in Bookings
+# 7. Both in Bookings (scrolling up brings the tab bar back from its minimised pill)
+- scrollUntilVisible:
+    element: 'Bookings'
+    direction: UP
 - tapOn: 'Bookings'
 - assertVisible: 'Wheel-throwing taster.*'
 - assertVisible: 'Oud with Dina.*'
