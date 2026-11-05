@@ -1,4 +1,5 @@
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
+import { useEffect } from 'react';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
@@ -25,6 +26,10 @@ export default function TabsLayout() {
   const { t } = useTranslation();
   const minimised = useTabBarMinimised();
   useReminderSync();
+  // Back on a tab (a tab switch, or coming back from a pushed screen): show the bar again. It only reacts
+  // to scrolling, so a page that returns already at the top would otherwise keep the minimised pill.
+  const pathname = usePathname();
+  useEffect(() => restoreTabBar(), [pathname]);
 
   if (Platform.OS === 'ios') {
     return (
