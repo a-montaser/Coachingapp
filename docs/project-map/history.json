@@ -1,5 +1,121 @@
 [
  {
+  "at": "2026-11-05T16:07:51.943Z",
+  "commit": "c40d8d2",
+  "note": "Owner's answers: Arabic moved to the last phase; four look fixes from the iPhone screenshots (T23 done); sports small groups now live under Groups; refunds now come back as app credit the learner can choose to spend (D63, D64)",
+  "nodes": 1394,
+  "links": 4400,
+  "communities": 67,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_checkout_usecredit",
+    "l": "useCredit()",
+    "c": 56,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_credit_on_profile",
+    "l": "10. Refund shows as app credit on Profile",
+    "c": 24,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "docs_decisions_app_credit_migration",
+    "l": "Migration 20261105120000_app_credit.sql",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_grant_credit",
+    "l": "grant_credit() ops function",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_sql_test_04_app_credit",
+    "l": "SQL tests 04_app_credit",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_profile_credit_row",
+    "l": "Profile app credit row",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_use_credit_switch",
+    "l": "Review & pay \"Use my app credit\" switch",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_design_credit_spends_table",
+    "l": "credit_spends table",
+    "c": 24,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_design_credits_table",
+    "l": "credits table",
+    "c": 24,
+    "f": "specs/phase-1/design.md"
+   },
+   {
+    "id": "specs_phase_1_requirements_r8_4",
+    "l": "R8.4 Cancel and refund (app credit)",
+    "c": 24,
+    "f": "specs/phase-1/requirements.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_app_credit_strings",
+    "l": "App credit strings (review, cancel, profile)",
+    "c": 24,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_decisions_d64",
+    "l": "D64: Refunds are app credit",
+    "c": 24,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_cancel_sheet_credit_wording",
+    "l": "Cancel sheet credit wording (\"Cancel and get N EGP credit\")",
+    "c": 51,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_groups_migrations_hosted",
+    "l": "Groups and level-label migrations pushed to hosted project",
+    "c": 6,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_t23_ui_fixes",
+    "l": "T23 four UI fixes (nav fade, fact tiles, dark thumb, Home capital)",
+    "c": 6,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d63",
+    "l": "D63: Owner answers: Arabic last phase, T23 closed, Groups migrations live",
+    "c": 6,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 70,
+  "files": [
+   "apps/mobile/e2e/phase1.yaml",
+   "apps/mobile/src/data/checkout.ts",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md",
+   "specs/phase-1/design.md",
+   "specs/phase-1/requirements.md"
+  ]
+ },
+ {
   "at": "2026-11-05T13:02:30.110Z",
   "commit": "ec38427",
   "note": "End-to-end tests green in CI (T20 done): the whole Phase 1 journey on Android. Three bugs they found are fixed. Egyptian Arabic drafts for every app string, waiting for the owner (T21)",
