@@ -64,6 +64,10 @@ jobs:
     env:
       SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN: local-only
     steps:
+      - name: Free disk space (SDK, build, Docker and the emulator don't fit otherwise)
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          df -h /
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
