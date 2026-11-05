@@ -49,11 +49,15 @@ appId: com.coachforall.app
 - assertVisible: 'Category: Hobbies. Change category'
 
 # 4 + 6. Book two workshop seats and pay by card (fake provider)
-# Found through search, so it doesn't depend on where the date puts it in Home's rail.
-- tapOn: 'Pottery, oud, photography.*'
-- inputText: 'Wheel'
-- hideKeyboard
+# Through Explore's Groups list (vertical, soonest first), so it doesn't depend on where the date
+# puts it in Home's rail. No keyboard: the CI emulator's software GPU crashed opening it here.
+- tapOn: 'Explore'
 - tapOn: 'Groups'
+- scrollUntilVisible:
+    element: 'Wheel-throwing taster.*'
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
 - tapOn: 'Wheel-throwing taster.*'
 - extendedWaitUntil:
     visible: 'Pick a date'
