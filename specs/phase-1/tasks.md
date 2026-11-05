@@ -58,11 +58,11 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: reminder-time tests; manual notification on the iPhone.
 
 ## F2. Owner revision (25 Oct, D54, R11) — before T20
-- [ ] **T23 New look** (`/impeccable`): visual direction with the owner, tokens and components re-themed app-wide, DESIGN.md written. (R11.1)
-  - Done in code (4 Nov): direction chosen (D55, look C D58), tokens and components re-themed, craft-floor pass (Book again kicker → button, board corners 20), `apps/mobile/DESIGN.md` and `.impeccable/design.json` written. **Left: the both-themes look on the iPhone, from the owner's screenshots.**
+- [x] **T23 New look** (`/impeccable`): visual direction with the owner, tokens and components re-themed app-wide, DESIGN.md written. (R11.1)
+  - Done in code (4 Nov): direction chosen (D55, look C D58), tokens and components re-themed, craft-floor pass (Book again kicker → button, board corners 20), `apps/mobile/DESIGN.md` and `.impeccable/design.json` written. 5 Nov: both themes checked from the owner's iPhone screenshots; four fixes (D63).
 - [x] **T24 Sign-up name, one-page levels, Skip all, Profile header and one-page preferences edit.** (R11.2–R11.4; Profile → Interests and levels is `app/preferences.tsx`)
 - [x] **T25 Home and Explore:** "Classes near you", cards without price and with level, Lessons | Groups everywhere, filters in the Filters sheet as in the prototype. (R11.5–R11.8)
-  - Sports small groups join Groups through migration `20261025120000_groups_include_all_group_types.sql` (tested in CI); **pushing it to the hosted project waits for the owner**.
+  - Sports small groups join Groups through migration `20261025120000_groups_include_all_group_types.sql` (tested in CI); pushed to the hosted project 5 Nov (D63).
 - [x] **T26 MonthCalendar; Book "Adults | Kids"; Group page (calendar, seats, one button); price only on Review.** (R11.7, R11.9–R11.11, R11.13)
 - [x] **T27 Bookings:** time first, filter by type and time, month calendar view. (R11.12)
   - Verify (each): RNTL for the changed journey; `npm run check`; both themes looked at on the iPhone.
@@ -70,7 +70,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 ## G. End to end and close
 - [x] **T20 Maestro in CI** (Android debug build, local Supabase, fake provider), with the flows in R10.1.
   - Verify: CI green. Done 5 Nov: run 42029422740, all four jobs green (D62).
-- [ ] **T21 Arabic pass.** Every new string goes into `docs/translations/ar-app-strings.md` for you.
+- [ ] ~~**T21 Arabic pass.**~~ **Moved to the last phase by the owner (5 Nov, D63).** Every new string goes into `docs/translations/ar-app-strings.md` for you.
   - **Deferred by the owner (25 Oct):** do it after T20; remind the owner before T22. The table has 426 rows waiting for Egyptian Arabic.
   - 5 Nov: table synced with the app (471 rows) and every row drafted in Egyptian Arabic by Claude, placeholders checked. **Waiting for the owner to read and correct;** then the approved rows go into `ar.json`.
   - Verify: no hard-coded English in screens (lint/grep).

@@ -22,7 +22,7 @@ const seg = component.segmented;
  * springs onto the segment it is let go on.
  */
 export function SegmentedControl({ segments, selectedIndex, onChange, accessibilityLabel }: Props) {
-  const { c, shadow } = useTheme();
+  const { c, shadow, scheme } = useTheme();
   const { reduceTransparency } = useA11y();
   const liquid = glassMode(Platform.OS, liquidAvailable(), reduceTransparency) === 'liquid';
   const lens = useGlassLens({
@@ -46,7 +46,8 @@ export function SegmentedControl({ segments, selectedIndex, onChange, accessibil
             top={seg.padding}
             bottom={seg.padding}
             liquid={liquid}
-            fill={c.surface}
+            // Dark: surface sits too close to the track; iOS lifts the thumb with a lighter fill.
+            fill={scheme === 'dark' ? c.glassSelected : c.surface}
             shadow={shadow.thumb}
           />
           {segments.map((label, i) => {

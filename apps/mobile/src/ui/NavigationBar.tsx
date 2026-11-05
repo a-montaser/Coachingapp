@@ -94,17 +94,23 @@ export function NavigationBar({
     <>
       {/* Scroll-edge fade (§4.4). shortcut: gradient only, no 8 pt blur yet; add if it reads too hard on device. */}
       {/* Over a hero the fade waits until the hero has scrolled away, so it doesn't wash the photo. */}
+      {/* The gradient sits on a plain View: on device it didn't draw on the Animated.View (T23 screenshots). */}
+      {/* Solid behind the status bar, then fading out, so scrolled content never shows under the clock. */}
       <Animated.View
         pointerEvents="none"
-        style={[
-          styles.fade,
-          {
-            height: insets.top + n.fadeHeight,
-            experimental_backgroundImage: `linear-gradient(${c.bg}, transparent)`,
-          },
-          titleAfterHero && fadeStyle,
-        ]}
-      />
+        style={[styles.fade, { height: insets.top + n.fadeHeight }, titleAfterHero && fadeStyle]}
+      >
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              experimental_backgroundImage: `linear-gradient(${c.bg} ${Math.round(
+                (100 * insets.top) / (insets.top + n.fadeHeight),
+              )}%, transparent)`,
+            },
+          ]}
+        />
+      </Animated.View>
       {capsule ? (
         <View pointerEvents="box-none" style={[styles.stack, { top: insets.top + n.top }]}>
           <Glass radius={radius.pill}>

@@ -42,7 +42,7 @@ const BAR_CLEARANCE =
  * `?slot=` preselects that date (from Home, Explore or the instructor's list).
  */
 export default function Workshop() {
-  const { c } = useTheme();
+  const { c, shadow } = useTheme();
   const { t } = useTranslation();
   const lang = useLang();
   const insets = useSafeAreaInsets();
@@ -236,7 +236,7 @@ export default function Workshop() {
 
           <View style={styles.facts}>
             {facts.map((f) => (
-              <View key={f.key} style={[styles.fact, { backgroundColor: c.surface2 }]}>
+              <View key={f.key} style={[styles.fact, { backgroundColor: c.surface, boxShadow: shadow.card }]}>
                 <IconTile icon={f.icon} />
                 <T variant="headline">{f.title}</T>
                 <T variant="footnote" color={c.label2}>

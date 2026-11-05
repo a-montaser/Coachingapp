@@ -177,11 +177,10 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `home.emptySub.sports` | Home | Find a coach near you | لاقي مدرّب قريب منك |
 | `home.emptySub.education` | Home | Find a tutor for your next exam | لاقي مدرّس لامتحانك الجاي |
 | `home.emptySub.languages` | Home | Try a conversation group first | ابدأ بجروب محادثة |
-| `home.kickerWorkshop` | Home | Next group · {{when}} | الجروب الجاي · {{when}} |
-| `home.today` | Home | today | النهارده |
-| `home.tomorrow` | Home | tomorrow | بكره |
-| `home.inDays_one` | Home | in {{n}} day | بعد يوم |
-| `home.inDays_other` | Home | in {{n}} days | بعد {{n}} أيام |
+| `home.today` | Home | Today | النهارده |
+| `home.tomorrow` | Home | Tomorrow | بكره |
+| `home.inDays_one` | Home | In {{n}} day | بعد يوم |
+| `home.inDays_other` | Home | In {{n}} days | بعد {{n}} أيام |
 | `home.seeAll` | Home | See all | شوف الكل |
 | `home.bookAgain` | Home | Book again | احجز تاني |
 | `home.bookAgainTitle` | Home | {{discipline}} with {{name}} | {{discipline}} مع {{name}} |
