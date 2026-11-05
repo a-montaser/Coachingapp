@@ -56,7 +56,7 @@ appId: com.coachforall.app
     timeout: 30000
 - tapOn: 'Wheel-throwing taster.*'
 - extendedWaitUntil:
-    visible: 'How many seats\?'
+    visible: 'Pick a date'
     timeout: 30000
 - takeScreenshot: e2e-output/group-page
 - scrollUntilVisible:
