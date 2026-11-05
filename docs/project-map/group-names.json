@@ -96,5 +96,17 @@
   "Format · I18N Test": "Formatting & i18n Tests",
   "Language · Appearance": "Language & Appearance Sheets",
   "Account · Gallerycopy": "Account Data & Gallery Copy",
-  "Usea11Y · Settings": "Accessibility & Settings"
+  "Usea11Y · Settings": "Accessibility & Settings",
+  "T · Daypicker": "Date Tiles, Banners & Day Picker",
+  "Product · Agents": "Product Record & Agent Guides",
+  "Tasks · Design": "Phase 0 Arabic, CI & Theme Plumbing",
+  "Verify · Otpboxes": "Code Entry Screen",
+  "Ci · Claude": "CI Jobs & Checks",
+  "Decisions · Ar App Strings": "Review, Pay & Confirmed",
+  "Requirements · Report": "Phase 0 Report & Requirements",
+  "Decisions · Ar App Strings 2": "Book & Group Page Journey",
+  "Navigationbar · Usea11Y": "Accessibility Flags & Nav Bar",
+  "Gallerycopy · Gallery Sheet": "Gallery Sheet & Copy",
+  "Requirements · Design Handoff": "Category Tray & Explore Specs",
+  "Sign Out · Queryclient": "Sign Out & Query Client"
 }

@@ -1,5 +1,260 @@
 [
  {
+  "at": "2026-11-05T09:17:05.954Z",
+  "commit": "ff527f0",
+  "note": "End-to-end Maestro journey in CI (T20, in progress), DESIGN.md for the purple-and-gold look (T23), Book picks a lone time for you, group labels cleaned up, Supabase project restored and demo times refreshed (D59, D60)",
+  "nodes": 1363,
+  "links": 4311,
+  "communities": 69,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_onboarding_test_mockrefetch",
+    "l": "mockRefetch",
+    "c": 18,
+    "f": "apps/mobile/src/data/onboarding.test.tsx"
+   },
+   {
+    "id": "apps_mobile_e2e_ci",
+    "l": "ci.sh",
+    "c": 67,
+    "f": "apps/mobile/e2e/ci.sh"
+   },
+   {
+    "id": "apps_mobile_e2e_ci_sh__entry",
+    "l": "ci.sh script",
+    "c": 67,
+    "f": "apps/mobile/e2e/ci.sh"
+   },
+   {
+    "id": "apps_mobile_design_aubergine_colour",
+    "l": "Aubergine (#3b0a6b) action colour",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_buttons",
+    "l": "Buttons (primary, secondary, plain)",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_cards",
+    "l": "Cards",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_chips",
+    "l": "Chips",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_class_first_rule",
+    "l": "The Class First Rule",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_departures_board",
+    "l": "Departures board (signature)",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_evening_class_board",
+    "l": "Creative North Star: The evening class board",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_evening_gold_colour",
+    "l": "Evening Gold (#c9a96e)",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_full_strength_rule",
+    "l": "The Full Strength Rule",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_gold_is_earned_rule",
+    "l": "The Gold Is Earned Rule",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_home_band",
+    "l": "Home band",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_inputs",
+    "l": "Inputs",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_one_action_colour_rule",
+    "l": "The One Action Colour Rule",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_playfair_display",
+    "l": "Playfair Display display font",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_time_leads_rule",
+    "l": "The Time Leads Rule",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design",
+    "l": "Design System: Coach For All (DESIGN.md)",
+    "c": 10,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_onboarding",
+    "l": "1. Onboarding: Categories, Interests, Levels, Who & where",
+    "c": 20,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_design_glass_is_apple_rule",
+    "l": "The Glass Is Apple's Rule",
+    "c": 24,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_design_navigation",
+    "l": "Navigation (native tabs, glass)",
+    "c": 24,
+    "f": "apps/mobile/DESIGN.md"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_book_one_to_one",
+    "l": "5. Book soonest 1:1 oud time",
+    "c": 4,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_both_in_bookings",
+    "l": "7. Both in Bookings",
+    "c": 4,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_sign_up",
+    "l": "2. Sign up and verify, land on Home",
+    "c": 4,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "_github_workflows_ci_e2e_job",
+    "l": "e2e job (Maestro on Android emulator)",
+    "c": 43,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1",
+    "l": "Phase 1 Maestro journey (R10.1)",
+    "c": 43,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_cancel_with_refund",
+    "l": "8. Cancel with refund",
+    "c": 43,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_cancel_without_refund",
+    "l": "9. Cancel without refund (within 24 h)",
+    "c": 43,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_category_tray",
+    "l": "3. Category tray",
+    "c": 43,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_pay_fake_provider",
+    "l": "6. Pay by card with fake provider",
+    "c": 44,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase1_book_group_seats",
+    "l": "4. Book two workshop seats",
+    "c": 48,
+    "f": "apps/mobile/e2e/phase1.yaml"
+   },
+   {
+    "id": "docs_decisions_group_level_labels_migration",
+    "l": "group_level_labels data migration",
+    "c": 48,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_refresh_demo_slots_script",
+    "l": "refresh_demo_slots.sql demo times script",
+    "c": 48,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d59",
+    "l": "D59: Fewest taps; level labels without Workshop",
+    "c": 48,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d60",
+    "l": "D60: Hosted project restored; demo times refresh script",
+    "c": 48,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "docs_decisions_cancel_booking",
+    "l": "cancel_booking() / cancelOutcome",
+    "c": 16,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_bottomactionbar",
+    "l": "BottomActionBar",
+    "c": 23,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_segmented_control",
+    "l": "Segmented control",
+    "c": 3,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "linkDelta": 21,
+  "files": [
+   ".github/workflows/ci.yml",
+   "apps/mobile/DESIGN.md",
+   "apps/mobile/e2e/ci.sh",
+   "apps/mobile/e2e/phase1.yaml",
+   "apps/mobile/src/data/onboarding.test.tsx",
+   "docs/DECISIONS.md"
+  ]
+ },
+ {
   "at": "2026-11-03T17:02:16.715Z",
   "commit": "37be7ff",
   "note": "Home gets the owner's chosen look C: a dark purple \"Starting soon near you\" board with gold start times for classes today and tomorrow nearby (D58)",
