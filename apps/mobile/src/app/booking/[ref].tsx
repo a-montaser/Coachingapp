@@ -2,7 +2,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, Linking, Share, StyleSheet, View } from 'react-native';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
+import { Image, Linking, Platform, Share, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,6 +26,7 @@ import { useTheme } from '@/theme/useTheme';
 import { Avatar } from '@/ui/Avatar';
 import { Banner } from '@/ui/Banner';
 import { Button } from '@/ui/Button';
+import { Icon } from '@/ui/Icon';
 import { EmptyState } from '@/ui/EmptyState';
 import { GroupedList } from '@/ui/GroupedList';
 import { NavigationBar } from '@/ui/NavigationBar';
@@ -126,6 +128,15 @@ export default function BookingDetail() {
               resizeMode="cover"
               accessibilityLabel={t('booking.mapLabel', { venue: b.venue_name })}
             />
+          ) : !LIVE_MAP ? (
+            // shortcut: no map on Android builds until the Google Maps key is set (D52); Directions still works.
+            <View
+              style={[StyleSheet.absoluteFill, styles.noMap, { backgroundColor: c.brandTint }]}
+              accessible
+              accessibilityLabel={t('booking.mapLabel', { venue: b.venue_name })}
+            >
+              <Icon name="pin" size={component.iconButton.size} color={c.brandText} />
+            </View>
           ) : (
             // shortcut: live Apple map until the Google key is set (D52); Expo Go on iPhone has no Google map view.
             <MapView
@@ -267,9 +278,14 @@ export default function BookingDetail() {
   );
 }
 
+// A live map needs Apple Maps (iOS) or Google's key on Android. Expo Go for Android carries its own key;
+// our own Android builds have none until the owner adds one (D52), and the map view crashes without it.
+const LIVE_MAP = Platform.OS === 'ios' || Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
+
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   center: { justifyContent: 'center', padding: layout.sideMargin },
+  noMap: { alignItems: 'center', justifyContent: 'center' },
   directions: { position: 'absolute', end: layout.sideMargin, bottom: component.hero.overlap + space.space3 },
   sheet: {
     marginTop: -component.hero.overlap,
