@@ -71,7 +71,7 @@ appId: com.coachforall.app
 - tapOn: '2 seats'
 - tapOn: 'Reserve'
 - assertVisible: 'Review & pay'
-- tapOn: 'Pay .*'
+- tapOn: 'Pay [0-9,]+ EGP'
 - tapOn:
     text: 'Allow'
     optional: true
@@ -101,7 +101,7 @@ appId: com.coachforall.app
     index: 0
 - tapOn: 'Continue'
 - assertVisible: 'Review & pay'
-- tapOn: 'Pay .*'
+- tapOn: 'Pay [0-9,]+ EGP'
 - tapOn:
     text: 'Allow'
     optional: true
