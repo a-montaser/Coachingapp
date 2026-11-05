@@ -120,7 +120,7 @@ jobs:
       - name: Edge Function log and bookings (on failure)
         if: failure()
         run: |
-          docker logs supabase_edge_runtime_Coachingapp 2>&1 | tail -80 || docker ps --format '{{.Names}}'
+          docker logs "$(docker ps -qf name=edge_runtime)" 2>&1 | tail -80
           eval "$(supabase status -o env)"
           psql "$DB_URL" -c "select ref, status, method, total_egp, created_at from public.bookings order by created_at desc limit 5"
       - name: Keep the Maestro output and Metro log
