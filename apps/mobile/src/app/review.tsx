@@ -103,6 +103,10 @@ export default function Review() {
 
   const goConfirmed = (ref: string) => {
     useBookDraft.getState().set({ pendingRef: null, failed: false });
+    // Now confirmed (paid, or nothing to pay): refresh what was fetched while it was still on hold, so
+    // Home's next session, Bookings, seat counts and the board are right.
+    for (const key of ['myBookings', 'book', 'groupSessions', 'instructorCards', 'workshop'])
+      qc.invalidateQueries({ queryKey: [key] });
     // Done with booking: back to the tabs, then the confirmation on top.
     router.dismissAll();
     router.push({ pathname: '/confirmed/[ref]', params: { ref } });

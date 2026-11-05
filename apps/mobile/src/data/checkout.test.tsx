@@ -70,9 +70,10 @@ const review = (type: string, extra = {}) => ({
 });
 let mockReview: object | undefined = review('private');
 let mockBooking: object | undefined;
+const mockInvalidate = jest.fn();
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
-  useQueryClient: () => ({ invalidateQueries: jest.fn() }),
+  useQueryClient: () => ({ invalidateQueries: mockInvalidate }),
   useQuery: ({ queryKey }: { queryKey: string[] }) =>
     queryKey[0] === 'review'
       ? { data: mockReview, isLoading: false }
@@ -136,6 +137,23 @@ test('Review: Phase 1 methods, the policy line, and pay at the venue confirms st
     expect.objectContaining({ slotId: 's1', seats: 1, method: 'venue', promo: null }),
   );
   expect(mockCheckout).not.toHaveBeenCalled();
+});
+
+test('Review: a card payment that settles at once confirms and refreshes bookings fetched during the hold', async () => {
+  mockPlace.mockResolvedValue({ ref: 'CFA-22222', status: 'awaiting_payment' });
+  mockCheckout.mockResolvedValue('done');
+  await render(<Review />);
+  await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
+  await waitFor(() =>
+    expect(mockRouter.push).toHaveBeenCalledWith({
+      pathname: '/confirmed/[ref]',
+      params: { ref: 'CFA-22222' },
+    }),
+  );
+  // Home's next session read the booking while it was on hold; it must refetch now it's confirmed.
+  expect(mockInvalidate).toHaveBeenLastCalledWith({ queryKey: ['workshop'] });
+  expect(mockInvalidate).toHaveBeenCalledWith({ queryKey: ['myBookings'] });
+  expect(mockInvalidate.mock.calls.filter(([k]) => k.queryKey[0] === 'myBookings').length).toBeGreaterThan(1);
 });
 
 test('Review: a valid promo lowers the total; an invalid one explains itself', async () => {
