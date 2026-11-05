@@ -93,6 +93,7 @@ jobs:
         run: |
           npx expo prebuild --platform android --no-install
           cd android && ./gradlew assembleDebug -PreactNativeArchitectures=x86_64 --no-daemon
+          ./gradlew --stop; pkill -f KotlinCompileDaemon || true # free the build's memory for the emulator
       - name: Metro, with the bundle built ahead of the app asking for it
         working-directory: apps/mobile
         run: |
@@ -113,7 +114,8 @@ jobs:
           arch: x86_64
           disable-animations: true
           ram-size: 4096M # the default 2 GB emulator was killed mid-run once
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          # swangle: the newer software GPU; swiftshader_indirect crashed ("Failed to find ColorBuffer") on Explore.
+          emulator-options: -no-window -gpu swangle_indirect -noaudio -no-boot-anim -camera-back none
           script: sh apps/mobile/e2e/ci.sh
       - name: Keep the Maestro output and Metro log
         if: failure()
