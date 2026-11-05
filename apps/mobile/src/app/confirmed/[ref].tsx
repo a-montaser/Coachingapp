@@ -50,7 +50,7 @@ export default function Confirmed() {
   const name = firstName(b.instructor_name);
   const when = `${formatWeekday(start, lang)} ${formatDayMonth(start, lang)} · ${formatClock(start, lang)}–${formatClock(new Date(b.ends_at), lang)}`;
   const money = pending
-    ? { title: t('confirmed.payLater', { name }), value: formatPrice(b.total_egp, lang) }
+    ? { title: t('confirmed.payLater', { name }), value: formatPrice(b.total_egp - b.credit_egp, lang) }
     : b.method === 'venue'
       ? { title: t('confirmed.due'), value: formatPrice(b.total_egp, lang) }
       : { title: t('confirmed.paid'), value: formatPrice(b.total_egp, lang) };

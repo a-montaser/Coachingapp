@@ -1,7 +1,7 @@
 -- Booking rules, refunds, reschedule and RLS (requirements R1, R6.3, R8.4, R8.5).
 -- Times are relative to now(); nothing depends on the seed except the areas table.
 begin;
-select plan(30);
+select plan(31);
 
 -- ---------- Fixtures (as the owner) ----------
 insert into auth.users (id, instance_id, aud, role, phone, created_at, updated_at, raw_app_meta_data, raw_user_meta_data) values
@@ -93,7 +93,8 @@ select is((public.cancel_booking((select ref from public.bookings where slot_id 
 select is((public.cancel_booking((select ref from public.bookings where slot_id = 'cccccccc-0000-4000-8000-000000000002'))).refund_egp, 0, 'pay at venue: nothing refunded');
 select is((select seats_taken from public.slots where id = 'cccccccc-0000-4000-8000-000000000003'), 0, 'cancelling frees the seat');
 reset role;
-select is((select count(*)::int from public.refunds where status = 'queued'), 1, 'exactly one refund is queued');
+select is((select array_agg(remaining_egp) from public.credits where source = 'refund'), array[200], 'exactly one refund, as 200 EGP of app credit (D64)');
+select is((select count(*)::int from public.refunds), 0, 'nothing is queued back to the card');
 
 -- ---------- Reschedule (§9.3, D29) ----------
 select pg_temp.as_user('11111111-1111-4111-8111-111111111111');

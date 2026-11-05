@@ -78,6 +78,8 @@ type BookDraft = {
   note: string;
   /** A card booking already holding seats (awaiting payment): retrying pays for it, not a new hold. */
   pendingRef: string | null;
+  /** App credit that held booking already took (D64); only read while `pendingRef` is set. */
+  pendingCredit: number;
   /** The last card payment failed (demo Fail, or the gateway said no). */
   failed: boolean;
   set: (patch: Partial<Omit<BookDraft, 'set'>>) => void;
@@ -89,6 +91,7 @@ export const useBookDraft = create<BookDraft>()((set) => ({
   childId: null,
   note: '',
   pendingRef: null,
+  pendingCredit: 0,
   failed: false,
   set: (patch) => set(patch),
 }));

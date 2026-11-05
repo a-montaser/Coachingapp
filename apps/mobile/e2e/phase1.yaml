@@ -126,17 +126,17 @@ appId: com.coachforall.app
 - assertVisible: 'Wheel-throwing taster.*'
 - assertVisible: 'Oud with Dina.*'
 
-# 8. Cancel with refund: the workshop is three days out, paid by card
+# 8. Cancel with refund: the workshop is three days out, paid by card; it comes back as app credit (D64)
 - tapOn: 'Wheel-throwing taster.*'
 - scrollUntilVisible:
     element: 'Cancel booking'
     direction: DOWN
     centerElement: true
 - tapOn: 'Cancel booking'
-- assertVisible: "You'll get 1,300 EGP back.*"
+- assertVisible: "You'll get 1,300 EGP back as app credit.*"
 - tapOn:
     id: 'cancel-confirm'
-- assertVisible: 'Booking cancelled · 1,300 EGP on its way back'
+- assertVisible: 'Booking cancelled · 1,300 EGP added to your credit'
 
 # 9. Cancel without refund: the oud lesson starts within 24 h
 - tapOn: 'Oud with Dina.*'
@@ -149,3 +149,11 @@ appId: com.coachforall.app
 - tapOn:
     id: 'cancel-confirm'
 - assertVisible: 'Booking cancelled'
+
+# 10. The refund is on Profile as app credit (D64)
+- tapOn: 'Profile'
+- scrollUntilVisible:
+    element: 'App credit.*'
+    direction: DOWN
+    centerElement: true
+- assertVisible: '.*1,300 EGP.*'

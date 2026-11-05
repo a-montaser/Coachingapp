@@ -30,12 +30,14 @@ const mockPlace = jest.fn();
 const mockCheckout = jest.fn();
 const mockPromo = jest.fn();
 const mockDemoPay = jest.fn();
+let mockCredit = 0;
 jest.mock('./checkout', () => ({
   ...jest.requireActual('./checkout'),
   placeBooking: (...a: unknown[]) => mockPlace(...a),
   runCheckout: (...a: unknown[]) => mockCheckout(...a),
   applyPromo: (...a: unknown[]) => mockPromo(...a),
   demoPay: (...a: unknown[]) => mockDemoPay(...a),
+  useCredit: () => ({ data: mockCredit }),
 }));
 
 const DAY = 86_400_000;
@@ -94,8 +96,10 @@ beforeEach(() => {
     childId: null,
     note: '',
     pendingRef: null,
+    pendingCredit: 0,
     failed: false,
   });
+  mockCredit = 0;
 });
 
 test('price, promo and policy rules mirror the SQL (§9.1, §9.7, §9.8)', () => {
@@ -118,7 +122,7 @@ test('SQL errors map to plain messages', () => {
 });
 
 test('Review: Phase 1 methods, the policy line, and pay at the venue confirms straight away', async () => {
-  mockPlace.mockResolvedValue({ ref: 'CFA-11111', status: 'confirmed' });
+  mockPlace.mockResolvedValue({ ref: 'CFA-11111', status: 'confirmed', credit_egp: 0 });
   await render(<Review />);
   expect(screen.getByRole('radio', { name: /Card/ })).toBeChecked();
   expect(screen.getByRole('radio', { name: /Pay at the venue/ })).toBeOnTheScreen();
@@ -140,7 +144,7 @@ test('Review: Phase 1 methods, the policy line, and pay at the venue confirms st
 });
 
 test('Review: a card payment that settles at once confirms and refreshes bookings fetched during the hold', async () => {
-  mockPlace.mockResolvedValue({ ref: 'CFA-22222', status: 'awaiting_payment' });
+  mockPlace.mockResolvedValue({ ref: 'CFA-22222', status: 'awaiting_payment', credit_egp: 0 });
   mockCheckout.mockResolvedValue('done');
   await render(<Review />);
   await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
@@ -151,9 +155,38 @@ test('Review: a card payment that settles at once confirms and refreshes booking
     }),
   );
   // Home's next session read the booking while it was on hold; it must refetch now it's confirmed.
-  expect(mockInvalidate).toHaveBeenLastCalledWith({ queryKey: ['workshop'] });
+  expect(mockInvalidate).toHaveBeenLastCalledWith({ queryKey: ['credit'] });
   expect(mockInvalidate).toHaveBeenCalledWith({ queryKey: ['myBookings'] });
   expect(mockInvalidate.mock.calls.filter(([k]) => k.queryKey[0] === 'myBookings').length).toBeGreaterThan(1);
+});
+
+test("Review: app credit is the learner's choice, on by default, and the card pays the rest (D64)", async () => {
+  mockCredit = 400;
+  mockPlace.mockResolvedValue({ ref: 'CFA-33333', status: 'awaiting_payment', credit_egp: 400 });
+  mockCheckout.mockResolvedValue('done');
+  await render(<Review />);
+  expect(screen.getByText('400 EGP available')).toBeOnTheScreen();
+  expect(screen.getByText('−400 EGP')).toBeOnTheScreen();
+  await fireEvent(screen.getByLabelText('Use my app credit'), 'valueChange', false);
+  expect(screen.getByRole('button', { name: 'Pay 650 EGP' })).toBeOnTheScreen();
+  await fireEvent(screen.getByLabelText('Use my app credit'), 'valueChange', true);
+  await fireEvent.press(screen.getByRole('button', { name: 'Pay 250 EGP' }));
+  await waitFor(() => expect(mockCheckout).toHaveBeenCalledWith('CFA-33333'));
+  expect(mockPlace).toHaveBeenCalledWith(expect.objectContaining({ useCredit: true }));
+});
+
+test('Review: credit that covers the whole price confirms without the card', async () => {
+  mockCredit = 1000;
+  mockPlace.mockResolvedValue({ ref: 'CFA-44444', status: 'confirmed', credit_egp: 650 });
+  await render(<Review />);
+  await fireEvent.press(screen.getByRole('button', { name: 'Confirm booking' }));
+  await waitFor(() =>
+    expect(mockRouter.push).toHaveBeenCalledWith({
+      pathname: '/confirmed/[ref]',
+      params: { ref: 'CFA-44444' },
+    }),
+  );
+  expect(mockCheckout).not.toHaveBeenCalled();
 });
 
 test('Review: a valid promo lowers the total; an invalid one explains itself', async () => {
@@ -173,7 +206,7 @@ test('Review: a valid promo lowers the total; an invalid one explains itself', a
 });
 
 test('Review: card holds the seat, then opens the demo checkout; a retry pays for the same hold', async () => {
-  mockPlace.mockResolvedValue({ ref: 'CFA-22222', status: 'awaiting_payment' });
+  mockPlace.mockResolvedValue({ ref: 'CFA-22222', status: 'awaiting_payment', credit_egp: 0 });
   mockCheckout.mockResolvedValue('demo');
   await render(<Review />);
   await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
@@ -207,7 +240,7 @@ test('Review: a lost last seat says so; kids sessions send a request instead of 
 
 test('Demo checkout: Pay confirms and opens Confirmed; Fail returns with the seat still held', async () => {
   mockParams = { ref: 'CFA-22222', amount: '650' };
-  mockDemoPay.mockResolvedValue({ status: 'confirmed' });
+  mockDemoPay.mockResolvedValue({ status: 'confirmed', credit_egp: 0 });
   const view = await render(<DemoCheckout />);
   await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
   await waitFor(() =>

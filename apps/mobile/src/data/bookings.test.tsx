@@ -55,6 +55,7 @@ const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
   seats: 1,
   total_egp: 650,
   refund_egp: null,
+  credit_egp: 0,
   refundable_until: at(48),
   same_day: false,
   pay_by: null,
@@ -245,7 +246,7 @@ test('Booking detail: status, policy, payment and ref; payment due pays from her
 
   mockOne = row('CFA-1', { display_status: 'cancelled', refund_egp: 650 });
   await render(<BookingDetail />);
-  expect(screen.getByText('Private 1:1 · Cancelled · refunded 650 EGP')).toBeOnTheScreen();
+  expect(screen.getByText('Private 1:1 · Cancelled · 650 EGP back as credit')).toBeOnTheScreen();
   expect(screen.queryByText(/^Free cancellation/)).toBeNull();
   expect(screen.getByRole('button', { name: 'Book again' })).toBeOnTheScreen();
 });
@@ -257,6 +258,11 @@ test('cancel outcome mirrors cancel_booking(); reschedule closes 24 h before, ca
   expect(cancelOutcome(row('c', { same_day: true }), now)).toEqual({ kind: 'sameDay' });
   expect(cancelOutcome(row('d', { method: 'venue' }), now)).toEqual({ kind: 'nothing' });
   expect(cancelOutcome(row('e', { display_status: 'payment_due' }), now)).toEqual({ kind: 'nothing' });
+  // Not paid yet but holding app credit: the credit goes back (D64).
+  expect(cancelOutcome(row('e2', { display_status: 'pending', credit_egp: 200 }), now)).toEqual({
+    kind: 'creditBack',
+    amount: 200,
+  });
   expect(canReschedule(row('f', { starts_at: at(30) }), now)).toBe(true);
   expect(canReschedule(row('g', { starts_at: at(20) }), now)).toBe(false);
   expect(canCancel(row('h', { starts_at: at(1) }), now)).toBe(true);
@@ -269,12 +275,16 @@ test('Cancel sheet: says the refund, cancels with the reason, back to Bookings w
   mockOne = row('CFA-1');
   mockCancel.mockResolvedValue({ ref: 'CFA-1', refund_egp: 650 });
   await render(<CancelSheet />);
-  expect(screen.getByText("You'll get 650 EGP back on your card [refund timing].")).toBeOnTheScreen();
+  expect(
+    screen.getByText(
+      "You'll get 650 EGP back as app credit for your next booking. Refund credit never expires.",
+    ),
+  ).toBeOnTheScreen();
   await fireEvent.press(screen.getByRole('button', { name: 'Injury' }));
-  await fireEvent.press(screen.getByRole('button', { name: 'Cancel and refund 650 EGP' }));
+  await fireEvent.press(screen.getByRole('button', { name: 'Cancel and get 650 EGP credit' }));
   await waitFor(() => expect(mockRouter.navigate).toHaveBeenCalledWith('/bookings'));
   expect(mockCancel).toHaveBeenCalledWith('CFA-1', 'Injury');
-  expect(useToast.getState().message).toBe('Booking cancelled · 650 EGP on its way back');
+  expect(useToast.getState().message).toBe('Booking cancelled · 650 EGP added to your credit');
 });
 
 test('Cancel sheet: inside 24 h says no refund and offers a plain cancel', async () => {

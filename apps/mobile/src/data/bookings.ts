@@ -17,6 +17,8 @@ export type MyBooking = {
   seats: number;
   total_egp: number;
   refund_egp: number | null;
+  /** App credit spent on this booking (D64); the card or the venue covers the rest. */
+  credit_egp: number;
   refundable_until: string | null;
   same_day: boolean;
   pay_by: string | null;
@@ -41,7 +43,7 @@ export type MyBooking = {
 };
 
 export const MY_BOOKING_COLUMNS =
-  'ref, display_status, method, seats, total_egp, refund_egp, refundable_until, same_day, pay_by, slot_id, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name';
+  'ref, display_status, method, seats, total_egp, credit_egp, refund_egp, refundable_until, same_day, pay_by, slot_id, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name';
 
 /** "Padel with Nour", "Swimming · Ali with Mariam", or a workshop's own title (§7.11). */
 export function bookingTitle(
@@ -148,14 +150,23 @@ export const canReschedule = (b: Pick<MyBooking, 'display_status' | 'starts_at'>
 
 /**
  * The Cancel sheet's outcome (§9.1), as `cancel_booking()` decides it: a paid card booking more than
- * 24 h out is refunded in full; inside 24 h, or booked the same day, it isn't; nothing was charged for
- * pay-at-venue or not-yet-paid bookings.
+ * 24 h out is refunded in full, as app credit (D64); inside 24 h, or booked the same day, it isn't; nothing
+ * was charged for pay-at-venue or not-yet-paid bookings, and any credit they hold goes back.
  */
 export function cancelOutcome(
-  b: Pick<MyBooking, 'method' | 'display_status' | 'same_day' | 'refundable_until' | 'total_egp'>,
+  b: Pick<
+    MyBooking,
+    'method' | 'display_status' | 'same_day' | 'refundable_until' | 'total_egp' | 'credit_egp'
+  >,
   now: Date,
-): { kind: 'refund'; amount: number } | { kind: 'late' } | { kind: 'sameDay' } | { kind: 'nothing' } {
-  if (b.method === 'venue' || b.display_status !== 'confirmed') return { kind: 'nothing' };
+):
+  | { kind: 'refund'; amount: number }
+  | { kind: 'late' }
+  | { kind: 'sameDay' }
+  | { kind: 'nothing' }
+  | { kind: 'creditBack'; amount: number } {
+  if (b.method === 'venue' || b.display_status !== 'confirmed')
+    return b.credit_egp > 0 ? { kind: 'creditBack', amount: b.credit_egp } : { kind: 'nothing' };
   if (b.same_day) return { kind: 'sameDay' };
   if (b.refundable_until && Date.parse(b.refundable_until) > now.getTime())
     return { kind: 'refund', amount: b.total_egp };

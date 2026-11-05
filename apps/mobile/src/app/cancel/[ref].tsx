@@ -35,7 +35,7 @@ export default function CancelSheet() {
   if (!b) return null;
 
   const outcome = cancelOutcome(b, new Date());
-  const amount = outcome.kind === 'refund' ? formatPrice(outcome.amount, lang) : '';
+  const amount = 'amount' in outcome ? formatPrice(outcome.amount, lang) : '';
 
   const cancel = async () => {
     setBusy(true);
@@ -44,6 +44,7 @@ export default function CancelSheet() {
       await cancelBooking(b.ref, reason && t(`cancel.reasons.${reason}`, { lng: 'en' }));
       qc.invalidateQueries({ queryKey: ['myBookings'] });
       qc.invalidateQueries({ queryKey: ['booking', b.ref] });
+      qc.invalidateQueries({ queryKey: ['credit'] });
       showToast(outcome.kind === 'refund' ? t('cancel.toastRefund', { amount }) : t('cancel.toast'));
       router.dismissAll();
       router.navigate('/bookings');
@@ -58,11 +59,7 @@ export default function CancelSheet() {
       <T variant="title1" accessibilityRole="header">
         {t('cancel.title')}
       </T>
-      <T color={c.label2}>
-        {outcome.kind === 'refund'
-          ? t('cancel.outcome.refund', { amount })
-          : t(`cancel.outcome.${outcome.kind}`)}
-      </T>
+      <T color={c.label2}>{t(`cancel.outcome.${outcome.kind}`, { amount })}</T>
       <View style={styles.chips} accessibilityLabel={t('cancel.reasonLabel')}>
         {REASONS.map((r) => (
           <Chip

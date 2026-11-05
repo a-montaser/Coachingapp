@@ -84,6 +84,7 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `profile.family` | Profile | Family & kids | العيلة والأطفال |
 | `profile.language` | Profile | Language | اللغة |
 | `profile.appearance` | Profile | Appearance | الشكل |
+| `profile.credit` | Profile | App credit | رصيد التطبيق |
 | `level.beginner` | Profile levels | Beginner | مبتدئ |
 | `level.intermediate` | Profile levels | Intermediate | متوسط |
 | `level.advanced` | Profile levels | Advanced | متقدم |
@@ -309,6 +310,9 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `review.session` | Review & pay | Session | الحصة |
 | `review.sessionSeats` | Review & pay | Session × {{n}} | الحصة × {{n}} |
 | `review.promoLine` | Review & pay | Promo {{code}} | خصم {{code}} |
+| `review.creditLine` | Review & pay | App credit | رصيد التطبيق |
+| `review.useCredit` | Review & pay | Use my app credit | استخدم رصيدي |
+| `review.creditBalance` | Review & pay | {{amount}} available | متاح {{amount}} |
 | `review.venueFee` | Review & pay | Venue fee | رسوم المكان |
 | `review.included` | Review & pay | Included | متضمّنة |
 | `review.policyFree` | Review & pay | Free cancellation until {{when}}. | الإلغاء مجاني لحد {{when}}. |
@@ -386,7 +390,7 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `booking.paid` | Booking detail | Paid {{amount}} | اتدفع {{amount}} |
 | `booking.atVenue` | Booking detail | Pay at the venue · {{amount}} | هتدفع في المكان · {{amount}} |
 | `booking.due` | Booking detail | Payment due · {{amount}} | مستني الدفع · {{amount}} |
-| `booking.refunded` | Booking detail | Cancelled · refunded {{amount}} | اتلغى · اترجّع {{amount}} |
+| `booking.refunded` | Booking detail | Cancelled · {{amount}} back as credit | اتلغى · {{amount}} رجعوا رصيد |
 | `booking.noRefund` | Booking detail | Cancelled · not refunded | اتلغى · من غير استرجاع |
 | `booking.ref` | Booking detail | Booking ref {{ref}} | رقم الحجز {{ref}} |
 | `booking.bring` | Booking detail | What to bring | هات معاك |
@@ -395,10 +399,11 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `booking.policyLate` | Booking detail | Less than 24 hours to go. Cancelling now isn't refunded. | فاضل أقل من ٢٤ ساعة. الإلغاء دلوقتي مش هيرجّع الفلوس. |
 | `booking.mapLabel` | Booking detail | Map showing {{venue}} | خريطة لـ {{venue}} |
 | `cancel.title` | Cancel sheet | Cancel this session? | تلغي الحصة دي؟ |
-| `cancel.outcome.refund` | Cancel sheet | You'll get {{amount}} back on your card [refund timing]. | هيرجعلك {{amount}} على الكارت [refund timing]. |
+| `cancel.outcome.refund` | Cancel sheet | You'll get {{amount}} back as app credit for your next booking. Refund credit never expires. | هيرجعلك {{amount}} رصيد في التطبيق لحجزك الجاي. رصيد الاسترجاع مالوش تاريخ انتهاء. |
 | `cancel.outcome.late` | Cancel sheet | Less than 24 hours to go, so cancelling now isn't refunded. [late-cancellation policy] | فاضل أقل من ٢٤ ساعة، فالإلغاء دلوقتي مش هيرجّع الفلوس. [late-cancellation policy] |
 | `cancel.outcome.sameDay` | Cancel sheet | Same-day bookings are final, so cancelling isn't refunded. | حجز نفس اليوم نهائي، فالإلغاء مش هيرجّع الفلوس. |
 | `cancel.outcome.nothing` | Cancel sheet | Nothing has been charged, so there's nothing to refund. | متخصمش حاجة، فمفيش حاجة ترجع. |
+| `cancel.outcome.creditBack` | Cancel sheet | Nothing has been charged. The {{amount}} of credit you used goes back to your balance. | متخصمش حاجة. الـ{{amount}} رصيد اللي استخدمته هيرجعوا لرصيدك. |
 | `cancel.reasonLabel` | Cancel sheet | Reason (optional) | السبب (اختياري) |
 | `cancel.reasons.schedule` | Cancel sheet | Schedule change | المواعيد اتغيّرت |
 | `cancel.reasons.injury` | Cancel sheet | Injury | إصابة |
@@ -406,9 +411,9 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `cancel.reasons.other` | Cancel sheet | Other | حاجة تانية |
 | `cancel.keep` | Cancel sheet | Keep booking | خلّي الحجز |
 | `cancel.confirm` | Cancel sheet | Cancel booking | الغي الحجز |
-| `cancel.confirmRefund` | Cancel sheet | Cancel and refund {{amount}} | الغي واسترجع {{amount}} |
+| `cancel.confirmRefund` | Cancel sheet | Cancel and get {{amount}} credit | الغي وخد {{amount}} رصيد |
 | `cancel.toast` | Cancel sheet | Booking cancelled | الحجز اتلغى |
-| `cancel.toastRefund` | Cancel sheet | Booking cancelled · {{amount}} on its way back | الحجز اتلغى · {{amount}} راجعين لك |
+| `cancel.toastRefund` | Cancel sheet | Booking cancelled · {{amount}} added to your credit | الحجز اتلغى · {{amount}} اتضافوا لرصيدك |
 | `reschedule.title` | Reschedule | Reschedule | غيّر المعاد |
 | `reschedule.from` | Reschedule | Now {{when}} | دلوقتي {{when}} |
 | `reschedule.newTime` | Reschedule | New time | المعاد الجديد |

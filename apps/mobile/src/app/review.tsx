@@ -12,6 +12,7 @@ import {
   bookingErrorKey,
   placeBooking,
   runCheckout,
+  useCredit,
   useReview,
   type BookingErrorKey,
   type Method,
@@ -31,6 +32,7 @@ import { GroupedList } from '@/ui/GroupedList';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { RowCard } from '@/ui/RowCard';
 import { Section } from '@/ui/Section';
+import { Switch } from '@/ui/Switch';
 import { T } from '@/ui/T';
 import { TextField } from '@/ui/TextField';
 import { TextLink } from '@/ui/TextLink';
@@ -63,6 +65,9 @@ export default function Review() {
   const [promoError, setPromoError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<BookingErrorKey | null>(null);
+  const balance = useCredit(userId).data ?? 0;
+  // The learner chooses whether to spend app credit (owner, D64); on by default.
+  const [creditOn, setCreditOn] = useState(true);
 
   if (q.isLoading) return <View style={[styles.screen, { backgroundColor: c.bg }]} />;
   if (!q.data) {
@@ -82,11 +87,18 @@ export default function Review() {
   const sub = subtotal(o.price_egp, seats);
   const discount = promo ? promoDiscount(sub, promo.pct) : 0;
   const total = sub - discount;
+  // A held booking from a failed attempt already took its credit; otherwise credit pays card bookings only.
+  const credit = draft.pendingRef
+    ? draft.pendingCredit
+    : method === 'card' && creditOn
+      ? Math.min(balance, total)
+      : 0;
+  const due = total - credit;
   // Kids and approval sessions are charged only after the instructor confirms (D29).
   const askFirst = o.type === 'kids' || o.needs_approval;
   const policy = policyFor(start, new Date());
   const when = `${formatWeekday(start, lang)} ${formatDayMonth(start, lang)}, ${formatClock(start, lang)}`;
-  const amount = formatPrice(total, lang);
+  const amount = formatPrice(due, lang);
 
   const apply = async () => {
     const entered = code.trim().toUpperCase();
@@ -105,7 +117,7 @@ export default function Review() {
     useBookDraft.getState().set({ pendingRef: null, failed: false });
     // Now confirmed (paid, or nothing to pay): refresh what was fetched while it was still on hold, so
     // Home's next session, Bookings, seat counts and the board are right.
-    for (const key of ['myBookings', 'book', 'groupSessions', 'instructorCards', 'workshop'])
+    for (const key of ['myBookings', 'book', 'groupSessions', 'instructorCards', 'workshop', 'credit'])
       qc.invalidateQueries({ queryKey: [key] });
     // Done with booking: back to the tabs, then the confirmation on top.
     router.dismissAll();
@@ -127,15 +139,17 @@ export default function Review() {
           method,
           promo: promo?.code ?? null,
           note: draft.note,
+          useCredit: credit > 0,
         });
         qc.invalidateQueries({ queryKey: ['myBookings'] });
         qc.invalidateQueries({ queryKey: ['book'] });
+        qc.invalidateQueries({ queryKey: ['credit'] });
         if (b.status !== 'awaiting_payment') return goConfirmed(b.ref);
         ref = b.ref;
-        useBookDraft.getState().set({ pendingRef: ref });
+        useBookDraft.getState().set({ pendingRef: ref, pendingCredit: b.credit_egp });
       }
       if ((await runCheckout(ref)) === 'demo') {
-        router.push({ pathname: '/demo-checkout', params: { ref, amount: String(total) } });
+        router.push({ pathname: '/demo-checkout', params: { ref, amount: String(due) } });
       } else {
         goConfirmed(ref);
       }
@@ -148,7 +162,7 @@ export default function Review() {
 
   const cta = askFirst
     ? t('review.request')
-    : method === 'venue'
+    : method === 'venue' || due === 0
       ? t('review.confirm')
       : t('review.pay', { amount });
 
@@ -199,6 +213,26 @@ export default function Review() {
           )}
         </Section>
 
+        {balance > 0 && method === 'card' && !draft.pendingRef && (
+          <GroupedList
+            rows={[
+              {
+                key: 'credit',
+                icon: 'card',
+                title: t('review.useCredit'),
+                subtitle: t('review.creditBalance', { amount: formatPrice(balance, lang) }),
+                trailing: (
+                  <Switch
+                    value={creditOn}
+                    onValueChange={setCreditOn}
+                    accessibilityLabel={t('review.useCredit')}
+                  />
+                ),
+              },
+            ]}
+          />
+        )}
+
         <Section title={t('review.promo')} variant="headline">
           {promo ? (
             <View style={styles.promoRow}>
@@ -240,6 +274,9 @@ export default function Review() {
                     value: `−${formatPrice(discount, lang)}`,
                   },
                 ]
+              : []),
+            ...(credit > 0
+              ? [{ key: 'credit', title: t('review.creditLine'), value: `−${formatPrice(credit, lang)}` }]
               : []),
             { key: 'fee', title: t('review.venueFee'), value: t('review.included') },
           ]}

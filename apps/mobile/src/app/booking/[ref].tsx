@@ -77,6 +77,8 @@ export default function BookingDetail() {
   const upcoming = ['pending', 'payment_due', 'awaiting_payment', 'confirmed'].includes(status);
   const policy = upcoming && status !== 'pending' ? bookingPolicy(b, now) : null;
   const amount = formatPrice(b.total_egp, lang);
+  // What's still owed: app credit already covers part of it (D64).
+  const owed = formatPrice(b.total_egp - b.credit_egp, lang);
   const mapPicture = staticMapUrl(b.venue_lat, b.venue_lng, lang);
   const due = status === 'payment_due' || status === 'awaiting_payment';
   const money =
@@ -87,7 +89,7 @@ export default function BookingDetail() {
       : status === 'pending'
         ? t('confirmed.payLater', { name })
         : status === 'payment_due' || status === 'awaiting_payment'
-          ? t('booking.due', { amount })
+          ? t('booking.due', { amount: owed })
           : b.method === 'venue'
             ? t('booking.atVenue', { amount })
             : t('booking.paid', { amount });
@@ -97,7 +99,10 @@ export default function BookingDetail() {
     setError(null);
     try {
       if ((await runCheckout(b.ref)) === 'demo') {
-        router.push({ pathname: '/demo-checkout', params: { ref: b.ref, amount: String(b.total_egp) } });
+        router.push({
+          pathname: '/demo-checkout',
+          params: { ref: b.ref, amount: String(b.total_egp - b.credit_egp) },
+        });
       } else {
         qc.invalidateQueries({ queryKey: ['booking', b.ref] });
         qc.invalidateQueries({ queryKey: ['myBookings'] });

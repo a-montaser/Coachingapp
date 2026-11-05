@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
   const db = service();
   const { data: b } = await db
     .from('bookings')
-    .select('id, ref, status, total_egp, hold_expires_at, pay_by')
+    .select('id, ref, status, total_egp, credit_egp, hold_expires_at, pay_by')
     .eq('ref', ref)
     .eq('user_id', user.id)
     .maybeSingle();
@@ -23,19 +23,21 @@ Deno.serve(async (req) => {
   const live =
     (b.status === 'awaiting_payment' && b.hold_expires_at && Date.parse(b.hold_expires_at) > now) ||
     (b.status === 'payment_due' && b.pay_by && Date.parse(b.pay_by) > now);
-  if (!live) return json({ error: 'not_payable' }, 409);
+  // App credit the learner chose on Review & pay is already taken (D64); the card pays the rest.
+  const amountEgp = b.total_egp - b.credit_egp;
+  if (!live || amountEgp <= 0) return json({ error: 'not_payable' }, 409);
 
   const provider = getProvider();
   const paymentKey = `${provider.name}_${crypto.randomUUID()}`;
   const { error } = await db
     .from('payments')
-    .insert({ booking_id: b.id, provider: provider.name, provider_ref: paymentKey, amount_egp: b.total_egp });
+    .insert({ booking_id: b.id, provider: provider.name, provider_ref: paymentKey, amount_egp: amountEgp });
   if (error) return json({ error: 'payment_record' }, 500);
 
   const { url } = await provider.createCheckout({
     ref: b.ref,
     paymentKey,
-    amountEgp: b.total_egp,
+    amountEgp,
     phone: user.phone ? `+${user.phone.replace(/^\+/, '')}` : '',
     firstName: '',
     returnUrl: `coachforall://payment-return?ref=${encodeURIComponent(b.ref)}`,
@@ -44,5 +46,5 @@ Deno.serve(async (req) => {
   // The fake provider (CI) settles at once, through the same SQL path as a webhook.
   if (provider.settlesAtCheckout)
     await db.rpc('record_payment', { p_provider_ref: paymentKey, p_status: 'paid' });
-  return json({ url, amountEgp: b.total_egp });
+  return json({ url, amountEgp });
 });

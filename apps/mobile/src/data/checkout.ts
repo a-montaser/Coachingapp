@@ -73,7 +73,14 @@ export async function applyPromo(code: string, subtotalEgp: number) {
   return row;
 }
 
-export type Booking = { id: string; ref: string; status: string; total_egp: number; method: Method };
+export type Booking = {
+  id: string;
+  ref: string;
+  status: string;
+  total_egp: number;
+  credit_egp: number;
+  method: Method;
+};
 
 /** SQL `book()`: holds the seats atomically. Card → awaiting payment (5 min); venue → confirmed; kids/approval → pending. */
 export async function placeBooking(b: {
@@ -83,6 +90,7 @@ export async function placeBooking(b: {
   method: Method;
   promo: string | null;
   note: string;
+  useCredit: boolean;
 }) {
   const { data, error } = await supabase.rpc('book', {
     p_slot: b.slotId,
@@ -91,9 +99,23 @@ export async function placeBooking(b: {
     p_method: b.method,
     p_promo: b.promo,
     p_note: b.note || null,
+    p_use_credit: b.useCredit,
   });
   if (error) throw error;
   return data as Booking;
+}
+
+/** The learner's spendable app credit in EGP (refunds become credit, D64). */
+export function useCredit(userId: string | undefined) {
+  return useQuery({
+    queryKey: ['credit', userId],
+    enabled: Boolean(userId),
+    queryFn: async () => {
+      const { data, error } = await supabase.from('my_credit').select('balance_egp').single();
+      if (error) throw error;
+      return (data as { balance_egp: number }).balance_egp;
+    },
+  });
 }
 
 /** Edge Function create-checkout: the hosted (or demo) checkout URL for an awaiting-payment booking. */
@@ -103,7 +125,7 @@ export async function startCheckout(ref: string) {
   return data as { url: string; amountEgp: number };
 }
 
-/** SQL `cancel_booking()`: cancels, frees the seats and queues any refund (§9.1). */
+/** SQL `cancel_booking()`: cancels, frees the seats and returns any refund as app credit (§9.1, D64). */
 export async function cancelBooking(ref: string, reason: string | null) {
   const { data, error } = await supabase.rpc('cancel_booking', { p_ref: ref, p_reason: reason });
   if (error) throw error;

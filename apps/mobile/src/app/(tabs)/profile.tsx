@@ -6,7 +6,8 @@ import { component, layout, space } from '@cfa/tokens';
 import { useArea, useInterests, type Interest } from '@/data/account';
 import { galleryCopy } from '@/dev/galleryCopy';
 import { useProfile, useSession } from '@/data/auth';
-import { formatDayMonth, formatYear } from '@/i18n/format';
+import { useCredit } from '@/data/checkout';
+import { formatDayMonth, formatPrice, formatYear } from '@/i18n/format';
 import { useLang } from '@/i18n';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
@@ -31,6 +32,7 @@ export default function Profile() {
   const profile = useProfile(userId).data;
   const area = useArea(profile?.area_id).data;
   const interests = useInterests(userId).data ?? [];
+  const credit = useCredit(userId).data ?? 0;
 
   const year = profile ? formatYear(new Date(profile.created_at), lang) : '';
   const areaName = area && (lang === 'ar' ? (area.name_ar ?? area.name_en) : area.name_en);
@@ -95,6 +97,13 @@ export default function Profile() {
       <Section title={t('profile.settings')} variant="footnote">
         <GroupedList
           rows={[
+            {
+              // Refunds come back as app credit (D64); spent on Review & pay.
+              key: 'credit',
+              icon: 'card',
+              title: t('profile.credit'),
+              value: formatPrice(credit, lang),
+            },
             {
               key: 'family',
               icon: 'family',

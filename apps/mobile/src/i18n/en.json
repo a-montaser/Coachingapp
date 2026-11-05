@@ -110,7 +110,8 @@
     "settings": "Settings",
     "family": "Family & kids",
     "language": "Language",
-    "appearance": "Appearance"
+    "appearance": "Appearance",
+    "credit": "App credit"
   },
   "level": {
     "beginner": "Beginner",
@@ -420,6 +421,9 @@
     "session": "Session",
     "sessionSeats": "Session × {{n}}",
     "promoLine": "Promo {{code}}",
+    "creditLine": "App credit",
+    "useCredit": "Use my app credit",
+    "creditBalance": "{{amount}} available",
     "venueFee": "Venue fee",
     "included": "Included",
     "policyFree": "Free cancellation until {{when}}.",
@@ -540,7 +544,7 @@
     "paid": "Paid {{amount}}",
     "atVenue": "Pay at the venue · {{amount}}",
     "due": "Payment due · {{amount}}",
-    "refunded": "Cancelled · refunded {{amount}}",
+    "refunded": "Cancelled · {{amount}} back as credit",
     "noRefund": "Cancelled · not refunded",
     "ref": "Booking ref {{ref}}",
     "bring": "What to bring",
@@ -554,10 +558,11 @@
   "cancel": {
     "title": "Cancel this session?",
     "outcome": {
-      "refund": "You'll get {{amount}} back on your card [refund timing].",
+      "refund": "You'll get {{amount}} back as app credit for your next booking. Refund credit never expires.",
       "late": "Less than 24 hours to go, so cancelling now isn't refunded. [late-cancellation policy]",
       "sameDay": "Same-day bookings are final, so cancelling isn't refunded.",
-      "nothing": "Nothing has been charged, so there's nothing to refund."
+      "nothing": "Nothing has been charged, so there's nothing to refund.",
+      "creditBack": "Nothing has been charged. The {{amount}} of credit you used goes back to your balance."
     },
     "reasonLabel": "Reason (optional)",
     "reasons": {
@@ -568,9 +573,9 @@
     },
     "keep": "Keep booking",
     "confirm": "Cancel booking",
-    "confirmRefund": "Cancel and refund {{amount}}",
+    "confirmRefund": "Cancel and get {{amount}} credit",
     "toast": "Booking cancelled",
-    "toastRefund": "Booking cancelled · {{amount}} on its way back"
+    "toastRefund": "Booking cancelled · {{amount}} added to your credit"
   },
   "reschedule": {
     "title": "Reschedule",

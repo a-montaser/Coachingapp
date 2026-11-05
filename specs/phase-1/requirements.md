@@ -187,7 +187,8 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
   - more than 24 h before the start: full refund of the amount paid
   - less than 24 h, or a same-day booking: cancelled, no refund
   - pay at venue: nothing charged, nothing refunded
-  - wording after the window: `[late-cancellation policy]`; timing: `[refund timing]`. Both stay as visible placeholders.
+  - wording after the window: `[late-cancellation policy]` stays a visible placeholder.
+  - **refunds are app credit (owner, D64):** never money back to the card; refund credit never expires, credit from any other source expires after 6 months. Review & pay offers "Use my app credit" (on by default, card only); the card pays the rest, and a booking credit covers in full is confirmed without the card. The balance shows on Profile, Review & pay and in the Cancel sheet.
 - R8.5 Reschedule (§9.3) moves the same booking (same ref) to another open slot of the same offering, atomically. Status is recalculated. When rescheduling is allowed: Open question 6.
 - **AC:**
   - SQL tests for every refund branch, with times frozen
@@ -251,7 +252,7 @@ Each screen matches the canvas artboard it comes from and follows the handoff's 
 2. **Payments:** a **demo provider** works end to end on the device now: an in-app demo checkout with Pay or Fail. **Paymob** is built behind the same `PaymentProvider` interface and switched on by secrets plus `PAYMENT_PROVIDER=paymob`, with no app release needed. Phase 1 methods: card (demo, then Paymob test) and pay at the venue.
 3. **Unpaid card hold:** 5 minutes.
 4. **Kids bookings:** `pending` with seats held, no charge. Once confirmed: a card booking becomes `payment_due`, payable from Booking detail within **24 h of confirmation or by the start time, whichever is first**, after which the seat is released; a venue booking becomes `confirmed`. In Phase 1 ops confirm with `approve_booking(ref)` / `decline_booking(ref)` in Studio. A push to the parent needs remote push (development build), so Phase 1 shows it in Bookings and on Booking detail.
-5. **Refunds:** cancelling more than 24 h before the start refunds the amount paid automatically through the provider. Inside 24 h, or for same-day bookings: no refund.
+5. **Refunds:** cancelling more than 24 h before the start returns the amount paid as app credit at once (D64). Inside 24 h, or for same-day bookings: no refund.
 6. **Reschedule:** allowed until 24 h before the start.
 7. **"The evening before":** 20:00 Cairo time, the day before.
 8. **Booking detail:** a real map header: the live `react-native-maps` map in Phase 1; a still Google map picture (Maps Static API) switches on later once the owner adds the key; Directions open Google Maps *(D52)*.

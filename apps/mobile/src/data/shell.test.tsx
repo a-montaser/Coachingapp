@@ -42,6 +42,10 @@ jest.mock('./account', () => ({
   }),
 }));
 const mockSave = jest.fn();
+jest.mock('./checkout', () => ({
+  ...jest.requireActual('./checkout'),
+  useCredit: () => ({ data: 1300 }),
+}));
 jest.mock('./family', () => ({
   ...jest.requireActual('./family'),
   useFamily: () => ({ data: [{ id: 'k1', first_name: 'Ali', age: 9 }] }),
@@ -113,6 +117,8 @@ test('Profile shows the header, levels and settings with current values (R3.4)',
   expect(screen.getByText('Level not set')).toBeOnTheScreen();
   expect(screen.getByText('English')).toBeOnTheScreen();
   expect(screen.getByText('System')).toBeOnTheScreen();
+  expect(screen.getByText('App credit')).toBeOnTheScreen();
+  expect(screen.getByText('1,300 EGP')).toBeOnTheScreen();
   await fireEvent.press(screen.getByText('Family & kids'));
   expect(mockRouter.push).toHaveBeenCalledWith('/family');
   await fireEvent.press(screen.getByText('Sign out'));

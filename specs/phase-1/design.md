@@ -50,7 +50,9 @@ supabase/
 | `promo_codes` | `code`, `percent_off`, `active`, `valid_until` | no direct read (`apply_promo` only) |
 | `bookings` | `id`, `ref` unique, `user_id`, `slot_id`, `family_member_id`, `seats`, `status` (awaiting_payment/pending/payment_due/confirmed/cancelled), `approved_at`, `pay_by`, `method` (card/venue), `subtotal_egp`, `discount_egp`, `total_egp`, `promo_code`, `note`, `hold_expires_at`, `refundable_until`, `same_day`, `reminder_min` default 120, `created_at`, `cancelled_at`, `cancel_reason`, `refund_egp` | self read; **no direct writes** |
 | `payments` | `id`, `booking_id`, `provider`, `provider_ref`, `amount_egp`, `status` (initiated/paid/failed/refunded), `raw` jsonb, `created_at` | self read through the booking; writes from the service role only |
-| `refunds` | `id`, `payment_id`, `amount_egp`, `status`, `provider_ref`, `created_at` | self read; service role writes |
+| `refunds` | `id`, `payment_id`, `amount_egp`, `status`, `provider_ref`, `created_at` | self read; service role writes. **Unused since D64** (refunds are app credit) |
+| `credits` | `id`, `user_id`, `source` (refund/goodwill/promo), `amount_egp`, `remaining_egp`, `expires_at` (null for refund credit, else +6 months), `booking_id`, `created_at` | self read; functions write (D64) |
+| `credit_spends` | `booking_id`, `credit_id`, `amount_egp` | functions only; lets credit go back to the grant it came from |
 
 - **Status:** `completed` (§9.5) is derived, not stored: a view `my_bookings` shows `completed` once a confirmed booking has ended. `awaiting_payment` is internal and never shown. It is a seat hold.
 - **Availability rules:** Phase 1 has no `availability_rules` table, since ops seed slots directly. Rules arrive with the instructor app (Phase 3).
@@ -68,7 +70,8 @@ book(slot uuid, seats int, child uuid, method text, promo text, note text) retur
   -- 6. seats_taken += seats;  refundable_until = starts_at − 24 h;  same_day = booked on the start date (Cairo)
 cancel_booking(ref text, reason text) returns { refund_egp }
   -- lock booking + slot; refund = paid ∧ now() < refundable_until ∧ ¬same_day ? amount paid : 0
-  -- status cancelled, seats freed; a refund row is queued for the refund Edge Function (OQ5)
+  -- status cancelled, seats freed; the refund is app credit (D64): card part → new refund credit (never expires),
+  -- credit part → back to its grants; not yet paid → spent credit goes back. Nothing goes back to the card.
 reschedule_booking(ref text, new_slot uuid) returns bookings
   -- lock both slots in id order (no deadlock); same offering; new slot passes book()'s checks
   -- allowed only while now() < starts_at − 24 h; move seats, keep ref and payment, recompute refundable_until / same_day
