@@ -72,6 +72,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify: CI green.
 - [ ] **T21 Arabic pass.** Every new string goes into `docs/translations/ar-app-strings.md` for you.
   - **Deferred by the owner (25 Oct):** do it after T20; remind the owner before T22. The table has 426 rows waiting for Egyptian Arabic.
+  - 5 Nov: table synced with the app (471 rows) and every row drafted in Egyptian Arabic by Claude, placeholders checked. **Waiting for the owner to read and correct;** then the approved rows go into `ar.json`.
   - Verify: no hard-coded English in screens (lint/grep).
 - [ ] **T22 Graphify `--update`, DECISIONS, phase report** with canvas side-by-sides.
   - **Revert the testing aids first (D43):** `TEST_IMAGES = false` in `src/dev/testImages.ts`, then delete it and `assets/test-images/`; `component.otp.resendSeconds` back to 60.
