@@ -68,8 +68,8 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - Verify (each): RNTL for the changed journey; `npm run check`; both themes looked at on the iPhone.
 
 ## G. End to end and close
-- [ ] **T20 Maestro in CI** (Android debug build, local Supabase, fake provider), with the flows in R10.1.
-  - Verify: CI green.
+- [x] **T20 Maestro in CI** (Android debug build, local Supabase, fake provider), with the flows in R10.1.
+  - Verify: CI green. Done 5 Nov: run 42029422740, all four jobs green (D62).
 - [ ] **T21 Arabic pass.** Every new string goes into `docs/translations/ar-app-strings.md` for you.
   - **Deferred by the owner (25 Oct):** do it after T20; remind the owner before T22. The table has 426 rows waiting for Egyptian Arabic.
   - 5 Nov: table synced with the app (471 rows) and every row drafted in Egyptian Arabic by Claude, placeholders checked. **Waiting for the owner to read and correct;** then the approved rows go into `ar.json`.
