@@ -49,11 +49,11 @@ appId: com.coachforall.app
 - assertVisible: 'Category: Hobbies. Change category'
 
 # 4 + 6. Book two workshop seats and pay by card (fake provider)
-- scrollUntilVisible:
-    element: 'Wheel-throwing taster.*'
-    direction: DOWN
-    centerElement: true
-    timeout: 30000
+# Found through search, so it doesn't depend on where the date puts it in Home's rail.
+- tapOn: 'Pottery, oud, photography.*'
+- inputText: 'Wheel'
+- hideKeyboard
+- tapOn: 'Groups'
 - tapOn: 'Wheel-throwing taster.*'
 - extendedWaitUntil:
     visible: 'Pick a date'
