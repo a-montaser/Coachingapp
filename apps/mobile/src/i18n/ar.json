@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "home": "الرئيسية",
+    "explore": "استكشف",
+    "bookings": "حجوزاتي",
+    "messages": "الرسائل",
+    "profile": "حسابي"
+  },
+  "language": {
+    "en": "English",
+    "ar": "العربية"
+  },
+  "card": {
+    "from": "{{price}}"
+  },
+  "home": {
+    "greeting": {
+      "evening": "مساء الخير يا {{name}}"
+    },
+    "search": {
+      "sports": "مدرب أو رياضة أو منطقة"
+    },
+    "people": {
+      "sports": "متاح اليوم بالقرب منك"
+    },
+    "inDays_two": "بعد يومين"
+  }
+}

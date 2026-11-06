@@ -1,0 +1,12 @@
+{
+  "name": "@cfa/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "generate": "node scripts/generate.ts",
+    "check": "node scripts/generate.ts --check",
+    "test": "node --test"
+  }
+}

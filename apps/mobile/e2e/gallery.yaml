@@ -1,0 +1,52 @@
+# Phase 0 gallery check on the Android emulator, running in Expo Go against local Metro.
+# Run from apps/mobile with Metro started: maestro test e2e/gallery.yaml
+appId: host.exp.exponent
+---
+- launchApp
+- openLink: exp://10.0.2.2:8081
+- extendedWaitUntil:
+    visible: 'Component gallery'
+    timeout: 180000
+
+# Light and dark, LTR
+- tapOn: 'Light'
+- takeScreenshot: e2e/screenshots/light-ltr
+- tapOn: 'Dark'
+- takeScreenshot: e2e/screenshots/dark-ltr
+
+# Accessibility fallbacks change what renders
+- tapOn: 'Reduce Transparency'
+- takeScreenshot: e2e/screenshots/dark-reduce-transparency
+- tapOn: 'Reduce Transparency'
+- tapOn: 'Increase Contrast'
+- takeScreenshot: e2e/screenshots/dark-increase-contrast
+- tapOn: 'Increase Contrast'
+
+# Category tray: pick Sports
+- scrollUntilVisible:
+    element: 'Category: Hobbies. Change category'
+    direction: DOWN
+    timeout: 30000
+- tapOn: 'Category: Hobbies. Change category'
+- assertVisible: 'Browse by'
+- tapOn: 'Sports'
+- assertVisible: 'Category: Sports. Change category'
+- assertNotVisible: 'Browse by'
+
+# Arabic / RTL (reloads the app)
+- scrollUntilVisible:
+    element: 'العربية'
+    direction: UP
+    timeout: 30000
+- tapOn: 'العربية'
+- extendedWaitUntil:
+    visible: 'Component gallery'
+    timeout: 180000
+- tapOn: 'Dark'
+- takeScreenshot: e2e/screenshots/dark-rtl
+- tapOn: 'Light'
+- takeScreenshot: e2e/screenshots/light-rtl
+- tapOn: 'English'
+- extendedWaitUntil:
+    visible: 'Component gallery'
+    timeout: 180000

@@ -1,0 +1,100 @@
+import { QueryClientProvider } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
+import { LogBox, StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { type as typeScale } from '@cfa/tokens';
+import { useProfile, useSession } from '@/data/auth';
+import { useApplyDraftAfterSignUp } from '@/data/onboarding';
+import { queryClient } from '@/data/queryClient';
+import { useIsRTL } from '@/i18n';
+import { useSettings } from '@/theme/settings';
+import { useApplyThemeOverride, useTheme } from '@/theme/useTheme';
+import { useSheetOptions } from '@/ui/Sheet';
+import { Toast, useToast } from '@/ui/Toast';
+
+// CI end-to-end runs (T20): dev warning boxes must not cover the buttons Maestro taps.
+if (process.env.EXPO_PUBLIC_E2E === '1') LogBox.ignoreAllLogs();
+
+/**
+ * The journey gate: signed out → Welcome (then onboarding, then sign-up, D34); signed in but not
+ * onboarded → Interests; otherwise the tabs. Screens pushed above the tabs (instructor, workshop, book…) hide the tab bar.
+ */
+function RootNavigator() {
+  const { c } = useTheme();
+  const sheet = useSheetOptions();
+  const direction = useIsRTL() ? 'rtl' : 'ltr';
+  const { session, loading } = useSession();
+  const profile = useProfile(session?.user.id);
+  const applying = useApplyDraftAfterSignUp(session?.user.id, profile.data);
+  if (loading || (session && profile.isLoading) || applying) return null;
+  const signedIn = Boolean(session);
+  const onboarded = Boolean(profile.data?.onboarded_at);
+
+  return (
+    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg, direction } }}>
+      <Stack.Protected guard={!signedIn}>
+        <Stack.Screen name="(auth)" />
+      </Stack.Protected>
+      <Stack.Protected guard={signedIn && onboarded}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="family" />
+        <Stack.Screen name="preferences" />
+        <Stack.Screen name="instructor/[id]" />
+        <Stack.Screen name="workshop/[id]" />
+        <Stack.Screen name="book/[offeringId]" />
+        <Stack.Screen name="review" />
+        <Stack.Screen name="demo-checkout" options={sheet} />
+        <Stack.Screen name="confirmed/[ref]" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="remind/[ref]" options={sheet} />
+        <Stack.Screen name="booking/[ref]" />
+        <Stack.Screen name="bookings-filter" options={sheet} />
+        {/* Sized to its content so both buttons always show; at the half detent Android cut off "Cancel". */}
+        <Stack.Screen name="cancel/[ref]" options={{ ...sheet, sheetAllowedDetents: 'fitToContents' }} />
+        <Stack.Screen name="reschedule/[ref]" />
+        <Stack.Screen name="family-member" options={sheet} />
+        <Stack.Screen name="language" options={sheet} />
+        <Stack.Screen name="appearance" options={sheet} />
+        <Stack.Screen name="sign-out" options={sheet} />
+        <Stack.Screen name="filters" options={sheet} />
+        <Stack.Screen name="sort" options={sheet} />
+      </Stack.Protected>
+      {/* Open to everyone: new learners onboard before sign-up (D34), signed-in ones who never finished
+          land here, and Profile reopens steps 1–2. Listed after the tabs so an onboarded learner lands Home. */}
+      <Stack.Screen name="(onboarding)" />
+      <Stack.Screen name="gallery" />
+      <Stack.Screen name="gallery-sheet" options={sheet} />
+    </Stack>
+  );
+}
+
+function AppToast() {
+  const { message, hide } = useToast();
+  return <Toast message={message ?? ''} icon="check" visible={Boolean(message)} onHide={hide} />;
+}
+
+export default function RootLayout() {
+  useApplyThemeOverride();
+  const { scheme } = useTheme();
+  const direction = useIsRTL() ? 'rtl' : 'ltr';
+  // Wait for saved theme/language/category so the first frame is already right (R3.2).
+  const [hydrated, setHydrated] = useState(useSettings.persist.hasHydrated());
+  useEffect(() => useSettings.persist.onFinishHydration(() => setHydrated(true)), []);
+  const [fontsLoaded] = useFonts({
+    [typeScale.brandHero.fontFamily]: require('../../assets/fonts/PlayfairDisplay-SemiBold.ttf'),
+  });
+  if (!fontsLoaded || !hydrated) return null;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <GestureHandlerRootView style={[styles.root, { direction }]}>
+        <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+        <RootNavigator />
+        <AppToast />
+      </GestureHandlerRootView>
+    </QueryClientProvider>
+  );
+}
+
+const styles = StyleSheet.create({ root: { flex: 1 } });

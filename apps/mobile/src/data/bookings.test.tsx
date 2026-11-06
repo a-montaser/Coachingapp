@@ -1,0 +1,336 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import '@/i18n';
+import BookingDetail from '@/app/booking/[ref]';
+import CancelSheet from '@/app/cancel/[ref]';
+import Reschedule from '@/app/reschedule/[ref]';
+import { useToast } from '@/ui/Toast';
+import Bookings from '@/app/(tabs)/bookings';
+import BookingsFilter from '@/app/bookings-filter';
+import { useSettings } from '@/theme/settings';
+import {
+  bookingPolicy,
+  canCancel,
+  canReschedule,
+  cancelOutcome,
+  directionsUrl,
+  matchesFilter,
+  staticMapUrl,
+  splitBookings,
+  statusPill,
+  useBookingsFilter,
+  type MyBooking,
+} from './bookings';
+
+let mockParams: Record<string, string> = {};
+jest.mock('expo-router', () => ({
+  router: { push: jest.fn(), back: jest.fn(), navigate: jest.fn(), dismissAll: jest.fn() },
+  useLocalSearchParams: () => mockParams,
+}));
+const mockRouter = jest.requireMock('expo-router').router;
+jest.mock('react-native-maps', () => {
+  const { View } = jest.requireActual('react-native');
+  return { __esModule: true, default: View, Marker: View };
+});
+jest.mock('./supabase', () => ({ supabaseConfigured: true, supabase: {} }));
+jest.mock('./auth', () => ({
+  ...jest.requireActual('./auth'),
+  useSession: () => ({ session: { user: { id: 'u1' } }, loading: false }),
+}));
+const mockRun = jest.fn();
+const mockCancel = jest.fn();
+const mockMove = jest.fn();
+jest.mock('./checkout', () => ({
+  ...jest.requireActual('./checkout'),
+  runCheckout: (...a: unknown[]) => mockRun(...a),
+  cancelBooking: (...a: unknown[]) => mockCancel(...a),
+  rescheduleBooking: (...a: unknown[]) => mockMove(...a),
+}));
+
+const HOUR = 3_600_000;
+const at = (h: number) => new Date(Date.now() + h * HOUR).toISOString();
+const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
+  ref,
+  display_status: 'confirmed',
+  method: 'card',
+  seats: 1,
+  total_egp: 650,
+  refund_egp: null,
+  credit_egp: 0,
+  refundable_until: at(48),
+  same_day: false,
+  pay_by: null,
+  slot_id: 's-now',
+  starts_at: at(72),
+  ends_at: at(73),
+  offering_id: 'o1',
+  type: 'private',
+  title: 'Private padel',
+  what_to_bring: 'Water and court shoes',
+  discipline_id: 'padel',
+  discipline_en: 'Padel',
+  discipline_ar: null,
+  category_id: 'sports',
+  instructor_id: 'nour',
+  instructor_name: 'Nour El-Sayed',
+  venue_name: 'Cedar Court Club',
+  venue_notes: null,
+  venue_lat: 30.03,
+  venue_lng: 31.47,
+  child_name: null,
+  ...extra,
+});
+
+let mockRows: MyBooking[] = [];
+let mockOne: MyBooking | undefined;
+let mockSlots: object[] = [];
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQueryClient: () => ({ invalidateQueries: jest.fn() }),
+  useQuery: ({ queryKey }: { queryKey: string[] }) =>
+    queryKey[0] === 'booking'
+      ? { data: mockOne, isLoading: false }
+      : queryKey[0] === 'book'
+        ? { data: { slots: mockSlots }, isLoading: false }
+        : { data: mockRows, isLoading: false },
+}));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  useSettings.setState({ lang: 'en' });
+  useBookingsFilter.getState().reset();
+  mockParams = {};
+});
+
+test('split: upcoming soonest first; finished and cancelled are past, latest first; filter narrows', () => {
+  const rows = [
+    row('old', { starts_at: at(-50), ends_at: at(-49), display_status: 'completed' }),
+    row('gone', { starts_at: at(-2), ends_at: at(-1), display_status: 'cancelled' }),
+    row('soon', { starts_at: at(5), ends_at: at(6) }),
+    row('later', {
+      starts_at: at(30),
+      ends_at: at(31),
+      display_status: 'pending',
+      discipline_id: 'swimming',
+    }),
+    row('lapsed', { starts_at: at(40), ends_at: at(41), display_status: 'cancelled' }),
+  ];
+  const { upcoming, past } = splitBookings(rows, new Date());
+  expect(upcoming.map((b) => b.ref)).toEqual(['soon', 'later']);
+  expect(past.map((b) => b.ref)).toEqual(['lapsed', 'gone', 'old']);
+  expect(splitBookings(rows, new Date(), { discipline: 'swimming' }).upcoming.map((b) => b.ref)).toEqual([
+    'later',
+  ]);
+  expect(statusPill('payment_due')).toEqual({ key: 'paymentDue', tone: 'warn' });
+  expect(statusPill('completed').tone).toBe('neutral');
+});
+
+test('filter by Lessons or Groups and by time of day (Cairo)', () => {
+  const morning = row('m', { starts_at: '2026-10-28T06:00:00Z', type: 'private' }); // 09:00 Cairo
+  const evening = row('e', { starts_at: '2026-10-28T16:00:00Z', type: 'workshop' }); // 19:00 Cairo
+  expect(matchesFilter(morning, { kind: 'lessons' })).toBe(true);
+  expect(matchesFilter(evening, { kind: 'lessons' })).toBe(false);
+  expect(matchesFilter(evening, { kind: 'groups' })).toBe(true);
+  expect(matchesFilter(row('k', { type: 'kids' }), { kind: 'groups' })).toBe(false);
+  expect(matchesFilter(morning, { time: 'morning' })).toBe(true);
+  expect(matchesFilter(evening, { time: 'morning' })).toBe(false);
+  expect(matchesFilter(evening, { time: 'evening', kind: 'groups' })).toBe(true);
+});
+
+test('policy: free until refundable_until; late inside 24 h or same-day; none at the venue (§9.1)', () => {
+  const now = new Date();
+  const a = row('a');
+  expect(bookingPolicy(a, now)).toEqual({ kind: 'free', until: new Date(a.refundable_until!) });
+  expect(bookingPolicy(row('b', { refundable_until: at(-1) }), now)).toEqual({ kind: 'late' });
+  expect(bookingPolicy(row('c', { same_day: true }), now)).toEqual({ kind: 'late' });
+  expect(bookingPolicy(row('d', { method: 'venue' }), now)).toBeNull();
+});
+
+test('Bookings: upcoming cards with Directions, past with Book again, cancelled with Details', async () => {
+  mockRows = [
+    row('CFA-1', {
+      child_name: 'Ali',
+      discipline_en: 'Swimming',
+      instructor_name: 'Mariam Adel',
+      display_status: 'pending',
+      type: 'kids',
+    }),
+    row('CFA-2', { starts_at: at(-50), ends_at: at(-49), display_status: 'completed' }),
+    row('CFA-3', { starts_at: at(-30), ends_at: at(-29), display_status: 'cancelled' }),
+  ];
+  await render(<Bookings />);
+  expect(screen.getByRole('tab', { name: 'Upcoming · 1' })).toBeSelected();
+  expect(screen.getByText('Swimming · Ali with Mariam')).toBeOnTheScreen();
+  expect(screen.getByText('Waiting for Mariam to confirm')).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Directions' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: /^Swimming · Ali with Mariam/ }));
+  expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/booking/[ref]', params: { ref: 'CFA-1' } });
+
+  await fireEvent.press(screen.getByRole('tab', { name: 'Past' }));
+  expect(screen.getByText('Completed')).toBeOnTheScreen();
+  expect(screen.getByText('Cancelled')).toBeOnTheScreen();
+  expect(screen.getAllByRole('button', { name: 'Book again' })).toHaveLength(2);
+  expect(screen.getByRole('button', { name: 'Details' })).toBeOnTheScreen();
+});
+
+test('Bookings: the time leads each card; the Calendar tab marks booked days and lists the chosen one', async () => {
+  mockRows = [row('CFA-1', { starts_at: at(72), ends_at: at(73) })];
+  await render(<Bookings />);
+  const hours = screen.getByText(/^\d{2}:\d{2}–\d{2}:\d{2}$/);
+  expect(hours).toBeOnTheScreen();
+  expect(screen.getByText('Private 1:1')).toBeOnTheScreen();
+
+  await fireEvent.press(screen.getByRole('tab', { name: 'Calendar' }));
+  // The month may roll over within 72 h; the booked day is marked in this month or the next.
+  if (!screen.queryAllByRole('button', { name: /Has bookings/ }).length)
+    await fireEvent.press(screen.getByRole('button', { name: 'Next month' }));
+  expect(screen.getAllByRole('button', { name: /Has bookings/ })).toHaveLength(1);
+  expect(screen.getByText('Padel with Nour')).toBeOnTheScreen(); // the first booked day is chosen
+  const empty = screen
+    .getAllByRole('button')
+    .filter(
+      (b) =>
+        /^\w+day \d+ \w+$/.test(b.props.accessibilityLabel ?? '') && !b.props.accessibilityState?.disabled,
+    );
+  await fireEvent.press(empty.at(-1)!);
+  expect(screen.getByText(/^Nothing booked on /)).toBeOnTheScreen();
+});
+
+test('Filter sheet: Type and Time of day narrow the list; Reset clears; the button counts', async () => {
+  mockRows = [
+    row('a', { starts_at: '2099-01-03T07:00:00Z', ends_at: '2099-01-03T08:00:00Z' }), // 09:00 Cairo, 1:1
+    row('b', { starts_at: '2099-01-03T17:00:00Z', ends_at: '2099-01-03T19:00:00Z', type: 'workshop' }), // 19:00
+  ];
+  await render(<BookingsFilter />);
+  expect(screen.getByRole('button', { name: 'Show 2 bookings' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('radio', { name: 'Groups' }));
+  expect(screen.getByRole('button', { name: 'Show 1 booking' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('radio', { name: 'Morning' }));
+  expect(screen.getByRole('button', { name: 'No bookings match' })).toBeDisabled();
+  expect(useBookingsFilter.getState()).toMatchObject({ kind: 'groups', time: 'morning' });
+  await fireEvent.press(screen.getByRole('button', { name: 'Reset' }));
+  expect(screen.getByRole('button', { name: 'Show 2 bookings' })).toBeOnTheScreen();
+});
+
+test('Bookings: an empty state per tab', async () => {
+  mockRows = [];
+  await render(<Bookings />);
+  expect(screen.getByText('No upcoming sessions')).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Explore' }));
+  expect(mockRouter.navigate).toHaveBeenCalledWith('/explore');
+  await fireEvent.press(screen.getByRole('tab', { name: 'Past' }));
+  expect(screen.getByText('Nothing here yet')).toBeOnTheScreen();
+});
+
+test('Booking detail: status, policy, payment and ref; payment due pays from here; cancelled shows the refund', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  const view = await render(<BookingDetail />);
+  expect(screen.getByRole('header', { name: 'Padel with Nour' })).toBeOnTheScreen();
+  expect(screen.getByText('Confirmed')).toBeOnTheScreen();
+  expect(screen.getByText(/^Free cancellation until /)).toBeOnTheScreen();
+  expect(screen.getByText('Private 1:1 · Paid 650 EGP')).toBeOnTheScreen();
+  expect(screen.getByText('Booking ref CFA-1')).toBeOnTheScreen();
+  expect(screen.getByText('Water and court shoes')).toBeOnTheScreen();
+  await view.unmount();
+
+  mockOne = row('CFA-1', { display_status: 'payment_due', type: 'kids', child_name: 'Ali' });
+  mockRun.mockResolvedValue('demo');
+  const due = await render(<BookingDetail />);
+  await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
+  expect(mockRun).toHaveBeenCalledWith('CFA-1');
+  expect(mockRouter.push).toHaveBeenCalledWith({
+    pathname: '/demo-checkout',
+    params: { ref: 'CFA-1', amount: '650' },
+  });
+  await due.unmount();
+
+  mockOne = row('CFA-1', { display_status: 'cancelled', refund_egp: 650 });
+  await render(<BookingDetail />);
+  expect(screen.getByText('Private 1:1 · Cancelled · 650 EGP back as credit')).toBeOnTheScreen();
+  expect(screen.queryByText(/^Free cancellation/)).toBeNull();
+  expect(screen.getByRole('button', { name: 'Book again' })).toBeOnTheScreen();
+});
+
+test('cancel outcome mirrors cancel_booking(); reschedule closes 24 h before, cancel at the start (§9.1, §9.3)', () => {
+  const now = new Date();
+  expect(cancelOutcome(row('a'), now)).toEqual({ kind: 'refund', amount: 650 });
+  expect(cancelOutcome(row('b', { refundable_until: at(-1) }), now)).toEqual({ kind: 'late' });
+  expect(cancelOutcome(row('c', { same_day: true }), now)).toEqual({ kind: 'sameDay' });
+  expect(cancelOutcome(row('d', { method: 'venue' }), now)).toEqual({ kind: 'nothing' });
+  expect(cancelOutcome(row('e', { display_status: 'payment_due' }), now)).toEqual({ kind: 'nothing' });
+  // Not paid yet but holding app credit: the credit goes back (D64).
+  expect(cancelOutcome(row('e2', { display_status: 'pending', credit_egp: 200 }), now)).toEqual({
+    kind: 'creditBack',
+    amount: 200,
+  });
+  expect(canReschedule(row('f', { starts_at: at(30) }), now)).toBe(true);
+  expect(canReschedule(row('g', { starts_at: at(20) }), now)).toBe(false);
+  expect(canCancel(row('h', { starts_at: at(1) }), now)).toBe(true);
+  expect(canCancel(row('i', { starts_at: at(-1) }), now)).toBe(false);
+  expect(canCancel(row('j', { display_status: 'cancelled' }), now)).toBe(false);
+});
+
+test('Cancel sheet: says the refund, cancels with the reason, back to Bookings with a toast', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  mockCancel.mockResolvedValue({ ref: 'CFA-1', refund_egp: 650 });
+  await render(<CancelSheet />);
+  expect(
+    screen.getByText(
+      "You'll get 650 EGP back as app credit for your next booking. Refund credit never expires.",
+    ),
+  ).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Injury' }));
+  await fireEvent.press(screen.getByRole('button', { name: 'Cancel and get 650 EGP credit' }));
+  await waitFor(() => expect(mockRouter.navigate).toHaveBeenCalledWith('/bookings'));
+  expect(mockCancel).toHaveBeenCalledWith('CFA-1', 'Injury');
+  expect(useToast.getState().message).toBe('Booking cancelled · 650 EGP added to your credit');
+});
+
+test('Cancel sheet: inside 24 h says no refund and offers a plain cancel', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1', { refundable_until: at(-1), starts_at: at(5) });
+  await render(<CancelSheet />);
+  expect(screen.getByText(/isn't refunded/)).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Cancel booking' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Keep booking' }));
+  expect(mockRouter.back).toHaveBeenCalled();
+});
+
+test('Reschedule: other open times of the same offering; moving keeps the ref', async () => {
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  mockSlots = [
+    { id: 's-now', offering_id: 'o1', starts_at: at(72), ends_at: at(73), seats_free: 1 },
+    { id: 's-full', offering_id: 'o1', starts_at: at(96), ends_at: at(97), seats_free: 0 },
+    { id: 's-new', offering_id: 'o1', starts_at: at(120), ends_at: at(121), seats_free: 1 },
+  ];
+  mockMove.mockResolvedValue(undefined);
+  await render(<Reschedule />);
+  const times = screen.getAllByRole('button', { name: /\d:\d\d/ });
+  expect(times).toHaveLength(1); // not the current time, not a full one
+  await fireEvent.press(times[0]!);
+  await fireEvent.press(screen.getByRole('button', { name: 'Move booking' }));
+  await waitFor(() => expect(mockRouter.back).toHaveBeenCalled());
+  expect(mockMove).toHaveBeenCalledWith('CFA-1', 's-new');
+  expect(useToast.getState().message).toMatch(/^Moved to /);
+});
+
+test('maps are Google: directions link, and a static map picture once the key is set (D52)', async () => {
+  expect(directionsUrl(30.03, 31.47)).toBe('https://www.google.com/maps/dir/?api=1&destination=30.03,31.47');
+  const saved = process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  delete process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  expect(staticMapUrl(30.03, 31.47, 'en')).toBeNull(); // the live map stays until the owner's key is set
+  process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY = 'test-key';
+  const url = staticMapUrl(30.03, 31.47, 'ar')!;
+  expect(url).toMatch(/^https:\/\/maps\.googleapis\.com\/maps\/api\/staticmap\?center=30\.03,31\.47&zoom=15/);
+  expect(url).toContain('&markers=30.03%2C31.47&language=ar&key=test-key');
+  mockParams = { ref: 'CFA-1' };
+  mockOne = row('CFA-1');
+  await render(<BookingDetail />);
+  expect(screen.getByLabelText('Map showing Cedar Court Club').props.source).toEqual({
+    uri: staticMapUrl(30.03, 31.47, 'en'),
+  });
+  if (saved === undefined) delete process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
+  else process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY = saved;
+});

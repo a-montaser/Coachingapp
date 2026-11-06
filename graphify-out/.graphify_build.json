@@ -1,0 +1,6 @@
+{
+  "excludes": [
+    "apps/mobile/assets/*",
+    "docs/project-map/*"
+  ]
+}

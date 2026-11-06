@@ -1,0 +1,272 @@
+import { fireEvent, render, screen } from '@testing-library/react-native';
+import '@/i18n';
+import Home from '@/app/(tabs)/index';
+import { useSettings, type Category } from '@/theme/settings';
+import {
+  cairoDaysUntil,
+  distanceKm,
+  greetingPeriod,
+  startingSoon,
+  type GroupSessionRow,
+  type InstructorCardRow,
+} from './home';
+
+jest.mock('expo-router', () => ({
+  router: { navigate: jest.fn(), push: jest.fn() },
+  useFocusEffect: jest.fn(),
+}));
+const mockRouter = jest.requireMock('expo-router').router;
+jest.mock('./supabase', () => ({ supabaseConfigured: true, supabase: {} }));
+jest.mock('./auth', () => ({
+  ...jest.requireActual('./auth'),
+  useSession: () => ({ session: { user: { id: 'u1' } }, loading: false }),
+  useProfile: () => ({ data: { first_name: 'Omar', area_id: 'new-cairo' } }),
+}));
+
+const DAY = 86_400_000;
+const inDays = (n: number) => new Date(Date.now() + n * DAY).toISOString();
+let mockBookings: { next: object | null; lastCompleted: object | null } = { next: null, lastCompleted: null };
+const mockRows: Record<string, unknown> = {
+  disciplines: [
+    { id: 'pottery', category_id: 'hobbies', name_en: 'Pottery', name_ar: null, icon: 'pottery', code: null },
+    { id: 'padel', category_id: 'sports', name_en: 'Padel', name_ar: null, icon: 'padel', code: null },
+    { id: 'maths', category_id: 'education', name_en: 'Maths', name_ar: null, icon: 'maths', code: null },
+    { id: 'french', category_id: 'languages', name_en: 'French', name_ar: null, icon: null, code: 'FR' },
+  ],
+  areas: [{ id: 'new-cairo', name_en: 'New Cairo', name_ar: null, lat: 30.0074, lng: 31.4913 }],
+  instructorCards: [
+    {
+      id: 'nour',
+      display_name: 'Nour El-Sayed',
+      discipline_id: 'padel',
+      discipline_en: 'Padel',
+      discipline_ar: null,
+      levels: 'Intermediate–Advanced',
+      rating_avg: 4.9,
+      rating_count: 128,
+      from_price: 390,
+      next_at: inDays(2),
+      area_en: 'New Cairo',
+      area_ar: null,
+      lat: 30.028,
+      lng: 31.47,
+    },
+  ],
+  groupSessions: [
+    {
+      slot_id: 's1',
+      starts_at: inDays(4),
+      capacity: 8,
+      seats_free: 3,
+      offering_id: 'o1',
+      title: 'Wheel-throwing taster',
+      price_egp: 650,
+      area_en: 'Zamalek',
+      area_ar: null,
+    },
+  ],
+};
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQuery: ({ queryKey, enabled }: { queryKey: string[]; enabled?: boolean }) => ({
+    data:
+      enabled === false ? undefined : queryKey[0] === 'myBookings' ? mockBookings : mockRows[queryKey[0]!],
+  }),
+}));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  mockBookings = { next: null, lastCompleted: null };
+  useSettings.setState({ lang: 'en', category: 'hobbies' });
+});
+
+test('greeting follows Cairo time: morning 05–11, afternoon 12–16, evening 17–04', () => {
+  // January: Cairo is UTC+2.
+  expect(greetingPeriod(new Date('2026-01-10T02:59:00Z'))).toBe('evening'); // 04:59
+  expect(greetingPeriod(new Date('2026-01-10T03:00:00Z'))).toBe('morning'); // 05:00
+  expect(greetingPeriod(new Date('2026-01-10T09:59:00Z'))).toBe('morning'); // 11:59
+  expect(greetingPeriod(new Date('2026-01-10T10:00:00Z'))).toBe('afternoon'); // 12:00
+  expect(greetingPeriod(new Date('2026-01-10T14:59:00Z'))).toBe('afternoon'); // 16:59
+  expect(greetingPeriod(new Date('2026-01-10T15:00:00Z'))).toBe('evening'); // 17:00
+});
+
+test('days are counted on the Cairo calendar, and distance is great-circle km', () => {
+  const lateTonight = new Date('2026-01-10T21:30:00Z'); // 23:30 Cairo
+  expect(cairoDaysUntil(new Date('2026-01-10T21:50:00Z'), lateTonight)).toBe(0);
+  expect(cairoDaysUntil(new Date('2026-01-10T22:30:00Z'), lateTonight)).toBe(1); // 00:30 next day
+  const zamalek = { lat: 30.0609, lng: 31.2197 };
+  const newCairo = { lat: 30.0074, lng: 31.4913 };
+  expect(distanceKm(zamalek, newCairo)).toBeGreaterThan(26);
+  expect(distanceKm(zamalek, newCairo)).toBeLessThan(28);
+});
+
+test.each<[Category, string, string, string, string | null, string]>([
+  [
+    'hobbies',
+    'What will you make this week?',
+    'Pottery, oud, photography…',
+    'Pick up something new',
+    'Groups near you',
+    'Classes near you',
+  ],
+  ['sports', 'Your coaches and courts', 'Coach, sport or area', 'Sports', null, 'Classes near you'],
+  [
+    'education',
+    'Tutors for school, exams and new skills',
+    'Subject, exam or tutor',
+    'Subjects',
+    'Revision groups',
+    'Classes near you',
+  ],
+  [
+    'languages',
+    'Speak with real teachers, in person or online',
+    'Language, level or teacher',
+    'Languages',
+    'Conversation groups',
+    'Classes near you',
+  ],
+])(
+  'Home for %s: subline, search, rails and people from the canvas (§7.4)',
+  async (category, sub, search, rail, groups, people) => {
+    useSettings.setState({ category });
+    await render(<Home />);
+    expect(screen.getByText(/^Good (morning|afternoon|evening), Omar\.?$/)).toBeOnTheScreen();
+    expect(screen.getByText(sub)).toBeOnTheScreen();
+    expect(screen.getByPlaceholderText(search)).toBeOnTheScreen();
+    expect(screen.getByRole('header', { name: rail })).toBeOnTheScreen();
+    expect(screen.getByRole('header', { name: people })).toBeOnTheScreen();
+    if (groups) expect(screen.getByRole('header', { name: groups })).toBeOnTheScreen();
+    else expect(screen.queryByText('Wheel-throwing taster')).toBeNull(); // Sports has no group rail in v1
+    expect(screen.getByRole('button', { name: /Category: .*Change category/ })).toBeOnTheScreen();
+  },
+);
+
+test('no booking shows the empty card; a session within 24 h leads with its time; a later one stays off Home', async () => {
+  useSettings.setState({ category: 'education' });
+  const view = await render(<Home />);
+  expect(screen.getByText('No lessons booked yet')).toBeOnTheScreen();
+  expect(screen.getByText('Find a tutor for your next exam')).toBeOnTheScreen();
+  await view.unmount();
+
+  useSettings.setState({ category: 'hobbies' });
+  const booking = (startsAt: string) => ({
+    next: {
+      ref: 'CFA-1',
+      type: 'workshop',
+      title: 'Wheel-throwing taster with Yasmine',
+      starts_at: startsAt,
+      venue_name: 'The Clay Room',
+    },
+    lastCompleted: null,
+  });
+  mockBookings = booking(new Date(Date.now() + 5 * 3_600_000).toISOString());
+  const soon = await render(<Home />);
+  expect(screen.getByText(/\d · Wheel-throwing taster with Yasmine$/)).toBeOnTheScreen();
+  expect(screen.getByText(/· The Clay Room$/)).toBeOnTheScreen();
+  await soon.unmount();
+
+  mockBookings = booking(inDays(3));
+  await render(<Home />);
+  expect(screen.queryByText(/Wheel-throwing taster with Yasmine/)).toBeNull();
+  expect(screen.queryByText('Nothing booked yet')).toBeNull();
+});
+
+test('Sports shows "Book again" for the last completed session with that coach\'s next opening', async () => {
+  useSettings.setState({ category: 'sports' });
+  mockBookings = {
+    next: null,
+    lastCompleted: {
+      instructor_id: 'nour',
+      instructor_name: 'Nour',
+      discipline_id: 'padel',
+      discipline_en: 'Padel',
+      discipline_ar: null,
+    },
+  };
+  await render(<Home />);
+  expect(screen.getByText('Padel with Nour')).toBeOnTheScreen();
+  expect(screen.getByText(/^Next open: \w{3} \d{2}:\d{2}$/)).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Book again' }));
+  expect(mockRouter.push).toHaveBeenCalledWith({
+    pathname: '/instructor/[id]',
+    params: { id: 'nour', discipline: 'padel' },
+  });
+  // The people list shows distance from the learner's area (New Cairo → Fifth Settlement court).
+  expect(screen.getByText(/km · New Cairo/)).toBeOnTheScreen();
+});
+
+test('search and the disciplines rail open Explore', async () => {
+  await render(<Home />);
+  await fireEvent(screen.getByPlaceholderText('Pottery, oud, photography…'), 'focus');
+  expect(mockRouter.navigate).toHaveBeenCalledWith({
+    pathname: '/explore',
+    params: { focus: '1', at: expect.any(String) },
+  });
+  await fireEvent.press(screen.getByRole('button', { name: 'Pottery' }));
+  expect(mockRouter.navigate).toHaveBeenCalledWith({
+    pathname: '/explore',
+    params: { discipline: 'pottery', at: expect.any(String) },
+  });
+});
+
+test('Starting soon near you: today and tomorrow, still bookable, nearby, soonest first, at most four (D58)', () => {
+  const now = new Date('2026-01-10T08:00:00Z'); // Sat 10:00 Cairo
+  const here = { lat: 30.0074, lng: 31.4913 }; // New Cairo
+  const g = (id: string, starts_at: string, extra: Partial<GroupSessionRow> = {}) =>
+    ({ slot_id: id, starts_at, seats_free: 2, lat: 30.02, lng: 31.47, ...extra }) as GroupSessionRow;
+  const p = (id: string, next_at: string | null, extra: Partial<InstructorCardRow> = {}) =>
+    ({ id, discipline_id: 'oud', next_at, lat: 30.01, lng: 31.48, ...extra }) as InstructorCardRow;
+  const rows = startingSoon(
+    [
+      g('soon', '2026-01-10T08:30:00Z'), // 30 min away: not bookable
+      g('noon', '2026-01-10T10:00:00Z'),
+      g('full', '2026-01-10T11:00:00Z', { seats_free: 0 }),
+      g('far', '2026-01-10T12:00:00Z', { lat: 30.0609, lng: 31.2197 }), // Zamalek, ~27 km
+      g('sun', '2026-01-11T16:00:00Z'), // tomorrow
+      g('mon', '2026-01-12T08:00:00Z'), // in two days
+    ],
+    [p('dina', '2026-01-10T15:00:00Z'), p('none', null)],
+    now,
+    here,
+  );
+  expect(rows.map((r) => (r.kind === 'group' ? r.group.slot_id : r.person.id))).toEqual([
+    'noon',
+    'dina',
+    'sun',
+  ]);
+  // Without a known place, distance doesn't filter.
+  expect(
+    startingSoon([g('far', '2026-01-10T12:00:00Z', { lat: 30.06, lng: 31.22 })], [], now, null),
+  ).toHaveLength(1);
+});
+
+test('the board lists what starts soon, with gold times, and opens the class', async () => {
+  const soon = new Date(Date.now() + 3 * 3_600_000).toISOString();
+  mockRows.groupSessions = [
+    {
+      slot_id: 's2',
+      starts_at: soon,
+      capacity: 6,
+      seats_free: 1,
+      offering_id: 'o2',
+      title: "Ruq'ah calligraphy",
+      instructor_name: 'Ahmed Ezz',
+      area_en: 'New Cairo',
+      area_ar: null,
+      lat: 30.02,
+      lng: 31.47,
+    },
+    ...(mockRows.groupSessions as object[]),
+  ];
+  await render(<Home />);
+  expect(screen.getByRole('header', { name: 'Starting soon near you' })).toBeOnTheScreen();
+  await fireEvent.press(
+    screen.getByRole('button', { name: /Ruq'ah calligraphy, Ahmed Ezz · New Cairo · 1 seat left$/ }),
+  );
+  expect(mockRouter.push).toHaveBeenCalledWith({
+    pathname: '/workshop/[id]',
+    params: { id: 'o2', slot: 's2' },
+  });
+  mockRows.groupSessions = (mockRows.groupSessions as object[]).slice(1);
+});
