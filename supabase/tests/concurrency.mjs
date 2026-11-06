@@ -86,3 +86,65 @@ console.log(
 assert.equal(wins.length, 1, 'exactly one booking succeeds');
 assert.equal(noSeats.length, N - 1, 'every other attempt is refused with no_seats');
 assert.equal(seatsTaken, 1, 'the slot is not overbooked');
+
+// Phase 2 R5: 20 learners book the same two one-seat weeks as a series at once. Exactly one series wins,
+// and neither week is oversold (book_series is all or nothing).
+const cairoOffsetMs = (d) => {
+  const p = Object.fromEntries(
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Africa/Cairo',
+      hourCycle: 'h23',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+      .formatToParts(d)
+      .map((x) => [x.type, x.value]),
+  );
+  return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute) - Math.floor(d.getTime() / 60e3) * 60e3;
+};
+const week0 = new Date(Math.floor((Date.now() + 72 * 3600e3) / 60e3) * 60e3);
+// Same Cairo wall-clock time a week later, whatever the clocks did in between.
+const week1 = new Date(
+  week0.getTime() +
+    7 * 86400e3 +
+    cairoOffsetMs(week0) -
+    cairoOffsetMs(new Date(week0.getTime() + 7 * 86400e3)),
+);
+const weekSlots = (
+  await call('/rest/v1/slots', {
+    method: 'POST',
+    prefer: 'return=representation',
+    body: [week0, week1].map((s) => ({
+      offering_id: offering.id,
+      starts_at: s.toISOString(),
+      ends_at: new Date(s.getTime() + offering.duration_min * 60e3).toISOString(),
+      capacity: 1,
+    })),
+  })
+).json;
+assert.equal(weekSlots.length, 2, 'two weekly slots created');
+
+const seriesResults = await Promise.all(
+  users.map((id) =>
+    call('/rest/v1/rpc/book_series', {
+      method: 'POST',
+      token: jwt(id),
+      body: { p_slot: weekSlots[0].id, p_weeks: 2, p_method: 'venue' },
+    }),
+  ),
+);
+const seriesWins = seriesResults.filter((r) => r.ok);
+const seriesRefused = seriesResults.filter((r) => !r.ok && r.json?.message === 'series_week_unavailable');
+const taken = (
+  await call(`/rest/v1/slots?id=in.(${weekSlots.map((s) => s.id).join(',')})&select=seats_taken`)
+).json.map((s) => s.seats_taken);
+
+console.log(
+  `book_series() x${N} over 2 one-seat weeks: ${seriesWins.length} succeeded, ${seriesRefused.length} refused, seats_taken=${taken}`,
+);
+assert.equal(seriesWins.length, 1, 'exactly one series succeeds');
+assert.equal(seriesRefused.length, N - 1, 'every other series is refused whole');
+assert.deepEqual(taken, [1, 1], 'neither week is oversold');

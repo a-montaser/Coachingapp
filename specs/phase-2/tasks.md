@@ -9,7 +9,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 - [x] **T1 Engagement migration.** Tables, columns, RLS, `my_threads`, triggers (design §2).
   - Verify: pgTAP RLS tests `05_chat`, `07_favourites`; CI supabase job.
   - Done 6 Nov: migration `20261106120000_engagement.sql`; CI run 42267559972 green on all four jobs (89 pgTAP tests, 33 new). Not pushed to the hosted project yet (T3).
-- [ ] **T2 Functions.** `start_thread`, `rate_booking`, `_book_one` + `book_series`, `cancel_booking(every_week)`.
+- [ ] **T2 Functions.** `start_thread`, `rate_booking`, `book_series`, `cancel_booking(every_week)`.
   - Verify: pgTAP `06_ratings`, `08_series` with frozen time; Phase 1 tests unchanged and green; series concurrency script.
 - [ ] **T3 Seed and push.** Two seeded instructors linked to test numbers *(Q1, D67)*; a signed-in instructor skips onboarding and sees Messages only (journey gate); a seeded thread for the demo learner; migration pushed to the hosted project.
   - Verify: `supabase db push`; read-only query shows the counts.

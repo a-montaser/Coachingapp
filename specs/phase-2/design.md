@@ -56,14 +56,14 @@ rate_booking(ref text, stars int, body text) returns reviews
   -- instructors: rating_count += 1; rating_avg = round((avg × count + stars) / (count + 1), 1), row locked
 book_series(slot uuid, weeks int, method text, promo text, note text) returns setof bookings
   -- 2 ≤ weeks ≤ 8; type private or group; slots = this slot + the same offering's slots exactly 7·k days later
-  -- lock all slots `for update` in starts_at order (no deadlocks), then the existing book() checks for each
+  -- calls book() for each week in date order (book() locks each slot, so every series locks in the same order: no deadlocks)
   -- any failure raises with the failing week's date → the whole transaction rolls back
   -- each booking: own ref, same series_id, own refundable_until / same_day; promo on each
 cancel_booking(ref, reason, every_week boolean default false)
   -- every_week: this booking and the series' later non-cancelled bookings, each through the existing refund branch (D64)
 ```
 
-`book()`'s body moves into an internal `_book_one(…)` that both `book` and `book_series` call, so the rules stay in one place (Phase 1 tests keep passing unchanged).
+`book_series` calls the existing `book()` once per week, so the rules stay in one place; a full, past or missing week raises `series_week_unavailable` with that week's Cairo date as the error detail. The Phase 1 `cancel_booking` and `reschedule_booking` are renamed `cancel_one_booking` / `reschedule_one_booking` (no longer callable by the app) and wrapped: the new `cancel_booking` adds `p_every_week`, and `reschedule_booking` clears the moved week's `series_id`. `my_bookings` gains `series_id`. Phase 1 tests keep passing unchanged.
 
 ## 4. Chat client
 - **Send:** insert the row with a client-made `id` (idempotent retry); show it at once from the cache; on error mark it "Not sent · Retry".
