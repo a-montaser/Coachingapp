@@ -19,7 +19,6 @@ import { MonthCalendar } from '@/ui/MonthCalendar';
 import { RowCard } from '@/ui/RowCard';
 import { Section } from '@/ui/Section';
 import { EmptyState } from '@/ui/EmptyState';
-import { testBanner, testPhoto } from '@/dev/testImages';
 import { Avatar } from '@/ui/Avatar';
 import { Hero } from '@/ui/Hero';
 import { NavigationBar } from '@/ui/NavigationBar';
@@ -125,12 +124,7 @@ export default function Workshop() {
         ref={scrollRef}
         contentContainerStyle={{ paddingBottom: insets.bottom + BAR_CLEARANCE }}
       >
-        <Hero
-          height={hero.workshop}
-          icon="hobbies"
-          label={t('card.photoPlaceholder')}
-          image={testBanner(o.discipline_id, 'hobbies')}
-        />
+        <Hero height={hero.workshop} icon="hobbies" label={t('card.photoPlaceholder')} />
         <View style={[styles.sheet, { backgroundColor: c.bg }]}>
           <View style={styles.intro}>
             <View style={styles.pill}>
@@ -150,7 +144,7 @@ export default function Workshop() {
           </View>
 
           <RowCard
-            leading={<Avatar size={component.iconButton.size} image={testPhoto(who.display_name)} />}
+            leading={<Avatar size={component.iconButton.size} />}
             title={t('workshop.with', { name: who.display_name })}
             subtitle={`${n(who.rating_avg)} (${n(who.rating_count)}) · ${venue}`}
             onPress={() =>

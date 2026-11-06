@@ -19,7 +19,6 @@ import {
   statusPill,
 } from '@/data/bookings';
 import { bookingErrorKey, runCheckout, useMyBooking, type BookingErrorKey } from '@/data/checkout';
-import { testPhoto } from '@/dev/testImages';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatPrice, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -223,7 +222,7 @@ export default function BookingDetail() {
           />
 
           <RowCard
-            leading={<Avatar size={component.iconButton.size} image={testPhoto(b.instructor_name)} />}
+            leading={<Avatar size={component.iconButton.size} />}
             title={b.instructor_name}
             subtitle={subject}
             onPress={() =>

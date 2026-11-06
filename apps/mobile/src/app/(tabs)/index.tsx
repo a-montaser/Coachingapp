@@ -22,7 +22,6 @@ import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { useMinimiseOnScroll } from '@/ui/TabBar';
-import { testBanner, testPhoto } from '@/dev/testImages';
 import { Avatar } from '@/ui/Avatar';
 import { Button } from '@/ui/Button';
 import { CategoryButton, CategoryTray } from '@/ui/CategoryTray';
@@ -223,7 +222,7 @@ export default function Home() {
 
         {again && (
           <RowCard
-            leading={<Avatar size={component.iconButton.size} image={testPhoto(again.instructor_name)} />}
+            leading={<Avatar size={component.iconButton.size} />}
             title={t('home.bookAgainTitle', {
               discipline: (ar && again.discipline_ar) || again.discipline_en,
               name: again.instructor_name,
@@ -281,7 +280,6 @@ export default function Home() {
                   key={g.slot_id}
                   layout="rail"
                   workshop={{
-                    banner: testBanner(g.discipline_id, category),
                     title: g.title,
                     when: `${formatWeekday(new Date(g.starts_at), lang)} ${formatDayMonth(new Date(g.starts_at), lang)} · ${formatClock(new Date(g.starts_at), lang)}`,
                     area: (ar && g.area_ar) || g.area_en,
@@ -307,7 +305,6 @@ export default function Home() {
             <InstructorCard
               key={`${p.id}-${p.discipline_id}`}
               instructor={{
-                photo: testPhoto(p.display_name),
                 name: p.display_name,
                 discipline: (ar && p.discipline_ar) || p.discipline_en,
                 levels: p.levels ?? undefined,

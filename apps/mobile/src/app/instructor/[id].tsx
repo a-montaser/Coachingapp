@@ -16,7 +16,6 @@ import { Card } from '@/ui/Card';
 import { Chip } from '@/ui/Chip';
 import { EmptyState } from '@/ui/EmptyState';
 import { GroupedList } from '@/ui/GroupedList';
-import { testHero } from '@/dev/testImages';
 import { Hero } from '@/ui/Hero';
 import { Icon, disciplineIcon } from '@/ui/Icon';
 import { NavigationBar } from '@/ui/NavigationBar';
@@ -118,7 +117,6 @@ export default function InstructorProfile() {
           height={hero.instructor}
           icon={disciplineIcon(p.discipline_id) ?? 'profile'}
           label={t('card.photoPlaceholder')}
-          image={testHero(p.display_name)}
         />
         <View style={[styles.sheet, { backgroundColor: c.bg }]}>
           <View style={styles.intro}>

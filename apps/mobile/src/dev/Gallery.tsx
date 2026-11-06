@@ -8,7 +8,6 @@ import { component, layout, space } from '@cfa/tokens';
 import { missingArabicKeys, setLanguage, useLang } from '@/i18n';
 import { useSettings, type A11yFlag, type ThemePref } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
-import { testBanner, testPhoto } from '@/dev/testImages';
 import { Avatar } from '@/ui/Avatar';
 import { Banner } from '@/ui/Banner';
 import { Card } from '@/ui/Card';
@@ -336,7 +335,7 @@ export function Gallery() {
             onPress={() => {}}
           />
           <RowCard
-            leading={<Avatar size={component.iconButton.size} image={testPhoto('Nour El-Sayed')} />}
+            leading={<Avatar size={component.iconButton.size} />}
             kicker={g.app.againKicker}
             title={g.app.againTitle}
             subtitle={g.app.againSub}
@@ -349,11 +348,7 @@ export function Gallery() {
             trailing={<Button label={g.app.change} size="small" onPress={() => {}} />}
           />
           <View style={styles.row}>
-            <Avatar
-              size={component.profilePhoto.size}
-              image={testPhoto('Yasmine Fathy')}
-              accessibilityLabel={g.app.avatar}
-            />
+            <Avatar size={component.profilePhoto.size} accessibilityLabel={g.app.avatar} />
             <Avatar size={component.profilePhoto.size} accessibilityLabel={g.app.avatar} />
             <IconTile icon="hobbies" />
             <IconTile icon="clock" tone="neutral" />
@@ -393,12 +388,7 @@ export function Gallery() {
             />
           </Card>
           <Banner text={g.app.banner} />
-          <Hero
-            height={component.hero.workshop / 2}
-            icon="hobbies"
-            label={g.app.hero}
-            image={testBanner('pottery')}
-          />
+          <Hero height={component.hero.workshop / 2} icon="hobbies" label={g.app.hero} />
         </Section>
 
         <Section

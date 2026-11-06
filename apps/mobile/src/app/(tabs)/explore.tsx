@@ -12,7 +12,6 @@ import { cairoDaysUntil } from '@/data/home';
 import { useSettings } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
 import { useMinimiseOnScroll } from '@/ui/TabBar';
-import { testBanner, testPhoto } from '@/dev/testImages';
 import { FilterButton } from '@/ui/FilterButton';
 import { EmptyState } from '@/ui/EmptyState';
 import { InstructorCard } from '@/ui/InstructorCard';
@@ -138,7 +137,6 @@ export default function Explore() {
           <WorkshopCard
             key={g.slot_id}
             workshop={{
-              banner: testBanner(g.discipline_id, category),
               title: g.title,
               when: `${formatWeekday(new Date(g.starts_at), lang)} ${formatDayMonth(new Date(g.starts_at), lang)} · ${formatClock(new Date(g.starts_at), lang)}`,
               area: (ar && g.area_ar) || g.area_en,
@@ -156,7 +154,6 @@ export default function Explore() {
           <InstructorCard
             key={`${p.id}-${p.discipline_id}`}
             instructor={{
-              photo: testPhoto(p.display_name),
               name: p.display_name,
               discipline: (ar && p.discipline_ar) || p.discipline_en,
               levels: p.levels ?? undefined,

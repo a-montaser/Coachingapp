@@ -19,7 +19,6 @@ import {
 } from '@/data/checkout';
 import { useFamily } from '@/data/family';
 import { policyFor, promoDiscount, subtotal } from '@/data/rules';
-import { testPhoto } from '@/dev/testImages';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatPrice, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -179,7 +178,7 @@ export default function Review() {
         ]}
       >
         <RowCard
-          leading={<Avatar size={component.iconButton.size} image={testPhoto(instructor.display_name)} />}
+          leading={<Avatar size={component.iconButton.size} />}
           title={t('home.bookAgainTitle', { discipline, name: instructor.display_name })}
           subtitle={[
             when,

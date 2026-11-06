@@ -56,7 +56,7 @@ Success: a learner goes from "I'd like to try pottery" to a confirmed session wi
 ## Evidence on Hand
 
 - No real instructor photos, venue photos, testimonials, ratings or customers yet. Seed instructors and classes are sample data.
-- `apps/mobile/assets/test-images/`: prototype illustrations standing in for photos during testing only; they are removed before the Phase 1 report. Do not present them as real.
+- No real photos yet: cards and profiles show neutral placeholders until instructors upload photos. The prototype illustrations used for testing were removed at the end of Phase 1 (D43).
 - Do not invent instructors, reviews, prices or partner claims.
 
 ## Product Principles

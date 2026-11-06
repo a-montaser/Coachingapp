@@ -176,7 +176,7 @@ export const component = {
     boxHeight: 60,
     ring: 2,
     length: 6,
-    resendSeconds: 10 /* TESTING ONLY (D43): back to 60, Supabase's limit, after testing */,
+    resendSeconds: 60 /* Supabase's resend limit */,
   }, // §7.2
   categoryButton: { padStart: 10, padEnd: 12, gap: 6, iconSize: icon.small, chevronSize: icon.xsmall }, // §6.2, DS .modebtn
   tray: {
