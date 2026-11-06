@@ -1,8 +1,9 @@
-import { Tabs, usePathname } from 'expo-router';
+import { Tabs, router, usePathname } from 'expo-router';
 import { useEffect } from 'react';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+import { useMyInstructorId, useSession } from '@/data/auth';
 import { useReminderSync } from '@/data/reminders';
 import { TabBar, restoreTabBar, useTabBarMinimised, type TabKey } from '@/ui/TabBar';
 import { TAB_ICON } from '@/ui/tabIcons';
@@ -15,6 +16,8 @@ const ROUTE: Record<TabKey, string> = {
   profile: 'profile',
 };
 const ORDER: TabKey[] = ['home', 'explore', 'bookings', 'messages', 'profile'];
+// A signed-in instructor uses the app for chat only until Phase 3 (D67); Profile keeps sign-out and settings.
+const INSTRUCTOR_TABS: TabKey[] = ['messages', 'profile'];
 
 /**
  * iOS: Apple's own tab bar, so the Liquid Glass and its selection animation are the system's (owner, D47)
@@ -30,12 +33,21 @@ export default function TabsLayout() {
   // to scrolling, so a page that returns already at the top would otherwise keep the minimised pill.
   const pathname = usePathname();
   useEffect(() => restoreTabBar(), [pathname]);
+  const instructor = useMyInstructorId(useSession().session?.user.id);
+  const isInstructor = Boolean(instructor.data);
+  const tabs = isInstructor ? INSTRUCTOR_TABS : ORDER;
+  // Home is hidden for an instructor, so they land on Messages.
+  useEffect(() => {
+    if (isInstructor && pathname === '/') router.replace('/messages');
+  }, [isInstructor, pathname]);
+  // Wait for the answer: changing which tabs exist later would remount the tab navigator.
+  if (instructor.isLoading) return null;
 
   if (Platform.OS === 'ios') {
     return (
       <NativeTabs minimizeBehavior="onScrollDown">
         {ORDER.map((tab) => (
-          <NativeTabs.Trigger key={tab} name={ROUTE[tab]}>
+          <NativeTabs.Trigger key={tab} name={ROUTE[tab]} hidden={!tabs.includes(tab)}>
             <NativeTabs.Trigger.Icon src={TAB_ICON[tab]} renderingMode="template" />
             <NativeTabs.Trigger.Label>{t(`tabs.${tab}`)}</NativeTabs.Trigger.Label>
           </NativeTabs.Trigger>
@@ -56,6 +68,7 @@ export default function TabsLayout() {
             active={active ?? 'home'}
             minimised={minimised}
             onRestore={restoreTabBar}
+            tabs={tabs}
             onSelect={(k) => {
               restoreTabBar();
               navigation.navigate(ROUTE[k]);
@@ -65,7 +78,7 @@ export default function TabsLayout() {
       }}
     >
       {ORDER.map((tab) => (
-        <Tabs.Screen key={tab} name={ROUTE[tab]} />
+        <Tabs.Screen key={tab} name={ROUTE[tab]} options={tabs.includes(tab) ? undefined : { href: null }} />
       ))}
     </Tabs>
   );

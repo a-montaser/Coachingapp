@@ -56,6 +56,22 @@ export function useProfile(userId: string | undefined) {
   });
 }
 
+/**
+ * The signed-in person's instructor row id, or null for a learner (SQL `my_instructor_id()`). Instructors
+ * sign in for chat only until Phase 3's instructor mode (D67), so the tabs show Messages and Profile.
+ */
+export function useMyInstructorId(userId: string | undefined) {
+  return useQuery({
+    queryKey: ['my-instructor', userId],
+    enabled: Boolean(userId),
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc('my_instructor_id');
+      if (error) throw error;
+      return (data as string | null) ?? null;
+    },
+  });
+}
+
 /** Supabase auth errors → our copy keys. */
 export function authErrorKey(error: { message?: string; code?: string; status?: number } | null) {
   if (!error) return null;

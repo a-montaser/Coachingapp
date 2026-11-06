@@ -138,3 +138,13 @@ test('Text inside Toast stays visible under Reduce Motion (no animation, content
   await render(<Toast message="Saved" visible onHide={() => {}} />);
   expect(screen.getByText('Saved')).toBeOnTheScreen();
 });
+
+test('TabBar for a signed-in instructor: Messages and Profile only; minimised it jumps to Profile (D67)', async () => {
+  const onSelect = jest.fn();
+  await render(<TabBar active="messages" onSelect={onSelect} tabs={['messages', 'profile']} />);
+  expect(screen.getAllByRole('tab').map((t) => t.props.accessibilityLabel)).toEqual(['Messages', 'Profile']);
+
+  await render(<TabBar active="messages" onSelect={onSelect} tabs={['messages', 'profile']} minimised />);
+  await fireEvent.press(screen.getByRole('button', { name: 'Profile' }));
+  expect(onSelect).toHaveBeenCalledWith('profile');
+});

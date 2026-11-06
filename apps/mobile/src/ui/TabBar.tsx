@@ -69,6 +69,8 @@ type Props = {
   unreadMessages?: number;
   minimised?: boolean;
   onRestore?: () => void;
+  /** The tabs shown, in order; a signed-in instructor gets Messages and Profile only (D67). */
+  tabs?: TabKey[];
 };
 
 const tb = component.tabBar;
@@ -95,7 +97,14 @@ export function useTabBarBottom() {
 }
 
 /** §4.4 floating glass tab bar (prototype "Shared · Floating glass tab bar"), on iOS and Android (D43). */
-export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false, onRestore }: Props) {
+export function TabBar({
+  active,
+  onSelect,
+  unreadMessages = 0,
+  minimised = false,
+  onRestore,
+  tabs = TABS,
+}: Props) {
   const { c } = useTheme();
   const { t } = useTranslation();
   const { reduceMotion } = useA11y();
@@ -105,10 +114,10 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   const liquid = glassMode(Platform.OS, liquidAvailable(), reduceTransparency) === 'liquid';
   // The iOS 26 lens under the finger (D49): swells, follows a drag, springs onto the tab let go on.
   const lens = useGlassLens({
-    count: TABS.length,
-    index: TABS.indexOf(active),
+    count: tabs.length,
+    index: tabs.indexOf(active),
     inset: tb.padding,
-    onChange: (i) => onSelect(TABS[i]!),
+    onChange: (i) => onSelect(tabs[i]!),
   });
   // Scale only: fading a parent of native glass breaks it (DECISIONS D20).
   const pop = reduceMotion ? undefined : ZoomIn.duration(motion.tabMinimiseMs);
@@ -138,7 +147,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
   );
 
   if (minimised) {
-    const jump: TabKey = active === 'messages' ? 'home' : 'messages';
+    const jump: TabKey = active !== 'messages' ? 'messages' : tabs.includes('home') ? 'home' : 'profile';
     return (
       <Animated.View key="min" entering={pop} style={[styles.wrap, { bottom }, styles.minRow]}>
         <Pressable accessibilityRole="button" accessibilityLabel={label(active)} onPress={onRestore}>
@@ -176,7 +185,7 @@ export function TabBar({ active, onSelect, unreadMessages = 0, minimised = false
                 liquid={liquid}
                 fill={liquid ? undefined : c.glassSelected}
               />
-              {TABS.map((tab) => {
+              {tabs.map((tab) => {
                 const selected = tab === active;
                 return (
                   // Touch is the lens's gesture; the Pressable keeps VoiceOver and Switch Control activation.

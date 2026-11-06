@@ -27,7 +27,7 @@ supabase/
 scripts/realtime-test.mjs                        two-client Realtime check, CI supabase job
 ```
 
-- **Journey gate** *(D67)*: a signed-in user whose id is an instructor's `user_id` skips onboarding and gets a tab bar with Messages only; Chat's header shows the learner's first name. Everything else is unchanged for learners.
+- **Journey gate** *(D67)*: a signed-in user whose id is an instructor's `user_id` skips onboarding and gets a tab bar with Messages and Profile only (D69), landing on Messages; Chat's header shows the learner's first name. Everything else is unchanged for learners.
 - Server state stays in TanStack Query. Realtime events update the query cache (`setQueryData`) instead of refetching.
 - One Realtime channel per open chat (`thread:<id>`: postgres inserts on `messages` for that thread, plus broadcast `typing`), and one app-wide subscription to `messages` inserts and `thread_reads` updates that RLS already narrows to my threads (tab badge, list, toast).
 
