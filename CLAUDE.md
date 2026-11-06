@@ -5,7 +5,7 @@ Cairo lesson-booking app (Hobbies first, then Sports, Education, Languages). Exp
 ## Read first, every session
 1. `docs/WORKING_AGREEMENT.md`: the owner's rules (phases, spec gates, what to ask before doing).
 2. `docs/DECISIONS.md`: D1–D30+. These override the working agreement where they differ.
-3. The current phase's spec in `specs/phase-N/` (requirements, design, tasks). **Phase 1 is in progress; next task is in `specs/phase-1/tasks.md`.**
+3. The current phase's spec in `specs/phase-N/` (requirements, design, tasks). **Phase 1 is closed (`specs/phase-1/report.md`). Phase 2 has started: its spec is not written yet. First job: draft `specs/phase-2/` from the report's Phase 2 outline, then STOP for the owner's approval.**
 4. `docs/DESIGN_HANDOFF.md` (source of truth) and `graphify-out/GRAPH_REPORT.md` (map; query it before cross-screen changes).
 
 Design questions the handoff leaves open: the design canvas https://claude.ai/artifact/T5HG8bjkJWWg48RsUwrGhC and its design system https://claude.ai/artifact/MEfnwmckrfLtf6ccKrnFbW (read with the Artifact tool). The handoff wins on conflict (D23).

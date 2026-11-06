@@ -4,16 +4,17 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
 
 ## Gate items carried over from Phase 0 (need you)
 - [ ] **G1 GitHub push**, then CI green on `phase-0` and a pull request into `main`.
+  - Pushed, and CI green on `phase-1` (6 Nov). The pull request into `main` waits for the owner at the Phase 2 gate.
 - [x] **G2 Supabase keys** in `.env`, then `supabase link` and `db push` of the baseline.
 
 ## A. Data (`data`)
-- [ ] **T1 Schema migration.** Tables and RLS from design.md §2; the `my_bookings` view; the profile trigger.
+- [x] **T1 Schema migration.** Tables and RLS from design.md §2; the `my_bookings` view; the profile trigger.
   - Verify: pgTAP RLS tests (two users can't see each other's rows).
-- [ ] **T2 Booking functions.** `book`, `cancel_booking`, `reschedule_booking`, `apply_promo`.
+- [x] **T2 Booking functions.** `book`, `cancel_booking`, `reschedule_booking`, `apply_promo`.
   - Verify: pgTAP tests for every rule and refund branch, with frozen time.
-- [ ] **T3 Seed.** Handoff §14 in full, plus 14 days of generated slots and Omar + Ali.
+- [x] **T3 Seed.** Handoff §14 in full, plus 14 days of generated slots and Omar + Ali.
   - Verify: the seed applies with `supabase db reset`; counts match §14.
-- [ ] **T4 Concurrency test** script, run in the CI Supabase job.
+- [x] **T4 Concurrency test** script, run in the CI Supabase job.
   - Verify: 1 of 20 succeeds.
 
 ## B. App foundations (`auth`, `shell`)
@@ -74,6 +75,7 @@ Each task ends with "✅ [task] · files touched · tests added or passed". A ta
   - **Deferred by the owner (25 Oct):** do it after T20; remind the owner before T22. The table has 426 rows waiting for Egyptian Arabic.
   - 5 Nov: table synced with the app (471 rows) and every row drafted in Egyptian Arabic by Claude, placeholders checked. **Waiting for the owner to read and correct;** then the approved rows go into `ar.json`.
   - Verify: no hard-coded English in screens (lint/grep).
-- [ ] **T22 Graphify `--update`, DECISIONS, phase report** with canvas side-by-sides.
+- [x] **T22 Graphify `--update`, DECISIONS, phase report** with canvas side-by-sides.
+  - Done 6 Nov: testing aids removed (D43), report in `specs/phase-1/report.md`. Canvas side-by-sides not made: the look was replaced (D58), so the report asks the owner whether to compare against the chosen look instead (D65).
   - **Revert the testing aids first (D43):** `TEST_IMAGES = false` in `src/dev/testImages.ts`, then delete it and `assets/test-images/`; `component.otp.resendSeconds` back to 60.
   - Verify: CI green on the final commit. **STOP for the Phase 2 gate.**

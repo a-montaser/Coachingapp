@@ -1,5 +1,180 @@
 [
  {
+  "at": "2026-11-06T17:10:18.261Z",
+  "commit": "75a1e7a",
+  "note": "Phase 1 closed for the gate: testing aids removed, Phase 1 report written (D65)",
+  "nodes": 1400,
+  "links": 4389,
+  "communities": 73,
+  "added": [
+   {
+    "id": "claude_ci_only_database_tests",
+    "l": "CI-only database tests",
+    "c": 1,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_npm_run_check_gate",
+    "l": "npm run check gate",
+    "c": 1,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "docs_decisions_impeccable_mocks_archive",
+    "l": "Archived Impeccable mocks (apps/mobile/.impeccable/mocks/)",
+    "c": 12,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_report_demo_journey",
+    "l": "How to run and demo it (done-when tap path)",
+    "c": 21,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report_credit_history_gap",
+    "l": "No credit history list yet (balance only)",
+    "c": 43,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report_open_items",
+    "l": "[OPEN] items hit (photos, Members Circle, Maps key, Paymob live keys, credit history, credit sources)",
+    "c": 43,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report_phase2_outline",
+    "l": "Proposed Phase 2 spec outline (Engagement)",
+    "c": 43,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report_what_was_built",
+    "l": "What was built (Phase 1 learner app and backend)",
+    "c": 44,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "docs_decisions_cancel_sheet_fit_to_contents",
+    "l": "Cancel sheet fits its content (fitToContents)",
+    "c": 5,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_neutral_photo_placeholders",
+    "l": "Neutral photo placeholders (no real photos yet)",
+    "c": 5,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_report_canvas_side_by_sides",
+    "l": "Canvas side-by-sides (R5 AC) not made",
+    "c": 5,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report_not_done",
+    "l": "Not done, or done differently",
+    "c": 5,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report_test_results",
+    "l": "Test results (CI, four jobs green)",
+    "c": 5,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "specs_phase_1_report",
+    "l": "Phase 1 report",
+    "c": 5,
+    "f": "specs/phase-1/report.md"
+   },
+   {
+    "id": "docs_decisions_d65",
+    "l": "D65: Phase 1 closed for the gate (T22)",
+    "c": 5,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_1_report_risks",
+    "l": "Risks (no Apple Developer membership, Android only on CI emulator, free-tier hosted project, slow e2e)",
+    "c": 5,
+    "f": "specs/phase-1/report.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_dev_testimages_testhero",
+    "l": "testHero()",
+    "c": 12,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_testbanner",
+    "l": "testBanner()",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_testphoto",
+    "l": "testPhoto()",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages",
+    "l": "testImages.ts",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_bycategory",
+    "l": "byCategory",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_bydiscipline",
+    "l": "byDiscipline",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_heroes",
+    "l": "heroes",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_people",
+    "l": "people",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "apps_mobile_src_dev_testimages_test_images",
+    "l": "TEST_IMAGES",
+    "c": 13,
+    "f": "apps/mobile/src/dev/testImages.ts"
+   },
+   {
+    "id": "docs_decisions_testimages",
+    "l": "testImages.ts test illustrations",
+    "c": 1,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "linkDelta": -7,
+  "files": [
+   "CLAUDE.md",
+   "apps/mobile/src/dev/testImages.ts",
+   "docs/DECISIONS.md",
+   "specs/phase-1/report.md"
+  ]
+ },
+ {
   "at": "2026-11-06T13:23:47.249Z",
   "commit": "6449dcb",
   "note": "Cancel sheet now fits its content so the Cancel button is never cut off; app credit live on the hosted database",
