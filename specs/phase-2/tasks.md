@@ -12,8 +12,9 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 - [x] **T2 Functions.** `start_thread`, `rate_booking`, `book_series`, `cancel_booking(every_week)`.
   - Verify: pgTAP `06_ratings`, `08_series` with frozen time; Phase 1 tests unchanged and green; series concurrency script.
   - Done 6 Nov: migration `20261106130000_engagement_functions.sql`; CI run 42291508370 green on all four jobs (120 pgTAP tests; 20 parallel series over two one-seat weeks → 1 success, no seat oversold). Phase 1 test 28 caught a reschedule bug on the first run (fixed).
-- [ ] **T3 Seed and push.** Two seeded instructors linked to test numbers *(Q1, D67)*; a signed-in instructor skips onboarding and sees Messages and Profile only (D69); a seeded thread for the demo learner; migration pushed to the hosted project.
+- [x] **T3 Seed and push.** Two seeded instructors linked to test numbers *(Q1, D67)*; a signed-in instructor skips onboarding and sees Messages and Profile only (D69); a seeded thread for the demo learner; migration pushed to the hosted project.
   - Verify: `supabase db push`; read-only query shows the counts.
+  - Done 6 Nov: CI run 42292972446 green; both migrations pushed to the hosted project; `demo_instructors.sql` run there (Yasmine and Nour linked and onboarded, demo chat with 2 messages); the owner added their test numbers (code 111111 on hosted, list valid until 29 Nov).
 
 ## B. Chat
 - [ ] **T4 Messages tab + tab badge + entry points** (R1.3, R1.4, R1.9), text-only Chat with send, retry, mark read (R1.5, R1.8 without typing).
