@@ -1,5 +1,17 @@
 [
  {
+  "at": "2026-11-06T13:23:47.249Z",
+  "commit": "6449dcb",
+  "note": "Cancel sheet now fits its content so the Cancel button is never cut off; app credit live on the hosted database",
+  "nodes": 1394,
+  "links": 4396,
+  "communities": 66,
+  "added": [],
+  "removed": [],
+  "linkDelta": 0,
+  "files": []
+ },
+ {
   "at": "2026-11-05T16:07:51.943Z",
   "commit": "c40d8d2",
   "note": "Owner's answers: Arabic moved to the last phase; four look fixes from the iPhone screenshots (T23 done); sports small groups now live under Groups; refunds now come back as app credit the learner can choose to spend (D63, D64)",
