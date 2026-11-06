@@ -51,7 +51,8 @@ function RootNavigator() {
         <Stack.Screen name="remind/[ref]" options={sheet} />
         <Stack.Screen name="booking/[ref]" />
         <Stack.Screen name="bookings-filter" options={sheet} />
-        <Stack.Screen name="cancel/[ref]" options={sheet} />
+        {/* Sized to its content so both buttons always show; at the half detent Android cut off "Cancel". */}
+        <Stack.Screen name="cancel/[ref]" options={{ ...sheet, sheetAllowedDetents: 'fitToContents' }} />
         <Stack.Screen name="reschedule/[ref]" />
         <Stack.Screen name="family-member" options={sheet} />
         <Stack.Screen name="language" options={sheet} />

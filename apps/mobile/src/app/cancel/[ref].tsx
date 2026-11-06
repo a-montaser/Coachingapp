@@ -55,7 +55,7 @@ export default function CancelSheet() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.body}>
+    <ScrollView style={styles.fit} contentContainerStyle={styles.body}>
       <T variant="title1" accessibilityRole="header">
         {t('cancel.title')}
       </T>
@@ -84,6 +84,7 @@ export default function CancelSheet() {
 }
 
 const styles = StyleSheet.create({
+  fit: { flexGrow: 0 },
   body: { padding: layout.sideMargin, paddingTop: space.space6, gap: space.space4 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.space2 },
 });
