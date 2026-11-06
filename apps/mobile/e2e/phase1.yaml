@@ -134,6 +134,10 @@ appId: com.coachforall.app
     centerElement: true
 - tapOn: 'Cancel booking'
 - assertVisible: "You'll get 1,300 EGP back as app credit.*"
+- scrollUntilVisible:
+    element:
+      id: 'cancel-confirm'
+    direction: DOWN
 - tapOn:
     id: 'cancel-confirm'
 - assertVisible: 'Booking cancelled · 1,300 EGP added to your credit'
@@ -146,6 +150,10 @@ appId: com.coachforall.app
     centerElement: true
 - tapOn: 'Cancel booking'
 - assertVisible: "(Less than 24 hours to go|Same-day bookings are final).*"
+- scrollUntilVisible:
+    element:
+      id: 'cancel-confirm'
+    direction: DOWN
 - tapOn:
     id: 'cancel-confirm'
 - assertVisible: 'Booking cancelled'
