@@ -142,7 +142,9 @@ language plpgsql security definer set search_path = '' as $$
 declare v_b public.bookings;
 begin
   v_b := public.reschedule_one_booking(p_ref, p_new_slot);
-  update public.bookings set series_id = null where id = v_b.id and series_id is not null returning * into v_b;
+  if v_b.series_id is not null then -- (an update that matches no row would blank v_b)
+    update public.bookings set series_id = null where id = v_b.id returning * into v_b;
+  end if;
   return v_b;
 end $$;
 
