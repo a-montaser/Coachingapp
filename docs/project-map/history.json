@@ -1,5 +1,185 @@
 [
  {
+  "at": "2026-11-06T21:12:29.994Z",
+  "commit": "8b72c24",
+  "note": "T2 database functions (start a chat, rate a session, book weekly, cancel every week) with CI green; T3 local part: demo instructor sign-ins, demo chat, Messages and Profile tabs for instructors (D69)",
+  "nodes": 1516,
+  "links": 4794,
+  "communities": 72,
+  "added": [
+   {
+    "id": "apps_mobile_src_data_auth_usemyinstructorid",
+    "l": "useMyInstructorId()",
+    "c": 49,
+    "f": "apps/mobile/src/data/auth.ts"
+   },
+   {
+    "id": "supabase_tests_concurrency_cairooffsetms",
+    "l": "cairoOffsetMs()",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "apps_mobile_src_app_tabs_layout_instructor_tabs",
+    "l": "INSTRUCTOR_TABS",
+    "c": 0,
+    "f": "apps/mobile/src/app/(tabs)/_layout.tsx"
+   },
+   {
+    "id": "supabase_tests_concurrency_seriesrefused",
+    "l": "seriesRefused",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_serieswins",
+    "l": "seriesWins",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_taken",
+    "l": "taken",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_week0",
+    "l": "week0",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_tests_concurrency_week1",
+    "l": "week1",
+    "c": 7,
+    "f": "supabase/tests/concurrency.mjs"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_cancel_booking",
+    "l": "cancel_booking(p_every_week) wrapper",
+    "c": 16,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_cancel_one_booking",
+    "l": "cancel_one_booking() (renamed Phase 1 cancel, not app-callable)",
+    "c": 16,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_start_thread",
+    "l": "start_thread() (get-or-create learner/instructor thread)",
+    "c": 20,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_scripts_demo_instructors_omar_nour_thread",
+    "l": "Demo thread Omar and Nour (two messages)",
+    "c": 20,
+    "f": "supabase/scripts/demo_instructors.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions",
+    "l": "20261106130000_engagement_functions.sql (Phase 2 functions migration)",
+    "c": 40,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_book_series",
+    "l": "book_series() (2-8 weeks, all or nothing via book())",
+    "c": 40,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_my_bookings",
+    "l": "my_bookings view (+ series_id)",
+    "c": 40,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_reschedule_booking",
+    "l": "reschedule_booking() wrapper (clears series_id)",
+    "c": 40,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_reschedule_one_booking",
+    "l": "reschedule_one_booking() (renamed Phase 1 reschedule, not app-callable)",
+    "c": 40,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_tests_database_08_series_test",
+    "l": "pgTAP 08_series (18 tests: week bounds, series type, unavailable week all-or-nothing, promo per week, cancel one/every week, reschedule leaves series, credit refunds)",
+    "c": 40,
+    "f": "supabase/tests/database/08_series.test.sql"
+   },
+   {
+    "id": "specs_phase_2_design_my_bookings_series_id",
+    "l": "my_bookings gains series_id",
+    "c": 40,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_reschedule_booking_wrapper",
+    "l": "reschedule_booking() wrapper (moved week leaves the series)",
+    "c": 40,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "supabase_scripts_demo_instructors",
+    "l": "demo_instructors.sql (demo instructor sign-ins and demo chat)",
+    "c": 49,
+    "f": "supabase/scripts/demo_instructors.sql"
+   },
+   {
+    "id": "supabase_scripts_demo_instructors_yasmine_nour_signins",
+    "l": "Demo instructor sign-ins Yasmine Fathy and Nour El-Sayed (test numbers)",
+    "c": 49,
+    "f": "supabase/scripts/demo_instructors.sql"
+   },
+   {
+    "id": "docs_decisions_d69",
+    "l": "D69: Instructors get Messages and Profile tabs; demo instructor sign-ins",
+    "c": 49,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "supabase_migrations_20261106130000_engagement_functions_rate_booking",
+    "l": "rate_booking() (one rating per completed booking, moves instructor average)",
+    "c": 60,
+    "f": "supabase/migrations/20261106130000_engagement_functions.sql"
+   },
+   {
+    "id": "supabase_tests_database_06_ratings_test",
+    "l": "pgTAP 06_ratings (13 tests: star bounds, completed-only, rate once, average and count, review RLS, signed-out refused)",
+    "c": 60,
+    "f": "supabase/tests/database/06_ratings.test.sql"
+   }
+  ],
+  "removed": [
+   {
+    "id": "specs_phase_2_design_book_one",
+    "l": "_book_one() shared booking body",
+    "c": 0,
+    "f": "specs/phase-2/design.md"
+   }
+  ],
+  "linkDelta": 87,
+  "files": [
+   "apps/mobile/src/app/(tabs)/_layout.tsx",
+   "apps/mobile/src/data/auth.ts",
+   "docs/DECISIONS.md",
+   "specs/phase-2/design.md",
+   "supabase/migrations/20261106130000_engagement_functions.sql",
+   "supabase/scripts/demo_instructors.sql",
+   "supabase/tests/concurrency.mjs",
+   "supabase/tests/database/06_ratings.test.sql",
+   "supabase/tests/database/08_series.test.sql"
+  ]
+ },
+ {
   "at": "2026-11-06T20:24:25.525Z",
   "commit": "e6c09b9",
   "note": "T1 engagement schema: chat tables with read markers, reviews, favourites, weekly series link, Messages list view; RLS tested (33 new database tests, CI green)",
