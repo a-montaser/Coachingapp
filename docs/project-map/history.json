@@ -1,5 +1,124 @@
 [
  {
+  "at": "2026-11-06T20:24:25.525Z",
+  "commit": "e6c09b9",
+  "note": "T1 engagement schema: chat tables with read markers, reviews, favourites, weekly series link, Messages list view; RLS tested (33 new database tests, CI green)",
+  "nodes": 1492,
+  "links": 4707,
+  "communities": 72,
+  "added": [
+   {
+    "id": "supabase_migrations_20261106120000_engagement",
+    "l": "20261106120000_engagement.sql (engagement migration)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_bookings_series_id",
+    "l": "bookings.series_id column + partial index",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_favourites",
+    "l": "favourites table (user_id, instructor_id)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_instructors_user_id",
+    "l": "instructors.user_id column (unique, auth.users, on delete set null)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_is_thread_member",
+    "l": "is_thread_member() (RLS membership check)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_messages",
+    "l": "messages table (text 1-2000 chars, sender_id default auth.uid())",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_my_instructor_id",
+    "l": "my_instructor_id() (caller's instructor row or null)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_my_threads",
+    "l": "my_threads view (Messages list read model)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_realtime_publication",
+    "l": "supabase_realtime publication (messages, thread_reads)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_reviews",
+    "l": "reviews table (one per booking, 1-5 stars, body <= 1000)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_stamp_message",
+    "l": "stamp_message() trigger (server time on messages)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_stamp_read",
+    "l": "stamp_read() trigger (server time on read markers)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_thread_reads",
+    "l": "thread_reads table (per-member last_read_at marker)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_threads",
+    "l": "threads table (unique learner/instructor pair, last_message_at)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_migrations_20261106120000_engagement_touch_thread",
+    "l": "touch_thread() trigger (updates threads.last_message_at)",
+    "c": 0,
+    "f": "supabase/migrations/20261106120000_engagement.sql"
+   },
+   {
+    "id": "supabase_tests_database_05_chat_test",
+    "l": "pgTAP 05_chat (26 tests: chat RLS, server timestamps, unread, read receipts)",
+    "c": 0,
+    "f": "supabase/tests/database/05_chat.test.sql"
+   },
+   {
+    "id": "supabase_tests_database_07_favourites_test",
+    "l": "pgTAP 07_favourites (7 tests: favourites RLS, review write lock, series column)",
+    "c": 0,
+    "f": "supabase/tests/database/07_favourites.test.sql"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 80,
+  "files": [
+   "supabase/migrations/20261106120000_engagement.sql",
+   "supabase/tests/database/05_chat.test.sql",
+   "supabase/tests/database/07_favourites.test.sql"
+  ]
+ },
+ {
   "at": "2026-11-06T17:49:26.485Z",
   "commit": "55cb8fc",
   "note": "Phase 2 spec drafted and approved: text chat, ratings, favourites, Explore map (floating pin button), weekly bookings, add to calendar, credit history; Phase 1 pull request opened",

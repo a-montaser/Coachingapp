@@ -1230,9 +1230,27 @@
     "semantic_hash": "a62e4c8b7e6a6f5dfad5e0baac9d7a1e"
   },
   "specs/phase-2/tasks.md": {
-    "mtime": 1793987095.808909,
-    "seen": 1793987298.4835358,
-    "ast_hash": "cb8a7c4924de8974347cbb79648443f1",
-    "semantic_hash": "cb8a7c4924de8974347cbb79648443f1"
+    "mtime": 1793996473.9335117,
+    "seen": 1793996645.4661498,
+    "ast_hash": "aadf9c937515b93eacca49afc99544a3",
+    "semantic_hash": "aadf9c937515b93eacca49afc99544a3"
+  },
+  "supabase/migrations/20261106120000_engagement.sql": {
+    "mtime": 1793988193.5399463,
+    "seen": 1793996645.4661,
+    "ast_hash": "8d472570f8c9c773c144eb94c369402c",
+    "semantic_hash": "8d472570f8c9c773c144eb94c369402c"
+  },
+  "supabase/tests/database/05_chat.test.sql": {
+    "mtime": 1793988177.1783574,
+    "seen": 1793996645.466134,
+    "ast_hash": "690984034b106d2420164be22bb13160",
+    "semantic_hash": "690984034b106d2420164be22bb13160"
+  },
+  "supabase/tests/database/07_favourites.test.sql": {
+    "mtime": 1793988177.9889007,
+    "seen": 1793996645.4661372,
+    "ast_hash": "70e4b525a393440a89fc3fe1843cecee",
+    "semantic_hash": "70e4b525a393440a89fc3fe1843cecee"
   }
 }
