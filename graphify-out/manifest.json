@@ -1,9 +1,9 @@
 {
   "docs/DECISIONS.md": {
-    "mtime": 1793984841.898529,
-    "seen": 1793984987.040093,
-    "ast_hash": "dab4942d1912289b1b8c4cf427db3d30",
-    "semantic_hash": "dab4942d1912289b1b8c4cf427db3d30"
+    "mtime": 1793987095.8094833,
+    "seen": 1793987298.483527,
+    "ast_hash": "61628a5387b6611af79c5c41c7ba5c3b",
+    "semantic_hash": "61628a5387b6611af79c5c41c7ba5c3b"
   },
   "docs/DESIGN_HANDOFF.md": {
     "mtime": 1793724908.5947113,
@@ -702,10 +702,10 @@
     "semantic_hash": "fc5aeefabecedcb47aa7fd1e236c67ab"
   },
   "CLAUDE.md": {
-    "mtime": 1793984572.270177,
-    "seen": 1793984987.040084,
-    "ast_hash": "0a1a0793510bb103f39bbe9140d41c75",
-    "semantic_hash": "0a1a0793510bb103f39bbe9140d41c75"
+    "mtime": 1793985791.1397927,
+    "seen": 1793987298.483525,
+    "ast_hash": "f3ba5a0dda170a65ef6e81c0f21b36c4",
+    "semantic_hash": "f3ba5a0dda170a65ef6e81c0f21b36c4"
   },
   "docs/WORKING_AGREEMENT.md": {
     "mtime": 1792271631.486386,
@@ -1212,9 +1212,27 @@
     "semantic_hash": "3ab51f215110ed5f027541daa4790a42"
   },
   "specs/phase-1/report.md": {
-    "mtime": 1793984835.6241438,
-    "seen": 1793984987.040097,
-    "ast_hash": "3b8c5241bfa8caa3971d2119b4d0128c",
-    "semantic_hash": "3b8c5241bfa8caa3971d2119b4d0128c"
+    "mtime": 1793985791.1424625,
+    "seen": 1793987298.4835289,
+    "ast_hash": "f57c01607f125029398c6745fcc99e48",
+    "semantic_hash": "f57c01607f125029398c6745fcc99e48"
+  },
+  "specs/phase-2/design.md": {
+    "mtime": 1793987095.8056996,
+    "seen": 1793987298.483532,
+    "ast_hash": "d689bae39b5aceba525110efd2aa213a",
+    "semantic_hash": "d689bae39b5aceba525110efd2aa213a"
+  },
+  "specs/phase-2/requirements.md": {
+    "mtime": 1793987095.796647,
+    "seen": 1793987298.483534,
+    "ast_hash": "a62e4c8b7e6a6f5dfad5e0baac9d7a1e",
+    "semantic_hash": "a62e4c8b7e6a6f5dfad5e0baac9d7a1e"
+  },
+  "specs/phase-2/tasks.md": {
+    "mtime": 1793987095.808909,
+    "seen": 1793987298.4835358,
+    "ast_hash": "cb8a7c4924de8974347cbb79648443f1",
+    "semantic_hash": "cb8a7c4924de8974347cbb79648443f1"
   }
 }

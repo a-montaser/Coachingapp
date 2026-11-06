@@ -1,6 +1,6 @@
 # Phase 2 — Technical design
 
-Status: **DRAFT 6 Nov 2026, waiting for approval.** Follows the owner's answers to Q1–Q4 (D67): instructor sign-in for chat, series paid up front, no photos, text-only chat. The schema below locks on approval (working agreement: schema changes after approval need the owner).
+Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers to Q1–Q4 (D67): instructor sign-in for chat, series paid up front, no photos, text-only chat. The schema below locks on approval (working agreement: schema changes after approval need the owner).
 
 ## 1. Shape of the app (new and changed only)
 
@@ -76,6 +76,7 @@ cancel_booking(ref, reason, every_week boolean default false)
 - Credit spends are recorded per booking (each week's share), so a cancelled week returns its own share to the grants it came from (D64 rule 4 unchanged).
 
 ## 6. Map
+- Entry *(D68)*: a floating round glass `IconButton` (pin icon; list icon on the map) pinned bottom-right of Explore, 16 pt from the edge and 16 pt above the tab bar (iOS native tabs: above the bar's safe-area inset; Android: above `TabBar`). The new pin and list glyphs join `Icon` (SF `mappin` / `list.bullet` on iOS, Material equivalents on Android).
 - `react-native-maps` (installed): Apple on iOS, Google on Android; no key in Expo Go. `showsUserLocation` only when location is already granted (D37: Explore never prompts).
 - Pure functions in `rules.ts`: `groupByVenue(results)` → pins with the lowest price; `inRegion(results, region)` for "Search this area". Tested.
 - Pins are custom markers (`MapPin`, tokens only); tracksViewChanges off after first render (performance).

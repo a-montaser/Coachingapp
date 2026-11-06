@@ -1,6 +1,6 @@
 # Phase 2 — Requirements: Engagement
 
-Status: **DRAFT 6 Nov 2026, waiting for the owner's approval.** Nothing in Phase 2 is built until it is approved.
+Status: **APPROVED 6 Nov 2026** (D68), with the map button change in R4.1.
 **Owner answers, 6 Nov (D67):** Q1 instructors sign in for chat; Q2 a series is paid up front; Q3 photos wait for Phase 3; Q4 chat is text only in Phase 2. The text below already follows these answers.
 Sources: the Phase 1 report's outline (`specs/phase-1/report.md`), the working agreement's Phase 2 line, `docs/DESIGN_HANDOFF.md` §5 (chat bubbles), §6.1, §7.5 (map view), §7.6, §7.10–§7.13, §9.2, and `docs/DECISIONS.md` (D1–D66 still apply, D23 for design questions).
 
@@ -63,11 +63,11 @@ Everything still runs in Expo Go on the owner's iPhone, against the hosted dev p
 - **AC:** pgTAP RLS (only your own favourites); RNTL toggle, list and empty state.
 
 ### R4 `map` (handoff §7.5 Map view)
-- R4.1 Explore gets a **List | Map** switch (a glass icon button in the header, since the segmented control is already Lessons | Groups, D59). It keeps the current search, filters, sort and segment.
+- R4.1 *(D68)* A **floating round glass button** in Explore's bottom-right corner, above the tab bar, with a map-pin icon (a teardrop pin like Google Maps', drawn in the app's own icon style, not Google's logo), opens the map. On the map the same button shows a list icon and goes back to the list. Either way the current search, filters, sort and segment are kept. Accessibility labels "Show map" / "Show list"; 44 pt or larger.
 - R4.2 Map: full screen, one pin per venue with the lowest "From" price of its results ("390 EGP"; selected pin `brand` and slightly larger), the learner's location dot when allowed, glass recenter button (device location, else the area centre), "Search this area" small glass button that limits results to the visible region.
 - R4.3 Bottom: the selected result's card floating, with previous/next arrows and "2 of 6 coaches" (or "2 of 6 groups"). Tapping the card opens the profile or Group page as in the list. The tab bar is minimised on the map.
 - R4.4 Apple Maps on iOS and Google Maps on Android, through the installed `react-native-maps`: Expo Go needs no API key for either, so D52's key is not a blocker here.
-- **AC:** RNTL: switching List ↔ Map keeps filters; pins group by venue; arrows walk the results; "Search this area" filters by region (pure function, tested). Checked on the iPhone.
+- **AC:** RNTL: the floating button switches List ↔ Map and keeps filters; pins group by venue; arrows walk the results; "Search this area" filters by region (pure function, tested). Checked on the iPhone.
 
 ### R5 `recurring` (handoff §7.8, §7.9, §9.2) *(Q2)*
 - R5.1 Book shows a "Repeat weekly" switch for **1:1 and group** sessions (not kids, not workshops): "Same time every Tuesday". When on, a stepper picks **2–8 weeks**, capped at the number of following weeks that have the same time open; the line under it reads "4 weeks · 24 Nov – 15 Dec".
@@ -99,14 +99,14 @@ Everything still runs in Expo Go on the owner's iPhone, against the hosted dev p
 
 ## Gate questions from Phase 1 (answered with this spec)
 - **Canvas side-by-sides:** dropped *(Q5)*. The look changed (D58); the owner's iPhone screenshots stay the visual check.
-- **Phase 1 pull request into `main`:** opened at the start of Phase 2 *(Q5)*.
+- **Phase 1 pull request into `main`:** opened 6 Nov, https://github.com/a-montaser/Coachingapp/pull/1 *(Q5)*.
 - **Real photos:** wait for Phase 3 (Q3, D67); placeholders stay.
 - **Credit history:** in scope as R7.
 - **Chat media limits / moderation:** no media in Phase 2 (Q4, D67), so no limits or moderation yet.
 
-## Questions for the owner (Q1–Q4 answered 6 Nov, D67; Q5 open)
+## Questions for the owner (all answered 6 Nov, D67, D68)
 - **Q1 Who answers chat in Phase 2?** (a) Instructors sign in with a phone number and get the Messages tab only (`instructors.user_id`, test numbers in dev). (b) Ops answer from Supabase Studio with a SQL function; no instructor sign-in. (c) Chat waits for Phase 3. → **Answer: (a)**
 - **Q2 Recurring bookings (money flow):** (a) pay all weeks up front, 2–8 weeks, promo on every week, each week refunds on its own 24-hour rule. (b) Pay each week separately, a day before. (c) Recurring only with pay at the venue. → **Answer: (a)**
 - **Q3 Real photos:** (a) Ops upload instructor and workshop photos to a public Storage bucket in Studio and the app shows them (you send the photos). (b) Keep placeholders until the instructor app (Phase 3). → **Answer: (b)**
 - **Q4 Chat media:** (a) the limits in R1.7, no automatic moderation, a "Report" button with Phase 3's ops admin. (b) Text only in Phase 2. → **Answer: (b)**
-- **Q5 Phase 1 leftovers:** open the Phase 1 pull request into `main` now, and drop the canvas side-by-sides.
+- **Q5 Phase 1 leftovers:** open the Phase 1 pull request into `main` now, and drop the canvas side-by-sides. → **Answer: yes**

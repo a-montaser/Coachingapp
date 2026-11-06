@@ -1,5 +1,511 @@
 [
  {
+  "at": "2026-11-06T17:49:26.485Z",
+  "commit": "55cb8fc",
+  "note": "Phase 2 spec drafted and approved: text chat, ratings, favourites, Explore map (floating pin button), weekly bookings, add to calendar, credit history; Phase 1 pull request opened",
+  "nodes": 1475,
+  "links": 4627,
+  "communities": 73,
+  "added": [
+   {
+    "id": "specs_phase_2_requirements_gate_questions",
+    "l": "Gate questions from Phase 1 (answered)",
+    "c": 14,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_g1",
+    "l": "G1: Phase 1 pull request into main (opened 6 Nov)",
+    "c": 14,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "docs_decisions_d66",
+    "l": "D66: Phase 1 closed by the owner; Phase 2 starts",
+    "c": 14,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_2_design_map_rules",
+    "l": "groupByVenue() and inRegion() map rules",
+    "c": 16,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r8",
+    "l": "R8 e2e2 (Maestro additions in CI)",
+    "c": 17,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t13",
+    "l": "T13: Maestro R8.1 additions",
+    "c": 17,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_design_expo_calendar",
+    "l": "expo-calendar (createEventInCalendarAsync)",
+    "c": 19,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_map_entry_button",
+    "l": "Floating map/list IconButton on Explore (D68)",
+    "c": 19,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_capability_map",
+    "l": "Phase 2 capability map (data2, chat, ratings, favourites, map, recurring, calendar, credit-history, e2e2)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements",
+    "l": "Phase 2 requirements: Engagement",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_owner_questions",
+    "l": "Owner questions Q1-Q5 (answered D67, D68)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_2",
+    "l": "R1.2 Instructor sign-in for chat only (instructors.user_id)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r2",
+    "l": "R2 ratings (Rate sheet on completed bookings)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r2_3",
+    "l": "R2.3 Instructor average and count update at once",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r3",
+    "l": "R3 favourites (heart on instructors, Profile Favourites list)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r4",
+    "l": "R4 map (Explore map view)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r4_1",
+    "l": "R4.1 Floating round glass map button (D68)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r5",
+    "l": "R5 recurring weekly bookings (2-8 weeks, paid up front)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r5_6",
+    "l": "R5.6 Reschedule moves one week, leaves the series",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r6",
+    "l": "R6 calendar (Add to calendar)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r6_2",
+    "l": "R6.2 Calendar sync stays hidden (Later)",
+    "c": 19,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks",
+    "l": "Phase 2 ordered tasks",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t11",
+    "l": "T11: Cancel every week; Reschedule one week",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t12",
+    "l": "T12: Add to calendar",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t3",
+    "l": "T3: Seed instructors with test numbers and push",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t6",
+    "l": "T6: Rate sheet",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t7",
+    "l": "T7: Favourites",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t9",
+    "l": "T9: Explore map from the floating pin button",
+    "c": 19,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "docs_decisions_d67",
+    "l": "D67: Phase 2 spec drafted with owner answers Q1-Q4",
+    "c": 19,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d68",
+    "l": "D68: Phase 2 spec approved; floating map button",
+    "c": 19,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "claude_project_map_page",
+    "l": "Project Map page (build-data.mjs, republished artifact)",
+    "c": 2,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_2_design_cancel_booking_every_week",
+    "l": "cancel_booking(every_week) branch",
+    "c": 21,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_series_payments",
+    "l": "Payments for a series (one checkout, per-booking credit spends)",
+    "c": 21,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r5_3",
+    "l": "R5.3 Series paid at once on one checkout",
+    "c": 21,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r5_5",
+    "l": "R5.5 Cancel every week switch",
+    "c": 21,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t10",
+    "l": "T10: Repeat weekly, Review & pay for a series, series checkout",
+    "c": 21,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_design_book_one",
+    "l": "_book_one() shared booking body",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_book_series",
+    "l": "book_series() SQL function",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_bookings_series_id",
+    "l": "bookings.series_id column",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_engagement_migration",
+    "l": "Engagement migration (2026111xxxxxxx_engagement.sql)",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_favourites_table",
+    "l": "favourites table",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_instructors_user_id",
+    "l": "instructors.user_id column",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_journey_gate",
+    "l": "Instructor journey gate (Messages-only tab bar)",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_map_pin",
+    "l": "MapPin custom marker",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_messages_table",
+    "l": "messages table",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_my_threads_view",
+    "l": "my_threads view (security_invoker)",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_rate_booking",
+    "l": "rate_booking() SQL function",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_reviews_table",
+    "l": "reviews table",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_start_thread",
+    "l": "start_thread() SQL function",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_thread_reads_table",
+    "l": "thread_reads table (read receipts)",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_threads_table",
+    "l": "threads table",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design",
+    "l": "Phase 2 technical design",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_1",
+    "l": "R1.1 One thread per learner and instructor (RLS)",
+    "c": 25,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r4_4",
+    "l": "R4.4 Apple/Google maps via react-native-maps, no key in Expo Go",
+    "c": 25,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t1",
+    "l": "T1: Engagement migration",
+    "c": 25,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t2",
+    "l": "T2: Functions (start_thread, rate_booking, book_series, cancel every week)",
+    "c": 25,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_design_unread_rule",
+    "l": "Unread / Delivered / Read rule (no per-message flag)",
+    "c": 25,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_chat_client",
+    "l": "Chat client (idempotent send, typing broadcast, mark read)",
+    "c": 28,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_chat_data_module",
+    "l": "data/chat.ts (threads, messages, send, realtime hooks)",
+    "c": 28,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_realtime_channels",
+    "l": "Realtime channels (thread:<id> per chat + app-wide messages subscription)",
+    "c": 28,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_realtime_test_script",
+    "l": "scripts/realtime-test.mjs two-client Realtime check",
+    "c": 28,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_design_testing_and_ci",
+    "l": "Phase 2 testing and CI",
+    "c": 28,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1",
+    "l": "R1 chat (text, realtime, unread, typing, read receipts)",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_10",
+    "l": "R1.10 No push; in-app toast for new messages",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_3",
+    "l": "R1.3 Messages tab thread list",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_4",
+    "l": "R1.4 Messages tab unread badge",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_5",
+    "l": "R1.5 Chat screen (bubbles, next-booking card)",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_7",
+    "l": "R1.7 Text only, 2,000 characters",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_8",
+    "l": "R1.8 Live messages, typing and read receipts",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_9",
+    "l": "R1.9 Message entry points Phase 1 hid",
+    "c": 28,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t4",
+    "l": "T4: Messages tab, badge, entry points, text Chat",
+    "c": 28,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t5",
+    "l": "T5: Realtime (live messages, typing, read receipts, toast)",
+    "c": 28,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_design_boundaries",
+    "l": "Phase 2 boundaries (always / ask first / never)",
+    "c": 43,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r5_2",
+    "l": "R5.2 One atomic booking of all weeks (book_series)",
+    "c": 43,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r7",
+    "l": "R7 credit-history (Profile App credit list)",
+    "c": 43,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t14",
+    "l": "T14: Graphify update, DECISIONS, Phase 2 report",
+    "c": 43,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t8",
+    "l": "T8: App credit history",
+    "c": 43,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_out_of_scope",
+    "l": "Phase 2 out of scope (instructor mode, chat media, push, calendar sync, real photos)",
+    "c": 5,
+    "f": "specs/phase-2/requirements.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "claude_ci_only_db_tests",
+    "l": "CI-only database tests",
+    "c": 1,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_npm_run_check",
+    "l": "npm run check gate",
+    "c": 1,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "claude_testing_aids_to_revert",
+    "l": "Testing aids to revert (D43)",
+    "c": 5,
+    "f": "CLAUDE.md"
+   }
+  ],
+  "linkDelta": 238,
+  "files": [
+   "CLAUDE.md",
+   "docs/DECISIONS.md",
+   "specs/phase-2/design.md",
+   "specs/phase-2/requirements.md",
+   "specs/phase-2/tasks.md"
+  ]
+ },
+ {
   "at": "2026-11-06T17:10:18.261Z",
   "commit": "75a1e7a",
   "note": "Phase 1 closed for the gate: testing aids removed, Phase 1 report written (D65)",

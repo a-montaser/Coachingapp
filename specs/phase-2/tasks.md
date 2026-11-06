@@ -1,9 +1,9 @@
 # Phase 2 — Ordered tasks
 
-Status: **DRAFT 6 Nov 2026, waiting for approval.** Follows the owner's answers Q1–Q4 (D67). Each task ends with "✅ [task] · files touched · tests added or passed", a commit on `phase-2`, and the map/Project Map update from CLAUDE.md. A task that fails the same way twice gets stopped and reported.
+Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67). Each task ends with "✅ [task] · files touched · tests added or passed", a commit on `phase-2`, and the map/Project Map update from CLAUDE.md. A task that fails the same way twice gets stopped and reported.
 
 ## Gate items from Phase 1
-- [ ] **G1 Phase 1 pull request** `phase-1` → `main` *(Q5)*.
+- [x] **G1 Phase 1 pull request** `phase-1` → `main` *(Q5)*: https://github.com/a-montaser/Coachingapp/pull/1 (6 Nov), waiting for the owner to merge.
 
 ## A. Data (`data2`)
 - [ ] **T1 Engagement migration.** Tables, columns, RLS, `my_threads`, triggers (design §2).
@@ -27,7 +27,7 @@ Status: **DRAFT 6 Nov 2026, waiting for approval.** Follows the owner's answers 
   - Verify: RNTL.
 
 ## D. Explore map
-- [ ] **T9 List | Map** with pins by venue, selected card, arrows, recenter, "Search this area" (R4).
+- [ ] **T9 Map** opened from the floating pin button (D68), with pins by venue, selected card, arrows, recenter, "Search this area" (R4).
   - Verify: rules tests; RNTL toggle; on the iPhone.
 
 ## E. Recurring and calendar
