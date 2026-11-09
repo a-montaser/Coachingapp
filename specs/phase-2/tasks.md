@@ -8,7 +8,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 ## A. Data (`data2`)
 - [x] **T1 Engagement migration.** Tables, columns, RLS, `my_threads`, triggers (design §2).
   - Verify: pgTAP RLS tests `05_chat`, `07_favourites`; CI supabase job.
-  - Done 6 Nov: migration `20261106120000_engagement.sql`; CI run 42267559972 green on all four jobs (89 pgTAP tests, 33 new). Not pushed to the hosted project yet (T3).
+  - Done 6 Nov: migration `20261106120000_engagement.sql`; CI run 42267559972 green on all four jobs (89 pgTAP tests, 33 new). Pushed to the hosted project with T3 (D70).
 - [x] **T2 Functions.** `start_thread`, `rate_booking`, `book_series`, `cancel_booking(every_week)`.
   - Verify: pgTAP `06_ratings`, `08_series` with frozen time; Phase 1 tests unchanged and green; series concurrency script.
   - Done 6 Nov: migration `20261106130000_engagement_functions.sql`; CI run 42291508370 green on all four jobs (120 pgTAP tests; 20 parallel series over two one-seat weeks → 1 success, no seat oversold). Phase 1 test 28 caught a reschedule bug on the first run (fixed).

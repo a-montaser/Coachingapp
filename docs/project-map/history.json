@@ -1,5 +1,303 @@
 [
  {
+  "at": "2026-11-09T20:02:50.393Z",
+  "commit": "b4fc39c",
+  "note": "T4 Messages and Chat: Messages tab with search and unread counts, text chat with send, retry and read receipts, Message buttons, tab badge (CI green); T3 done on the hosted project (D70)",
+  "nodes": 1562,
+  "links": 5030,
+  "communities": 78,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_chatbubble_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/ChatBubble.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_composer_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Composer.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_threadrow_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/ThreadRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_message",
+    "l": "Message",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_t",
+    "l": "T",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_thread",
+    "l": "Thread",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_chat_threadid_chat",
+    "l": "Chat()",
+    "c": 4,
+    "f": "apps/mobile/src/app/chat/[threadId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_byactivity",
+    "l": "byActivity()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_contextline",
+    "l": "contextLine()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_daytime",
+    "l": "dayTime()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_listtime",
+    "l": "listTime()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_markread",
+    "l": "markRead()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_matchessearch",
+    "l": "matchesSearch()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_newid",
+    "l": "newId()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_openchat",
+    "l": "openChat()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_receipt",
+    "l": "receipt()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_startthread",
+    "l": "startThread()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_ago",
+    "l": "ago()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_msg",
+    "l": "msg()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_thread",
+    "l": "thread()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_usemessages",
+    "l": "useMessages()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_usesend",
+    "l": "useSend()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_usethreads",
+    "l": "useThreads()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_useunreadtotal",
+    "l": "useUnreadTotal()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_chatbubble_chatbubble",
+    "l": "ChatBubble()",
+    "c": 4,
+    "f": "apps/mobile/src/ui/ChatBubble.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_composer_composer",
+    "l": "Composer()",
+    "c": 4,
+    "f": "apps/mobile/src/ui/Composer.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_threadrow_threadrow",
+    "l": "ThreadRow()",
+    "c": 4,
+    "f": "apps/mobile/src/ui/ThreadRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_chatbubble",
+    "l": "ChatBubble.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/ChatBubble.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_chatbubble_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/ChatBubble.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_composer",
+    "l": "Composer.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Composer.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_composer_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/Composer.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_threadrow",
+    "l": "ThreadRow.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/ThreadRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_threadrow_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/ThreadRow.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_chat_threadid",
+    "l": "[threadId].tsx",
+    "c": 4,
+    "f": "apps/mobile/src/app/chat/[threadId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_chat_threadid_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/app/chat/[threadId].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat",
+    "l": "chat.ts",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test",
+    "l": "chat.test.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mockinsert",
+    "l": "mockInsert",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mockmessages",
+    "l": "mockMessages",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mocksetdata",
+    "l": "mockSetData",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mockthreads",
+    "l": "mockThreads",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mockupsert",
+    "l": "mockUpsert",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_t",
+    "l": "t",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_chat_strings",
+    "l": "Chat strings (18)",
+    "c": 4,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_decisions_d71",
+    "l": "D71: T4 Messages and Chat (text) choices",
+    "c": 4,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d70",
+    "l": "D70: Hosted project updated for Phase 2 (migrations, demo instructors)",
+    "c": 58,
+    "f": "docs/DECISIONS.md"
+   }
+  ],
+  "removed": [],
+  "linkDelta": 236,
+  "files": [
+   "apps/mobile/src/app/chat/[threadId].tsx",
+   "apps/mobile/src/data/chat.test.tsx",
+   "apps/mobile/src/data/chat.ts",
+   "apps/mobile/src/ui/ChatBubble.tsx",
+   "apps/mobile/src/ui/Composer.tsx",
+   "apps/mobile/src/ui/ThreadRow.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md"
+  ]
+ },
+ {
   "at": "2026-11-06T21:12:29.994Z",
   "commit": "8b72c24",
   "note": "T2 database functions (start a chat, rate a session, book weekly, cancel every week) with CI green; T3 local part: demo instructor sign-ins, demo chat, Messages and Profile tabs for instructors (D69)",
