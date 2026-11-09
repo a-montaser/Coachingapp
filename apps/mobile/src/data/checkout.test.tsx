@@ -11,7 +11,13 @@ import { policyFor, promoDiscount, subtotal } from './rules';
 
 let mockParams: Record<string, string> = {};
 jest.mock('expo-router', () => ({
-  router: { push: jest.fn(), back: jest.fn(), replace: jest.fn(), dismissAll: jest.fn() },
+  router: {
+    push: jest.fn(),
+    back: jest.fn(),
+    replace: jest.fn(),
+    dismissAll: jest.fn(),
+    dismissTo: jest.fn(),
+  },
   useLocalSearchParams: () => mockParams,
 }));
 const mockRouter = jest.requireMock('expo-router').router;
@@ -289,6 +295,9 @@ test('Confirmed: category headline, ref, paid amount; pending says "Request sent
   expect(screen.getByText('Nour has confirmed. Booking ref CFA-33333')).toBeOnTheScreen();
   expect(screen.getByText('Paid')).toBeOnTheScreen();
   expect(screen.getByText('2 hours before')).toBeOnTheScreen(); // default reminder
+  // Back to the tabs underneath, not a new Home on top of them (SDK 58 drew that one without its tab bar).
+  await fireEvent.press(screen.getByRole('link', { name: 'Back to Home' }));
+  expect(mockRouter.dismissTo).toHaveBeenCalledWith('/');
   await view.unmount();
   mockBooking = booking({ display_status: 'pending', category_id: 'sports' });
   await render(<Confirmed />);

@@ -119,7 +119,7 @@ export default function Confirmed() {
         onPress={() => router.replace({ pathname: '/booking/[ref]', params: { ref: b.ref } })}
       />
       <View style={styles.center}>
-        <TextLink label={t('confirmed.backHome')} onPress={() => router.replace('/')} />
+        <TextLink label={t('confirmed.backHome')} onPress={() => router.dismissTo('/')} />
       </View>
     </ScrollView>
   );
