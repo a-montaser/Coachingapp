@@ -35,10 +35,11 @@ function RootNavigator() {
 
   return (
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg, direction } }}>
-      <Stack.Protected guard={!signedIn}>
+      {/* SDK 58 no longer falls back on its own when a guard fails (D73): each group says where to go. */}
+      <Stack.Protected guard={!signedIn} redirectTo="/">
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
-      <Stack.Protected guard={signedIn && onboarded}>
+      <Stack.Protected guard={signedIn && onboarded} redirectTo={signedIn ? '/categories' : '/welcome'}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="family" />
         <Stack.Screen name="preferences" />
