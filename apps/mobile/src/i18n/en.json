@@ -94,8 +94,11 @@
   "messages": {
     "title": "Messages",
     "emptyTitle": "No messages yet",
-    "emptyBody": "Chat with your instructors after you book.",
-    "emptyAction": "Explore"
+    "emptyBody": "Message an instructor from their profile or a booking.",
+    "emptyAction": "Explore",
+    "search": "Names and messages",
+    "unread": "{{count}} unread",
+    "noResults": "No conversations match"
   },
   "profile": {
     "photo": "Profile photo",
@@ -600,5 +603,25 @@
     "nextMonth": "Next month",
     "hasTimes": "Has open times",
     "hasBookings": "Has bookings"
+  },
+  "chat": {
+    "today": "Today",
+    "dayTime": "{{day}}, {{time}}",
+    "lastSession": "{{discipline}} · last session {{date}}",
+    "coach": "{{discipline}} coach",
+    "next": "Next: {{when}} · {{venue}}",
+    "view": "View",
+    "viewProfile": "View profile",
+    "placeholder": "Message",
+    "send": "Send",
+    "delivered": "Delivered",
+    "read": "Read",
+    "notSent": "Not sent · Retry",
+    "you": "You, {{time}}",
+    "them": "{{name}}, {{time}}",
+    "message": "Message",
+    "openFailed": "Couldn't open the chat. Check your connection and try again.",
+    "emptyTitle": "Say hello",
+    "emptyBody": "Ask {{name}} anything about their sessions."
   }
 }

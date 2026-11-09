@@ -39,6 +39,7 @@ const names = {
   bell: { ios: 'bell', android: 'notifications' },
   filter: { ios: 'line.3.horizontal.decrease', android: 'filter_list' },
   bag: { ios: 'bag', android: 'shopping_bag' },
+  send: { ios: 'arrow.up', android: 'arrow_upward' }, // Chat composer (§7.13)
   // Disciplines, keyed by `disciplines.icon` (not named in the handoff; picked to match the canvas drawings).
   pottery: { ios: 'cup.and.saucer', android: 'emoji_food_beverage' },
   painting: { ios: 'paintbrush', android: 'brush' },

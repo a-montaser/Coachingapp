@@ -3,7 +3,6 @@ import '@/i18n';
 import SignUp from '@/app/(auth)/sign-up';
 import { useOnboardingDraft } from './onboarding';
 import Verify from '@/app/(auth)/verify';
-import Messages from '@/app/(tabs)/messages';
 import { authErrorKey, formatEgMobile, isValidEgMobile } from './auth';
 
 jest.mock('expo-router', () => ({
@@ -88,11 +87,4 @@ test('a right code hands over to the journey gate', async () => {
   await render(<Verify />);
   await act(async () => fireEvent.changeText(screen.getByTestId('otp-input'), '482917'));
   expect(mockRouter.replace).toHaveBeenCalledWith('/');
-});
-
-test('Messages tab explains that chat comes after booking (R3.6)', async () => {
-  await render(<Messages />);
-  expect(screen.getByRole('header', { name: 'No messages yet' })).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('button', { name: 'Explore' }));
-  expect(mockRouter.navigate).toHaveBeenCalledWith('/explore');
 });

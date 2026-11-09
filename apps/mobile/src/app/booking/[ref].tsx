@@ -9,6 +9,7 @@ import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-rean
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
+import { openChat } from '@/data/chat';
 import {
   bookingPolicy,
   canCancel,
@@ -32,13 +33,14 @@ import { NavigationBar } from '@/ui/NavigationBar';
 import { Pill } from '@/ui/Pill';
 import { RowCard } from '@/ui/RowCard';
 import { T } from '@/ui/T';
+import { showToast } from '@/ui/Toast';
 
 const map = component.bookingMap;
 
 /**
  * §7.12 Booking detail: map header with Directions, status pill, title, date and time, venue, payment,
  * the cancellation policy, the instructor and what to bring. A kids booking that was approved is paid
- * here (D29). Reschedule until 24 h before; Cancel until the start. Message, Add to calendar and Rate
+ * here (D29). Reschedule until 24 h before; Cancel until the start. Message (Phase 2 R1.9); Add to calendar and Rate
  * are Phase 2.
  */
 export default function BookingDetail() {
@@ -247,6 +249,13 @@ export default function BookingDetail() {
               label={t('booking.reschedule')}
               variant={due ? 'secondary' : 'primary'}
               onPress={() => router.push({ pathname: '/reschedule/[ref]', params: { ref: b.ref } })}
+            />
+          )}
+          {upcoming && (
+            <Button
+              label={t('chat.message')}
+              variant="secondary"
+              onPress={() => void openChat(b.instructor_id, () => showToast(t('chat.openFailed')))}
             />
           )}
           {canCancel(b, now) && (

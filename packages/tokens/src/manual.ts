@@ -139,6 +139,9 @@ export const component = {
   homeWordmarkSize: 22, // §7.4
   homeBand: { overlap: 28, bounce: 600 }, // owner revision D55: next-session card overlap; pull-down cover
   emptyState: { iconTile: 56, iconSize: 26 /* provisional */ }, // §5
+  chatBubble: { maxWidth: 260, radius: 20, tail: 6, padH: 14, padV: 8 /* provisional */, gap: 8 }, // §5 Chat bubbles
+  threadRow: { photo: 48, gap: 12, padV: 10 /* provisional */, badge: 20, badgePad: 6 }, // §7.13 Messages
+  composer: { minHeight: 44, maxHeight: 120 /* provisional */, padH: 14, padV: 10 }, // §7.13 Chat composer
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
   avatar: { iconRatio: 0.45 }, // silhouette size inside a photo slot
   profilePhoto: { size: 64, iconSize: 28 /* provisional */ }, // §7.14

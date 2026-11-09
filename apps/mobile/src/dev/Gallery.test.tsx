@@ -4,6 +4,9 @@ import { useSettings } from '@/theme/settings';
 import { Gallery } from './Gallery';
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn(), back: jest.fn() } }));
+// The Gallery renders every component at once; on the 8 GB dev Mac under a full parallel run that
+// passes Jest's 5 s default (assertions unchanged).
+jest.setTimeout(20_000);
 
 beforeEach(() =>
   useSettings.setState({

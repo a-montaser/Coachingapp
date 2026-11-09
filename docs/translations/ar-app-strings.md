@@ -69,8 +69,29 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `auth.keepSignedIn` | Sign-in and sign out | Stay signed in | خليني مسجّل |
 | `messages.title` | Messages tab | Messages | الرسايل |
 | `messages.emptyTitle` | Messages tab | No messages yet | مفيش رسايل لسه |
-| `messages.emptyBody` | Messages tab | Chat with your instructors after you book. | كلّم المدرّبين بتوعك بعد ما تحجز. |
+| `messages.emptyBody` | Messages tab | Message an instructor from their profile or a booking. | ابعت رسالة لمدرّب من صفحته أو من حجز. |
 | `messages.emptyAction` | Messages tab | Explore | استكشف |
+| `messages.search` | Messages tab | Names and messages | أسامي ورسايل |
+| `messages.unread` | Messages tab | {{count}} unread | {{count}} مش مقروءة |
+| `messages.noResults` | Messages tab | No conversations match | مفيش محادثات زي كده |
+| `chat.today` | Messages, Chat | Today | النهارده |
+| `chat.dayTime` | Messages, Chat | {{day}}, {{time}} | {{day}}، {{time}} |
+| `chat.lastSession` | Messages tab | {{discipline}} · last session {{date}} | {{discipline}} · آخر حصة {{date}} |
+| `chat.coach` | Chat header | {{discipline}} coach | مدرّب {{discipline}} |
+| `chat.next` | Chat | Next: {{when}} · {{venue}} | الجاية: {{when}} · {{venue}} |
+| `chat.view` | Chat | View | اعرض |
+| `chat.viewProfile` | Chat header | View profile | اعرض الصفحة |
+| `chat.placeholder` | Chat | Message | رسالة |
+| `chat.send` | Chat | Send | ابعت |
+| `chat.delivered` | Chat | Delivered | وصلت |
+| `chat.read` | Chat | Read | اتقرت |
+| `chat.notSent` | Chat | Not sent · Retry | ما اتبعتتش · حاول تاني |
+| `chat.you` | Chat (screen reader) | You, {{time}} | إنت، {{time}} |
+| `chat.them` | Chat (screen reader) | {{name}}, {{time}} | {{name}}، {{time}} |
+| `chat.message` | Instructor profile, Booking detail, Bookings | Message | ابعت رسالة |
+| `chat.openFailed` | Message buttons | Couldn't open the chat. Check your connection and try again. | مقدرناش نفتح الشات. اتأكد من النت وحاول تاني. |
+| `chat.emptyTitle` | Chat | Say hello | قول أهلاً |
+| `chat.emptyBody` | Chat | Ask {{name}} anything about their sessions. | اسأل {{name}} أي حاجة عن الحصص. |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

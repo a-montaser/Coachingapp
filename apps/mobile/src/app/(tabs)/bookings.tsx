@@ -6,8 +6,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { firstName } from '@/data/book';
+import { openChat } from '@/data/chat';
 import {
-  canReschedule,
   bookingTitle,
   directionsUrl,
   filterCount,
@@ -27,6 +27,7 @@ import { MonthCalendar } from '@/ui/MonthCalendar';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { SegmentedControl } from '@/ui/SegmentedControl';
 import { useMinimiseOnScroll } from '@/ui/TabBar';
+import { showToast } from '@/ui/Toast';
 
 type Tab = 'upcoming' | 'past' | 'calendar';
 const TABS: Tab[] = ['upcoming', 'past', 'calendar'];
@@ -39,7 +40,7 @@ const HEADER =
  * §7.11 Bookings (prototype Bookings, owner revision D54): one glass capsule (Filter · "Bookings" · New
  * booking) with Upcoming · N | Past | Calendar under it, then booking cards with the time set largest.
  * Calendar: a month with a dot on each day that has a booking; tapping one lists that day's. Calendar
- * sync, Message and Rate are Phase 2 (hidden).
+ * sync and Rate are Phase 2 (hidden); Message is on upcoming cards (Phase 2 R1.9).
  */
 export default function Bookings() {
   const { c } = useTheme();
@@ -91,14 +92,11 @@ export default function Bookings() {
             label: t('confirmed.directions'),
             onPress: () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng)),
           },
-          ...(canReschedule(b, now)
-            ? [
-                {
-                  label: t('booking.reschedule'),
-                  onPress: () => router.push({ pathname: '/reschedule/[ref]', params: { ref: b.ref } }),
-                },
-              ]
-            : []),
+          // §7.11: Directions + Message (Phase 2 R1.9); Reschedule is on Booking detail (D71).
+          {
+            label: t('chat.message'),
+            onPress: () => void openChat(b.instructor_id, () => showToast(t('chat.openFailed'))),
+          },
         ]
       : b.display_status === 'cancelled'
         ? [bookAgain, { label: t('bookings.details'), onPress: open }]

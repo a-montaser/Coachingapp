@@ -2,8 +2,11 @@ import { Tabs, router, usePathname } from 'expo-router';
 import { useEffect } from 'react';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useTranslation } from 'react-i18next';
+import { useLang } from '@/i18n';
+import { formatNumber } from '@/i18n/format';
 import { Platform } from 'react-native';
 import { useMyInstructorId, useSession } from '@/data/auth';
+import { useUnreadTotal } from '@/data/chat';
 import { useReminderSync } from '@/data/reminders';
 import { TabBar, restoreTabBar, useTabBarMinimised, type TabKey } from '@/ui/TabBar';
 import { TAB_ICON } from '@/ui/tabIcons';
@@ -27,13 +30,16 @@ const INSTRUCTOR_TABS: TabKey[] = ['messages', 'profile'];
  */
 export default function TabsLayout() {
   const { t } = useTranslation();
+  const lang = useLang();
   const minimised = useTabBarMinimised();
   useReminderSync();
   // Back on a tab (a tab switch, or coming back from a pushed screen): show the bar again. It only reacts
   // to scrolling, so a page that returns already at the top would otherwise keep the minimised pill.
   const pathname = usePathname();
   useEffect(() => restoreTabBar(), [pathname]);
-  const instructor = useMyInstructorId(useSession().session?.user.id);
+  const userId = useSession().session?.user.id;
+  const instructor = useMyInstructorId(userId);
+  const unread = useUnreadTotal(userId); // R1.4
   const isInstructor = Boolean(instructor.data);
   const tabs = isInstructor ? INSTRUCTOR_TABS : ORDER;
   // Home is hidden for an instructor, so they land on Messages.
@@ -50,6 +56,9 @@ export default function TabsLayout() {
           <NativeTabs.Trigger key={tab} name={ROUTE[tab]} hidden={!tabs.includes(tab)}>
             <NativeTabs.Trigger.Icon src={TAB_ICON[tab]} renderingMode="template" />
             <NativeTabs.Trigger.Label>{t(`tabs.${tab}`)}</NativeTabs.Trigger.Label>
+            {tab === 'messages' && unread > 0 && (
+              <NativeTabs.Trigger.Badge>{formatNumber(unread, lang)}</NativeTabs.Trigger.Badge>
+            )}
           </NativeTabs.Trigger>
         ))}
       </NativeTabs>
@@ -69,6 +78,7 @@ export default function TabsLayout() {
             minimised={minimised}
             onRestore={restoreTabBar}
             tabs={tabs}
+            unreadMessages={unread}
             onSelect={(k) => {
               restoreTabBar();
               navigation.navigate(ROUTE[k]);

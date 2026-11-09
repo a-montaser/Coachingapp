@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { component, layout, space } from '@cfa/tokens';
+import { component, layout, radius, space } from '@cfa/tokens';
 import { missingArabicKeys, setLanguage, useLang } from '@/i18n';
 import { useSettings, type A11yFlag, type ThemePref } from '@/theme/settings';
 import { useTheme } from '@/theme/useTheme';
@@ -27,6 +27,9 @@ import { Stepper } from '@/ui/Stepper';
 import { TextField } from '@/ui/TextField';
 import { TextLink } from '@/ui/TextLink';
 import { BookingCard } from '@/ui/BookingCard';
+import { ChatBubble } from '@/ui/ChatBubble';
+import { Composer } from '@/ui/Composer';
+import { ThreadRow } from '@/ui/ThreadRow';
 import { DeparturesBoard } from '@/ui/DeparturesBoard';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
@@ -88,6 +91,7 @@ export function Gallery() {
 
   const [chip, setChip] = useState(0);
   const [search, setSearch] = useState('');
+  const [chatDraft, setChatDraft] = useState('');
   const [segment, setSegment] = useState(0);
   const [weekly, setWeekly] = useState(true);
   const [day, setDay] = useState(0);
@@ -287,6 +291,36 @@ export function Gallery() {
           </View>
         </Section>
 
+        <Section variant="title2" title={g.sections.chat}>
+          <View style={[styles.chatList, { backgroundColor: c.surface }]}>
+            <ThreadRow
+              name={g.chat.name}
+              time={g.chat.time}
+              context={g.chat.context}
+              lastMessage={g.chat.last}
+              unread={2}
+              unreadLabel={g.chat.unread}
+              onPress={() => {}}
+            />
+          </View>
+          <ChatBubble mine={false} body={g.chat.theirs} accessibilityLabel={g.chat.name} />
+          <ChatBubble mine body={g.chat.mine} accessibilityLabel={g.chat.name} footer={g.chat.delivered} />
+          <ChatBubble
+            mine
+            body={g.chat.failedText}
+            accessibilityLabel={g.chat.name}
+            failed={{ label: g.chat.notSent, onRetry: () => {} }}
+          />
+          <Composer
+            value={chatDraft}
+            onChangeText={setChatDraft}
+            onSend={() => setChatDraft('')}
+            placeholder={g.chat.placeholder}
+            sendLabel={g.chat.send}
+            maxLength={2000}
+          />
+        </Section>
+
         <Section title={g.sections.blocks} variant="title2">
           <BookingCard
             date={new Date(DEMO_BASE)}
@@ -480,6 +514,7 @@ export function Gallery() {
 }
 
 const styles = StyleSheet.create({
+  chatList: { borderRadius: radius.md, overflow: 'hidden' },
   screen: { flex: 1 },
   section: { gap: space.space3 },
   row: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: space.space3 },

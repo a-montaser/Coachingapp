@@ -4,6 +4,8 @@ import { Share, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
+import { useMyInstructorId, useSession } from '@/data/auth';
+import { openChat } from '@/data/chat';
 import { distanceKm, cairoDaysUntil } from '@/data/home';
 import { useOrigin } from '@/data/explore';
 import { nextAvailable, useInstructor, type Offering } from '@/data/instructor';
@@ -21,6 +23,7 @@ import { Icon, disciplineIcon } from '@/ui/Icon';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Section } from '@/ui/Section';
 import { SessionRow } from '@/ui/SessionRow';
+import { showToast } from '@/ui/Toast';
 import { T } from '@/ui/T';
 
 const hero = component.hero;
@@ -35,7 +38,7 @@ const BAR_CLEARANCE =
 /**
  * §7.6 Instructor profile (canvas artboard 8), for one of the instructor's disciplines (`?discipline=`).
  * Hobbies: upcoming workshops, then private lessons; other categories: session types with prices.
- * Favourite and Message are Phase 2 (R5.4).
+ * Message opens the chat with them (Phase 2 R1.9); Favourite comes with T7.
  */
 export default function InstructorProfile() {
   const { c } = useTheme();
@@ -47,6 +50,8 @@ export default function InstructorProfile() {
   const origin = useOrigin();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useScrollViewOffset(scrollRef);
+  // An instructor looking at their own profile has nobody to message there.
+  const self = useMyInstructorId(useSession().session?.user.id).data === id;
   const ar = lang === 'ar';
   const n = (x: number) => formatNumber(x, lang);
   const now = new Date();
@@ -257,6 +262,13 @@ export default function InstructorProfile() {
         ]}
       />
       <BottomActionBar caption={t('instructor.from')} price={formatPrice(p.from_price, lang)}>
+        {!self && (
+          <Button
+            label={t('chat.message')}
+            variant="secondary"
+            onPress={() => void openChat(id, () => showToast(t('chat.openFailed')))}
+          />
+        )}
         <Button
           label={t('instructor.book')}
           variant="primary"
