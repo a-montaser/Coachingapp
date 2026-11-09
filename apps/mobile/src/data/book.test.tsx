@@ -3,7 +3,7 @@ import '@/i18n';
 import Book from '@/app/book/[offeringId]';
 import { useSettings } from '@/theme/settings';
 import { useBookDraft } from './book';
-import { cairoHM, isBookable, weekDays } from './rules';
+import { cairoHM, isBookable, sameCairoDay, weekDays } from './rules';
 
 let mockParams: { offeringId: string; slot?: string } = { offeringId: 'one' };
 jest.mock('expo-router', () => ({
@@ -96,8 +96,12 @@ test('Book: Adults | Kids, starts on the first day with times, picking a time fi
   expect(screen.getAllByRole('button', { name: /Has open times/ })).toHaveLength(1);
   expect(screen.getByText('Just you and Nour, 60 min')).toBeOnTheScreen();
   // That day has one open time, so it is chosen for you (fewest taps, R11.13) and Continue is ready.
-  expect(screen.getByText(/^\w{3} · \d{2}:\d{2}–\d{2}:\d{2}$/)).toBeOnTheScreen();
-  expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
+  // (In the last 20 minutes before Cairo midnight the "too soon" slot falls on tomorrow too, so tomorrow
+  // has two times and none is chosen for you, as it should be.)
+  if (!sameCairoDay(new Date(mockData.slots[0]!.starts_at), days[1]!)) {
+    expect(screen.getByText(/^\w{3} · \d{2}:\d{2}–\d{2}:\d{2}$/)).toBeOnTheScreen();
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
+  }
   // The price waits for Review & pay (D54).
   expect(screen.queryByText('650 EGP')).toBeNull();
 });
