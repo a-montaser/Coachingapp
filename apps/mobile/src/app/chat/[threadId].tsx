@@ -7,7 +7,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { firstName } from '@/data/book';
-import { dayTime, markRead, receipt, useMessages, useSend, useThreads } from '@/data/chat';
+import {
+  dayTime,
+  markRead,
+  receipt,
+  useMessages,
+  useOpenThread,
+  useSend,
+  useThreads,
+  useTyping,
+} from '@/data/chat';
 import { useLang } from '@/i18n';
 import { formatClock } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -18,13 +27,14 @@ import { EmptyState } from '@/ui/EmptyState';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { T } from '@/ui/T';
 import { TextLink } from '@/ui/TextLink';
+import { TypingDots } from '@/ui/TypingDots';
 
 const MAX = 2000; // R1.7, the messages.body check
 
 /**
  * §7.13 Chat (Phase 2 R1.5–R1.8, text only): the other person in the header, the next session together
  * under it, bubbles with "Delivered" / "Read" under my last one, and the composer. Opening it marks the
- * thread read. Live updates (new messages, typing) arrive in T5.
+ * thread read. New messages, "Read" and the other side's typing dots arrive live (T5, `useChatRealtime`).
  */
 export default function Chat() {
   const { threadId } = useLocalSearchParams<{ threadId: string }>();
@@ -41,6 +51,20 @@ export default function Chat() {
   const scroll = useRef<ScrollView>(null);
   const list = messages.data ?? [];
   const count = list.length;
+  const typing = useTyping(threadId, userId);
+  const lastFromThem = count > 0 && list[count - 1]!.sender_id !== userId;
+
+  // This chat is on screen: its messages don't raise the in-app alert.
+  useEffect(() => {
+    useOpenThread.setState({ id: threadId });
+    return () => useOpenThread.setState({ id: null });
+  }, [threadId]);
+
+  // Their message landed: their dots go.
+  const { clear } = typing;
+  useEffect(() => {
+    if (lastFromThem) clear();
+  }, [count, lastFromThem, clear]);
 
   // Opening the chat, and each message arriving while it's open, clears the unread count.
   useEffect(() => {
@@ -119,12 +143,16 @@ export default function Chat() {
             />
           );
         })}
+        {typing.typing && <TypingDots accessibilityLabel={t('chat.typing', { name: firstName(name) })} />}
       </ScrollView>
 
       <View style={[styles.composer, { paddingBottom: insets.bottom + space.space2 }]}>
         <Composer
           value={draft}
-          onChangeText={setDraft}
+          onChangeText={(text) => {
+            setDraft(text);
+            if (text.trim()) typing.ping();
+          }}
           onSend={submit}
           placeholder={t('chat.placeholder')}
           sendLabel={t('chat.send')}

@@ -24,7 +24,7 @@ supabase/
   migrations/2026111xxxxxxx_engagement.sql      tables, RLS, functions below
   tests/                                        05_chat, 06_ratings, 07_favourites, 08_series
   functions/create-checkout, payment-webhook    series-aware (§5)
-scripts/realtime-test.mjs                        two-client Realtime check, CI supabase job
+supabase/tests/realtime.mjs                        two-client Realtime check, CI supabase job
 ```
 
 - **Journey gate** *(D67)*: a signed-in user whose id is an instructor's `user_id` skips onboarding and gets a tab bar with Messages and Profile only (D69), landing on Messages; Chat's header shows the learner's first name. Everything else is unchanged for learners.
@@ -100,7 +100,7 @@ No other new packages. Realtime comes with `@supabase/supabase-js`.
 | Screens | Jest + RNTL | Messages, Chat (bubbles, composer, retry), Rate sheet, Favourites, Map toggle, Repeat weekly, Cancel every week, Credit list, Add to calendar event |
 | Database | pgTAP | RLS for threads, messages, reads, reviews and favourites; `rate_booking`, `book_series`, cancel every week, with frozen time |
 | Concurrency | Node script | 20 parallel `book_series` over shared weeks → no oversold slot |
-| Realtime | Node script (`scripts/realtime-test.mjs`) | two signed-in clients: message, typing, read receipt arrive |
+| Realtime | Node script (`supabase/tests/realtime.mjs`) | two signed-in clients: message, typing, read receipt arrive |
 | Edge Functions | `deno test` | series checkout: paid confirms all, failed releases all, replay is a no-op |
 | End to end | Maestro, CI | R8.1 |
 

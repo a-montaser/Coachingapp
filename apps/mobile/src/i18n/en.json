@@ -622,6 +622,9 @@
     "message": "Message",
     "openFailed": "Couldn't open the chat. Check your connection and try again.",
     "emptyTitle": "Say hello",
-    "emptyBody": "Ask {{name}} anything about their sessions."
+    "emptyBody": "Ask {{name}} anything about their sessions.",
+    "typing": "{{name}} is typing",
+    "toast": "New message from {{name}}",
+    "toastNew": "New message"
   }
 }

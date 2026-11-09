@@ -1,6 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { useCallback } from 'react';
+import type { RealtimeChannel } from '@supabase/supabase-js';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { create } from 'zustand';
 import type { Lang } from '@/theme/settings';
 import { formatClock, formatDayMonth, formatWeekday } from '@/i18n/format';
 import { sameCairoDay } from './rules';
@@ -53,11 +55,6 @@ export function useThreads(userId: string | undefined) {
       return (data as Thread[]).sort(byActivity);
     },
   });
-}
-
-/** The Messages tab badge (R1.4). */
-export function useUnreadTotal(userId: string | undefined) {
-  return useThreads(userId).data?.reduce((n, th) => n + th.unread, 0) ?? 0;
 }
 
 // shortcut: the latest 200 messages only, no paging back; add paging when a thread gets that long.
@@ -178,3 +175,91 @@ export const matchesSearch = (th: Thread, q: string) => {
   const s = q.trim().toLowerCase();
   return !s || [th.other_name, th.last_body].some((x) => x?.toLowerCase().includes(s));
 };
+
+// ---------- Live (T5, R1.8, R1.10) ----------
+
+/** The chat on screen right now, so a message for it doesn't also raise the in-app alert. */
+export const useOpenThread = create<{ id: string | null }>(() => ({ id: null }));
+
+type Row = Message & { thread_id: string };
+
+/** Adds a message from the server to a thread's cached list (replacing its "sending" copy), in time order. */
+export const mergeMessage = (old: Message[] | undefined, m: Row): Message[] | undefined =>
+  old &&
+  [
+    ...old.filter((x) => x.id !== m.id),
+    { id: m.id, sender_id: m.sender_id, body: m.body, created_at: m.created_at },
+  ].sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+
+/**
+ * One subscription for the whole signed-in app: new messages (RLS limits them to the caller's threads) go
+ * straight into an open chat and refresh the list and the tab badge; read markers refresh "Read".
+ * `onIncoming` gets someone else's message for a chat that isn't on screen (the in-app alert).
+ */
+export function useChatRealtime(userId: string | undefined, onIncoming: (m: Row) => void) {
+  const qc = useQueryClient();
+  const incoming = useRef(onIncoming);
+  useEffect(() => {
+    incoming.current = onIncoming;
+  });
+  useEffect(() => {
+    if (!userId) return;
+    const channel = supabase
+      .channel(`chat:${userId}`)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, ({ new: m }) => {
+        const row = m as Row;
+        qc.setQueryData<Message[]>(['messages', row.thread_id], (old) => mergeMessage(old, row));
+        void qc.invalidateQueries({ queryKey: ['threads'] });
+        if (row.sender_id !== userId && useOpenThread.getState().id !== row.thread_id) incoming.current(row);
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'thread_reads' }, () => {
+        void qc.invalidateQueries({ queryKey: ['threads'] });
+      })
+      .subscribe();
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [userId, qc]);
+}
+
+const TYPING_EVERY_MS = 2000;
+const TYPING_SHOWN_MS = 4000;
+
+/**
+ * Typing dots (R1.8): while the field changes, tell the other side at most every 2 s; their dots hide 4 s
+ * after the last signal, or when their message lands (`clear`).
+ * shortcut: a plain broadcast channel named by the thread's random id, not an RLS-checked private channel;
+ * it carries only "typing" and a user id. Make it private if it ever carries more.
+ */
+export function useTyping(threadId: string | undefined, userId: string | undefined) {
+  const [typing, setTyping] = useState(false);
+  const channel = useRef<RealtimeChannel | null>(null);
+  const lastSent = useRef(0);
+  useEffect(() => {
+    if (!threadId || !userId) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const ch = supabase
+      .channel(`thread:${threadId}`, { config: { broadcast: { self: false } } })
+      .on('broadcast', { event: 'typing' }, ({ payload }) => {
+        if ((payload as { user?: string } | undefined)?.user === userId) return;
+        setTyping(true);
+        clearTimeout(timer);
+        timer = setTimeout(() => setTyping(false), TYPING_SHOWN_MS);
+      })
+      .subscribe();
+    channel.current = ch;
+    return () => {
+      clearTimeout(timer);
+      channel.current = null;
+      void supabase.removeChannel(ch);
+    };
+  }, [threadId, userId]);
+  const ping = useCallback(() => {
+    const now = Date.now();
+    if (now - lastSent.current < TYPING_EVERY_MS) return;
+    lastSent.current = now;
+    void channel.current?.send({ type: 'broadcast', event: 'typing', payload: { user: userId } });
+  }, [userId]);
+  const clear = useCallback(() => setTyping(false), []);
+  return { typing, ping, clear };
+}

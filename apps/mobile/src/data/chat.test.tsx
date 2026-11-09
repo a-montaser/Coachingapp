@@ -1,9 +1,18 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import i18n from '@/i18n';
 import { useSettings } from '@/theme/settings';
 import Chat from '@/app/chat/[threadId]';
 import Messages from '@/app/(tabs)/messages';
-import { byActivity, contextLine, matchesSearch, receipt, type Message, type Thread } from './chat';
+import {
+  byActivity,
+  contextLine,
+  matchesSearch,
+  mergeMessage,
+  receipt,
+  useOpenThread,
+  type Message,
+  type Thread,
+} from './chat';
 
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), back: jest.fn(), navigate: jest.fn() },
@@ -12,6 +21,9 @@ jest.mock('expo-router', () => ({
 const mockRouter = jest.requireMock('expo-router').router;
 const mockInsert = jest.fn();
 const mockUpsert = jest.fn();
+// A fake Realtime channel: tests fire its handlers (`mockHandlers`) and see what it sent (`mockBroadcast`).
+const mockHandlers: Record<string, (p: { payload?: unknown; new?: unknown }) => void> = {};
+const mockBroadcast = jest.fn();
 jest.mock('./supabase', () => ({
   supabaseConfigured: true,
   supabase: {
@@ -19,6 +31,18 @@ jest.mock('./supabase', () => ({
       table === 'thread_reads'
         ? { upsert: (...a: unknown[]) => mockUpsert(...a) }
         : { insert: (...a: unknown[]) => mockInsert(...a) },
+    channel: (name: string) => {
+      const ch = {
+        on: (_kind: string, filter: { event: string; table?: string }, fn: (p: unknown) => void) => {
+          mockHandlers[`${name}:${filter.table ?? filter.event}`] = fn;
+          return ch;
+        },
+        subscribe: () => ch,
+        send: (...a: unknown[]) => mockBroadcast(...a),
+      };
+      return ch;
+    },
+    removeChannel: jest.fn(),
   },
 }));
 jest.mock('./auth', () => ({
@@ -155,4 +179,39 @@ test('Chat: send shows the message at once; a failed one offers Retry, which res
   expect(mockInsert).toHaveBeenCalledWith(
     expect.objectContaining({ thread_id: 'th1', body: 'See you at 17:30' }),
   );
+});
+
+test('a live message replaces its "sending" copy and keeps time order; none is added to an unloaded list', () => {
+  const list = [msg('a', 'nour', 10), msg('b', 'me', 1, { status: 'sending' })];
+  const merged = mergeMessage(list, { ...msg('b', 'me', 2), thread_id: 'th1' })!;
+  expect(merged.map((m) => [m.id, m.status])).toEqual([
+    ['a', undefined],
+    ['b', undefined],
+  ]);
+  expect(
+    mergeMessage([msg('z', 'nour', 0)], { ...msg('y', 'nour', 5), thread_id: 'th1' })!.map((m) => m.id),
+  ).toEqual(['y', 'z']);
+  expect(mergeMessage(undefined, { ...msg('c', 'nour', 0), thread_id: 'th1' })).toBeUndefined();
+});
+
+test('Chat live: marks itself open, shows their typing dots, and sends typing at most every 2 s', async () => {
+  jest.useFakeTimers();
+  mockThreads = [thread()];
+  mockMessages = [msg('a', 'nour', 10)];
+  const view = await render(<Chat />);
+  expect(useOpenThread.getState().id).toBe('th1');
+
+  await act(async () => mockHandlers['thread:th1:typing']!({ payload: { user: 'nour' } }));
+  expect(screen.getByLabelText('Nour is typing')).toBeOnTheScreen();
+  await act(async () => jest.advanceTimersByTime(4100));
+  expect(screen.queryByLabelText('Nour is typing')).toBeNull();
+
+  await fireEvent.changeText(screen.getByLabelText('Message'), 'H');
+  await fireEvent.changeText(screen.getByLabelText('Message'), 'Hi');
+  expect(mockBroadcast).toHaveBeenCalledTimes(1);
+  expect(mockBroadcast).toHaveBeenCalledWith({ type: 'broadcast', event: 'typing', payload: { user: 'me' } });
+
+  await act(async () => view.unmount());
+  expect(useOpenThread.getState().id).toBeNull();
+  jest.useRealTimers();
 });

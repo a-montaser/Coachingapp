@@ -95,6 +95,7 @@ const en = {
     notSent: 'Not sent · Retry',
     placeholder: 'Message',
     send: 'Send',
+    typing: 'Nour is typing',
   },
   app: {
     nextKicker: 'Next workshop · in 3 days',
@@ -242,6 +243,7 @@ const ar: typeof en = {
     notSent: 'ما اتبعتتش · حاول تاني',
     placeholder: 'رسالة',
     send: 'ابعت',
+    typing: 'نور بيكتب',
   },
   app: {
     nextKicker: 'الورشة الجاية · بعد ٣ أيام',

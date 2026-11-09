@@ -92,6 +92,9 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `chat.openFailed` | Message buttons | Couldn't open the chat. Check your connection and try again. | مقدرناش نفتح الشات. اتأكد من النت وحاول تاني. |
 | `chat.emptyTitle` | Chat | Say hello | قول أهلاً |
 | `chat.emptyBody` | Chat | Ask {{name}} anything about their sessions. | اسأل {{name}} أي حاجة عن الحصص. |
+| `chat.typing` | Chat (screen reader) | {{name}} is typing | {{name}} بيكتب |
+| `chat.toast` | In-app alert | New message from {{name}} | رسالة جديدة من {{name}} |
+| `chat.toastNew` | In-app alert | New message | رسالة جديدة |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

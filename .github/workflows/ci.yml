@@ -45,8 +45,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-      # Database, auth and REST only: what the tests need.
-      - run: supabase start -x studio,imgproxy,inbucket,realtime,storage-api,edge-runtime,logflare,vector,supavisor,postgres-meta
+      # Database, auth, REST and Realtime (live chat, Phase 2 T5): what the tests need.
+      - run: supabase start -x studio,imgproxy,inbucket,storage-api,edge-runtime,logflare,vector,supavisor,postgres-meta
       - run: supabase db reset
       - run: supabase db lint --fail-on error
       - run: supabase test db
@@ -55,6 +55,12 @@ jobs:
           eval "$(supabase status -o env)"
           API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" JWT_SECRET="$JWT_SECRET" \
             node supabase/tests/concurrency.mjs
+      - run: npm ci --ignore-scripts # supabase-js for the Realtime test
+      - name: Live chat reaches the other side; an outsider gets nothing
+        run: |
+          eval "$(supabase status -o env)"
+          API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" JWT_SECRET="$JWT_SECRET" \
+            node supabase/tests/realtime.mjs
 
   # R10.1: the Phase 1 journey in Maestro on an Android emulator, against a debug build, local Supabase
   # and the fake payment provider.

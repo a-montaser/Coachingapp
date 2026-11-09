@@ -6,10 +6,11 @@ import { useLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
 import { Platform } from 'react-native';
 import { useMyInstructorId, useSession } from '@/data/auth';
-import { useUnreadTotal } from '@/data/chat';
+import { useChatRealtime, useThreads } from '@/data/chat';
 import { useReminderSync } from '@/data/reminders';
 import { TabBar, restoreTabBar, useTabBarMinimised, type TabKey } from '@/ui/TabBar';
 import { TAB_ICON } from '@/ui/tabIcons';
+import { showToast } from '@/ui/Toast';
 
 const ROUTE: Record<TabKey, string> = {
   home: 'index',
@@ -39,7 +40,13 @@ export default function TabsLayout() {
   useEffect(() => restoreTabBar(), [pathname]);
   const userId = useSession().session?.user.id;
   const instructor = useMyInstructorId(userId);
-  const unread = useUnreadTotal(userId); // R1.4
+  const threads = useThreads(userId).data;
+  const unread = threads?.reduce((n, th) => n + th.unread, 0) ?? 0; // R1.4
+  // Live chat for the whole signed-in app (T5); a message for a chat that isn't open shows as a toast (R1.10).
+  useChatRealtime(userId, (m) => {
+    const name = threads?.find((th) => th.id === m.thread_id)?.other_name;
+    showToast(name ? t('chat.toast', { name }) : t('chat.toastNew'));
+  });
   const isInstructor = Boolean(instructor.data);
   const tabs = isInstructor ? INSTRUCTOR_TABS : ORDER;
   // Home is hidden for an instructor, so they land on Messages.

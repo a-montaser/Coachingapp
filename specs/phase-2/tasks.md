@@ -19,7 +19,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 ## B. Chat
 - [ ] **T4 Messages tab + tab badge + entry points** (R1.3, R1.4, R1.9), text-only Chat with send, retry, mark read (R1.5, R1.8 without typing).
   - Verify: RNTL; on the iPhone with the demo instructor signed in on a second device.
-- [ ] **T5 Realtime:** live messages, typing, read receipts, in-app toast (R1.8, R1.10); `scripts/realtime-test.mjs` in CI.
+- [ ] **T5 Realtime:** live messages, typing, read receipts, in-app toast (R1.8, R1.10); `supabase/tests/realtime.mjs` in CI.
   - Verify: CI realtime test; on the iPhone.
 ## C. Ratings, favourites, credit
 - [ ] **T6 Rate sheet** from Bookings and Booking detail; "Rated 5★" (R2).

@@ -24,6 +24,8 @@ export const motion = {
   navTitleRise: 6, // §8
   ringDrawMs: 800, // §8 confirmation ring
   tickMs: 450, // §8 confirmation tick
+  typingPulseMs: 400, // §8 typing dots (provisional)
+  typingStaggerMs: 150, // §8 "pulsing in sequence" (provisional)
   lensSpring: { damping: 18, stiffness: 220, mass: 0.8 }, // iOS 26 tab selection lens (provisional, tuned by eye)
   // iOS 26 selection lens under the finger (tab bar, segmented control; D49). Provisional, tuned by eye.
   lensDragSpring: { damping: 26, stiffness: 520, mass: 0.6 }, // follows a drag a beat behind, so it stretches
@@ -142,6 +144,7 @@ export const component = {
   chatBubble: { maxWidth: 260, radius: 20, tail: 6, padH: 14, padV: 8 /* provisional */, gap: 8 }, // §5 Chat bubbles
   threadRow: { photo: 48, gap: 12, padV: 10 /* provisional */, badge: 20, badgePad: 6 }, // §7.13 Messages
   composer: { minHeight: 44, maxHeight: 120 /* provisional */, padH: 14, padV: 10 }, // §7.13 Chat composer
+  typingDots: { size: 8, gap: 4 /* provisional */ }, // §5 typing indicator
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
   avatar: { iconRatio: 0.45 }, // silhouette size inside a photo slot
   profilePhoto: { size: 64, iconSize: 28 /* provisional */ }, // §7.14

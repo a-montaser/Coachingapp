@@ -30,6 +30,7 @@ import { BookingCard } from '@/ui/BookingCard';
 import { ChatBubble } from '@/ui/ChatBubble';
 import { Composer } from '@/ui/Composer';
 import { ThreadRow } from '@/ui/ThreadRow';
+import { TypingDots } from '@/ui/TypingDots';
 import { DeparturesBoard } from '@/ui/DeparturesBoard';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
@@ -304,6 +305,7 @@ export function Gallery() {
             />
           </View>
           <ChatBubble mine={false} body={g.chat.theirs} accessibilityLabel={g.chat.name} />
+          <TypingDots accessibilityLabel={g.chat.typing} />
           <ChatBubble mine body={g.chat.mine} accessibilityLabel={g.chat.name} footer={g.chat.delivered} />
           <ChatBubble
             mine
