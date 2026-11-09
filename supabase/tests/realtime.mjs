@@ -70,20 +70,28 @@ assert.ifError(thread.error);
 const threadId = thread.data.id;
 
 const [L, U, X] = [clientFor(learner), clientFor(coach), clientFor(outsider)];
-const got = { coachMessage: null, outsiderMessage: null, learnerRead: null, coachTyping: null };
+const got = { coachMessage: null, coachTyping: null };
+const seen = { coach: [], learner: [], outsider: [] }; // every message body each side received
 const arrived = {};
 const signal = (key) => new Promise((resolve) => (arrived[key] = resolve));
 const waits = { message: signal('message'), read: signal('read'), typing: signal('typing') };
 
-const onMessages = (c, key, done) =>
+const onMessages = (c, who, done) =>
   c
-    .channel(`test-msg-${key}`)
+    .channel(`test-msg-${who}`)
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, ({ new: m }) => {
-      got[key] = m;
-      done?.();
+      seen[who].push(m.body);
+      done?.(m);
     });
-const coachMsgs = onMessages(U, 'coachMessage', () => arrived.message(Date.now()));
-const outsiderMsgs = onMessages(X, 'outsiderMessage');
+let measuring = false;
+const coachMsgs = onMessages(U, 'coach', (m) => {
+  if (measuring && m.body === 'Is the court indoors?') {
+    got.coachMessage = m;
+    arrived.message(Date.now());
+  }
+});
+const learnerMsgs = onMessages(L, 'learner');
+const outsiderMsgs = onMessages(X, 'outsider');
 const learnerReads = L.channel('test-reads').on(
   'postgres_changes',
   { event: '*', schema: 'public', table: 'thread_reads' },
@@ -100,8 +108,27 @@ const typingU = U.channel(`thread:${threadId}`, { config: { broadcast: { self: f
     arrived.typing(Date.now());
   },
 );
-await Promise.all([coachMsgs, outsiderMsgs, learnerReads, typingL, typingU].map(subscribed));
-await new Promise((r) => setTimeout(r, 1500)); // let Realtime finish wiring the database listeners
+await Promise.all([coachMsgs, learnerMsgs, outsiderMsgs, learnerReads, typingL, typingU].map(subscribed));
+
+// A freshly started local Realtime takes a while to begin streaming database changes after the first
+// subscription. Send warm-up messages until one reaches the instructor (or give up after 45 s), so the
+// timing below measures delivery, not start-up.
+const warmUntil = Date.now() + 45_000;
+for (let i = 1; !seen.coach.length; i++) {
+  if (Date.now() > warmUntil) {
+    throw new Error(
+      `no message reached the instructor in 45 s (learner received ${seen.learner.length}, outsider ${seen.outsider.length}): ` +
+        (seen.learner.length
+          ? 'Realtime streams, so the instructor is filtered out (check RLS)'
+          : 'Realtime never streamed any change'),
+    );
+  }
+  const warm = await L.from('messages').insert({ thread_id: threadId, body: `warm-up ${i}` });
+  assert.ifError(warm.error);
+  await new Promise((r) => setTimeout(r, 2000));
+}
+console.log(`Realtime warm-up: ${seen.coach.length} message(s) before the first arrived`);
+measuring = true;
 
 // 1. The learner sends; the instructor receives it live, the outsider doesn't.
 let t0 = Date.now();
@@ -127,7 +154,7 @@ assert.ifError(read.error);
 const readMs = (await within(waits.read, 'read marker to the learner')) - t0;
 
 await new Promise((r) => setTimeout(r, 1000));
-assert.equal(got.outsiderMessage, null, 'a user outside the thread receives nothing');
+assert.equal(seen.outsider.length, 0, 'a user outside the thread receives nothing');
 
 console.log(
   `Realtime chat: message ${messageMs} ms, typing ${typingMs} ms, read receipt ${readMs} ms; outsider received nothing`,
