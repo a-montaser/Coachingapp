@@ -18,7 +18,7 @@
     "check": "npm run lint && npm run typecheck && npm test && npm run tokens:check"
   },
   "overrides": {
-    "react": "19.2.3"
+    "react": "19.3.0"
   },
   "devDependencies": {
     "supabase": "^2.121.0"

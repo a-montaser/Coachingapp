@@ -1,6 +1,6 @@
 import { Tabs, router, usePathname } from 'expo-router';
 import { useEffect } from 'react';
-import { NativeTabs } from 'expo-router/unstable-native-tabs';
+import { NativeTabs } from 'expo-router/native-tabs';
 import { useTranslation } from 'react-i18next';
 import { useLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
@@ -75,7 +75,7 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{ headerShown: false }}
-      tabBar={({ state, navigation }) => {
+      tabBar={({ state, navigateToTab }) => {
         const active = (Object.keys(ROUTE) as TabKey[]).find(
           (k) => ROUTE[k] === state.routes[state.index]?.name,
         );
@@ -88,7 +88,9 @@ export default function TabsLayout() {
             unreadMessages={unread}
             onSelect={(k) => {
               restoreTabBar();
-              navigation.navigate(ROUTE[k]);
+              // SDK 58: a custom tab bar switches tabs by route key.
+              const route = state.routes.find((r) => r.name === ROUTE[k]);
+              if (route) navigateToTab(route.key);
             }}
           />
         );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, type LayoutChangeEvent } from 'react-native';
-import { Gesture, type ComposedGesture } from 'react-native-gesture-handler';
+import { Gesture } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -16,7 +16,7 @@ import { Glass } from './Glass';
 type Lens = {
   /** Put on the track (a GestureDetector's child) to learn its width. */
   onLayout: (e: LayoutChangeEvent) => void;
-  gesture: ComposedGesture;
+  gesture: ReturnType<typeof Gesture.Simultaneous>;
   /** One segment's width; 0 until the track is laid out. */
   width: number;
   pos: SharedValue<number>;

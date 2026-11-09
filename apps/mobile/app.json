@@ -31,7 +31,9 @@
           "supportsRTL": true
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-font",
+      "expo-status-bar"
     ],
     "scheme": "coachforall",
     "experiments": {

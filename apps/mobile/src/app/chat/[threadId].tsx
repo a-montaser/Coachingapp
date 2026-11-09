@@ -2,7 +2,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+  type ScrollViewInstance,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
@@ -48,7 +55,7 @@ export default function Chat() {
   const messages = useMessages(threadId);
   const send = useSend(threadId, userId);
   const [draft, setDraft] = useState('');
-  const scroll = useRef<ScrollView>(null);
+  const scroll = useRef<ScrollViewInstance>(null);
   const list = messages.data ?? [];
   const count = list.length;
   const typing = useTyping(threadId, userId);

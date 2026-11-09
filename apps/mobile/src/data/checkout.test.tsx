@@ -16,6 +16,11 @@ jest.mock('expo-router', () => ({
 }));
 const mockRouter = jest.requireMock('expo-router').router;
 jest.mock('expo-web-browser', () => ({ openAuthSessionAsync: jest.fn() }));
+// SDK 58's notifications mock can't take a handler at import time (reminders.ts sets one); stub just that.
+jest.mock('expo-notifications', () => ({
+  ...jest.requireActual('expo-notifications'),
+  setNotificationHandler: jest.fn(),
+}));
 jest.mock('expo-linking', () => ({ createURL: (p: string) => `coachforall://${p}` }));
 jest.mock('./supabase', () => ({ supabaseConfigured: true, supabase: {} }));
 jest.mock('./auth', () => ({

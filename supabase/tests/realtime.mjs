@@ -1,47 +1,40 @@
 // Phase 2 R1.8 / T5: live chat between two signed-in users, through local Supabase Realtime.
 // A learner's message, typing signal and the instructor's read marker each reach the other side live, and
 // a third user receives none of it (RLS). Prints how long each took.
-// Env (from `supabase status -o env`): API_URL, SERVICE_ROLE_KEY, ANON_KEY, JWT_SECRET.
-import { createHmac, randomUUID } from 'node:crypto';
+// Env (from `supabase status -o env`): API_URL, SERVICE_ROLE_KEY, ANON_KEY.
+// Users sign in for real (email and password) so Realtime gets tokens Supabase Auth issued itself.
+import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { createClient } from '@supabase/supabase-js';
 
-const { API_URL, SERVICE_ROLE_KEY, ANON_KEY, JWT_SECRET } = process.env;
-for (const [k, v] of Object.entries({ API_URL, SERVICE_ROLE_KEY, ANON_KEY, JWT_SECRET })) {
+const { API_URL, SERVICE_ROLE_KEY, ANON_KEY } = process.env;
+for (const [k, v] of Object.entries({ API_URL, SERVICE_ROLE_KEY, ANON_KEY })) {
   if (!v) throw new Error(`${k} is not set`);
 }
 const WAIT_MS = 15_000;
-
-const b64 = (o) => Buffer.from(JSON.stringify(o)).toString('base64url');
-function jwt(sub) {
-  const now = Math.floor(Date.now() / 1000);
-  const body = `${b64({ alg: 'HS256', typ: 'JWT' })}.${b64({ sub, role: 'authenticated', aud: 'authenticated', iat: now, exp: now + 600 })}`;
-  return `${body}.${createHmac('sha256', JWT_SECRET).update(body).digest('base64url')}`;
-}
+const PASSWORD = `pw-${randomUUID()}`;
 
 const admin = createClient(API_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false } });
 async function newUser(i) {
   const { data, error } = await admin.auth.admin.createUser({
-    phone: `2018${String(Date.now()).slice(-6)}${i}`,
-    phone_confirm: true,
-    user_metadata: { test: randomUUID() },
+    email: `realtime-${i}-${randomUUID()}@test.local`,
+    password: PASSWORD,
+    email_confirm: true,
   });
   if (error) throw error;
-  return data.user.id;
+  return { id: data.user.id, email: data.user.email };
 }
-function clientFor(id) {
-  const token = jwt(id);
-  const c = createClient(API_URL, ANON_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-    global: { headers: { Authorization: `Bearer ${token}` } },
-  });
-  c.realtime.setAuth(token);
+async function clientFor(user) {
+  const c = createClient(API_URL, ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+  const { error } = await c.auth.signInWithPassword({ email: user.email, password: PASSWORD });
+  if (error) throw error;
   return c;
 }
 const subscribed = (channel) =>
   new Promise((resolve, reject) => {
     channel.subscribe((status, err) => {
       if (status === 'SUBSCRIBED') resolve();
+      else if (err) console.log(`channel ${channel.topic}: ${status} ${err.message ?? err}`);
       else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') reject(err ?? new Error(status));
     });
   });
@@ -54,7 +47,8 @@ const within = (promise, what) =>
   ]);
 
 // Learner L, instructor U (signed in, linked to an instructor row), outsider X; one thread L ↔ U.
-const [learner, coach, outsider] = await Promise.all([newUser(1), newUser(2), newUser(3)]);
+const [learnerUser, coachUser, outsiderUser] = await Promise.all([newUser(1), newUser(2), newUser(3)]);
+const [learner, coach, outsider] = [learnerUser.id, coachUser.id, outsiderUser.id];
 const instructor = await admin
   .from('instructors')
   .insert({ display_name: 'Realtime Coach', gender: 'female', verified: true, user_id: coach })
@@ -69,7 +63,7 @@ const thread = await admin
 assert.ifError(thread.error);
 const threadId = thread.data.id;
 
-const [L, U, X] = [clientFor(learner), clientFor(coach), clientFor(outsider)];
+const [L, U, X] = await Promise.all([clientFor(learnerUser), clientFor(coachUser), clientFor(outsiderUser)]);
 const got = { coachMessage: null, coachTyping: null };
 const seen = { coach: [], learner: [], outsider: [] }; // every message body each side received
 const arrived = {};
@@ -79,6 +73,7 @@ const waits = { message: signal('message'), read: signal('read'), typing: signal
 const onMessages = (c, who, done) =>
   c
     .channel(`test-msg-${who}`)
+    .on('system', {}, (m) => console.log(`realtime ${who}: ${JSON.stringify(m)}`))
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, ({ new: m }) => {
       seen[who].push(m.body);
       done?.(m);

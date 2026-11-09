@@ -59,7 +59,7 @@ jobs:
       - name: Live chat reaches the other side; an outsider gets nothing
         run: |
           eval "$(supabase status -o env)"
-          API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" JWT_SECRET="$JWT_SECRET" \
+          API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" \
             node supabase/tests/realtime.mjs
 
   # R10.1: the Phase 1 journey in Maestro on an Android emulator, against a debug build, local Supabase

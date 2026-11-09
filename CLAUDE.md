@@ -1,6 +1,6 @@
 # Coach For All
 
-Cairo lesson-booking app (Hobbies first, then Sports, Education, Languages). Expo SDK 57 + Expo Router + TypeScript strict, Supabase backend.
+Cairo lesson-booking app (Hobbies first, then Sports, Education, Languages). Expo SDK 58 + Expo Router + TypeScript strict, Supabase backend.
 
 ## Read first, every session
 1. `docs/WORKING_AGREEMENT.md`: the owner's rules (phases, spec gates, what to ask before doing).

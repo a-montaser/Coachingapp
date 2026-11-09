@@ -190,7 +190,9 @@ test('Sports profile: session types with prices and no workshop list; no open ti
 });
 
 test('Share opens the system share sheet; back goes back; a missing profile says so', async () => {
-  const share = jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' });
+  const share = jest
+    .spyOn(Share, 'share')
+    .mockResolvedValue({ action: 'sharedAction', activityType: undefined });
   const view = await render(<Profile />);
   await fireEvent.press(screen.getByRole('button', { name: 'Share' }));
   expect(share).toHaveBeenCalledWith({ message: 'Yasmine Fathy teaches Pottery on Coach For All.' });
