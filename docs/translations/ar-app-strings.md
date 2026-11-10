@@ -116,6 +116,18 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `favourites.emptyTitle` | Favourites | No favourites yet | مفيش مفضلة لسه |
 | `favourites.emptyBody` | Favourites | Tap the heart on a coach to keep them here. | دوس على القلب عند أي مدرّب عشان يفضل هنا. |
 | `favourites.error` | Hearts | Couldn't save your favourite. Try again. | مقدرناش نحفظ المفضلة. حاول تاني. |
+| `credit.title` | App credit | App credit | رصيد التطبيق |
+| `credit.balance` | App credit | Available now | المتاح دلوقتي |
+| `credit.usedOn` | App credit | Used on {{ref}} | اتصرف على {{ref}} |
+| `credit.refundFor` | App credit | Refund for {{ref}} | استرجاع لـ{{ref}} |
+| `credit.source.refund` | App credit | Refund | استرجاع |
+| `credit.source.goodwill` | App credit | Goodwill credit | رصيد هدية |
+| `credit.source.promo` | App credit | Promo credit | رصيد عرض |
+| `credit.neverExpires` | App credit | Never expires | مالوش تاريخ انتهاء |
+| `credit.expires` | App credit | Expires {{date}} | بينتهي {{date}} |
+| `credit.expired` | App credit | Expired | انتهى |
+| `credit.emptyTitle` | App credit | No app credit yet | مفيش رصيد لسه |
+| `credit.emptyBody` | App credit | Refunds and credit from us show up here. | المرتجعات والرصيد اللي بنديهولك بيظهروا هنا. |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

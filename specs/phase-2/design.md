@@ -46,6 +46,7 @@ supabase/tests/realtime.mjs                        two-client Realtime check, CI
 - **Unread count** = messages in the thread not sent by me, after my `last_read_at`. **Delivered** = the row exists; **Read** = the other side's `last_read_at` ≥ my message's `created_at`. No per-message read flag.
 - **View `my_threads`** (`security_invoker`): thread, the other party's name (instructor `display_name`, or learner `first_name`), `reply_label`, last message preview, unread count, next/last booking between the two for the context line.
 - A trigger keeps `threads.last_message_at`.
+- **View `my_credit_history`** (T8, R7; migration `20261110130000_credit_history`): the caller's credit grants and, per booking, what credit paid for. Owner-run, filtered to `auth.uid()`, because `credit_spends` stays unreadable to the app (D64); a spend handed back leaves the history.
 
 ## 3. Functions (`security definer`, `auth.uid()` checked)
 

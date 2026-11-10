@@ -43,6 +43,7 @@ function RootNavigator() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="family" />
         <Stack.Screen name="favourites" />
+        <Stack.Screen name="credit" />
         <Stack.Screen name="preferences" />
         <Stack.Screen name="instructor/[id]" />
         <Stack.Screen name="workshop/[id]" />

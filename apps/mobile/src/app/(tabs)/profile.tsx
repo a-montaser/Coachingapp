@@ -103,6 +103,7 @@ export default function Profile() {
               icon: 'card',
               title: t('profile.credit'),
               value: formatPrice(credit, lang),
+              onPress: () => router.push('/credit'), // the history (Phase 2 R7)
             },
             {
               key: 'favourites',

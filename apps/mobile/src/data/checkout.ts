@@ -118,6 +118,33 @@ export function useCredit(userId: string | undefined) {
   });
 }
 
+/** One line of Profile → App credit (SQL view `my_credit_history`, Phase 2 R7). */
+export type CreditLine = {
+  kind: 'grant' | 'spend';
+  source: 'refund' | 'goodwill' | 'promo' | null;
+  amount_egp: number;
+  remaining_egp: number | null;
+  expires_at: string | null;
+  at: string;
+  ref: string | null;
+};
+
+/** Every grant and every booking credit paid for, newest first. */
+export function useCreditHistory(userId: string | undefined) {
+  return useQuery({
+    queryKey: ['credit-history', userId],
+    enabled: Boolean(userId),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('my_credit_history')
+        .select('*')
+        .order('at', { ascending: false });
+      if (error) throw error;
+      return data as CreditLine[];
+    },
+  });
+}
+
 /** Edge Function create-checkout: the hosted (or demo) checkout URL for an awaiting-payment booking. */
 export async function startCheckout(ref: string) {
   const { data, error } = await supabase.functions.invoke('create-checkout', { body: { ref } });

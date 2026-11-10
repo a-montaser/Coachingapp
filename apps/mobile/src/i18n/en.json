@@ -651,5 +651,21 @@
     "emptyTitle": "No favourites yet",
     "emptyBody": "Tap the heart on a coach to keep them here.",
     "error": "Couldn't save your favourite. Try again."
+  },
+  "credit": {
+    "title": "App credit",
+    "balance": "Available now",
+    "usedOn": "Used on {{ref}}",
+    "refundFor": "Refund for {{ref}}",
+    "source": {
+      "refund": "Refund",
+      "goodwill": "Goodwill credit",
+      "promo": "Promo credit"
+    },
+    "neverExpires": "Never expires",
+    "expires": "Expires {{date}}",
+    "expired": "Expired",
+    "emptyTitle": "No app credit yet",
+    "emptyBody": "Refunds and credit from us show up here."
   }
 }
