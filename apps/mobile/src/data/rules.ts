@@ -124,3 +124,30 @@ export function policyFor(startsAt: Date, now: Date): Policy {
   const until = new Date(startsAt.getTime() - 24 * 60 * 60_000);
   return now < until ? { kind: 'free', until } : { kind: 'late' };
 }
+
+// ---------- Explore map (Phase 2 R4) ----------
+
+/** A result as the map needs it: where it is and what it costs. */
+export type MapItem = { key: string; lat: number; lng: number; venue: string; price: number };
+/** One pin per venue (results there share it), labelled with the lowest price (§7.5 price pins). */
+export type MapPin = { key: string; lat: number; lng: number; price: number; items: number[] };
+
+export function groupByVenue(items: MapItem[]): MapPin[] {
+  const pins = new Map<string, MapPin>();
+  items.forEach((it, i) => {
+    const key = `${it.venue}@${it.lat.toFixed(5)},${it.lng.toFixed(5)}`;
+    const pin = pins.get(key);
+    if (pin) {
+      pin.items.push(i);
+      pin.price = Math.min(pin.price, it.price);
+    } else pins.set(key, { key, lat: it.lat, lng: it.lng, price: it.price, items: [i] });
+  });
+  return [...pins.values()];
+}
+
+export type Region = { latitude: number; longitude: number; latitudeDelta: number; longitudeDelta: number };
+
+/** "Search this area": inside the part of the map on screen. */
+export const inRegion = (p: { lat: number; lng: number }, r: Region) =>
+  Math.abs(p.lat - r.latitude) <= r.latitudeDelta / 2 &&
+  Math.abs(p.lng - r.longitude) <= r.longitudeDelta / 2;

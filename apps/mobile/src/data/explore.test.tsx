@@ -14,6 +14,7 @@ import {
   type OfferingPrice,
 } from './explore';
 import type { GroupSessionRow, InstructorCardRow } from './home';
+import { groupByVenue, inRegion } from './rules';
 
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), back: jest.fn(), navigate: jest.fn() },
@@ -21,6 +22,10 @@ jest.mock('expo-router', () => ({
 }));
 jest.mock('expo-location', () => ({ getForegroundPermissionsAsync: async () => ({ granted: false }) }));
 jest.mock('@react-native-community/slider', () => 'Slider');
+jest.mock('react-native-maps', () => {
+  const { View } = jest.requireActual('react-native');
+  return { __esModule: true, default: View, Marker: View };
+});
 jest.mock('./supabase', () => ({ supabaseConfigured: true, supabase: {} }));
 jest.mock('./auth', () => ({
   ...jest.requireActual('./auth'),
@@ -292,4 +297,35 @@ test('Sort sheet: a choice sets the order and closes', async () => {
   await fireEvent.press(screen.getByRole('radio', { name: 'Lowest price' }));
   expect(useExplore.getState().sort).toBe('price');
   expect(jest.requireMock('expo-router').router.back).toHaveBeenCalled();
+});
+
+test('map pins: one per venue with its lowest price; "Search this area" keeps what is on screen (R4)', () => {
+  const pins = groupByVenue([
+    { key: 'a', lat: 30.06, lng: 31.22, venue: 'Cedar Court', price: 650 },
+    { key: 'b', lat: 30.06, lng: 31.22, venue: 'Cedar Court', price: 390 },
+    { key: 'c', lat: 30.09, lng: 31.32, venue: 'The Clay Room', price: 450 },
+  ]);
+  expect(pins.map((p) => [p.price, p.items])).toEqual([
+    [390, [0, 1]],
+    [450, [2]],
+  ]);
+  const r = { latitude: 30.06, longitude: 31.22, latitudeDelta: 0.02, longitudeDelta: 0.02 };
+  expect(inRegion({ lat: 30.065, lng: 31.225 }, r)).toBe(true);
+  expect(inRegion({ lat: 30.09, lng: 31.32 }, r)).toBe(false);
+});
+
+test('Explore map: the pin button opens it with the same search; arrows walk the results; back to the list (D68)', async () => {
+  await render(<Explore />);
+  await fireEvent.changeText(screen.getByPlaceholderText('Pottery, oud, photography…'), 'a'); // all three
+  await fireEvent.press(screen.getByRole('button', { name: 'Show map' }));
+  expect(screen.getByText('1 of 3 lessons')).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Previous' })).toBeDisabled();
+  await fireEvent.press(screen.getByRole('button', { name: 'Next' }));
+  expect(screen.getByText('2 of 3 lessons')).toBeOnTheScreen();
+  // The search still applies on the map.
+  await fireEvent.changeText(screen.getByPlaceholderText('Pottery, oud, photography…'), 'yasm');
+  expect(screen.getByText('1 of 1 lesson')).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Show list' }));
+  expect(screen.getByText('1 lesson')).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Show map' })).toBeOnTheScreen();
 });

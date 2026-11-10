@@ -320,7 +320,14 @@
     "audience": {
       "private": "Adults",
       "kids": "Kids"
-    }
+    },
+    "showMap": "Show map",
+    "showList": "Show list",
+    "searchArea": "Search this area",
+    "recenter": "Recenter the map",
+    "previous": "Previous",
+    "next": "Next",
+    "mapPosition": "{{i}} of {{total}}"
   },
   "instructor": {
     "reviews_one": "{{n}} review",

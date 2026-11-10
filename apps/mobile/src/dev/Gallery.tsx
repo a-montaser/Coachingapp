@@ -23,6 +23,7 @@ import { PhoneField } from '@/ui/PhoneField';
 import { RowCard } from '@/ui/RowCard';
 import { Section } from '@/ui/Section';
 import { SessionRow } from '@/ui/SessionRow';
+import { MapPin } from '@/ui/MapPin';
 import { StarRating } from '@/ui/StarRating';
 import { Stepper } from '@/ui/Stepper';
 import { TextField } from '@/ui/TextField';
@@ -309,6 +310,10 @@ export function Gallery() {
           <ChatBubble mine={false} body={g.chat.theirs} accessibilityLabel={g.chat.name} />
           <TypingDots accessibilityLabel={g.chat.typing} />
           <StarRating value={stars} onChange={setStars} label={(n) => `${g.chat.stars} ${n}`} />
+          <View style={styles.pins}>
+            <MapPin label={formatPrice(390, lang)} selected={false} />
+            <MapPin label={formatPrice(450, lang)} selected />
+          </View>
           <ChatBubble
             mine
             body={g.chat.mine}
@@ -534,6 +539,7 @@ export function Gallery() {
 
 const styles = StyleSheet.create({
   chatList: { borderRadius: radius.md, overflow: 'hidden' },
+  pins: { flexDirection: 'row', gap: space.space3 },
   screen: { flex: 1 },
   section: { gap: space.space3 },
   row: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: space.space3 },

@@ -32,7 +32,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
   - Verify: RNTL.
 
 ## D. Explore map
-- [ ] **T9 Map** opened from the floating pin button (D68), with pins by venue, selected card, arrows, recenter, "Search this area" (R4).
+- [x] **T9 Map** opened from the floating pin button (D68), with pins by venue, selected card, arrows, recenter, "Search this area" (R4).
   - Verify: rules tests; RNTL toggle; on the iPhone.
 
 ## E. Recurring and calendar

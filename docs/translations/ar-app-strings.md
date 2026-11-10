@@ -128,6 +128,13 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `credit.expired` | App credit | Expired | انتهى |
 | `credit.emptyTitle` | App credit | No app credit yet | مفيش رصيد لسه |
 | `credit.emptyBody` | App credit | Refunds and credit from us show up here. | المرتجعات والرصيد اللي بنديهولك بيظهروا هنا. |
+| `explore.showMap` | Explore (map button) | Show map | اعرض الخريطة |
+| `explore.showList` | Explore map | Show list | اعرض القايمة |
+| `explore.searchArea` | Explore map | Search this area | دوّر في المنطقة دي |
+| `explore.recenter` | Explore map | Recenter the map | رجّع الخريطة لمكانك |
+| `explore.previous` | Explore map | Previous | اللي قبله |
+| `explore.next` | Explore map | Next | اللي بعده |
+| `explore.mapPosition` | Explore map | {{i}} of {{total}} | {{i}} من {{total}} |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

@@ -42,6 +42,9 @@ const names = {
   bag: { ios: 'bag', android: 'shopping_bag' },
   send: { ios: 'arrow.up', android: 'arrow_upward' }, // Chat composer (§7.13)
   reply: { ios: 'arrowshape.turn.up.left', android: 'reply' }, // swipe to reply (D74)
+  mapPin: { ios: 'mappin', android: 'location_on' }, // Explore map button (D68): the teardrop pin
+  list: { ios: 'list.bullet', android: 'list' }, // Explore: back to the list
+  recenter: { ios: 'location', android: 'my_location' }, // Explore map: recenter
   // Disciplines, keyed by `disciplines.icon` (not named in the handoff; picked to match the canvas drawings).
   pottery: { ios: 'cup.and.saucer', android: 'emoji_food_beverage' },
   painting: { ios: 'paintbrush', android: 'brush' },

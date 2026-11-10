@@ -247,6 +247,17 @@ export function useOrigin(): Point | null {
   return device ?? (area ? { lat: area.lat, lng: area.lng } : null);
 }
 
+/** Location already allowed? The map shows your dot only then; Explore never asks (D37). */
+export function useLocationGranted() {
+  const [granted, setGranted] = useState(false);
+  useEffect(() => {
+    Location.getForegroundPermissionsAsync()
+      .then((r) => setGranted(r.granted))
+      .catch(() => {});
+  }, []);
+  return granted;
+}
+
 /** What Explore lists for a category right now; the Filters sheet uses it for its live count. */
 export function useExploreResults(category: Category) {
   const s = useExplore();

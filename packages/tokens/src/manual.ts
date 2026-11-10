@@ -146,6 +146,8 @@ export const component = {
   composer: { minHeight: 44, maxHeight: 120 /* provisional */, padH: 14, padV: 10 }, // §7.13 Chat composer
   typingDots: { size: 8, gap: 4 /* provisional */ }, // §5 typing indicator
   starRating: { size: 34, gap: 8 }, // §7.12 Rate sheet: five stars, 34 pt
+  mapPin: { padH: 10, padV: 5, selectedScale: 1.15, delta: 0.12 /* provisional */ }, // §7.5 map view
+  mapFab: { gap: 12 }, // D68 floating map/list button, above the tab bar
   replySwipe: { activateAt: 12, threshold: 56, max: 80, arrowInset: 32, quoteBar: 3, quoteRadius: 8 }, // swipe to reply (D74, provisional)
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
   avatar: { iconRatio: 0.45 }, // silhouette size inside a photo slot
