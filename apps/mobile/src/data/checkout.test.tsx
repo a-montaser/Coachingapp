@@ -106,6 +106,7 @@ beforeEach(() => {
     seats: 1,
     childId: null,
     note: '',
+    weeks: 1,
     pendingRef: null,
     pendingCredit: 0,
     failed: false,
@@ -311,4 +312,23 @@ test('Remind me: a choice is saved for the booking and the sheet closes', async 
   await fireEvent.press(screen.getByRole('radio', { name: 'The evening before' }));
   expect(useReminders.getState().byRef['CFA-33333']).toBe('evening');
   expect(mockRouter.back).toHaveBeenCalled();
+});
+
+test('Review: a weekly series shows "4 weeks × 650 EGP", promo on every week, and books the series (R5.3)', async () => {
+  useBookDraft.setState({ weeks: 4 });
+  mockPromo.mockResolvedValue({ code: 'CFA10', percent_off: 10, discount_egp: 65 });
+  mockPlace.mockResolvedValue({ ref: 'CFA-44444', status: 'confirmed', credit_egp: 0 });
+  await render(<Review />);
+  expect(screen.getByText('4 weeks × 650 EGP')).toBeOnTheScreen();
+  expect(screen.getByText(/weekly · 4 weeks/)).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Pay 2,600 EGP' })).toBeOnTheScreen();
+  await fireEvent.changeText(screen.getByPlaceholderText('Promo code'), 'cfa10');
+  await fireEvent.press(screen.getByRole('button', { name: 'Apply' }));
+  // 10% of each week (65), four times.
+  expect(await screen.findByRole('button', { name: 'Pay 2,340 EGP' })).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('radio', { name: /Pay at the venue/ }));
+  await fireEvent.press(screen.getByRole('button', { name: 'Confirm booking' }));
+  await waitFor(() =>
+    expect(mockPlace).toHaveBeenCalledWith(expect.objectContaining({ weeks: 4, method: 'venue' })),
+  );
 });

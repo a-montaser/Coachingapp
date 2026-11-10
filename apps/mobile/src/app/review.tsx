@@ -83,8 +83,10 @@ export default function Review() {
   const name = firstName(instructor.display_name);
   const discipline = (lang === 'ar' && instructor.discipline_ar) || instructor.discipline_en;
   const seats = draft.seats;
-  const sub = subtotal(o.price_egp, seats);
-  const discount = promo ? promoDiscount(sub, promo.pct) : 0;
+  // A weekly series (Phase 2 R5.3): each week is priced and promo'd on its own, and all are paid now.
+  const weeks = draft.weeks;
+  const sub = subtotal(o.price_egp, seats) * weeks;
+  const discount = promo ? promoDiscount(subtotal(o.price_egp, seats), promo.pct) * weeks : 0;
   const total = sub - discount;
   // A held booking from a failed attempt already took its credit; otherwise credit pays card bookings only.
   const credit = draft.pendingRef
@@ -104,7 +106,7 @@ export default function Review() {
     if (!entered) return;
     setPromoError(null);
     try {
-      const r = await applyPromo(entered, sub);
+      const r = await applyPromo(entered, subtotal(o.price_egp, seats));
       setPromo({ code: r.code, pct: r.percent_off });
     } catch {
       setPromo(null);
@@ -139,6 +141,7 @@ export default function Review() {
           promo: promo?.code ?? null,
           note: draft.note,
           useCredit: credit > 0,
+          weeks,
         });
         qc.invalidateQueries({ queryKey: ['myBookings'] });
         qc.invalidateQueries({ queryKey: ['book'] });
@@ -184,6 +187,7 @@ export default function Review() {
             when,
             t(`instructor.types.${o.type}`),
             seats > 1 ? t('workshop.seat', { count: seats, n: formatNumber(seats, lang) }) : null,
+            weeks > 1 ? t('review.weekly', { n: formatNumber(weeks, lang) }) : null,
             child ? t('review.forChild', { name: child.first_name }) : null,
             o.venue?.name,
           ]
@@ -262,7 +266,14 @@ export default function Review() {
             {
               key: 'session',
               title:
-                seats > 1 ? t('review.sessionSeats', { n: formatNumber(seats, lang) }) : t('review.session'),
+                weeks > 1
+                  ? t('review.sessionWeeks', {
+                      n: formatNumber(weeks, lang),
+                      price: formatPrice(subtotal(o.price_egp, seats), lang),
+                    })
+                  : seats > 1
+                    ? t('review.sessionSeats', { n: formatNumber(seats, lang) })
+                    : t('review.session'),
               value: formatPrice(sub, lang),
             },
             ...(promo

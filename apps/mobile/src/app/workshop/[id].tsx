@@ -5,9 +5,9 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
-import { useBookDraft } from '@/data/book';
+import { repeatTexts, useBookDraft } from '@/data/book';
 import { useWorkshop } from '@/data/instructor';
-import { cairoKey, clampSeats, maxWorkshopSeats, monthsAhead } from '@/data/rules';
+import { cairoKey, clampSeats, isBookable, maxWorkshopSeats, monthsAhead, seriesWeeks } from '@/data/rules';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -23,6 +23,7 @@ import { Avatar } from '@/ui/Avatar';
 import { Hero } from '@/ui/Hero';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Pill } from '@/ui/Pill';
+import { RepeatWeekly } from '@/ui/RepeatWeekly';
 import { T } from '@/ui/T';
 
 const hero = component.hero;
@@ -53,6 +54,7 @@ export default function Workshop() {
   const [dayChoice, setDayChoice] = useState<string | null>(null);
   const [slotId, setSlotId] = useState<string | null>(null);
   const [seats, setSeats] = useState<number | null>(null);
+  const [weeksChoice, setWeeksChoice] = useState(1); // Phase 2 R5.1
   const n = (x: number) => formatNumber(x, lang);
   const now = new Date();
 
@@ -84,6 +86,19 @@ export default function Workshop() {
   const chosen = slots.find((s) => s.id === selectedId) ?? null;
   const max = chosen ? maxWorkshopSeats(chosen.seats_free) : 0;
   const count = seats === null ? null : clampSeats(seats, max);
+  // Repeat weekly (R5.1): small groups, not workshops; a series holds one seat each week.
+  const weeksMax =
+    chosen && o.type === 'group' && count === 1
+      ? seriesWeeks(chosen, slots, (s) => s.seats_free > 0 && isBookable(new Date(s.starts_at), now))
+      : 1;
+  const weeks = Math.min(weeksChoice, weeksMax);
+  const repeat = chosen
+    ? repeatTexts(chosen.starts_at, Math.max(weeks, 2), t, {
+        weekday: (d) => formatWeekday(d, lang, 'long'),
+        dayMonth: (d) => formatDayMonth(d, lang),
+        n,
+      })
+    : null;
   const when = chosen
     ? `${formatWeekday(new Date(chosen.starts_at), lang)} ${formatDayMonth(new Date(chosen.starts_at), lang)} · ${formatClock(new Date(chosen.starts_at), lang)}`
     : null;
@@ -228,6 +243,18 @@ export default function Workshop() {
             </Section>
           )}
 
+          {repeat && weeksMax >= 2 && (
+            <RepeatWeekly
+              weeks={weeks}
+              max={weeksMax}
+              onChange={setWeeksChoice}
+              title={t('book.repeat')}
+              subtitle={repeat.subtitle}
+              span={repeat.span}
+              labels={{ weeks: t('book.weeks'), fewer: t('book.fewerWeeks'), more: t('book.moreWeeks') }}
+            />
+          )}
+
           <View style={styles.facts}>
             {facts.map((f) => (
               <View key={f.key} style={[styles.fact, { backgroundColor: c.surface, boxShadow: shadow.card }]}>
@@ -254,7 +281,7 @@ export default function Workshop() {
             if (!chosen || !count) return;
             useBookDraft
               .getState()
-              .set({ offeringId: o.id, slotId: chosen.id, seats: count, childId: null, note: '' });
+              .set({ offeringId: o.id, slotId: chosen.id, seats: count, childId: null, note: '', weeks });
             router.push('/review');
           }}
         />

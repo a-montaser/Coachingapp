@@ -135,6 +135,17 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `explore.previous` | Explore map | Previous | اللي قبله |
 | `explore.next` | Explore map | Next | اللي بعده |
 | `explore.mapPosition` | Explore map | {{i}} of {{total}} | {{i}} من {{total}} |
+| `book.repeat` | Book, Group page | Repeat weekly | كرر كل أسبوع |
+| `book.repeatSub` | Book, Group page | Same time every {{day}} | نفس الميعاد كل {{day}} |
+| `book.repeatSpan` | Book, Group page | {{n}} weeks · {{from}} – {{to}} | {{n}} أسابيع · {{from}} – {{to}} |
+| `book.weeks` | Book (screen reader) | Weeks | الأسابيع |
+| `book.fewerWeeks` | Book (screen reader) | One week fewer | أسبوع أقل |
+| `book.moreWeeks` | Book (screen reader) | One week more | أسبوع زيادة |
+| `book.weekly` | Book, Booking detail | weekly | كل أسبوع |
+| `bookings.weekly` | Bookings | repeats weekly | بيتكرر كل أسبوع |
+| `review.sessionWeeks` | Review & pay | {{n}} weeks × {{price}} | {{n}} أسابيع × {{price}} |
+| `review.weekly` | Review & pay | weekly · {{n}} weeks | كل أسبوع · {{n}} أسابيع |
+| `review.errors.series_week_unavailable` | Review & pay | One of those weeks is no longer free. Pick fewer weeks or another time. | واحد من الأسابيع دي مبقاش فاضي. اختار أسابيع أقل أو ميعاد تاني. |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

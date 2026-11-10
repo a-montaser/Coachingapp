@@ -78,6 +78,7 @@ const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
   venue_lat: 30.03,
   venue_lng: 31.47,
   child_name: null,
+  series_id: null,
   ...extra,
 });
 

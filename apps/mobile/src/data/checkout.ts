@@ -91,7 +91,23 @@ export async function placeBooking(b: {
   promo: string | null;
   note: string;
   useCredit: boolean;
+  /** 2–8: a weekly series, all or nothing (SQL `book_series`, R5.2). */
+  weeks?: number;
 }) {
+  if (b.weeks && b.weeks > 1) {
+    const { data, error } = await supabase.rpc('book_series', {
+      p_slot: b.slotId,
+      p_weeks: b.weeks,
+      p_method: b.method,
+      p_promo: b.promo,
+      p_note: b.note || null,
+      p_use_credit: b.useCredit,
+    });
+    if (error) throw error;
+    const rows = data as Booking[];
+    // The first week stands for the series (its ref is paid and confirmed); credit is what all weeks took.
+    return { ...rows[0]!, credit_egp: rows.reduce((n, r) => n + r.credit_egp, 0) };
+  }
   const { data, error } = await supabase.rpc('book', {
     p_slot: b.slotId,
     p_seats: b.seats,
@@ -186,6 +202,7 @@ export async function demoPay(ref: string, outcome: 'paid' | 'failed') {
 }
 
 const KNOWN = [
+  'series_week_unavailable',
   'no_seats',
   'too_soon',
   'slot_past',

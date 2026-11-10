@@ -42,10 +42,12 @@ export type MyBooking = {
   venue_lat: number;
   venue_lng: number;
   child_name: string | null;
+  /** Set on the weeks of a "Repeat weekly" booking (Phase 2 R5). */
+  series_id: string | null;
 };
 
 export const MY_BOOKING_COLUMNS =
-  'id, ref, display_status, method, seats, total_egp, credit_egp, refund_egp, refundable_until, same_day, pay_by, slot_id, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name';
+  'id, ref, display_status, method, seats, total_egp, credit_egp, refund_egp, refundable_until, same_day, pay_by, slot_id, starts_at, ends_at, offering_id, type, title, what_to_bring, discipline_id, discipline_en, discipline_ar, category_id, instructor_id, instructor_name, venue_name, venue_notes, venue_lat, venue_lng, child_name, series_id';
 
 /** "Padel with Nour", "Swimming · Ali with Mariam", or a workshop's own title (§7.11). */
 export function bookingTitle(

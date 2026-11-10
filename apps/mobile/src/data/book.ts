@@ -76,6 +76,8 @@ type BookDraft = {
   seats: number;
   childId: string | null;
   note: string;
+  /** Repeat weekly (Phase 2 R5): 1 is a single session, 2–8 a series booked and paid together. */
+  weeks: number;
   /** A card booking already holding seats (awaiting payment): retrying pays for it, not a new hold. */
   pendingRef: string | null;
   /** App credit that held booking already took (D64); only read while `pendingRef` is set. */
@@ -90,6 +92,7 @@ export const useBookDraft = create<BookDraft>()((set) => ({
   seats: 1,
   childId: null,
   note: '',
+  weeks: 1,
   pendingRef: null,
   pendingCredit: 0,
   failed: false,
@@ -98,3 +101,18 @@ export const useBookDraft = create<BookDraft>()((set) => ({
 
 /** First name for "Book with Nour" (§7.8). */
 export const firstName = (displayName: string) => displayName.split(' ')[0] ?? displayName;
+
+/** "Repeat weekly" texts (Phase 2 R5.1): "Same time every Tuesday" and "4 weeks · 24 Nov – 15 Dec". */
+export function repeatTexts(
+  startIso: string,
+  weeks: number,
+  t: (key: string, o?: Record<string, string>) => string,
+  fmt: { weekday: (d: Date) => string; dayMonth: (d: Date) => string; n: (x: number) => string },
+) {
+  const start = new Date(startIso);
+  const end = new Date(start.getTime() + (weeks - 1) * 7 * 86_400_000);
+  return {
+    subtitle: t('book.repeatSub', { day: fmt.weekday(start) }),
+    span: t('book.repeatSpan', { n: fmt.n(weeks), from: fmt.dayMonth(start), to: fmt.dayMonth(end) }),
+  };
+}

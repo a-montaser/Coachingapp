@@ -100,6 +100,9 @@ const en = {
     replyingTo: 'Replying to Nour',
     cancelReply: 'Cancel reply',
     stars: 'Stars',
+    repeat: 'Repeat weekly',
+    repeatSub: 'Same time every Tuesday',
+    repeatSpan: '4 weeks · 24 Nov – 15 Dec',
   },
   app: {
     nextKicker: 'Next workshop · in 3 days',
@@ -252,6 +255,9 @@ const ar: typeof en = {
     replyingTo: 'بترد على نور',
     cancelReply: 'إلغاء الرد',
     stars: 'نجوم',
+    repeat: 'كرر كل أسبوع',
+    repeatSub: 'نفس الميعاد كل تلات',
+    repeatSpan: '٤ أسابيع · ٢٤ نوفمبر – ١٥ ديسمبر',
   },
   app: {
     nextKicker: 'الورشة الجاية · بعد ٣ أيام',

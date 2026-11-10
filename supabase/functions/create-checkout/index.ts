@@ -1,6 +1,7 @@
 // create-checkout (signed-in learner): starts payment for one of their bookings that is awaiting
 // payment (a live 5-minute card hold) or payment_due (kids, after confirmation). Records the attempt
-// as `initiated` and returns the provider's checkout URL (design.md §6).
+// as `initiated` and returns the provider's checkout URL (design.md §6). A weekly series (Phase 2 R5.3)
+// is paid in one checkout: every week still on hold, from its first week's ref.
 import { caller, json, service } from '../_shared/supabase.ts';
 import { getProvider } from '../_shared/payments/provider.ts';
 
@@ -14,7 +15,7 @@ Deno.serve(async (req) => {
   const db = service();
   const { data: b } = await db
     .from('bookings')
-    .select('id, ref, status, total_egp, credit_egp, hold_expires_at, pay_by')
+    .select('id, ref, status, total_egp, credit_egp, hold_expires_at, pay_by, series_id')
     .eq('ref', ref)
     .eq('user_id', user.id)
     .maybeSingle();
@@ -24,14 +25,29 @@ Deno.serve(async (req) => {
     (b.status === 'awaiting_payment' && b.hold_expires_at && Date.parse(b.hold_expires_at) > now) ||
     (b.status === 'payment_due' && b.pay_by && Date.parse(b.pay_by) > now);
   // App credit the learner chose on Review & pay is already taken (D64); the card pays the rest.
-  const amountEgp = b.total_egp - b.credit_egp;
+  let amountEgp = b.total_egp - b.credit_egp;
+  if (b.series_id) {
+    const { data: weeks } = await db
+      .from('bookings')
+      .select('total_egp, credit_egp, hold_expires_at')
+      .eq('series_id', b.series_id)
+      .eq('user_id', user.id)
+      .eq('status', 'awaiting_payment');
+    amountEgp = (weeks ?? [])
+      .filter((w) => w.hold_expires_at && Date.parse(w.hold_expires_at) > now)
+      .reduce((sum, w) => sum + w.total_egp - w.credit_egp, 0);
+  }
   if (!live || amountEgp <= 0) return json({ error: 'not_payable' }, 409);
 
   const provider = getProvider();
   const paymentKey = `${provider.name}_${crypto.randomUUID()}`;
-  const { error } = await db
-    .from('payments')
-    .insert({ booking_id: b.id, provider: provider.name, provider_ref: paymentKey, amount_egp: amountEgp });
+  const { error } = await db.from('payments').insert({
+    booking_id: b.id,
+    provider: provider.name,
+    provider_ref: paymentKey,
+    amount_egp: amountEgp,
+    series_id: b.series_id,
+  });
   if (error) return json({ error: 'payment_record' }, 500);
 
   const { url } = await provider.createCheckout({

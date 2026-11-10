@@ -24,6 +24,7 @@ import { RowCard } from '@/ui/RowCard';
 import { Section } from '@/ui/Section';
 import { SessionRow } from '@/ui/SessionRow';
 import { MapPin } from '@/ui/MapPin';
+import { RepeatWeekly } from '@/ui/RepeatWeekly';
 import { StarRating } from '@/ui/StarRating';
 import { Stepper } from '@/ui/Stepper';
 import { TextField } from '@/ui/TextField';
@@ -96,6 +97,7 @@ export function Gallery() {
   const [search, setSearch] = useState('');
   const [chatDraft, setChatDraft] = useState('');
   const [stars, setStars] = useState(4);
+  const [demoWeeks, setDemoWeeks] = useState(4);
   const [segment, setSegment] = useState(0);
   const [weekly, setWeekly] = useState(true);
   const [day, setDay] = useState(0);
@@ -310,6 +312,15 @@ export function Gallery() {
           <ChatBubble mine={false} body={g.chat.theirs} accessibilityLabel={g.chat.name} />
           <TypingDots accessibilityLabel={g.chat.typing} />
           <StarRating value={stars} onChange={setStars} label={(n) => `${g.chat.stars} ${n}`} />
+          <RepeatWeekly
+            weeks={demoWeeks}
+            max={8}
+            onChange={setDemoWeeks}
+            title={g.chat.repeat}
+            subtitle={g.chat.repeatSub}
+            span={g.chat.repeatSpan}
+            labels={{ weeks: g.chat.repeat, fewer: '−', more: '+' }}
+          />
           <View style={styles.pins}>
             <MapPin label={formatPrice(390, lang)} selected={false} />
             <MapPin label={formatPrice(450, lang)} selected />

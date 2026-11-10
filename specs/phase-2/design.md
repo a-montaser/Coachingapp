@@ -72,6 +72,7 @@ cancel_booking(ref, reason, every_week boolean default false)
 - **Mark read:** upsert `thread_reads` when the chat opens and when a message arrives while it is open.
 
 ## 5. Payments for a series *(Q2)*
+- *(T10)* "Repeat weekly" is on Book for 1:1 lessons and on the Group page for small groups (one seat a week), because groups book there (D54). Migration `20261110140000_series_payments` adds `payments.series_id` and settles a series in `record_payment` (pgTAP `11_series_payment`).
 - `create-checkout` accepts a series: it loads every `awaiting_payment` booking with that `series_id` for the caller and charges their total (after credit, per D64) in one checkout. The `payments` row points at the series' first booking and stores `series_id`.
 - `payment-webhook` / `demo-pay`: paid → every booking in the series confirmed; failed → every hold released. Same idempotency as Phase 1.
 - Credit spends are recorded per booking (each week's share), so a cancelled week returns its own share to the grants it came from (D64 rule 4 unchanged).

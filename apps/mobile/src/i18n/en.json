@@ -411,7 +411,14 @@
     "audience": {
       "private": "Adults",
       "kids": "Kids"
-    }
+    },
+    "repeat": "Repeat weekly",
+    "repeatSub": "Same time every {{day}}",
+    "repeatSpan": "{{n}} weeks · {{from}} – {{to}}",
+    "weeks": "Weeks",
+    "fewerWeeks": "One week fewer",
+    "moreWeeks": "One week more",
+    "weekly": "weekly"
   },
   "review": {
     "title": "Review & pay",
@@ -458,10 +465,13 @@
       "not_cancellable": "This booking can't be changed any more.",
       "reschedule_closed": "Rescheduling closes 24 hours before the start.",
       "pay_first": "Finish paying for this booking first.",
-      "no_slot": "That time isn't available any more. Pick another."
+      "no_slot": "That time isn't available any more. Pick another.",
+      "series_week_unavailable": "One of those weeks is no longer free. Pick fewer weeks or another time."
     },
     "paymentFailed": "The payment didn't go through. Your seat is held for 5 minutes, so you can try again.",
-    "notFound": "This time isn't available any more."
+    "notFound": "This time isn't available any more.",
+    "sessionWeeks": "{{n}} weeks × {{price}}",
+    "weekly": "weekly · {{n}} weeks"
   },
   "demoPay": {
     "title": "Demo payment",
@@ -548,7 +558,8 @@
     "filterNoneReason": "Try fewer filters",
     "filterOnCount": "Filter bookings, {{n}} on",
     "noneOnDay": "Nothing booked on {{day}}",
-    "noneOnDayBody": "Days with a dot have bookings."
+    "noneOnDayBody": "Days with a dot have bookings.",
+    "weekly": "repeats weekly"
   },
   "booking": {
     "paid": "Paid {{amount}}",

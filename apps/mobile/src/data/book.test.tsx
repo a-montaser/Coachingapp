@@ -3,7 +3,7 @@ import '@/i18n';
 import Book from '@/app/book/[offeringId]';
 import { useSettings } from '@/theme/settings';
 import { useBookDraft } from './book';
-import { cairoHM, isBookable, sameCairoDay, weekDays } from './rules';
+import { cairoHM, isBookable, sameCairoDay, seriesWeeks, weekDays } from './rules';
 
 let mockParams: { offeringId: string; slot?: string } = { offeringId: 'one' };
 jest.mock('expo-router', () => ({
@@ -175,4 +175,33 @@ test('nothing open at all: today is shown, and says so', async () => {
   mockQuery = { ...mockData, slots: [mockData.slots[2]] }; // only a full slot
   await render(<Book />);
   expect(screen.getByText(/^No times on \w+ · Nour isn't coaching that day\.$/)).toBeOnTheScreen();
+});
+
+test('weeks in a row with the same Cairo time open: a gap or a full week stops it, at most 8 (R5.1)', () => {
+  const at = (week: number, hour = 15) => new Date(Date.UTC(2026, 10, 3 + 7 * week, hour)).toISOString();
+  const open = (s: { seats_free: number }) => s.seats_free > 0;
+  const weekly = [0, 1, 2, 3].map((w) => ({ starts_at: at(w), seats_free: 1 }));
+  expect(seriesWeeks(weekly[0]!, weekly, open)).toBe(4);
+  expect(seriesWeeks(weekly[0]!, [...weekly.slice(0, 2), { starts_at: at(2), seats_free: 0 }], open)).toBe(2);
+  expect(seriesWeeks(weekly[0]!, [weekly[0]!, { starts_at: at(1, 16), seats_free: 1 }], open)).toBe(1); // other time
+  const many = Array.from({ length: 12 }, (_, w) => ({ starts_at: at(w), seats_free: 1 }));
+  expect(seriesWeeks(many[0]!, many, open)).toBe(8);
+});
+
+test('Book: Repeat weekly for a 1:1 with the same time open later weeks; Continue keeps the weeks (R5.1)', async () => {
+  const weekly = [0, 1, 2].map((w) => ({
+    id: `w${w}`,
+    offering_id: 'one',
+    starts_at: iso(days[1]!, w * 7 * 24 * 60),
+    ends_at: iso(days[1]!, w * 7 * 24 * 60 + 60),
+    seats_free: 1,
+  }));
+  mockQuery = { ...mockData, slots: weekly };
+  mockParams = { offeringId: 'one', slot: 'w0' };
+  await render(<Book />);
+  await fireEvent(screen.getByRole('switch', { name: 'Repeat weekly' }), 'valueChange', true);
+  // Only three weeks are open at that time, so the series starts at three (not the usual four).
+  expect(screen.getByText(/^3 weeks · /)).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+  expect(useBookDraft.getState().weeks).toBe(3);
 });

@@ -5,11 +5,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
-import { firstName, useBookDraft, useBookOptions } from '@/data/book';
+import { firstName, repeatTexts, useBookDraft, useBookOptions } from '@/data/book';
 import { useFamily } from '@/data/family';
-import { cairoHM, cairoKey, isBookable, monthsAhead, sameCairoDay } from '@/data/rules';
+import { cairoHM, cairoKey, isBookable, monthsAhead, sameCairoDay, seriesWeeks } from '@/data/rules';
 import { useLang } from '@/i18n';
-import { formatNumber, formatTime, formatWeekday } from '@/i18n/format';
+import { formatDayMonth, formatNumber, formatTime, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { BottomActionBar } from '@/ui/BottomActionBar';
 import { Button } from '@/ui/Button';
@@ -21,6 +21,7 @@ import { EmptyState } from '@/ui/EmptyState';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { SegmentedControl } from '@/ui/SegmentedControl';
 import { T } from '@/ui/T';
+import { RepeatWeekly } from '@/ui/RepeatWeekly';
 import { TimeSlots, type Slot } from '@/ui/TimeSlots';
 
 const BAR_CLEARANCE =
@@ -57,6 +58,7 @@ export default function Book() {
   const [slotId, setSlotId] = useState<string | null>(wanted ?? null);
   const [childIndex, setChildIndex] = useState(0);
   const [note, setNote] = useState('');
+  const [weeksChoice, setWeeksChoice] = useState(1); // Phase 2 R5.1
 
   if (q.isLoading) return <View style={[styles.screen, { backgroundColor: c.bg }]} />;
   if (!q.data) {
@@ -126,6 +128,20 @@ export default function Book() {
     setMonthChoice(null);
     router.setParams({ offeringId: next.id, slot: undefined });
   };
+  // Repeat weekly (R5.1): 1:1 and group only, as many weeks as that time stays open (up to 8).
+  const weeksMax =
+    chosen && (o.type === 'private' || o.type === 'group')
+      ? seriesWeeks(chosen, slots, (s) => open(s.starts_at, s.seats_free))
+      : 1;
+  const weeks = Math.min(weeksChoice, weeksMax);
+  const caption = chosen && weeks > 1 ? `${summary} · ${t('book.weekly')}` : summary;
+  const repeat = chosen
+    ? repeatTexts(chosen.starts_at, Math.max(weeks, 2), t, {
+        weekday: (d) => formatWeekday(d, lang, 'long'),
+        dayMonth: (d) => formatDayMonth(d, lang),
+        n,
+      })
+    : null;
   const canContinue = Boolean(chosen) && !needsChild;
   const goOn = () => {
     if (!chosen || needsChild) return;
@@ -135,6 +151,7 @@ export default function Book() {
       seats: 1,
       childId: child?.id ?? null,
       note: note.trim(),
+      weeks,
     });
     router.push('/review');
   };
@@ -214,6 +231,18 @@ export default function Book() {
           </T>
         )}
 
+        {repeat && weeksMax >= 2 && (
+          <RepeatWeekly
+            weeks={weeks}
+            max={weeksMax}
+            onChange={setWeeksChoice}
+            title={t('book.repeat')}
+            subtitle={repeat.subtitle}
+            span={repeat.span}
+            labels={{ weeks: t('book.weeks'), fewer: t('book.fewerWeeks'), more: t('book.moreWeeks') }}
+          />
+        )}
+
         <View style={styles.noteWrap}>
           <TextField
             value={note}
@@ -227,7 +256,7 @@ export default function Book() {
 
       <NavigationBar title={t('book.title', { name })} subtitle={discipline} onBack={() => router.back()} />
       {/* No price here: it comes at the end of the decision, on Review & pay (owner revision D54). */}
-      <BottomActionBar caption={summary}>
+      <BottomActionBar caption={caption}>
         <Button
           label={chosen ? t('book.continue') : t('book.pickTime')}
           variant="primary"

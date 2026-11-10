@@ -75,7 +75,7 @@ export default function BookingDetail() {
   const name = firstName(b.instructor_name);
   const subject = (lang === 'ar' && b.discipline_ar) || b.discipline_en;
   const title = bookingTitle(b, t, lang);
-  const when = `${formatWeekday(start, lang, 'long')} ${formatDayMonth(start, lang)} · ${formatClock(start, lang)}–${formatClock(new Date(b.ends_at), lang)}`;
+  const when = `${formatWeekday(start, lang, 'long')} ${formatDayMonth(start, lang)} · ${formatClock(start, lang)}–${formatClock(new Date(b.ends_at), lang)}${b.series_id ? ` · ${t('book.weekly')}` : ''}`;
   const status = b.display_status;
   const pill = statusPill(status);
   const upcoming = ['pending', 'payment_due', 'awaiting_payment', 'confirmed'].includes(status);

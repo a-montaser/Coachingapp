@@ -151,3 +151,33 @@ export type Region = { latitude: number; longitude: number; latitudeDelta: numbe
 export const inRegion = (p: { lat: number; lng: number }, r: Region) =>
   Math.abs(p.lat - r.latitude) <= r.latitudeDelta / 2 &&
   Math.abs(p.lng - r.longitude) <= r.longitudeDelta / 2;
+
+// ---------- Weekly series (Phase 2 R5) ----------
+
+const WEEK_MS = 7 * 86_400_000;
+export const SERIES_MAX_WEEKS = 8;
+
+/**
+ * How many weeks in a row, from the chosen slot, have that same Cairo time open (R5.1): the "Repeat
+ * weekly" stepper's maximum, capped at 8. 1 means no series is possible.
+ */
+export function seriesWeeks(
+  chosen: { starts_at: string },
+  slots: { starts_at: string; seats_free: number }[],
+  isOpen: (s: { starts_at: string; seats_free: number }) => boolean,
+): number {
+  const start = new Date(chosen.starts_at);
+  const [h, m] = cairoHM(start);
+  let weeks = 1;
+  while (weeks < SERIES_MAX_WEEKS) {
+    const day = cairoKey(new Date(start.getTime() + weeks * WEEK_MS));
+    const next = slots.find((s) => {
+      const d = new Date(s.starts_at);
+      const [sh, sm] = cairoHM(d);
+      return cairoKey(d) === day && sh === h && sm === m;
+    });
+    if (!next || !isOpen(next)) break;
+    weeks += 1;
+  }
+  return weeks;
+}

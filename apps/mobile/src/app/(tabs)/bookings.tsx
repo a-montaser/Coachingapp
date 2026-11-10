@@ -75,6 +75,7 @@ export default function Bookings() {
     const detail = [
       !isPast && sameCairoDay(start, now) ? t('bookings.today') : null,
       t(`instructor.types.${b.type}`),
+      b.series_id ? t('bookings.weekly') : null, // §7.11 "repeats weekly" (R5.4)
     ]
       .filter(Boolean)
       .join(' · ');
