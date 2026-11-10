@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -37,6 +38,8 @@ export type Message = {
   sender_id: string;
   body: string;
   created_at: string;
+  /** The message this one replies to (swipe to reply, D74). */
+  reply_to?: string | null;
   /** Only on this phone, until the server has it. */
   status?: 'sending' | 'failed';
 };
@@ -65,7 +68,7 @@ export function useMessages(threadId: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('messages')
-        .select('id, sender_id, body, created_at')
+        .select('id, sender_id, body, created_at, reply_to')
         .eq('thread_id', threadId!)
         .order('created_at', { ascending: false })
         .limit(200);
@@ -106,18 +109,21 @@ const newId = () =>
 export function useSend(threadId: string, userId: string | undefined) {
   const qc = useQueryClient();
   return useCallback(
-    async (body: string, retryId?: string) => {
+    async (body: string, retryId?: string, replyTo?: string | null) => {
       const text = body.trim();
       if (!text || !userId) return;
       const id = retryId ?? newId();
       const key = ['messages', threadId];
       const put = (m: Message) =>
         qc.setQueryData<Message[]>(key, (old = []) => [...old.filter((x) => x.id !== m.id), m]);
-      put({ id, sender_id: userId, body: text, created_at: new Date().toISOString(), status: 'sending' });
-      const { error } = await supabase.from('messages').insert({ id, thread_id: threadId, body: text });
+      const draft = { id, sender_id: userId, body: text, reply_to: replyTo ?? null };
+      put({ ...draft, created_at: new Date().toISOString(), status: 'sending' });
+      const { error } = await supabase
+        .from('messages')
+        .insert({ id, thread_id: threadId, body: text, reply_to: replyTo ?? null });
       // 23505: the first try did reach the server, only its answer was lost.
       if (error && error.code !== '23505') {
-        put({ id, sender_id: userId, body: text, created_at: new Date().toISOString(), status: 'failed' });
+        put({ ...draft, created_at: new Date().toISOString(), status: 'failed' });
         return;
       }
       await qc.invalidateQueries({ queryKey: key });
@@ -188,7 +194,13 @@ export const mergeMessage = (old: Message[] | undefined, m: Row): Message[] | un
   old &&
   [
     ...old.filter((x) => x.id !== m.id),
-    { id: m.id, sender_id: m.sender_id, body: m.body, created_at: m.created_at },
+    {
+      id: m.id,
+      sender_id: m.sender_id,
+      body: m.body,
+      created_at: m.created_at,
+      reply_to: m.reply_to ?? null,
+    },
   ].sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
 
 /**
@@ -262,4 +274,32 @@ export function useTyping(threadId: string | undefined, userId: string | undefin
   }, [userId]);
   const clear = useCallback(() => setTyping(false), []);
   return { typing, ping, clear };
+}
+
+// ---------- Message notifications (owner, D74) ----------
+
+/**
+ * A new message for a chat that isn't on screen shows as a phone notification (title: sender, text: the
+ * message, sound), the same way session reminders do. Tapping it opens the chat (`useOpenChatFromNotification`).
+ * Without notification permission it falls back to the in-app toast.
+ * shortcut: a local notification posted by the running app, so it only fires while the app runs; real push
+ * for a closed app needs a development build (Apple Developer account), D74.
+ */
+export async function notifyMessage(title: string, body: string, threadId: string, fallback: () => void) {
+  if ((await Notifications.getPermissionsAsync()).status !== 'granted') return fallback();
+  await Notifications.scheduleNotificationAsync({
+    content: { title, body, sound: true, data: { threadId } },
+    trigger: null,
+  });
+}
+
+/** Tapping a message notification opens its chat (once per tap). */
+export function useOpenChatFromNotification() {
+  const response = Notifications.useLastNotificationResponse();
+  useEffect(() => {
+    const threadId = response?.notification.request.content.data?.threadId;
+    if (typeof threadId !== 'string') return;
+    router.push({ pathname: '/chat/[threadId]', params: { threadId } });
+    void Notifications.clearLastNotificationResponseAsync();
+  }, [response]);
 }

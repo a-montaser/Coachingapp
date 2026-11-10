@@ -40,6 +40,7 @@ const names = {
   filter: { ios: 'line.3.horizontal.decrease', android: 'filter_list' },
   bag: { ios: 'bag', android: 'shopping_bag' },
   send: { ios: 'arrow.up', android: 'arrow_upward' }, // Chat composer (§7.13)
+  reply: { ios: 'arrowshape.turn.up.left', android: 'reply' }, // swipe to reply (D74)
   // Disciplines, keyed by `disciplines.icon` (not named in the handoff; picked to match the canvas drawings).
   pottery: { ios: 'cup.and.saucer', android: 'emoji_food_beverage' },
   painting: { ios: 'paintbrush', android: 'brush' },
@@ -77,7 +78,7 @@ export const disciplineIcon = (key: string | null): IconName | null =>
 
 // Direction is applied in JS (D26), so the system doesn't mirror symbols for us: flip directional ones.
 // When native RTL arrives (Phase 1 dev build), iOS backward/forward symbols self-mirror: flip Android only then.
-const directional = new Set<IconName>(['back', 'forward']);
+const directional = new Set<IconName>(['back', 'forward', 'reply']);
 
 type Props = { name: IconName; size: number; color: string };
 

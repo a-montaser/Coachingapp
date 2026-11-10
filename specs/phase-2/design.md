@@ -37,7 +37,7 @@ supabase/tests/realtime.mjs                        two-client Realtime check, CI
 |---|---|---|
 | `instructors.user_id` *(Q1)* | `uuid null unique references auth.users` | unchanged (public read where verified); the column itself is not selected by the app |
 | `threads` | `id`, `learner_id`, `instructor_id`, `created_at`, `last_message_at`; unique (`learner_id`, `instructor_id`) | members read; no direct insert (`start_thread`) |
-| `messages` | `id`, `thread_id`, `sender_id`, `body` (1–2,000 characters), `created_at`. Media columns come with media (D67) | members read; insert only as yourself into your thread; no update or delete |
+| `messages` | `id`, `thread_id`, `sender_id`, `body` (1–2,000 characters), `created_at`, `reply_to` (null, or a message in the same thread; D74, migration `20261110120000_message_replies`). Media columns come with media (D67) | members read; insert only as yourself into your thread; no update or delete |
 | `thread_reads` | `thread_id`, `user_id`, `last_read_at`; pk both | members read (the other side's marker = read receipts); write your own row only |
 | `reviews` | `booking_id` pk, `user_id`, `instructor_id`, `stars` 1–5, `body`, `created_at` | author and that instructor read; no direct writes (`rate_booking`) |
 | `favourites` | `user_id`, `instructor_id`, `created_at`; pk both | self all |

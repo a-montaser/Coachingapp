@@ -19,6 +19,8 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 ## B. Chat
 - [ ] **T4 Messages tab + tab badge + entry points** (R1.3, R1.4, R1.9), text-only Chat with send, retry, mark read (R1.5, R1.8 without typing).
   - Verify: RNTL; on the iPhone with the demo instructor signed in on a second device.
+- [ ] **T5b Swipe to reply and message notifications** (owner, 10 Nov, R1.10 revised, R1.11, D74): `messages.reply_to` with the same-thread check (pgTAP `09_replies`), swipe and VoiceOver reply, quote in the bubble, reply bar in the composer; local notifications for new messages, tap opens the chat.
+  - Verify: RNTL; pgTAP; on the iPhone with two accounts.
 - [ ] **T5 Realtime:** live messages, typing, read receipts, in-app toast (R1.8, R1.10); `supabase/tests/realtime.mjs` in CI.
   - Verify: CI realtime test; on the iPhone.
 ## C. Ratings, favourites, credit

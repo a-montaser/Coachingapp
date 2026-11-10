@@ -96,6 +96,9 @@ const en = {
     placeholder: 'Message',
     send: 'Send',
     typing: 'Nour is typing',
+    reply: 'Reply',
+    replyingTo: 'Replying to Nour',
+    cancelReply: 'Cancel reply',
   },
   app: {
     nextKicker: 'Next workshop · in 3 days',
@@ -244,6 +247,9 @@ const ar: typeof en = {
     placeholder: 'رسالة',
     send: 'ابعت',
     typing: 'نور بيكتب',
+    reply: 'رد',
+    replyingTo: 'بترد على نور',
+    cancelReply: 'إلغاء الرد',
   },
   app: {
     nextKicker: 'الورشة الجاية · بعد ٣ أيام',

@@ -625,6 +625,10 @@
     "emptyBody": "Ask {{name}} anything about their sessions.",
     "typing": "{{name}} is typing",
     "toast": "New message from {{name}}",
-    "toastNew": "New message"
+    "toastNew": "New message",
+    "reply": "Reply",
+    "replyingTo": "Replying to {{name}}",
+    "cancelReply": "Cancel reply",
+    "youName": "You"
   }
 }

@@ -8,6 +8,7 @@ import {
   contextLine,
   matchesSearch,
   mergeMessage,
+  notifyMessage,
   receipt,
   useOpenThread,
   type Message,
@@ -44,6 +45,18 @@ jest.mock('./supabase', () => ({
     },
     removeChannel: jest.fn(),
   },
+}));
+const mockNotif = {
+  status: 'granted',
+  schedule: jest.fn(),
+};
+jest.mock('expo-notifications', () => ({
+  setNotificationHandler: jest.fn(),
+  getPermissionsAsync: async () => ({ status: mockNotif.status, canAskAgain: false }),
+  requestPermissionsAsync: jest.fn(),
+  scheduleNotificationAsync: (...a: unknown[]) => mockNotif.schedule(...a),
+  useLastNotificationResponse: () => null,
+  clearLastNotificationResponseAsync: jest.fn(),
 }));
 jest.mock('./auth', () => ({
   ...jest.requireActual('./auth'),
@@ -170,7 +183,12 @@ test('Chat: send shows the message at once; a failed one offers Retry, which res
   mockMessages = [msg('x', 'me', 1, { status: 'failed', body: 'Can I bring a friend?' })];
   await render(<Chat />);
   await fireEvent.press(screen.getByRole('button', { name: 'Not sent · Retry' }));
-  expect(mockInsert).toHaveBeenCalledWith({ id: 'x', thread_id: 'th1', body: 'Can I bring a friend?' });
+  expect(mockInsert).toHaveBeenCalledWith({
+    id: 'x',
+    thread_id: 'th1',
+    body: 'Can I bring a friend?',
+    reply_to: null,
+  });
 
   mockInsert.mockClear();
   await fireEvent.changeText(screen.getByLabelText('Message'), '  See you at 17:30  ');
@@ -214,4 +232,45 @@ test('Chat live: marks itself open, shows their typing dots, and sends typing at
   await act(async () => view.unmount());
   expect(useOpenThread.getState().id).toBeNull();
   jest.useRealTimers();
+});
+
+test('swipe to reply (VoiceOver action): the reply bar shows, sends with reply_to, and the quote shows (D74)', async () => {
+  mockThreads = [thread()];
+  mockMessages = [
+    msg('a', 'nour', 10, { body: 'Bring trainers' }),
+    msg('b', 'me', 5, { body: 'Sure', reply_to: 'a' }),
+  ];
+  await render(<Chat />);
+  // A reply shows what it quotes, above its own text.
+  expect(screen.getByLabelText(/^You, \d\d:\d\d: Nour, Bring trainers\. Sure$/)).toBeOnTheScreen();
+
+  await fireEvent(
+    screen.getByLabelText(/^Nour El-Sayed, \d\d:\d\d: Bring trainers$/),
+    'accessibilityAction',
+    {
+      nativeEvent: { actionName: 'reply' },
+    },
+  );
+  expect(screen.getByText('Replying to Nour')).toBeOnTheScreen();
+  await fireEvent.changeText(screen.getByLabelText('Message'), 'Which size?');
+  await fireEvent.press(screen.getByRole('button', { name: 'Send' }));
+  expect(mockInsert).toHaveBeenCalledWith(expect.objectContaining({ body: 'Which size?', reply_to: 'a' }));
+  expect(screen.queryByText('Replying to Nour')).toBeNull();
+});
+
+test('a new message notifies like a reminder; without permission it falls back to the toast (D74)', async () => {
+  const fallback = jest.fn();
+  await notifyMessage('Nour El-Sayed', 'See you at 17:30', 'th1', fallback);
+  expect(mockNotif.schedule).toHaveBeenCalledWith({
+    content: { title: 'Nour El-Sayed', body: 'See you at 17:30', sound: true, data: { threadId: 'th1' } },
+    trigger: null,
+  });
+  expect(fallback).not.toHaveBeenCalled();
+
+  mockNotif.status = 'denied';
+  mockNotif.schedule.mockClear();
+  await notifyMessage('Nour El-Sayed', 'Hi', 'th1', fallback);
+  expect(mockNotif.schedule).not.toHaveBeenCalled();
+  expect(fallback).toHaveBeenCalled();
+  mockNotif.status = 'granted';
 });

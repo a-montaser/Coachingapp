@@ -306,7 +306,15 @@ export function Gallery() {
           </View>
           <ChatBubble mine={false} body={g.chat.theirs} accessibilityLabel={g.chat.name} />
           <TypingDots accessibilityLabel={g.chat.typing} />
-          <ChatBubble mine body={g.chat.mine} accessibilityLabel={g.chat.name} footer={g.chat.delivered} />
+          <ChatBubble
+            mine
+            body={g.chat.mine}
+            accessibilityLabel={g.chat.name}
+            footer={g.chat.delivered}
+            quote={{ name: g.chat.name, text: g.chat.theirs, onPress: () => {} }}
+            onReply={() => {}}
+            replyLabel={g.chat.reply}
+          />
           <ChatBubble
             mine
             body={g.chat.failedText}
@@ -320,6 +328,12 @@ export function Gallery() {
             placeholder={g.chat.placeholder}
             sendLabel={g.chat.send}
             maxLength={2000}
+            replyTo={{
+              title: g.chat.replyingTo,
+              text: g.chat.theirs,
+              onCancel: () => {},
+              cancelLabel: g.chat.cancelReply,
+            }}
           />
         </Section>
 

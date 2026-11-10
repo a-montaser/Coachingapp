@@ -145,6 +145,7 @@ export const component = {
   threadRow: { photo: 48, gap: 12, padV: 10 /* provisional */, badge: 20, badgePad: 6 }, // §7.13 Messages
   composer: { minHeight: 44, maxHeight: 120 /* provisional */, padH: 14, padV: 10 }, // §7.13 Chat composer
   typingDots: { size: 8, gap: 4 /* provisional */ }, // §5 typing indicator
+  replySwipe: { activateAt: 12, threshold: 56, max: 80, arrowInset: 32, quoteBar: 3, quoteRadius: 8 }, // swipe to reply (D74, provisional)
   phoneField: { minHeight: 56 }, // §7.2 (height not given: grouped-row height, provisional)
   avatar: { iconRatio: 0.45 }, // silhouette size inside a photo slot
   profilePhoto: { size: 64, iconSize: 28 /* provisional */ }, // §7.14

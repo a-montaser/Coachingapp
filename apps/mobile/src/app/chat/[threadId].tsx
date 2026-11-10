@@ -13,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
+import { askReminderPermission } from '@/data/reminders';
 import { firstName } from '@/data/book';
 import {
   dayTime,
@@ -23,6 +24,7 @@ import {
   useSend,
   useThreads,
   useTyping,
+  type Message,
 } from '@/data/chat';
 import { useLang } from '@/i18n';
 import { formatClock } from '@/i18n/format';
@@ -56,10 +58,19 @@ export default function Chat() {
   const send = useSend(threadId, userId);
   const [draft, setDraft] = useState('');
   const scroll = useRef<ScrollViewInstance>(null);
+  const offsets = useRef(new Map<string, number>());
+  // Swipe to reply (D74): the message being answered, shown above the field until sent or cancelled.
+  const [replyTo, setReplyTo] = useState<Message | null>(null);
   const list = messages.data ?? [];
   const count = list.length;
+  const byId = new Map(list.map((m) => [m.id, m]));
   const typing = useTyping(threadId, userId);
   const lastFromThem = count > 0 && list[count - 1]!.sender_id !== userId;
+
+  // Ask for notifications once (the same permission as reminders), so new messages can notify (D74).
+  useEffect(() => {
+    void askReminderPermission().catch(() => {});
+  }, []);
 
   // This chat is on screen: its messages don't raise the in-app alert.
   useEffect(() => {
@@ -82,6 +93,7 @@ export default function Chat() {
   }, [threadId, userId, count, qc]);
 
   const name = thread?.other_name ?? '';
+  const senderName = (m: Message) => (m.sender_id === userId ? t('chat.youName') : firstName(name));
   const learner = thread?.i_am_learner ?? true;
   const discipline = thread?.next_discipline_en ?? thread?.last_discipline_en;
   const subtitle = learner
@@ -93,7 +105,8 @@ export default function Chat() {
   const submit = () => {
     const body = draft;
     setDraft('');
-    void send(body);
+    void send(body, undefined, replyTo?.id);
+    setReplyTo(null);
   };
 
   return (
@@ -134,20 +147,38 @@ export default function Chat() {
         {list.map((m) => {
           const mine = m.sender_id === userId;
           const time = formatClock(new Date(m.created_at), lang);
+          const quoted = m.reply_to ? byId.get(m.reply_to) : undefined;
           return (
-            <ChatBubble
-              key={m.id}
-              mine={mine}
-              body={m.body}
-              sending={m.status === 'sending'}
-              accessibilityLabel={mine ? t('chat.you', { time }) : t('chat.them', { name, time })}
-              footer={tick?.id === m.id ? t(tick.read ? 'chat.read' : 'chat.delivered') : undefined}
-              failed={
-                m.status === 'failed'
-                  ? { label: t('chat.notSent'), onRetry: () => void send(m.body, m.id) }
-                  : undefined
-              }
-            />
+            // The wrapper records where each message sits, so tapping a quote can scroll to it.
+            <View key={m.id} onLayout={(e) => offsets.current.set(m.id, e.nativeEvent.layout.y)}>
+              <ChatBubble
+                mine={mine}
+                body={m.body}
+                sending={m.status === 'sending'}
+                accessibilityLabel={mine ? t('chat.you', { time }) : t('chat.them', { name, time })}
+                footer={tick?.id === m.id ? t(tick.read ? 'chat.read' : 'chat.delivered') : undefined}
+                failed={
+                  m.status === 'failed'
+                    ? { label: t('chat.notSent'), onRetry: () => void send(m.body, m.id, m.reply_to) }
+                    : undefined
+                }
+                onReply={m.status ? undefined : () => setReplyTo(m)}
+                replyLabel={t('chat.reply')}
+                quote={
+                  quoted
+                    ? {
+                        name: senderName(quoted),
+                        text: quoted.body,
+                        onPress: () => {
+                          const y = offsets.current.get(quoted.id);
+                          if (y !== undefined)
+                            scroll.current?.scrollTo({ y: Math.max(0, y - space.space8), animated: true });
+                        },
+                      }
+                    : undefined
+                }
+              />
+            </View>
           );
         })}
         {typing.typing && <TypingDots accessibilityLabel={t('chat.typing', { name: firstName(name) })} />}
@@ -164,6 +195,16 @@ export default function Chat() {
           placeholder={t('chat.placeholder')}
           sendLabel={t('chat.send')}
           maxLength={MAX}
+          replyTo={
+            replyTo
+              ? {
+                  title: t('chat.replyingTo', { name: senderName(replyTo) }),
+                  text: replyTo.body,
+                  onCancel: () => setReplyTo(null),
+                  cancelLabel: t('chat.cancelReply'),
+                }
+              : undefined
+          }
         />
       </View>
 

@@ -6,7 +6,7 @@ import { useLang } from '@/i18n';
 import { formatNumber } from '@/i18n/format';
 import { Platform } from 'react-native';
 import { useMyInstructorId, useSession } from '@/data/auth';
-import { useChatRealtime, useThreads } from '@/data/chat';
+import { notifyMessage, useChatRealtime, useOpenChatFromNotification, useThreads } from '@/data/chat';
 import { useReminderSync } from '@/data/reminders';
 import { TabBar, restoreTabBar, useTabBarMinimised, type TabKey } from '@/ui/TabBar';
 import { TAB_ICON } from '@/ui/tabIcons';
@@ -42,11 +42,15 @@ export default function TabsLayout() {
   const instructor = useMyInstructorId(userId);
   const threads = useThreads(userId).data;
   const unread = threads?.reduce((n, th) => n + th.unread, 0) ?? 0; // R1.4
-  // Live chat for the whole signed-in app (T5); a message for a chat that isn't open shows as a toast (R1.10).
+  // Live chat for the whole signed-in app (T5). A message for a chat that isn't open shows as a phone
+  // notification like the reminders (D74), or as the in-app toast without notification permission.
   useChatRealtime(userId, (m) => {
     const name = threads?.find((th) => th.id === m.thread_id)?.other_name;
-    showToast(name ? t('chat.toast', { name }) : t('chat.toastNew'));
+    void notifyMessage(name ?? t('chat.toastNew'), m.body, m.thread_id, () =>
+      showToast(name ? t('chat.toast', { name }) : t('chat.toastNew')),
+    );
   });
+  useOpenChatFromNotification();
   const isInstructor = Boolean(instructor.data);
   const tabs = isInstructor ? INSTRUCTOR_TABS : ORDER;
   // Home is hidden for an instructor, so they land on Messages.

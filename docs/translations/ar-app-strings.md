@@ -95,6 +95,10 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `chat.typing` | Chat (screen reader) | {{name}} is typing | {{name}} بيكتب |
 | `chat.toast` | In-app alert | New message from {{name}} | رسالة جديدة من {{name}} |
 | `chat.toastNew` | In-app alert | New message | رسالة جديدة |
+| `chat.reply` | Chat (screen reader action) | Reply | رد |
+| `chat.replyingTo` | Chat | Replying to {{name}} | بترد على {{name}} |
+| `chat.cancelReply` | Chat | Cancel reply | إلغاء الرد |
+| `chat.youName` | Chat (quoted reply) | You | إنت |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |
