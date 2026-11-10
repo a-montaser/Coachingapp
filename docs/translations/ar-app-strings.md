@@ -146,6 +146,9 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `review.sessionWeeks` | Review & pay | {{n}} weeks × {{price}} | {{n}} أسابيع × {{price}} |
 | `review.weekly` | Review & pay | weekly · {{n}} weeks | كل أسبوع · {{n}} أسابيع |
 | `review.errors.series_week_unavailable` | Review & pay | One of those weeks is no longer free. Pick fewer weeks or another time. | واحد من الأسابيع دي مبقاش فاضي. اختار أسابيع أقل أو ميعاد تاني. |
+| `cancel.everyWeek` | Cancel sheet | Cancel every week | إلغي كل الأسابيع |
+| `cancel.everyWeekSub_one` | Cancel sheet | This week and the {{n}} after it | الأسبوع ده واللي بعده |
+| `cancel.everyWeekSub_other` | Cancel sheet | This week and the {{n}} after it | الأسبوع ده و{{n}} بعده |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

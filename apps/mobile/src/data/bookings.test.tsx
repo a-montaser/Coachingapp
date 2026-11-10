@@ -297,7 +297,7 @@ test('Cancel sheet: says the refund, cancels with the reason, back to Bookings w
   await fireEvent.press(screen.getByRole('button', { name: 'Injury' }));
   await fireEvent.press(screen.getByRole('button', { name: 'Cancel and get 650 EGP credit' }));
   await waitFor(() => expect(mockRouter.navigate).toHaveBeenCalledWith('/bookings'));
-  expect(mockCancel).toHaveBeenCalledWith('CFA-1', 'Injury');
+  expect(mockCancel).toHaveBeenCalledWith('CFA-1', 'Injury', false);
   expect(useToast.getState().message).toBe('Booking cancelled · 650 EGP added to your credit');
 });
 
@@ -347,4 +347,19 @@ test('maps are Google: directions link, and a static map picture once the key is
   });
   if (saved === undefined) delete process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY;
   else process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY = saved;
+});
+
+test('Cancel sheet for a weekly booking: "Cancel every week" adds up each week\'s credit (R5.5)', async () => {
+  const week = (ref: string, h: number) =>
+    row(ref, { series_id: 'ser1', starts_at: at(h), ends_at: at(h + 1), refundable_until: at(h - 24) });
+  mockRows = [week('CFA-W1', 72), week('CFA-W2', 72 + 168), week('CFA-W3', 72 + 336)];
+  mockParams = { ref: 'CFA-W1' };
+  mockOne = mockRows[0];
+  mockCancel.mockResolvedValue({ ref: 'CFA-W1', refund_egp: 650 });
+  await render(<CancelSheet />);
+  expect(screen.getByText('This week and the 2 after it')).toBeOnTheScreen();
+  expect(screen.getByRole('button', { name: 'Cancel and get 650 EGP credit' })).toBeOnTheScreen();
+  await fireEvent(screen.getByRole('switch', { name: 'Cancel every week' }), 'valueChange', true);
+  await fireEvent.press(screen.getByRole('button', { name: 'Cancel and get 1,950 EGP credit' }));
+  await waitFor(() => expect(mockCancel).toHaveBeenCalledWith('CFA-W1', null, true));
 });

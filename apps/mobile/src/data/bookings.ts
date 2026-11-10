@@ -177,6 +177,28 @@ export function cancelOutcome(
   return { kind: 'late' };
 }
 
+/** This week and the series' later live weeks (Phase 2 R5.5), soonest first. */
+export function laterWeeks(b: MyBooking, all: MyBooking[]) {
+  if (!b.series_id) return [b];
+  return all
+    .filter(
+      (x) =>
+        x.series_id === b.series_id &&
+        Date.parse(x.starts_at) >= Date.parse(b.starts_at) &&
+        x.display_status !== 'cancelled' &&
+        x.display_status !== 'completed',
+    )
+    .sort((x, y) => Date.parse(x.starts_at) - Date.parse(y.starts_at));
+}
+
+/** "Cancel every week": each week by its own 24-hour rule (§9.1, D64), what comes back added up. */
+export function seriesCancelCredit(weeks: MyBooking[], now: Date) {
+  return weeks.reduce((sum, w) => {
+    const o = cancelOutcome(w, now);
+    return sum + ('amount' in o ? o.amount : 0);
+  }, 0);
+}
+
 /**
  * Google Maps directions to the venue (owner, D52): opens the Google Maps app when it's installed,
  * otherwise Google Maps in the browser, on iOS and Android alike.

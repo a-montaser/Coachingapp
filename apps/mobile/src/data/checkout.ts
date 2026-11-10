@@ -169,8 +169,12 @@ export async function startCheckout(ref: string) {
 }
 
 /** SQL `cancel_booking()`: cancels, frees the seats and returns any refund as app credit (§9.1, D64). */
-export async function cancelBooking(ref: string, reason: string | null) {
-  const { data, error } = await supabase.rpc('cancel_booking', { p_ref: ref, p_reason: reason });
+export async function cancelBooking(ref: string, reason: string | null, everyWeek = false) {
+  const { data, error } = await supabase.rpc('cancel_booking', {
+    p_ref: ref,
+    p_reason: reason,
+    p_every_week: everyWeek,
+  });
   if (error) throw error;
   return data as { ref: string; refund_egp: number };
 }

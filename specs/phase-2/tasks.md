@@ -38,7 +38,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 ## E. Recurring and calendar
 - [x] **T10 Repeat weekly on Book, Review & pay for a series, series checkout** (R5.1–R5.4, design §5).
   - Verify: RNTL; Deno series tests; on the iPhone with the demo provider.
-- [ ] **T11 Cancel every week; Reschedule one week** (R5.5, R5.6).
+- [x] **T11 Cancel every week; Reschedule one week** (R5.5, R5.6).
   - Verify: RNTL for the sums; pgTAP from T2.
 - [ ] **T12 Add to calendar** on Confirmed and Booking detail (R6).
   - Verify: RNTL for the event fields; on the iPhone.

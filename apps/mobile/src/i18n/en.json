@@ -596,7 +596,10 @@
     "confirm": "Cancel booking",
     "confirmRefund": "Cancel and get {{amount}} credit",
     "toast": "Booking cancelled",
-    "toastRefund": "Booking cancelled · {{amount}} added to your credit"
+    "toastRefund": "Booking cancelled · {{amount}} added to your credit",
+    "everyWeek": "Cancel every week",
+    "everyWeekSub_one": "This week and the {{n}} after it",
+    "everyWeekSub_other": "This week and the {{n}} after it"
   },
   "reschedule": {
     "title": "Reschedule",
