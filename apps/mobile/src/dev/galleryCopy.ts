@@ -99,6 +99,7 @@ const en = {
     reply: 'Reply',
     replyingTo: 'Replying to Nour',
     cancelReply: 'Cancel reply',
+    stars: 'Stars',
   },
   app: {
     nextKicker: 'Next workshop · in 3 days',
@@ -250,6 +251,7 @@ const ar: typeof en = {
     reply: 'رد',
     replyingTo: 'بترد على نور',
     cancelReply: 'إلغاء الرد',
+    stars: 'نجوم',
   },
   app: {
     nextKicker: 'الورشة الجاية · بعد ٣ أيام',

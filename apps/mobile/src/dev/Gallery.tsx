@@ -23,6 +23,7 @@ import { PhoneField } from '@/ui/PhoneField';
 import { RowCard } from '@/ui/RowCard';
 import { Section } from '@/ui/Section';
 import { SessionRow } from '@/ui/SessionRow';
+import { StarRating } from '@/ui/StarRating';
 import { Stepper } from '@/ui/Stepper';
 import { TextField } from '@/ui/TextField';
 import { TextLink } from '@/ui/TextLink';
@@ -93,6 +94,7 @@ export function Gallery() {
   const [chip, setChip] = useState(0);
   const [search, setSearch] = useState('');
   const [chatDraft, setChatDraft] = useState('');
+  const [stars, setStars] = useState(4);
   const [segment, setSegment] = useState(0);
   const [weekly, setWeekly] = useState(true);
   const [day, setDay] = useState(0);
@@ -306,6 +308,7 @@ export function Gallery() {
           </View>
           <ChatBubble mine={false} body={g.chat.theirs} accessibilityLabel={g.chat.name} />
           <TypingDots accessibilityLabel={g.chat.typing} />
+          <StarRating value={stars} onChange={setStars} label={(n) => `${g.chat.stars} ${n}`} />
           <ChatBubble
             mine
             body={g.chat.mine}

@@ -7,6 +7,7 @@ import { component, layout, space } from '@cfa/tokens';
 import { useSession } from '@/data/auth';
 import { firstName } from '@/data/book';
 import { openChat } from '@/data/chat';
+import { canRate, useMyRatings } from '@/data/ratings';
 import {
   bookingTitle,
   directionsUrl,
@@ -40,7 +41,7 @@ const HEADER =
  * §7.11 Bookings (prototype Bookings, owner revision D54): one glass capsule (Filter · "Bookings" · New
  * booking) with Upcoming · N | Past | Calendar under it, then booking cards with the time set largest.
  * Calendar: a month with a dot on each day that has a booking; tapping one lists that day's. Calendar
- * sync and Rate are Phase 2 (hidden); Message is on upcoming cards (Phase 2 R1.9).
+ * sync is hidden; Message is on upcoming cards (Phase 2 R1.9), Rate on finished ones (R2).
  */
 export default function Bookings() {
   const { c } = useTheme();
@@ -50,6 +51,7 @@ export default function Bookings() {
   const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const userId = useSession().session?.user.id;
   const q = useMyBookings(userId);
+  const ratings = useMyRatings(userId).data;
   const filter = useBookingsFilter();
   const on = filterCount(filter);
   const [tab, setTab] = useState<Tab>('upcoming');
@@ -100,7 +102,18 @@ export default function Bookings() {
         ]
       : b.display_status === 'cancelled'
         ? [bookAgain, { label: t('bookings.details'), onPress: open }]
-        : [bookAgain];
+        : canRate(b.display_status)
+          ? [
+              bookAgain,
+              // §7.11: "Rate session", or "Rated 5★" (opens the booking) once rated (Phase 2 R2.2).
+              ratings?.has(b.id)
+                ? { label: t('rate.rated', { n: formatNumber(ratings.get(b.id)!, lang) }), onPress: open }
+                : {
+                    label: t('rate.rate'),
+                    onPress: () => router.push({ pathname: '/rate/[ref]', params: { ref: b.ref } }),
+                  },
+            ]
+          : [bookAgain];
     return (
       <BookingCard
         key={b.ref}

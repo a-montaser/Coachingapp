@@ -49,6 +49,7 @@ jest.mock('./checkout', () => ({
 const HOUR = 3_600_000;
 const at = (h: number) => new Date(Date.now() + h * HOUR).toISOString();
 const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
+  id: `id-${ref}`,
   ref,
   display_status: 'confirmed',
   method: 'card',
@@ -83,15 +84,18 @@ const row = (ref: string, extra: Partial<MyBooking> = {}): MyBooking => ({
 let mockRows: MyBooking[] = [];
 let mockOne: MyBooking | undefined;
 let mockSlots: object[] = [];
+let mockRatings = new Map<string, number>();
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: () => ({ invalidateQueries: jest.fn() }),
   useQuery: ({ queryKey }: { queryKey: string[] }) =>
     queryKey[0] === 'booking'
       ? { data: mockOne, isLoading: false }
-      : queryKey[0] === 'book'
-        ? { data: { slots: mockSlots }, isLoading: false }
-        : { data: mockRows, isLoading: false },
+      : queryKey[0] === 'ratings'
+        ? { data: mockRatings, isLoading: false }
+        : queryKey[0] === 'book'
+          ? { data: { slots: mockSlots }, isLoading: false }
+          : { data: mockRows, isLoading: false },
 }));
 
 beforeEach(() => {
@@ -170,6 +174,15 @@ test('Bookings: upcoming cards with Directions, past with Book again, cancelled 
   expect(screen.getByText('Cancelled')).toBeOnTheScreen();
   expect(screen.getAllByRole('button', { name: 'Book again' })).toHaveLength(2);
   expect(screen.getByRole('button', { name: 'Details' })).toBeOnTheScreen();
+  // A finished session can be rated (Phase 2 R2.2); a cancelled one can't.
+  await fireEvent.press(screen.getByRole('button', { name: 'Rate session' }));
+  expect(mockRouter.push).toHaveBeenCalledWith({ pathname: '/rate/[ref]', params: { ref: 'CFA-2' } });
+  mockRatings = new Map([['id-CFA-2', 5]]);
+  await fireEvent.press(screen.getByRole('tab', { name: 'Upcoming · 1' }));
+  await fireEvent.press(screen.getByRole('tab', { name: 'Past' }));
+  expect(screen.getByRole('button', { name: 'Rated 5★' })).toBeOnTheScreen();
+  expect(screen.queryByRole('button', { name: 'Rate session' })).toBeNull();
+  mockRatings = new Map();
 });
 
 test('Bookings: the time leads each card; the Calendar tab marks booked days and lists the chosen one', async () => {

@@ -24,6 +24,7 @@ const names = {
   heart: { ios: 'heart', android: 'favorite_border' },
   heartFill: { ios: 'heart.fill', android: 'favorite' },
   star: { ios: 'star.fill', android: 'star' },
+  starOutline: { ios: 'star', android: 'star_border' }, // Rate sheet, a star not chosen
   share: { ios: 'square.and.arrow.up', android: 'share' },
   more: { ios: 'ellipsis', android: 'more_horiz' },
   plus: { ios: 'plus', android: 'add' },

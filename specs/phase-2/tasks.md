@@ -24,7 +24,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 - [ ] **T5 Realtime:** live messages, typing, read receipts, in-app toast (R1.8, R1.10); `supabase/tests/realtime.mjs` in CI.
   - Verify: CI realtime test; on the iPhone.
 ## C. Ratings, favourites, credit
-- [ ] **T6 Rate sheet** from Bookings and Booking detail; "Rated 5★" (R2).
+- [x] **T6 Rate sheet** from Bookings and Booking detail; "Rated 5★" (R2).
   - Verify: RNTL; pgTAP from T2.
 - [ ] **T7 Favourites:** heart on the profile and cards, Profile → Favourites (R3).
   - Verify: RNTL.

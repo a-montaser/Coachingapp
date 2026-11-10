@@ -9,7 +9,9 @@ import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-rean
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
+import { useSession } from '@/data/auth';
 import { openChat } from '@/data/chat';
+import { canRate, useMyRatings } from '@/data/ratings';
 import {
   bookingPolicy,
   canCancel,
@@ -21,7 +23,7 @@ import {
 } from '@/data/bookings';
 import { bookingErrorKey, runCheckout, useMyBooking, type BookingErrorKey } from '@/data/checkout';
 import { useLang } from '@/i18n';
-import { formatClock, formatDayMonth, formatPrice, formatWeekday } from '@/i18n/format';
+import { formatClock, formatDayMonth, formatNumber, formatPrice, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
 import { Avatar } from '@/ui/Avatar';
 import { Banner } from '@/ui/Banner';
@@ -40,7 +42,7 @@ const map = component.bookingMap;
 /**
  * §7.12 Booking detail: map header with Directions, status pill, title, date and time, venue, payment,
  * the cancellation policy, the instructor and what to bring. A kids booking that was approved is paid
- * here (D29). Reschedule until 24 h before; Cancel until the start. Message (Phase 2 R1.9); Add to calendar and Rate
+ * here (D29). Reschedule until 24 h before; Cancel until the start. Message (Phase 2 R1.9) and Rate (R2); Add to calendar
  * are Phase 2.
  */
 export default function BookingDetail() {
@@ -51,6 +53,7 @@ export default function BookingDetail() {
   const qc = useQueryClient();
   const { ref } = useLocalSearchParams<{ ref: string }>();
   const q = useMyBooking(ref);
+  const ratings = useMyRatings(useSession().session?.user.id).data;
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useScrollViewOffset(scrollRef);
   const [busy, setBusy] = useState(false);
@@ -265,6 +268,18 @@ export default function BookingDetail() {
               onPress={() => router.push({ pathname: '/cancel/[ref]', params: { ref: b.ref } })}
             />
           )}
+          {canRate(status) &&
+            (ratings?.has(b.id) ? (
+              <T variant="subheadline" color={c.label2} style={styles.rated}>
+                {t('rate.rated', { n: formatNumber(ratings.get(b.id)!, lang) })}
+              </T>
+            ) : (
+              <Button
+                label={t('rate.rate')}
+                variant="secondary"
+                onPress={() => router.push({ pathname: '/rate/[ref]', params: { ref: b.ref } })}
+              />
+            ))}
           {!upcoming && (
             <Button
               label={t('bookings.bookAgain')}
@@ -296,6 +311,7 @@ export default function BookingDetail() {
 const LIVE_MAP = Platform.OS === 'ios' || Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
 
 const styles = StyleSheet.create({
+  rated: { textAlign: 'center' },
   screen: { flex: 1 },
   center: { justifyContent: 'center', padding: layout.sideMargin },
   noMap: { alignItems: 'center', justifyContent: 'center' },

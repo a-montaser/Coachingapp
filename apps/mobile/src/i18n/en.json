@@ -630,5 +630,18 @@
     "replyingTo": "Replying to {{name}}",
     "cancelReply": "Cancel reply",
     "youName": "You"
+  },
+  "rate": {
+    "title": "Rate your session",
+    "stars_one": "{{n}} star",
+    "stars_other": "{{n}} stars",
+    "placeholder": "What went well? (optional)",
+    "private": "Shared with {{name}} only.",
+    "send": "Send rating",
+    "pickStars": "Pick a number of stars",
+    "toast": "Thanks for rating",
+    "error": "Couldn't send your rating. Try again.",
+    "rate": "Rate session",
+    "rated": "Rated {{n}}★"
   }
 }

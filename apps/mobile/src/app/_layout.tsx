@@ -50,6 +50,7 @@ function RootNavigator() {
         <Stack.Screen name="demo-checkout" options={sheet} />
         <Stack.Screen name="confirmed/[ref]" options={{ gestureEnabled: false }} />
         <Stack.Screen name="remind/[ref]" options={sheet} />
+        <Stack.Screen name="rate/[ref]" options={sheet} />
         <Stack.Screen name="booking/[ref]" />
         <Stack.Screen name="chat/[threadId]" />
         <Stack.Screen name="bookings-filter" options={sheet} />

@@ -99,6 +99,17 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `chat.replyingTo` | Chat | Replying to {{name}} | بترد على {{name}} |
 | `chat.cancelReply` | Chat | Cancel reply | إلغاء الرد |
 | `chat.youName` | Chat (quoted reply) | You | إنت |
+| `rate.title` | Rate sheet | Rate your session | قيّم الحصة |
+| `rate.stars_one` | Rate sheet (screen reader) | {{n}} star | نجمة واحدة |
+| `rate.stars_other` | Rate sheet (screen reader) | {{n}} stars | {{n}} نجوم |
+| `rate.placeholder` | Rate sheet | What went well? (optional) | إيه اللي عجبك؟ (اختياري) |
+| `rate.private` | Rate sheet | Shared with {{name}} only. | هيوصل لـ{{name}} بس. |
+| `rate.send` | Rate sheet | Send rating | ابعت التقييم |
+| `rate.pickStars` | Rate sheet | Pick a number of stars | اختار عدد النجوم |
+| `rate.toast` | Rate sheet | Thanks for rating | شكراً على التقييم |
+| `rate.error` | Rate sheet | Couldn't send your rating. Try again. | مقدرناش نبعت تقييمك. حاول تاني. |
+| `rate.rate` | Bookings, Booking detail | Rate session | قيّم الحصة |
+| `rate.rated` | Bookings, Booking detail | Rated {{n}}★ | اتقيّمت {{n}}★ |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |
