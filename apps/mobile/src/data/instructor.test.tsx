@@ -127,6 +127,7 @@ const padel = {
 let mockData: object | undefined = pottery;
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
+  useQueryClient: () => ({ getQueryData: () => [], setQueryData: jest.fn(), invalidateQueries: jest.fn() }),
   useQuery: ({ queryKey }: { queryKey: string[] }) =>
     queryKey[0] === 'instructor' ? { data: mockData, isLoading: false, isError: false } : { data: undefined },
 }));

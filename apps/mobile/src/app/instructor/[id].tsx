@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, radius, space } from '@cfa/tokens';
 import { useMyInstructorId, useSession } from '@/data/auth';
 import { openChat } from '@/data/chat';
+import { useFavourites } from '@/data/favourites';
 import { distanceKm, cairoDaysUntil } from '@/data/home';
 import { useOrigin } from '@/data/explore';
 import { nextAvailable, useInstructor, type Offering } from '@/data/instructor';
@@ -38,7 +39,7 @@ const BAR_CLEARANCE =
 /**
  * §7.6 Instructor profile (canvas artboard 8), for one of the instructor's disciplines (`?discipline=`).
  * Hobbies: upcoming workshops, then private lessons; other categories: session types with prices.
- * Message opens the chat with them (Phase 2 R1.9); Favourite comes with T7.
+ * Message opens the chat with them (Phase 2 R1.9); the heart keeps them in Favourites (R3).
  */
 export default function InstructorProfile() {
   const { c } = useTheme();
@@ -52,6 +53,7 @@ export default function InstructorProfile() {
   const scrollY = useScrollViewOffset(scrollRef);
   // An instructor looking at their own profile has nobody to message there.
   const self = useMyInstructorId(useSession().session?.user.id).data === id;
+  const fav = useFavourites(); // Phase 2 R3.1: the heart in the glass cluster (§7.6)
   const ar = lang === 'ar';
   const n = (x: number) => formatNumber(x, lang);
   const now = new Date();
@@ -258,6 +260,11 @@ export default function InstructorProfile() {
               Share.share({
                 message: t('instructor.share', { name: p.display_name, discipline: disciplineLabel }),
               }),
+          },
+          {
+            icon: fav.has(id) ? 'heartFill' : 'heart',
+            label: t(fav.has(id) ? 'favourites.remove' : 'favourites.add', { name: p.display_name }),
+            onPress: () => fav.toggle(id),
           },
         ]}
       />

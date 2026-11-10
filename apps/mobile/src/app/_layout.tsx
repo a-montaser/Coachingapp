@@ -42,6 +42,7 @@ function RootNavigator() {
       <Stack.Protected guard={signedIn && onboarded} redirectTo={signedIn ? '/categories' : '/welcome'}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="family" />
+        <Stack.Screen name="favourites" />
         <Stack.Screen name="preferences" />
         <Stack.Screen name="instructor/[id]" />
         <Stack.Screen name="workshop/[id]" />

@@ -234,6 +234,7 @@ const mockRows: Record<string, unknown> = {
 };
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
+  useQueryClient: () => ({ getQueryData: () => [], setQueryData: jest.fn(), invalidateQueries: jest.fn() }),
   useQuery: ({ queryKey }: { queryKey: string[] }) => ({ data: mockRows[queryKey[0]!], isLoading: false }),
 }));
 

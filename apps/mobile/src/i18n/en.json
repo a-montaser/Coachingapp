@@ -643,5 +643,13 @@
     "error": "Couldn't send your rating. Try again.",
     "rate": "Rate session",
     "rated": "Rated {{n}}★"
+  },
+  "favourites": {
+    "title": "Favourites",
+    "add": "Add {{name}} to favourites",
+    "remove": "Remove {{name}} from favourites",
+    "emptyTitle": "No favourites yet",
+    "emptyBody": "Tap the heart on a coach to keep them here.",
+    "error": "Couldn't save your favourite. Try again."
   }
 }

@@ -26,7 +26,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
 ## C. Ratings, favourites, credit
 - [x] **T6 Rate sheet** from Bookings and Booking detail; "Rated 5★" (R2).
   - Verify: RNTL; pgTAP from T2.
-- [ ] **T7 Favourites:** heart on the profile and cards, Profile → Favourites (R3).
+- [x] **T7 Favourites:** heart on the profile and cards, Profile → Favourites (R3).
   - Verify: RNTL.
 - [ ] **T8 App credit history** (R7).
   - Verify: RNTL.

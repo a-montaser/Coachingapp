@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Image, StyleSheet, View, type ImageSourcePropType } from 'react-native';
+import { Image, Pressable, StyleSheet, View, type ImageSourcePropType } from 'react-native';
 import { component, radius, space } from '@cfa/tokens';
 import { useLang } from '@/i18n';
 import { formatDistance, formatNumber } from '@/i18n/format';
@@ -33,7 +33,16 @@ const ic = component.instructorCard;
  * then the levels, rating and place, and the next opening. No price on cards. No real photos yet: a
  * neutral silhouette, never stock imagery (§13).
  */
-export function InstructorCard({ instructor: p, onPress }: { instructor: Instructor; onPress: () => void }) {
+export function InstructorCard({
+  instructor: p,
+  onPress,
+  onFavourite,
+}: {
+  instructor: Instructor;
+  onPress: () => void;
+  /** The heart (Phase 2 R3.1): a button on the card, and a VoiceOver action on it. */
+  onFavourite?: () => void;
+}) {
   const { c } = useTheme();
   const { t } = useTranslation();
   const lang = useLang();
@@ -43,6 +52,7 @@ export function InstructorCard({ instructor: p, onPress }: { instructor: Instruc
     .join(' · ');
   const rating = `${formatNumber(p.rating, lang)} (${formatNumber(p.reviews, lang)})`;
   const next = p.next && t('card.next', { when: p.next });
+  const heartLabel = t(p.favourite ? 'favourites.remove' : 'favourites.add', { name: p.name });
   const label = [
     p.discipline,
     p.name,
@@ -56,7 +66,13 @@ export function InstructorCard({ instructor: p, onPress }: { instructor: Instruc
     .join(', ');
 
   return (
-    <Card onPress={onPress} accessibilityLabel={label} style={styles.card}>
+    <Card
+      onPress={onPress}
+      accessibilityLabel={label}
+      style={styles.card}
+      accessibilityActions={onFavourite ? [{ name: 'favourite', label: heartLabel }] : undefined}
+      onAccessibilityAction={(name) => name === 'favourite' && onFavourite?.()}
+    >
       <View style={[styles.photo, { backgroundColor: c.surface2 }]}>
         {p.photo ? (
           <Image source={p.photo} style={StyleSheet.absoluteFill} resizeMode="cover" accessible={false} />
@@ -69,7 +85,22 @@ export function InstructorCard({ instructor: p, onPress }: { instructor: Instruc
           <T variant="title3" style={styles.flex}>
             {p.discipline}
           </T>
-          {p.favourite && <Icon name="heartFill" size={component.iconButton.iconSize} color={c.danger} />}
+          {onFavourite ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={heartLabel}
+              onPress={onFavourite}
+              hitSlop={space.space3}
+            >
+              <Icon
+                name={p.favourite ? 'heartFill' : 'heart'}
+                size={component.iconButton.iconSize}
+                color={p.favourite ? c.danger : c.label2}
+              />
+            </Pressable>
+          ) : (
+            p.favourite && <Icon name="heartFill" size={component.iconButton.iconSize} color={c.danger} />
+          )}
         </View>
         <T variant="footnote" color={c.label2}>
           {p.name}

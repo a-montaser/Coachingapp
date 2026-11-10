@@ -105,6 +105,12 @@ export default function Profile() {
               value: formatPrice(credit, lang),
             },
             {
+              key: 'favourites',
+              icon: 'heart',
+              title: t('favourites.title'),
+              onPress: () => router.push('/favourites'),
+            },
+            {
               key: 'family',
               icon: 'family',
               title: t('profile.family'),

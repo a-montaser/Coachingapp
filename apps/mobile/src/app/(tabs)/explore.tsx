@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import { activeFilterCount, useExplore, useExploreResults } from '@/data/explore';
 import { useDisciplines } from '@/data/onboarding';
+import { useFavourites } from '@/data/favourites';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { cairoDaysUntil } from '@/data/home';
@@ -32,6 +33,7 @@ export default function Explore() {
   const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const lang = useLang();
+  const fav = useFavourites(); // Phase 2 R3
   const insets = useSafeAreaInsets();
   const category = useSettings((s) => s.category);
   const params = useLocalSearchParams<{ discipline?: string; focus?: string; at?: string }>();
@@ -162,8 +164,10 @@ export default function Explore() {
               distanceKm: p.km ?? undefined,
               area: (ar && p.area_ar) || p.area_en,
               next: p.next_at ? when(p.next_at) : undefined,
+              favourite: fav.has(p.id),
               fromPrice: p.price,
             }}
+            onFavourite={() => fav.toggle(p.id)}
             onPress={() =>
               router.push({ pathname: '/instructor/[id]', params: { id: p.id, discipline: p.discipline_id } })
             }

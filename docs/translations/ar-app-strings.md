@@ -110,6 +110,12 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `rate.error` | Rate sheet | Couldn't send your rating. Try again. | مقدرناش نبعت تقييمك. حاول تاني. |
 | `rate.rate` | Bookings, Booking detail | Rate session | قيّم الحصة |
 | `rate.rated` | Bookings, Booking detail | Rated {{n}}★ | اتقيّمت {{n}}★ |
+| `favourites.title` | Profile, Favourites | Favourites | المفضلة |
+| `favourites.add` | Hearts (screen reader) | Add {{name}} to favourites | ضيف {{name}} للمفضلة |
+| `favourites.remove` | Hearts (screen reader) | Remove {{name}} from favourites | شيل {{name}} من المفضلة |
+| `favourites.emptyTitle` | Favourites | No favourites yet | مفيش مفضلة لسه |
+| `favourites.emptyBody` | Favourites | Tap the heart on a coach to keep them here. | دوس على القلب عند أي مدرّب عشان يفضل هنا. |
+| `favourites.error` | Hearts | Couldn't save your favourite. Try again. | مقدرناش نحفظ المفضلة. حاول تاني. |
 | `profile.photo` | Profile | Profile photo | صورة البروفايل |
 | `profile.memberSince` | Profile | {{area}} · member since {{year}} | {{area}} · عضو من {{year}} |
 | `profile.memberSinceNoArea` | Profile | Member since {{year}} | عضو من {{year}} |

@@ -17,6 +17,7 @@ import {
 } from '@/data/home';
 import { useOrigin } from '@/data/explore';
 import { disciplineName, useDisciplines } from '@/data/onboarding';
+import { useFavourites } from '@/data/favourites';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatWeekday } from '@/i18n/format';
 import { useSettings } from '@/theme/settings';
@@ -53,6 +54,7 @@ export default function Home() {
   const tabScroll = useMinimiseOnScroll(8, true).onScroll;
   const { t } = useTranslation();
   const lang = useLang();
+  const fav = useFavourites(); // Phase 2 R3
   const insets = useSafeAreaInsets();
   const category = useSettings((s) => s.category);
   const setCategory = useSettings((s) => s.setCategory);
@@ -313,8 +315,10 @@ export default function Home() {
                 distanceKm: origin ? distanceKm(origin, p) : undefined,
                 area: (ar && p.area_ar) || p.area_en,
                 next: p.next_at ? when(p.next_at) : undefined,
+                favourite: fav.has(p.id),
                 fromPrice: p.from_price,
               }}
+              onFavourite={() => fav.toggle(p.id)}
               onPress={() => openProfile(p.id, p.discipline_id)}
             />
           ))}
