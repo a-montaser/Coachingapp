@@ -1,0 +1,100 @@
+# Phase 2 additions to the journey (R8.1), run straight after phase1.yaml in the same app install, so
+# Salma is still signed in with 1,300 EGP of app credit. apps/mobile/e2e/helper.sh plays Nour's side
+# (her reply) and gives Salma a finished 1:1 to rate; fixture.sql leaves Nour two 1:1 times a week apart.
+# Not here: Explore's map, which Android builds hide until the Google Maps key is set (D52, D77).
+appId: com.coachforall.app
+---
+- launchApp
+- extendedWaitUntil:
+    visible: 'Category: .*. Change category'
+    timeout: 120000
+
+# 11. Favourite Nour from Explore (Sports, Lessons)
+- tapOn: 'Category: .*. Change category'
+- tapOn: 'Sports'
+- assertVisible: 'Category: Sports. Change category'
+- tapOn: 'Explore'
+- tapOn: 'Lessons'
+- scrollUntilVisible:
+    element: 'Add Nour El-Sayed to favourites'
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
+- tapOn: 'Add Nour El-Sayed to favourites'
+- assertVisible: 'Remove Nour El-Sayed from favourites'
+
+# 12. Message her; her reply arrives live (Realtime)
+- tapOn: 'Padel, Nour El-Sayed.*'
+- tapOn: 'Message'
+- tapOn:
+    id: 'composer-input'
+- inputText: 'Is the court indoors?'
+- tapOn: 'Send'
+- assertVisible: 'Is the court indoors?'
+- extendedWaitUntil:
+    visible: 'Yes, Cedar Court is covered. See you on court!'
+    timeout: 60000
+- hideKeyboard
+- back
+
+# 13. Book her 1:1 for two weeks in a row, paid at once (here from the app credit)
+- tapOn:
+    text: '.* · Private 1:1'
+    index: 0
+- tapOn: 'Repeat weekly'
+- assertVisible: '2 weeks · .*'
+- tapOn: 'Continue'
+- assertVisible: 'Review & pay'
+- tapOn: '(Pay [0-9,]+ EGP|Confirm booking)'
+- tapOn:
+    text: 'Allow'
+    optional: true
+- extendedWaitUntil:
+    visible: "You're on the court."
+    timeout: 60000
+- scrollUntilVisible:
+    element: 'Back to Home'
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Back to Home'
+
+# 14. Cancel every week: both are more than 24 h out, so both come back as credit
+- scrollUntilVisible:
+    element: 'Bookings'
+    direction: UP
+- tapOn: 'Bookings'
+- tapOn:
+    text: 'Padel with Nour.*'
+    index: 0
+- scrollUntilVisible:
+    element: 'Cancel booking'
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Cancel booking'
+- tapOn: 'Cancel every week'
+- assertVisible: '.*1,300 EGP.*'
+- tapOn:
+    id: 'cancel-confirm'
+- assertVisible: 'Booking cancelled.*'
+
+# 15. Rate the finished 1:1 (helper.sh) from Past
+- tapOn: 'Past'
+- scrollUntilVisible:
+    element: 'Rate session'
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Rate session'
+- tapOn: '5 stars'
+- tapOn: 'Send rating'
+- extendedWaitUntil:
+    visible: 'Rated 5★'
+    timeout: 30000
+
+# 16. Nour is in Profile → Favourites
+- tapOn: 'Profile'
+- scrollUntilVisible:
+    element: 'Favourites'
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Favourites'
+- assertVisible: '.*Nour El-Sayed.*'

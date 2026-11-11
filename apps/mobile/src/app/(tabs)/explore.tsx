@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { component, layout, space } from '@cfa/tokens';
 import {
   activeFilterCount,
+  LIVE_MAP,
   useExplore,
   useExploreResults,
   useLocationGranted,
@@ -340,17 +341,19 @@ export default function Explore() {
             {people.map(personCard)}
           </ScrollView>
           {/* D68: a floating round glass button, bottom-right above the tab bar, with a teardrop pin. */}
-          <View style={[styles.fab, { bottom: fabBottom }]}>
-            <IconButton
-              icon="mapPin"
-              floating
-              accessibilityLabel={t('explore.showMap')}
-              onPress={() => {
-                setSelected(0);
-                setMapOn(true);
-              }}
-            />
-          </View>
+          {LIVE_MAP && (
+            <View style={[styles.fab, { bottom: fabBottom }]}>
+              <IconButton
+                icon="mapPin"
+                floating
+                accessibilityLabel={t('explore.showMap')}
+                onPress={() => {
+                  setSelected(0);
+                  setMapOn(true);
+                }}
+              />
+            </View>
+          )}
         </>
       )}
     </View>

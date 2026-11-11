@@ -100,7 +100,7 @@ Everything still runs in Expo Go on the owner's iPhone, against the hosted dev p
 
 ### R8 `e2e2`
 
-- R8.1 The Maestro journey in CI adds: favourite an instructor and find them in Profile → Favourites; send a text message and see an instructor reply that CI inserts; rate a past booking; book a 1:1 for 2 weeks, cancel every week; switch Explore to Map and back.
+- R8.1 The Maestro journey in CI adds: favourite an instructor and find them in Profile → Favourites; send a text message and see an instructor reply that CI inserts; rate a past booking; book a 1:1 for 2 weeks, cancel every week; switch Explore to Map and back _(not in CI: Android builds hide the map until the Google Maps key is set, D77)_.
 - **AC:** CI green on all jobs.
 
 ## Out of scope in Phase 2 (hidden, not shown disabled)

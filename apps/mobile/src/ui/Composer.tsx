@@ -35,6 +35,7 @@ export function Composer({ value, onChangeText, onSend, placeholder, sendLabel, 
           placeholder={placeholder}
           placeholderTextColor={c.label2}
           accessibilityLabel={placeholder}
+          testID="composer-input"
           multiline
           maxLength={maxLength}
           style={[styles.input, scale.body, { color: c.glassLabel }]}

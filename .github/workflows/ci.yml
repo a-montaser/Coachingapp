@@ -62,7 +62,7 @@ jobs:
           API_URL="$API_URL" ANON_KEY="$ANON_KEY" SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" \
             node supabase/tests/realtime.mjs
 
-  # R10.1: the Phase 1 journey in Maestro on an Android emulator, against a debug build, local Supabase
+  # R10.1: the Phase 1 journey, then Phase 2's additions (R8.1), in Maestro on an Android emulator, against a debug build, local Supabase
   # and the fake payment provider.
   e2e:
     runs-on: ubuntu-latest
@@ -91,7 +91,7 @@ jobs:
       - name: Local Supabase with the fake payment provider
         run: |
           printf 'PAYMENT_PROVIDER=fake\nAPP_ENV=test\n' > supabase/functions/.env
-          start() { supabase start -x studio,imgproxy,inbucket,realtime,storage-api,logflare,vector,supavisor,postgres-meta; }
+          start() { supabase start -x studio,imgproxy,inbucket,storage-api,logflare,vector,supavisor,postgres-meta; } # Realtime on: chat (Phase 2)
           start || { supabase stop --no-backup; start; } # one retry: Docker port setup sometimes fails on the runner
           eval "$(supabase status -o env)"
           psql "$DB_URL" -v ON_ERROR_STOP=1 -f apps/mobile/e2e/fixture.sql

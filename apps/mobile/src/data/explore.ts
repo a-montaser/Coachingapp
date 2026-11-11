@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import * as Location from 'expo-location';
+import { Platform } from 'react-native';
 import { useEffect, useState } from 'react';
 import { create } from 'zustand';
 import { useProfile, useSession } from './auth';
@@ -277,3 +279,10 @@ export function useExploreResults(category: Category) {
     workshops: workshopsTab ? filterWorkshops(groups.data ?? [], s, origin, now, (id) => gender.get(id)) : [],
   };
 }
+
+/**
+ * Can a live map show? Apple Maps on iOS; on Android only in Expo Go, which carries its own Google Maps key.
+ * shortcut: an Android build has no Google Maps key yet (D52) and would crash opening a map, so maps hide there.
+ */
+export const LIVE_MAP =
+  Platform.OS === 'ios' || Constants.executionEnvironment === ExecutionEnvironment.StoreClient;

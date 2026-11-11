@@ -2,8 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Constants, { ExecutionEnvironment } from 'expo-constants';
-import { Image, Linking, Platform, Share, StyleSheet, View } from 'react-native';
+import { Image, Linking, Share, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +10,7 @@ import { component, layout, radius, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
 import { useSession } from '@/data/auth';
 import { openChat } from '@/data/chat';
+import { LIVE_MAP } from '@/data/explore';
 import { canRate, useMyRatings } from '@/data/ratings';
 import {
   bookingPolicy,
@@ -321,8 +321,6 @@ export default function BookingDetail() {
 
 // A live map needs Apple Maps (iOS) or Google's key on Android. Expo Go for Android carries its own key;
 // our own Android builds have none until the owner adds one (D52), and the map view crashes without it.
-const LIVE_MAP = Platform.OS === 'ios' || Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
-
 const styles = StyleSheet.create({
   rated: { textAlign: 'center' },
   screen: { flex: 1 },
