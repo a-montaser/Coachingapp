@@ -15,6 +15,8 @@ type Props = {
   overMedia?: boolean;
   color?: string;
   disabled?: boolean;
+  /** For the end-to-end journey (Maestro). */
+  testID?: string;
 };
 
 const size = component.iconButton.size;
@@ -27,6 +29,7 @@ export function IconButton({
   overMedia,
   color,
   disabled,
+  testID,
 }: Props) {
   const { c } = useTheme();
   const glyph = (
@@ -40,6 +43,7 @@ export function IconButton({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      testID={testID}
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
       onPress={onPress}

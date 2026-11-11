@@ -29,12 +29,13 @@ appId: com.coachforall.app
 - tapOn:
     id: 'composer-input'
 - inputText: 'Is the court indoors?'
-- tapOn: 'Send'
+- hideKeyboard
+- tapOn:
+    id: 'composer-send'
 - assertVisible: 'Is the court indoors?'
 - extendedWaitUntil:
     visible: 'Yes, Cedar Court is covered. See you on court!'
     timeout: 60000
-- hideKeyboard
 - back
 
 # 13. Book her 1:1 for two weeks in a row, paid at once (here from the app credit)

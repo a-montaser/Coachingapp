@@ -41,7 +41,14 @@ export function Composer({ value, onChangeText, onSend, placeholder, sendLabel, 
           style={[styles.input, scale.body, { color: c.glassLabel }]}
         />
       </Glass>
-      <IconButton icon="send" floating accessibilityLabel={sendLabel} onPress={onSend} disabled={empty} />
+      <IconButton
+        icon="send"
+        floating
+        accessibilityLabel={sendLabel}
+        onPress={onSend}
+        disabled={empty}
+        testID="composer-send"
+      />
     </View>
   );
   if (!replyTo) return field;
