@@ -27,21 +27,21 @@ supabase/
 supabase/tests/realtime.mjs                        two-client Realtime check, CI supabase job
 ```
 
-- **Journey gate** *(D67)*: a signed-in user whose id is an instructor's `user_id` skips onboarding and gets a tab bar with Messages and Profile only (D69), landing on Messages; Chat's header shows the learner's first name. Everything else is unchanged for learners.
+- **Journey gate** _(D67)_: a signed-in user whose id is an instructor's `user_id` skips onboarding and gets a tab bar with Messages and Profile only (D69), landing on Messages; Chat's header shows the learner's first name. Everything else is unchanged for learners.
 - Server state stays in TanStack Query. Realtime events update the query cache (`setQueryData`) instead of refetching.
 - One Realtime channel per open chat (`thread:<id>`: postgres inserts on `messages` for that thread, plus broadcast `typing`), and one app-wide subscription to `messages` inserts and `thread_reads` updates that RLS already narrows to my threads (tab badge, list, toast).
 
 ## 2. Schema additions (all with RLS in the same migration)
 
-| Table / change | Key columns | RLS |
-|---|---|---|
-| `instructors.user_id` *(Q1)* | `uuid null unique references auth.users` | unchanged (public read where verified); the column itself is not selected by the app |
-| `threads` | `id`, `learner_id`, `instructor_id`, `created_at`, `last_message_at`; unique (`learner_id`, `instructor_id`) | members read; no direct insert (`start_thread`) |
-| `messages` | `id`, `thread_id`, `sender_id`, `body` (1–2,000 characters), `created_at`, `reply_to` (null, or a message in the same thread; D74, migration `20261110120000_message_replies`). Media columns come with media (D67) | members read; insert only as yourself into your thread; no update or delete |
-| `thread_reads` | `thread_id`, `user_id`, `last_read_at`; pk both | members read (the other side's marker = read receipts); write your own row only |
-| `reviews` | `booking_id` pk, `user_id`, `instructor_id`, `stars` 1–5, `body`, `created_at` | author and that instructor read; no direct writes (`rate_booking`) |
-| `favourites` | `user_id`, `instructor_id`, `created_at`; pk both | self all |
-| `bookings.series_id` | `uuid null`, indexed | unchanged (self read, no direct writes) |
+| Table / change               | Key columns                                                                                                                                                                                                         | RLS                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `instructors.user_id` _(Q1)_ | `uuid null unique references auth.users`                                                                                                                                                                            | unchanged (public read where verified); the column itself is not selected by the app |
+| `threads`                    | `id`, `learner_id`, `instructor_id`, `created_at`, `last_message_at`; unique (`learner_id`, `instructor_id`)                                                                                                        | members read; no direct insert (`start_thread`)                                      |
+| `messages`                   | `id`, `thread_id`, `sender_id`, `body` (1–2,000 characters), `created_at`, `reply_to` (null, or a message in the same thread; D74, migration `20261110120000_message_replies`). Media columns come with media (D67) | members read; insert only as yourself into your thread; no update or delete          |
+| `thread_reads`               | `thread_id`, `user_id`, `last_read_at`; pk both                                                                                                                                                                     | members read (the other side's marker = read receipts); write your own row only      |
+| `reviews`                    | `booking_id` pk, `user_id`, `instructor_id`, `stars` 1–5, `body`, `created_at`                                                                                                                                      | author and that instructor read; no direct writes (`rate_booking`)                   |
+| `favourites`                 | `user_id`, `instructor_id`, `created_at`; pk both                                                                                                                                                                   | self all                                                                             |
+| `bookings.series_id`         | `uuid null`, indexed                                                                                                                                                                                                | unchanged (self read, no direct writes)                                              |
 
 - **Unread count** = messages in the thread not sent by me, after my `last_read_at`. **Delivered** = the row exists; **Read** = the other side's `last_read_at` ≥ my message's `created_at`. No per-message read flag.
 - **View `my_threads`** (`security_invoker`): thread, the other party's name (instructor `display_name`, or learner `first_name`), `reply_label`, last message preview, unread count, next/last booking between the two for the context line.
@@ -67,46 +67,51 @@ cancel_booking(ref, reason, every_week boolean default false)
 `book_series` calls the existing `book()` once per week, so the rules stay in one place; a full, past or missing week raises `series_week_unavailable` with that week's Cairo date as the error detail. The Phase 1 `cancel_booking` and `reschedule_booking` are renamed `cancel_one_booking` / `reschedule_one_booking` (no longer callable by the app) and wrapped: the new `cancel_booking` adds `p_every_week`, and `reschedule_booking` clears the moved week's `series_id`. `my_bookings` gains `series_id`. Phase 1 tests keep passing unchanged.
 
 ## 4. Chat client
+
 - **Send:** insert the row with a client-made `id` (idempotent retry); show it at once from the cache; on error mark it "Not sent · Retry".
 - **Typing:** broadcast `typing` at most every 2 s while the field changes; the dots hide 4 s after the last event.
 - **Mark read:** upsert `thread_reads` when the chat opens and when a message arrives while it is open.
 
-## 5. Payments for a series *(Q2)*
-- *(T10)* "Repeat weekly" is on Book for 1:1 lessons and on the Group page for small groups (one seat a week), because groups book there (D54). Migration `20261110140000_series_payments` adds `payments.series_id` and settles a series in `record_payment` (pgTAP `11_series_payment`).
+## 5. Payments for a series _(Q2)_
+
+- _(T10)_ "Repeat weekly" is on Book for 1:1 lessons and on the Group page for small groups (one seat a week), because groups book there (D54). Migration `20261110140000_series_payments` adds `payments.series_id` and settles a series in `record_payment` (pgTAP `11_series_payment`).
 - `create-checkout` accepts a series: it loads every `awaiting_payment` booking with that `series_id` for the caller and charges their total (after credit, per D64) in one checkout. The `payments` row points at the series' first booking and stores `series_id`.
 - `payment-webhook` / `demo-pay`: paid → every booking in the series confirmed; failed → every hold released. Same idempotency as Phase 1.
 - Credit spends are recorded per booking (each week's share), so a cancelled week returns its own share to the grants it came from (D64 rule 4 unchanged).
 
 ## 6. Map
-- Entry *(D68)*: a floating round glass `IconButton` (pin icon; list icon on the map) pinned bottom-right of Explore, 16 pt from the edge and 16 pt above the tab bar (iOS native tabs: above the bar's safe-area inset; Android: above `TabBar`). The new pin and list glyphs join `Icon` (SF `mappin` / `list.bullet` on iOS, Material equivalents on Android).
+
+- Entry _(D68)_: a floating round glass `IconButton` (pin icon; list icon on the map) pinned bottom-right of Explore, 16 pt from the edge and 16 pt above the tab bar (iOS native tabs: above the bar's safe-area inset; Android: above `TabBar`). The new pin and list glyphs join `Icon` (SF `mappin` / `list.bullet` on iOS, Material equivalents on Android).
 - `react-native-maps` (installed): Apple on iOS, Google on Android; no key in Expo Go. `showsUserLocation` only when location is already granted (D37: Explore never prompts).
 - Pure functions in `rules.ts`: `groupByVenue(results)` → pins with the lowest price; `inRegion(results, region)` for "Search this area". Tested.
 - Pins are custom markers (`MapPin`, tokens only); tracksViewChanges off after first render (performance).
 
 ## 7. Calendar
+
 - `expo-calendar`'s `createEventInCalendarAsync` opens the system add-event sheet; no full calendar permission is needed for it. Times are the booking's UTC instants; the notes hold the ref and venue address.
 
 ## 8. Dependencies — **need your approval** (runs in Expo Go, SDK 57 version via `npx expo install`)
 
-| Package | Why |
-|---|---|
+| Package         | Why                  |
+| --------------- | -------------------- |
 | `expo-calendar` | Add to calendar (R6) |
 
 No other new packages. Realtime comes with `@supabase/supabase-js`.
 
 ## 9. Testing and CI
 
-| Level | Tool | What |
-|---|---|---|
-| Rules | Jest | series weeks and sums, map grouping and region filter, chat context line, unread maths |
-| Screens | Jest + RNTL | Messages, Chat (bubbles, composer, retry), Rate sheet, Favourites, Map toggle, Repeat weekly, Cancel every week, Credit list, Add to calendar event |
-| Database | pgTAP | RLS for threads, messages, reads, reviews and favourites; `rate_booking`, `book_series`, cancel every week, with frozen time |
-| Concurrency | Node script | 20 parallel `book_series` over shared weeks → no oversold slot |
-| Realtime | Node script (`supabase/tests/realtime.mjs`) | two signed-in clients: message, typing, read receipt arrive |
-| Edge Functions | `deno test` | series checkout: paid confirms all, failed releases all, replay is a no-op |
-| End to end | Maestro, CI | R8.1 |
+| Level          | Tool                                        | What                                                                                                                                                |
+| -------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rules          | Jest                                        | series weeks and sums, map grouping and region filter, chat context line, unread maths                                                              |
+| Screens        | Jest + RNTL                                 | Messages, Chat (bubbles, composer, retry), Rate sheet, Favourites, Map toggle, Repeat weekly, Cancel every week, Credit list, Add to calendar event |
+| Database       | pgTAP                                       | RLS for threads, messages, reads, reviews and favourites; `rate_booking`, `book_series`, cancel every week, with frozen time                        |
+| Concurrency    | Node script                                 | 20 parallel `book_series` over shared weeks → no oversold slot                                                                                      |
+| Realtime       | Node script (`supabase/tests/realtime.mjs`) | two signed-in clients: message, typing, read receipt arrive                                                                                         |
+| Edge Functions | `deno test`                                 | series checkout: paid confirms all, failed releases all, replay is a no-op                                                                          |
+| End to end     | Maestro, CI                                 | R8.1                                                                                                                                                |
 
 ## 10. Boundaries
+
 - **Always:** RLS on every new table; money only in SQL and Edge Functions; tokens only; every new string added to `docs/translations/ar-app-strings.md`; accessibility labels and 44 pt targets (chat bubbles announce sender, time and status).
 - **Ask first:** schema changes after approval; any dependency beyond §8; anything that touches money beyond §5; pushing migrations to the hosted project if they change existing data.
 - **Never:** the service-role key in the app; showing a learner's phone number in chat.

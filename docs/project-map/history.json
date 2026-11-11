@@ -1,5 +1,925 @@
 [
  {
+  "at": "2026-11-11T12:47:49.824Z",
+  "commit": "e1ac493",
+  "note": "Phase 2 finished (T5–T14): live chat with swipe to reply and notifications, ratings, favourites, Explore map, weekly series with cancel every week, Add to calendar, credit history, the instructor profile calendar, the Phase 2 end-to-end test with screen recording, and the Phase 2 report with the Phase 3 outline",
+  "nodes": 1705,
+  "links": 5645,
+  "communities": 78,
+  "added": [
+   {
+    "id": "apps_mobile_src_ui_repeatweekly_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/RepeatWeekly.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_starrating_props",
+    "l": "Props",
+    "c": 0,
+    "f": "apps/mobile/src/ui/StarRating.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_mapitem",
+    "l": "MapItem",
+    "c": 1,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_region",
+    "l": "Region",
+    "c": 1,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_creditline",
+    "l": "CreditLine",
+    "c": 28,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_mappin",
+    "l": "MapPin",
+    "c": 29,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_row",
+    "l": "Row",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_app_credit_tfn",
+    "l": "TFn",
+    "c": 9,
+    "f": "apps/mobile/src/app/credit.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_favourites_favourites",
+    "l": "Favourites()",
+    "c": 1,
+    "f": "apps/mobile/src/app/favourites.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_uselocationgranted",
+    "l": "useLocationGranted()",
+    "c": 1,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_usefavouritecards",
+    "l": "useFavouriteCards()",
+    "c": 1,
+    "f": "apps/mobile/src/data/favourites.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_usefavouriteids",
+    "l": "useFavouriteIds()",
+    "c": 1,
+    "f": "apps/mobile/src/data/favourites.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_usefavourites",
+    "l": "useFavourites()",
+    "c": 1,
+    "f": "apps/mobile/src/data/favourites.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_usetogglefavourite",
+    "l": "useToggleFavourite()",
+    "c": 1,
+    "f": "apps/mobile/src/data/favourites.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_groupbyvenue",
+    "l": "groupByVenue()",
+    "c": 1,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_inregion",
+    "l": "inRegion()",
+    "c": 1,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_mappin_mappin",
+    "l": "MapPin()",
+    "c": 1,
+    "f": "apps/mobile/src/ui/MapPin.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_book_repeattexts",
+    "l": "repeatTexts()",
+    "c": 10,
+    "f": "apps/mobile/src/data/book.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_seriesweeks",
+    "l": "seriesWeeks()",
+    "c": 10,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_repeatweekly_repeatweekly",
+    "l": "RepeatWeekly()",
+    "c": 10,
+    "f": "apps/mobile/src/ui/RepeatWeekly.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_rate_ref_ratesheet",
+    "l": "RateSheet()",
+    "c": 2,
+    "f": "apps/mobile/src/app/rate/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_addtocalendar",
+    "l": "addToCalendar()",
+    "c": 2,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_calendarevent",
+    "l": "calendarEvent()",
+    "c": 2,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_laterweeks",
+    "l": "laterWeeks()",
+    "c": 2,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_seriescancelcredit",
+    "l": "seriesCancelCredit()",
+    "c": 2,
+    "f": "apps/mobile/src/data/bookings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_ratings_canrate",
+    "l": "canRate()",
+    "c": 2,
+    "f": "apps/mobile/src/data/ratings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_ratings_ratebooking",
+    "l": "rateBooking()",
+    "c": 2,
+    "f": "apps/mobile/src/data/ratings.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_ratings_usemyratings",
+    "l": "useMyRatings()",
+    "c": 2,
+    "f": "apps/mobile/src/data/ratings.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_starrating_starrating",
+    "l": "StarRating()",
+    "c": 2,
+    "f": "apps/mobile/src/ui/StarRating.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_typingdots_dot",
+    "l": "Dot()",
+    "c": 20,
+    "f": "apps/mobile/src/ui/TypingDots.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_typingdots_typingdots",
+    "l": "TypingDots()",
+    "c": 20,
+    "f": "apps/mobile/src/ui/TypingDots.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_credit_credithistory",
+    "l": "CreditHistory()",
+    "c": 28,
+    "f": "apps/mobile/src/app/credit.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_credit_creditsubtitle",
+    "l": "creditSubtitle()",
+    "c": 28,
+    "f": "apps/mobile/src/app/credit.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_credit_credittitle",
+    "l": "creditTitle()",
+    "c": 28,
+    "f": "apps/mobile/src/app/credit.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_usecredithistory",
+    "l": "useCreditHistory()",
+    "c": 28,
+    "f": "apps/mobile/src/data/checkout.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_mergemessage",
+    "l": "mergeMessage()",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_notifymessage",
+    "l": "notifyMessage()",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_usechatrealtime",
+    "l": "useChatRealtime()",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_useopenchatfromnotification",
+    "l": "useOpenChatFromNotification()",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_usetyping",
+    "l": "useTyping()",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "supabase_tests_realtime_clientfor",
+    "l": "clientFor()",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_newuser",
+    "l": "newUser()",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_onmessages",
+    "l": "onMessages()",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_signal",
+    "l": "signal()",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_subscribed",
+    "l": "subscribed()",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_within",
+    "l": "within()",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "apps_mobile_src_data_credit_test_line",
+    "l": "line()",
+    "c": 7,
+    "f": "apps/mobile/src/data/credit.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_test_card",
+    "l": "card()",
+    "c": 7,
+    "f": "apps/mobile/src/data/favourites.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_test_withcache",
+    "l": "withCache()",
+    "c": 7,
+    "f": "apps/mobile/src/data/favourites.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_mappin",
+    "l": "MapPin.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/MapPin.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_mappin_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/MapPin.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_repeatweekly",
+    "l": "RepeatWeekly.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/RepeatWeekly.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_repeatweekly_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/RepeatWeekly.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_starrating",
+    "l": "StarRating.tsx",
+    "c": 0,
+    "f": "apps/mobile/src/ui/StarRating.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_starrating_styles",
+    "l": "styles",
+    "c": 0,
+    "f": "apps/mobile/src/ui/StarRating.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_explore_live_map",
+    "l": "LIVE_MAP",
+    "c": 1,
+    "f": "apps/mobile/src/data/explore.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites",
+    "l": "favourites.ts",
+    "c": 1,
+    "f": "apps/mobile/src/data/favourites.ts"
+   },
+   {
+    "id": "apps_mobile_package_dependencies_expo_calendar",
+    "l": "expo-calendar",
+    "c": 15,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_src_app_rate_ref",
+    "l": "rate/[ref].tsx",
+    "c": 2,
+    "f": "apps/mobile/src/app/rate/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_rate_ref_styles",
+    "l": "styles",
+    "c": 2,
+    "f": "apps/mobile/src/app/rate/[ref].tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_bookings_test_mockratings",
+    "l": "mockRatings",
+    "c": 2,
+    "f": "apps/mobile/src/data/bookings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_ratings",
+    "l": "ratings.ts",
+    "c": 2,
+    "f": "apps/mobile/src/data/ratings.ts"
+   },
+   {
+    "id": "apps_mobile_src_ui_typingdots",
+    "l": "TypingDots.tsx",
+    "c": 20,
+    "f": "apps/mobile/src/ui/TypingDots.tsx"
+   },
+   {
+    "id": "apps_mobile_src_ui_typingdots_styles",
+    "l": "styles",
+    "c": 20,
+    "f": "apps/mobile/src/ui/TypingDots.tsx"
+   },
+   {
+    "id": "apps_mobile_e2e_helper",
+    "l": "helper.sh",
+    "c": 22,
+    "f": "apps/mobile/e2e/helper.sh"
+   },
+   {
+    "id": "apps_mobile_e2e_helper_sh__entry",
+    "l": "helper.sh script",
+    "c": 22,
+    "f": "apps/mobile/e2e/helper.sh"
+   },
+   {
+    "id": "apps_mobile_package_json_ref_expo",
+    "l": "expo",
+    "c": 25,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "ref_expo_calendar",
+    "l": "expo-calendar",
+    "c": 25,
+    "f": "apps/mobile/package.json"
+   },
+   {
+    "id": "apps_mobile_src_data_rules_series_max_weeks",
+    "l": "SERIES_MAX_WEEKS",
+    "c": 29,
+    "f": "apps/mobile/src/data/rules.ts"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mockbroadcast",
+    "l": "mockBroadcast",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mockhandlers",
+    "l": "mockHandlers",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_test_mocknotif",
+    "l": "mockNotif",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_chat_useopenthread",
+    "l": "useOpenThread",
+    "c": 3,
+    "f": "apps/mobile/src/data/chat.ts"
+   },
+   {
+    "id": "package_dependencies",
+    "l": "dependencies",
+    "c": 30,
+    "f": "package.json"
+   },
+   {
+    "id": "package_dependencies_expo",
+    "l": "expo",
+    "c": 30,
+    "f": "package.json"
+   },
+   {
+    "id": "package_json_ref_expo",
+    "l": "expo",
+    "c": 30,
+    "f": "package.json"
+   },
+   {
+    "id": "supabase_tests_realtime",
+    "l": "realtime.mjs",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_admin",
+    "l": "admin",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_arrived",
+    "l": "arrived",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_coachmsgs",
+    "l": "coachMsgs",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_got",
+    "l": "got",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_learner_coach_outsider",
+    "l": "[learner, coach, outsider]",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_learnermsgs",
+    "l": "learnerMsgs",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_learnerreads",
+    "l": "learnerReads",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_outsidermsgs",
+    "l": "outsiderMsgs",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_seen",
+    "l": "seen",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_t0",
+    "l": "t0",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_typingl",
+    "l": "typingL",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_typingu",
+    "l": "typingU",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "supabase_tests_realtime_waits",
+    "l": "waits",
+    "c": 32,
+    "f": "supabase/tests/realtime.mjs"
+   },
+   {
+    "id": "apps_mobile_src_data_checkout_test_mockaddevent",
+    "l": "mockAddEvent",
+    "c": 33,
+    "f": "apps/mobile/src/data/checkout.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_favourites",
+    "l": "favourites.tsx",
+    "c": 4,
+    "f": "apps/mobile/src/app/favourites.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_favourites_styles",
+    "l": "styles",
+    "c": 4,
+    "f": "apps/mobile/src/app/favourites.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_credit_test",
+    "l": "credit.test.tsx",
+    "c": 7,
+    "f": "apps/mobile/src/data/credit.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_credit_test_mocklines",
+    "l": "mockLines",
+    "c": 7,
+    "f": "apps/mobile/src/data/credit.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_test",
+    "l": "favourites.test.tsx",
+    "c": 7,
+    "f": "apps/mobile/src/data/favourites.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_test_clients",
+    "l": "clients",
+    "c": 7,
+    "f": "apps/mobile/src/data/favourites.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_favourites_test_mockwrite",
+    "l": "mockWrite",
+    "c": 7,
+    "f": "apps/mobile/src/data/favourites.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_ratings_test",
+    "l": "ratings.test.tsx",
+    "c": 7,
+    "f": "apps/mobile/src/data/ratings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_data_ratings_test_mockrpc",
+    "l": "mockRpc",
+    "c": 7,
+    "f": "apps/mobile/src/data/ratings.test.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_credit",
+    "l": "credit.tsx",
+    "c": 9,
+    "f": "apps/mobile/src/app/credit.tsx"
+   },
+   {
+    "id": "apps_mobile_src_app_credit_styles",
+    "l": "styles",
+    "c": 9,
+    "f": "apps/mobile/src/app/credit.tsx"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2_rate_past",
+    "l": "15. Rate the finished 1:1 from Past",
+    "c": 13,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "specs_phase_2_report_test_results",
+    "l": "Phase 2 CI test results (188 Jest, 135 pgTAP, 8 Deno, e2e)",
+    "c": 13,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "docs_decisions_d78",
+    "l": "D78: Rate sheet sizes to its content",
+    "c": 13,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_2_design_series_payments_migration",
+    "l": "payments.series_id and record_payment series settle (20261110140000_series_payments)",
+    "c": 17,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2_cancel_every_week",
+    "l": "14. Cancel every week (1,300 EGP credit)",
+    "c": 18,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "specs_phase_2_design_my_credit_history_view",
+    "l": "my_credit_history view (migration 20261110130000_credit_history)",
+    "c": 18,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2",
+    "l": "Phase 2 Maestro journey additions (R8.1)",
+    "c": 19,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2_book_two_weeks",
+    "l": "13. Book her 1:1 for two weeks (Repeat weekly)",
+    "c": 19,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2_favourite_nour",
+    "l": "11. Favourite Nour from Explore",
+    "c": 19,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2_favourites_list",
+    "l": "16. Nour in Profile Favourites",
+    "c": 19,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "apps_mobile_e2e_phase2_message_live_reply",
+    "l": "12. Message Nour; reply arrives live",
+    "c": 19,
+    "f": "apps/mobile/e2e/phase2.yaml"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_explore_map_strings",
+    "l": "Explore map strings (7)",
+    "c": 19,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_favourites_strings",
+    "l": "Favourites and hearts strings (6)",
+    "c": 19,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_weekly_series_strings",
+    "l": "Weekly series strings (Repeat weekly, Cancel every week) (14)",
+    "c": 19,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "specs_phase_2_report_what_was_built",
+    "l": "What Phase 2 built (chat, ratings, favourites, map, series, calendar, credit history)",
+    "c": 19,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "docs_decisions_d76",
+    "l": "D76: T12 Add to calendar via expo-calendar legacy",
+    "c": 19,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "_github_workflows_ci_e2e_recording_artifact",
+    "l": "e2e screen recording artifact upload",
+    "c": 22,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "specs_phase_2_report_not_done",
+    "l": "Not done or done differently (Android map, closed-app push, chat media, calendar sync)",
+    "c": 22,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "specs_phase_2_report_open_items",
+    "l": "[OPEN] items: Google Maps key, Apple Developer membership, test numbers expire 29 Nov",
+    "c": 22,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r8_1",
+    "l": "R8.1 Maestro journey additions (map not in CI, D77)",
+    "c": 22,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "docs_decisions_d77",
+    "l": "D77: T13 end-to-end additions; map hidden on Android builds",
+    "c": 22,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "_github_workflows_ci_realtime_step",
+    "l": "Live chat Realtime test step (supabase/tests/realtime.mjs)",
+    "c": 23,
+    "f": ".github/workflows/ci.yml"
+   },
+   {
+    "id": "specs_phase_2_design_message_replies",
+    "l": "messages.reply_to (migration 20261110120000_message_replies)",
+    "c": 23,
+    "f": "specs/phase-2/design.md"
+   },
+   {
+    "id": "docs_decisions_d72",
+    "l": "D72: T5 live chat (one app-wide Realtime subscription, typing broadcast)",
+    "c": 23,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r1_11",
+    "l": "R1.11 Swipe to reply (quote, reply bar, VoiceOver Reply)",
+    "c": 3,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "specs_phase_2_tasks_t5b",
+    "l": "T5b: Swipe to reply and message notifications (done, D74)",
+    "c": 3,
+    "f": "specs/phase-2/tasks.md"
+   },
+   {
+    "id": "docs_decisions_d74",
+    "l": "D74: Message notifications and swipe to reply",
+    "c": 3,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "claude_phase_3_gate",
+    "l": "Phase 2 waiting at the Phase 3 gate (draft specs/phase-3 on approval)",
+    "c": 37,
+    "f": "CLAUDE.md"
+   },
+   {
+    "id": "specs_phase_2_report_phase_3_outline",
+    "l": "Proposed Phase 3 outline: Supply side (instructor mode, verification, availability, offerings, earnings, ops admin)",
+    "c": 37,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "specs_phase_2_manual_test",
+    "l": "Manual end-to-end test on the iPhone (22 steps)",
+    "c": 37,
+    "f": "specs/phase-2/manual-test.md"
+   },
+   {
+    "id": "specs_phase_2_manual_test_before_you_start",
+    "l": "Before you start: Metro, test sign-ins, second phone as Nour",
+    "c": 37,
+    "f": "specs/phase-2/manual-test.md"
+   },
+   {
+    "id": "specs_phase_2_manual_test_dark_mode",
+    "l": "Dark mode and background catch-up checks",
+    "c": 37,
+    "f": "specs/phase-2/manual-test.md"
+   },
+   {
+    "id": "specs_phase_2_manual_test_part1_booking_loop",
+    "l": "Part 1: the booking loop (Phase 1)",
+    "c": 37,
+    "f": "specs/phase-2/manual-test.md"
+   },
+   {
+    "id": "specs_phase_2_manual_test_part2_phase2",
+    "l": "Part 2: what Phase 2 added (favourites, calendar, chat, series, rate, map, instructor side)",
+    "c": 37,
+    "f": "specs/phase-2/manual-test.md"
+   },
+   {
+    "id": "specs_phase_2_report",
+    "l": "Phase 2 report (Engagement)",
+    "c": 37,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "specs_phase_2_requirements_r4_5",
+    "l": "R4.5 Instructor profile calendar under Next available (D75)",
+    "c": 37,
+    "f": "specs/phase-2/requirements.md"
+   },
+   {
+    "id": "docs_decisions_d75",
+    "l": "D75: Instructor profile calendar; empty band fix",
+    "c": 37,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_decisions_d79",
+    "l": "D79: Phase 2 closed for the gate (T14)",
+    "c": 37,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "specs_phase_2_report_risks",
+    "l": "Phase 2 risks (slow e2e, unlocked typing broadcast, free tier pause, untested real Android)",
+    "c": 37,
+    "f": "specs/phase-2/report.md"
+   },
+   {
+    "id": "docs_decisions_d73",
+    "l": "D73: Expo SDK 58 upgrade",
+    "c": 5,
+    "f": "docs/DECISIONS.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_add_to_calendar_strings",
+    "l": "Add to calendar strings (3)",
+    "c": 6,
+    "f": "docs/translations/ar-app-strings.md"
+   },
+   {
+    "id": "docs_translations_ar_app_strings_rate_sheet_strings",
+    "l": "Rate sheet strings (11)",
+    "c": 62,
+    "f": "docs/translations/ar-app-strings.md"
+   }
+  ],
+  "removed": [
+   {
+    "id": "apps_mobile_src_data_chat_useunreadtotal",
+    "l": "useUnreadTotal()",
+    "c": 4,
+    "f": "apps/mobile/src/data/chat.ts"
+   }
+  ],
+  "linkDelta": 615,
+  "files": [
+   ".github/workflows/ci.yml",
+   "CLAUDE.md",
+   "apps/mobile/e2e/helper.sh",
+   "apps/mobile/e2e/phase2.yaml",
+   "apps/mobile/package.json",
+   "apps/mobile/src/app/credit.tsx",
+   "apps/mobile/src/app/favourites.tsx",
+   "apps/mobile/src/app/rate/[ref].tsx",
+   "apps/mobile/src/data/book.ts",
+   "apps/mobile/src/data/bookings.test.tsx",
+   "apps/mobile/src/data/bookings.ts",
+   "apps/mobile/src/data/chat.test.tsx",
+   "apps/mobile/src/data/chat.ts",
+   "apps/mobile/src/data/checkout.test.tsx",
+   "apps/mobile/src/data/checkout.ts",
+   "apps/mobile/src/data/credit.test.tsx",
+   "apps/mobile/src/data/explore.ts",
+   "apps/mobile/src/data/favourites.test.tsx",
+   "apps/mobile/src/data/favourites.ts",
+   "apps/mobile/src/data/ratings.test.tsx",
+   "apps/mobile/src/data/ratings.ts",
+   "apps/mobile/src/data/rules.ts",
+   "apps/mobile/src/ui/MapPin.tsx",
+   "apps/mobile/src/ui/RepeatWeekly.tsx",
+   "apps/mobile/src/ui/StarRating.tsx",
+   "apps/mobile/src/ui/TypingDots.tsx",
+   "docs/DECISIONS.md",
+   "docs/translations/ar-app-strings.md",
+   "package.json",
+   "specs/phase-2/design.md",
+   "specs/phase-2/manual-test.md",
+   "specs/phase-2/report.md",
+   "specs/phase-2/requirements.md",
+   "specs/phase-2/tasks.md",
+   "supabase/tests/realtime.mjs"
+  ]
+ },
+ {
   "at": "2026-11-09T20:02:50.393Z",
   "commit": "b4fc39c",
   "note": "T4 Messages and Chat: Messages tab with search and unread counts, text chat with send, retry and read receipts, Message buttons, tab badge (CI green); T3 done on the hosted project (D70)",

@@ -1,117 +1,117 @@
-# Graph Report - Coaching app  (2026-11-09)
+# Graph Report - Coaching app  (2026-11-11)
 
 ## Corpus Check
-- 22 files · ~136,277 words
+- 0 files · ~154,198 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1562 nodes · 5033 edges · 78 communities (73 shown, 5 thin omitted)
-- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 334 edges (avg confidence: 0.85)
-- Token cost: 60,000 input · 9,000 output
+- 1705 nodes · 5648 edges · 78 communities (73 shown, 5 thin omitted)
+- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 376 edges (avg confidence: 0.86)
+- Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
 - Cards & Booking Card
-- Interests Screen & Tests
-- Date Formatting & Time Slots
+- Home Data & Time Rules
 - Bookings Filter & Types
 - Chat Requirements & Screens
-- Gallery Screen & Theme
+- Interests Screen & Tests
 - Decisions Log & Expo Docs Rule
-- Token Generator Script
-- Paymob
-- CI Jobs & Project Guide
 - E2E Journey & Arabic Strings
-- Text & Time Slot Components
+- Settings, i18n Keys & Shell Tests
+- Paymob
+- Gallery Screen & Theme
+- Workshop Seats
 - Design Tokens Pipeline
+- Date Formatting & Time Slots
+- CI Jobs & Project Guide
 - Payment Settlement & Reminders
 - Mobile Runtime Dependencies
-- Explore, Map & Calendar Specs
-- Settings, i18n Keys & Shell Tests
+- Text & Time Slot Components
 - Phase 1 Design: Auth, Payments & Boundaries
-- Expo App Config
-- Root Stack
-- Project Guide & Design Sources
-- Phone Sign-up & Verify
-- Product Overview (Handoff)
-- Mobile Package Manifest
-- Testing Strategy & Monorepo
-- Home Data & Time Rules
-- Explore Filters Sheet
-- Phase 1 Requirements & Decisions
 - Working Agreement & Phase 1 Design
-- Checkout, Demo Pay & Reminders
-- Root Package & Scripts
+- Explore, Map & Calendar Specs
 - Accessibility & Glass Lens
-- Family, Account & Interests Data
-- Instructor Profile Data
-- Working Agreement
-- Workshop Seats
-- Explore Tests
-- Arabic Strings & Phase 1 Report
-- Engagement Schema & CI Database Job
+- Product Overview (Handoff)
 - CI Jobs & Checks
-- Book & Reschedule Screens
-- Gallery E2E & Dev Setup
-- Product Brief
-- Confirmed & Checkout Tests
+- Testing Strategy & Monorepo
+- Expo App Config
+- Mobile Package Manifest
+- Project Guide & Design Sources
+- Engagement Schema & CI Database Job
+- Checkout, Demo Pay & Reminders
 - Reminders
-- Phase 1 Design Notes
-- Arabic Copy & Dev Machine
-- Level Options & Colour Types
+- Root Package & Scripts
+- Instructor Profile Data
+- Realtime
+- Confirmed & Checkout Tests
+- Phase 1 Requirements & Decisions
+- Phone Sign-up & Verify
+- Weekly Series & Phase 2 Functions
+- Manual Test & Phase 3 Gate
+- Root Stack
+- Token Generator Script
 - Theme Tokens & Basics Tests
+- Concurrency
+- Gallery E2E & Dev Setup
+- Phase 1 Design Notes
 - Mobile TypeScript Config
 - Brand Tokens (Purple & Gold)
-- Glass Component & Sheets
-- Weekly Series & Phase 2 Functions
-- Ratings
-- Rules
-- Favourites & Series Schema
-- Mobile Dev Dependencies
+- Working Agreement
 - Root Layout & Query Client
-- Instructor Sign-in & Tabs
-- Glass Component
-- Tokens Package Manifest
+- Onboarding Screens
+- Glass Component & Sheets
 - Phase 0 Report & Requirements
+- Onboarding Draft & Save
+- Instructor Sign-in & Tabs
+- Mobile Dev Dependencies
+- Family, Account & Interests Data
+- Glass Component
+- Phase Boundaries & Skills
+- Tokens Package Manifest
 - Base TypeScript Config
 - Book Screen Tests
+- Arabic Copy & Dev Machine
 - Design Handoff
+- Ratings
+- Text Field & Family Member Sheet
+- Account Data & Supabase Client
+- Time Slots
 - Glass Chrome Specs (Tabs, Sheets)
-- Category Tray & Explore Specs
+- Tokens Test · Generate
 - Category Tray & Hand-set Tokens
+- Liquid Glass Materials
 - Mobile npm Scripts
 - Lint Config
-- Liquid Glass Materials
 - Jest Config
 - Code Entry Screen
 - Product in One Page (Handoff)
 - Account Data & Gallery Copy
 - Onboarding Layout
-- E2E CI Script
 - Deno Config
 
 ## God Nodes (most connected - your core abstractions)
-1. `react-native` - 102 edges
-2. `useTheme()` - 86 edges
-3. `T()` - 82 edges
-4. `Decisions log (DECISIONS.md)` - 75 edges
-5. `react` - 49 edges
-6. `react-i18next` - 49 edges
-7. `useLang()` - 47 edges
-8. `Arabic app strings to translate` - 47 edges
-9. `useSettings` - 40 edges
-10. `expo-router` - 40 edges
+1. `react-native` - 110 edges
+2. `useTheme()` - 93 edges
+3. `T()` - 88 edges
+4. `Decisions log (DECISIONS.md)` - 84 edges
+5. `react` - 54 edges
+6. `react-i18next` - 52 edges
+7. `Arabic app strings to translate` - 52 edges
+8. `useLang()` - 50 edges
+9. `Icon()` - 45 edges
+10. `expo-router` - 43 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `R6 calendar (Add to calendar)` --references--> `Confirmed()`  [INFERRED]
-  specs/phase-2/requirements.md → apps/mobile/src/app/confirmed/[ref].tsx
-- `Demo instructor sign-ins Yasmine Fathy and Nour El-Sayed (test numbers)` --semantically_similar_to--> `nour`  [INFERRED] [semantically similar]
-  supabase/scripts/demo_instructors.sql → apps/mobile/src/dev/seed.ts
-- `Demo instructor sign-ins Yasmine Fathy and Nour El-Sayed (test numbers)` --semantically_similar_to--> `yasmine`  [INFERRED] [semantically similar]
-  supabase/scripts/demo_instructors.sql → apps/mobile/src/dev/seed.ts
-- `cancel_one_booking() (renamed Phase 1 cancel, not app-callable)` --references--> `D64: Refunds are app credit`  [INFERRED]
-  supabase/migrations/20261106130000_engagement_functions.sql → docs/DECISIONS.md
-- `supabase job (db reset, lint, pgTAP)` --references--> `pgTAP 08_series (18 tests: week bounds, series type, unavailable week all-or-nothing, promo per week, cancel one/every week, reschedule leaves series, credit refunds)`  [INFERRED]
-  .github/workflows/ci.yml → supabase/tests/database/08_series.test.sql
+- `ThreadRow()` --implements--> `D71: T4 Messages and Chat (text) choices`  [INFERRED]
+  apps/mobile/src/ui/ThreadRow.tsx → docs/DECISIONS.md
+- `Floating map/list IconButton on Explore (D68)` --references--> `Explore()`  [INFERRED]
+  specs/phase-2/design.md → apps/mobile/src/app/(tabs)/explore.tsx
+- `R4.1 Floating round glass map button (D68)` --references--> `Explore()`  [INFERRED]
+  specs/phase-2/requirements.md → apps/mobile/src/app/(tabs)/explore.tsx
+- `BookingDetail()` --implements--> `D71: T4 Messages and Chat (text) choices`  [INFERRED]
+  apps/mobile/src/app/booking/[ref].tsx → docs/DECISIONS.md
+- `R1.9 Message entry points Phase 1 hid` --references--> `BookingDetail()`  [INFERRED]
+  specs/phase-2/requirements.md → apps/mobile/src/app/booking/[ref].tsx
 
 ## Import Cycles
 - None detected.
@@ -120,307 +120,304 @@
 - **Booking and payment pipeline** — specs_phase_1_design_book, specs_phase_1_design_apply_promo, specs_phase_1_design_create_checkout, specs_phase_1_design_payment_webhook, specs_phase_1_design_payment_provider, specs_phase_1_design_cancel_booking, specs_phase_1_design_refund, specs_phase_1_design_release_expired_holds, specs_phase_1_requirements_r6, specs_phase_1_requirements_r7, specs_phase_1_requirements_r8 [EXTRACTED 1.00]
 - **Chat RLS model (membership, own markers, server time)** — supabase_migrations_20261106120000_engagement_threads, supabase_migrations_20261106120000_engagement_messages, supabase_migrations_20261106120000_engagement_thread_reads, supabase_migrations_20261106120000_engagement_is_thread_member, supabase_migrations_20261106120000_engagement_my_instructor_id, supabase_migrations_20261106120000_engagement_my_threads [EXTRACTED 1.00]
 - **Owner revision: D54 specified as R11 items** — docs_decisions_d54, specs_phase_1_requirements_r11, specs_phase_1_requirements_r11_1, specs_phase_1_requirements_r11_5, specs_phase_1_requirements_r11_9, specs_phase_1_requirements_r11_12 [EXTRACTED 1.00]
-- **Phase 2 text chat flow** — specs_phase_2_requirements_r1, specs_phase_2_design_threads_table, specs_phase_2_design_messages_table, specs_phase_2_design_thread_reads_table, specs_phase_2_design_start_thread, specs_phase_2_design_realtime_channels, specs_phase_2_design_chat_client, specs_phase_2_tasks_t4, specs_phase_2_tasks_t5 [EXTRACTED 1.00]
-- **Recurring weekly series (book, pay, cancel)** — specs_phase_2_requirements_r5, specs_phase_2_design_book_series, specs_phase_1_design_book, specs_phase_2_design_series_payments, specs_phase_2_design_cancel_booking_every_week, specs_phase_2_design_bookings_series_id, specs_phase_2_tasks_t10, specs_phase_2_tasks_t11 [EXTRACTED 1.00]
 - **Weekly series functions (book_series, cancel every week, reschedule leaves series)** — supabase_migrations_20261106130000_engagement_functions_book_series, supabase_migrations_20261106130000_engagement_functions_cancel_booking, supabase_migrations_20261106130000_engagement_functions_reschedule_booking, supabase_migrations_20261106130000_engagement_functions_my_bookings, supabase_tests_database_08_series_test [EXTRACTED 1.00]
-- **Phase 2 spec gate (draft, owner answers, approval)** — docs_decisions_d66, docs_decisions_d67, docs_decisions_d68, specs_phase_2_requirements, specs_phase_2_design, specs_phase_2_tasks, specs_phase_1_report_phase2_outline [EXTRACTED 1.00]
 - **Product record: who, why, how** — apps_mobile_product_users, apps_mobile_product_purpose, apps_mobile_product_positioning, apps_mobile_product_principles [INFERRED 0.75]
 - **Glass material spec to implementation** — docs_design_handoff_liquid_glass, docs_design_handoff_glass_fallbacks, specs_phase_0_design_glass_decision_table, specs_phase_0_tasks_t11, docs_decisions_d16, docs_decisions_d17 [INFERRED 0.85]
 - **New look: purple and gold with departures board** — specs_phase_1_tasks_t23, apps_mobile_design, docs_decisions_d55, docs_decisions_d58, apps_mobile_design_departures_board [INFERRED 0.85]
-- **Phase 1 journey runs in CI** — _github_workflows_ci_e2e_job, apps_mobile_e2e_phase1, specs_phase_1_tasks_t20, docs_decisions_d12 [INFERRED 0.85]
-- **T4 Messages and Chat (text)** — docs_decisions_d71, specs_phase_2_tasks_t4, apps_mobile_src_app_tabs_messages_messages, apps_mobile_src_app_chat_threadid_chat, apps_mobile_src_data_chat, apps_mobile_src_ui_threadrow_threadrow, apps_mobile_src_ui_chatbubble_chatbubble, apps_mobile_src_ui_composer_composer [INFERRED 0.85]
+- **Live chat stack (tables, Realtime, CI test, e2e)** — specs_phase_2_design_messages_table, specs_phase_2_design_realtime_channels, _github_workflows_ci_realtime_step, apps_mobile_e2e_phase2_message_live_reply, docs_decisions_d72 [INFERRED 0.85]
+- **Weekly series flow (book, pay, cancel every week)** — specs_phase_2_requirements_r5, specs_phase_2_design_book_series, specs_phase_2_design_series_payments, specs_phase_2_design_cancel_booking_every_week, apps_mobile_e2e_phase2_book_two_weeks, apps_mobile_e2e_phase2_cancel_every_week [INFERRED 0.85]
 
 ## Communities (78 total, 5 thin omitted)
 
 ### Community 0 - "Cards & Booking Card"
-Cohesion: 0.06
-Nodes (79): styles, styles, DEMO_BASE, FLAGS, SLOTS, styles, THEMES, WEEK (+71 more)
+Cohesion: 0.05
+Nodes (89): styles, DEMO_BASE, FLAGS, SLOTS, styles, THEMES, WEEK, formatNumber() (+81 more)
 
-### Community 1 - "Interests Screen & Tests"
-Cohesion: 0.07
-Nodes (55): SignUp(), Welcome(), FiltersSheet(), styles, TYPES, WHEN, GallerySheet(), styles (+47 more)
+### Community 1 - "Home Data & Time Rules"
+Cohesion: 0.05
+Nodes (76): Favourites(), FiltersSheet(), styles, TYPES, WHEN, Levels(), SortSheet(), Explore() (+68 more)
 
-### Community 2 - "Date Formatting & Time Slots"
-Cohesion: 0.06
-Nodes (47): ar, en, galleryCopy, nour, photoWalk, seedFor(), text, wheelTaster (+39 more)
-
-### Community 3 - "Bookings Filter & Types"
-Cohesion: 0.07
-Nodes (48): styles, BookingsFilter(), KINDS, styles, TIMES, CancelSheet(), REASONS, styles (+40 more)
-
-### Community 4 - "Chat Requirements & Screens"
-Cohesion: 0.09
-Nodes (47): BookingDetail(), Chat(), styles, GalleryRoute(), InstructorProfile(), Bookings(), Messages(), styles (+39 more)
-
-### Community 5 - "Gallery Screen & Theme"
-Cohesion: 0.12
-Nodes (26): AppearanceSheet(), styles, THEMES, styles, FamilyMemberSheet(), styles, LANGS, LanguageSheet() (+18 more)
-
-### Community 6 - "Decisions Log & Expo Docs Rule"
-Cohesion: 0.07
-Nodes (8): Mobile AGENTS.md (Expo agent guide), EAS build/submit/update, Brand commitments, Design canvas and design system artifacts, cfa design system artifact, Decisions log (DECISIONS.md), GlassGroup (GlassEffectContainer), Buttons (mostly screen-reader labels) strings (6)
-
-### Community 7 - "Token Generator Script"
+### Community 2 - "Bookings Filter & Types"
 Cohesion: 0.08
-Nodes (26): build(), camel(), cssShadow(), glassShadow(), handoffPath, leadingNumber(), outPath, PLAYFAIR (+18 more)
+Nodes (61): BookingDetail(), styles, BookingsFilter(), KINDS, styles, TIMES, CancelSheet(), REASONS (+53 more)
+
+### Community 3 - "Chat Requirements & Screens"
+Cohesion: 0.06
+Nodes (63): Chat(), GalleryRoute(), InstructorProfile(), INSTRUCTOR_TABS, ORDER, ROUTE, TabsLayout(), Messages() (+55 more)
+
+### Community 4 - "Interests Screen & Tests"
+Cohesion: 0.09
+Nodes (49): Welcome(), styles, styles, GallerySheet(), styles, styles, Categories(), styles (+41 more)
+
+### Community 5 - "Decisions Log & Expo Docs Rule"
+Cohesion: 0.05
+Nodes (19): Mobile AGENTS.md (Expo agent guide), EAS build/submit/update, PRODUCT.md (product record), Accessibility & inclusion, Brand commitments, Platform: iPhone-first, adaptive, Positioning, Product principles (+11 more)
+
+### Community 6 - "E2E Journey & Arabic Strings"
+Cohesion: 0.07
+Nodes (44): 5. Book soonest 1:1 oud time, 7. Both in Bookings, 3. Category tray, 2. Sign up and verify, land on Home, Capabilities and constraints, Arabic app strings to translate, Add to calendar strings (3), App credit strings (review, cancel, profile) (+36 more)
+
+### Community 7 - "Settings, i18n Keys & Shell Tests"
+Cohesion: 0.09
+Nodes (19): Preferences(), mockLines, clients, mockWrite, mockSave, mockRpc, mockParams, mockSave (+11 more)
 
 ### Community 8 - "Paymob"
 Cohesion: 0.11
 Nodes (20): demo, fake, sample, at(), env(), HMAC_FIELDS, hmacSha512(), hmacString() (+12 more)
 
-### Community 9 - "CI Jobs & Project Guide"
-Cohesion: 0.08
-Nodes (23): CI workflow, checks job (lint, typecheck, tests, tokens), edge-functions job (Deno check and tests), Evidence on hand, Coach For All app, Project Map page (build-data.mjs, republished artifact), Archived Impeccable mocks (apps/mobile/.impeccable/mocks/), Neutral photo placeholders (no real photos yet) (+15 more)
-
-### Community 10 - "E2E Journey & Arabic Strings"
-Cohesion: 0.09
-Nodes (28): 5. Book soonest 1:1 oud time, 7. Both in Bookings, 3. Category tray, 2. Sign up and verify, land on Home, Demo sign-in (Supabase test number), Category tray and its button strings (8), Date strip strings (5), Explore strings (7) (+20 more)
-
-### Community 11 - "Text & Time Slot Components"
-Cohesion: 0.10
-Nodes (26): styles, styles, BookingCard(), Props, styles, ButtonVariant, Props, styles (+18 more)
-
-### Community 12 - "Design Tokens Pipeline"
-Cohesion: 0.10
-Nodes (26): Home surface brief (app-wide look, T23), Design System: Coach For All (DESIGN.md), Aubergine (#3b0a6b) action colour, Buttons (primary, secondary, plain), Cards, Chips, The Class First Rule, Departures board (signature) (+18 more)
-
-### Community 13 - "Payment Settlement & Reminders"
-Cohesion: 0.10
-Nodes (22): 1. Onboarding: Categories, Interests, Levels, Who & where, 6. Pay by card with fake provider, Operating context: categories, journey, rules, Refresh bookings, seats and board after settled payment, useReminderSync, Review & pay, Confirmed strings (19), Demo payment strings (5) (+14 more)
-
-### Community 14 - "Mobile Runtime Dependencies"
-Cohesion: 0.07
-Nodes (29): dependencies, @cfa/tokens, expo, expo-blur, expo-constants, expo-font, expo-glass-effect, expo-linking (+21 more)
-
-### Community 15 - "Explore, Map & Calendar Specs"
+### Community 9 - "Gallery Screen & Theme"
 Cohesion: 0.14
-Nodes (25): Explore(), Pure rules in data/rules.ts, Canvas side-by-sides (R5 AC) not made, expo-calendar (createEventInCalendarAsync), Floating map/list IconButton on Explore (D68), groupByVenue() and inRegion() map rules, Phase 2 requirements: Engagement, Phase 2 capability map (data2, chat, ratings, favourites, map, recurring, calendar, credit-history, e2e2) (+17 more)
+Nodes (22): AppearanceSheet(), styles, THEMES, styles, TFn, styles, LANGS, LanguageSheet() (+14 more)
 
-### Community 16 - "Settings, i18n Keys & Shell Tests"
-Cohesion: 0.11
-Nodes (13): mockSave, mockParams, mockSave, mockSignOut, i18n, keys(), missingArabicKeys(), Tree (+5 more)
+### Community 10 - "Workshop Seats"
+Cohesion: 0.14
+Nodes (29): Book(), KIDS_AGE, styles, Reschedule(), styles, Workshop(), repeatTexts(), useBookDraft (+21 more)
+
+### Community 11 - "Design Tokens Pipeline"
+Cohesion: 0.10
+Nodes (27): Home surface brief (app-wide look, T23), Design System: Coach For All (DESIGN.md), Aubergine (#3b0a6b) action colour, Buttons (primary, secondary, plain), Cards, Chips, The Class First Rule, Departures board (signature) (+19 more)
+
+### Community 12 - "Date Formatting & Time Slots"
+Cohesion: 0.12
+Nodes (24): ar, en, nour, photoWalk, seedFor(), text, wheelTaster, when() (+16 more)
+
+### Community 13 - "CI Jobs & Project Guide"
+Cohesion: 0.10
+Nodes (20): CI workflow, checks job (lint, typecheck, tests, tokens), 15. Rate the finished 1:1 from Past, Evidence on hand, Coach For All app, Project Map page (build-data.mjs, republished artifact), Cancel sheet fits its content (fitToContents), Neutral photo placeholders (no real photos yet) (+12 more)
+
+### Community 14 - "Payment Settlement & Reminders"
+Cohesion: 0.09
+Nodes (23): edge-functions job (Deno check and tests), 1. Onboarding: Categories, Interests, Levels, Who & where, 6. Pay by card with fake provider, Operating context: categories, journey, rules, Refresh bookings, seats and board after settled payment, useReminderSync, Review & pay, Confirmed strings (19) (+15 more)
+
+### Community 15 - "Mobile Runtime Dependencies"
+Cohesion: 0.07
+Nodes (30): dependencies, @cfa/tokens, expo, expo-blur, expo-calendar, expo-constants, expo-font, expo-glass-effect (+22 more)
+
+### Community 16 - "Text & Time Slot Components"
+Cohesion: 0.10
+Nodes (22): styles, Family(), styles, Banner(), styles, Props, styles, DashedCard() (+14 more)
 
 ### Community 17 - "Phase 1 Design: Auth, Payments & Boundaries"
-Cohesion: 0.12
-Nodes (25): Phase 1 technical design, App shape and routes, apply_promo() SQL function, Auth (Supabase phone OTP), book() SQL function, Booking ref CFA-#####, Boundaries, Component library (+17 more)
+Cohesion: 0.11
+Nodes (29): Review & pay "Use my app credit" switch, Phase 1 technical design, App shape and routes, apply_promo() SQL function, Auth (Supabase phone OTP), book() SQL function, Booking ref CFA-#####, Component library (+21 more)
 
-### Community 18 - "Expo App Config"
+### Community 18 - "Working Agreement & Phase 1 Design"
+Cohesion: 0.13
+Nodes (27): cancel-confirm test ID, 8. Cancel with refund as app credit, 9. Cancel without refund (within 24 h), 10. Refund shows as app credit on Profile, 14. Cancel every week (1,300 EGP credit), Migration 20261105120000_app_credit.sql, Cancel sheet credit wording ("Cancel and get N EGP credit"), Profile app credit row (+19 more)
+
+### Community 19 - "Explore, Map & Calendar Specs"
+Cohesion: 0.13
+Nodes (24): Phase 2 Maestro journey additions (R8.1), 13. Book her 1:1 for two weeks (Repeat weekly), 11. Favourite Nour from Explore, 16. Nour in Profile Favourites, 12. Message Nour; reply arrives live, Explore map strings (7), Favourites and hearts strings (6), Weekly series strings (Repeat weekly, Cancel every week) (14) (+16 more)
+
+### Community 20 - "Accessibility & Glass Lens"
+Cohesion: 0.13
+Nodes (19): A11yFlag, A11y, isContrast(), mergeA11y(), useA11y(), Props, styles, GlassLens() (+11 more)
+
+### Community 21 - "Product Overview (Handoff)"
+Cohesion: 0.11
+Nodes (25): Coach For All design handoff, 12. Accessibility, 6.1 App map, 7.8 Book (1:1, group, kids), 7.11 Bookings, 6.3 Category icons, Confirmation ring, 11. Content style (+17 more)
+
+### Community 22 - "CI Jobs & Checks"
+Cohesion: 0.13
+Nodes (18): Local Supabase with fake provider and fixture, e2e job (Maestro Phase 1 + Phase 2 journey on Android emulator), e2e screen recording artifact upload, Emulator: API 34, swangle_indirect GPU, 4 GB, Edge Function log and bookings on failure, Free disk space step, ci.sh script, helper.sh script (+10 more)
+
+### Community 23 - "Testing Strategy & Monorepo"
+Cohesion: 0.16
+Nodes (22): Live chat Realtime test step (supabase/tests/realtime.mjs), react-native-maps, Testing and CI, Phase 2 technical design, bookings.series_id column, Chat client (idempotent send, typing broadcast, mark read), data/chat.ts (threads, messages, send, realtime hooks), Engagement migration (2026111xxxxxxx_engagement.sql) (+14 more)
+
+### Community 24 - "Expo App Config"
 Cohesion: 0.08
 Nodes (24): backgroundColor, backgroundImage, foregroundImage, monochromeImage, adaptiveIcon, package, predictiveBackGestureEnabled, typedRoutes (+16 more)
 
-### Community 19 - "Root Stack"
-Cohesion: 0.13
-Nodes (18): INSTRUCTOR_TABS, ORDER, ROUTE, useMyInstructorId(), Props, restoreTabBar(), styles, TabBar() (+10 more)
+### Community 25 - "Mobile Package Manifest"
+Cohesion: 0.08
+Nodes (24): expo, main, name, private, version, @cfa/tokens, expo, expo-blur (+16 more)
 
-### Community 20 - "Project Guide & Design Sources"
+### Community 26 - "Project Guide & Design Sources"
 Cohesion: 0.12
-Nodes (18): 4. Book two workshop seats, Book screen, Cancel sheet fits its content (fitToContents), group_level_labels data migration, Group page, Groups and level-label migrations pushed to hosted project, refresh_demo_slots.sql demo times script, Reschedule screen (+10 more)
+Nodes (18): 4. Book two workshop seats, Book screen, group_level_labels data migration, Group page, Groups and level-label migrations pushed to hosted project, MonthCalendar, Reschedule screen, T23 four UI fixes (nav fade, fact tiles, dark thumb, Home capital) (+10 more)
 
-### Community 21 - "Phone Sign-up & Verify"
-Cohesion: 0.17
-Nodes (17): styles, styles, authErrorKey(), e164(), formatEgMobile(), isValidEgMobile(), sendCode(), mockSend (+9 more)
+### Community 27 - "Engagement Schema & CI Database Job"
+Cohesion: 0.25
+Nodes (22): Last seat goes to one of 20 bookings step, Supabase CLI pinned to 2.121.0, supabase job (db reset, lint, pgTAP), T4: Concurrency test, R1.1 One thread per learner and instructor (RLS), T1: Engagement migration (done, CI green), 20261106120000_engagement.sql (engagement migration), bookings.series_id column + partial index (+14 more)
 
-### Community 22 - "Product Overview (Handoff)"
+### Community 28 - "Checkout, Demo Pay & Reminders"
+Cohesion: 0.10
+Nodes (21): CreditHistory(), creditSubtitle(), creditTitle(), DemoCheckout(), Profile(), MY_BOOKING_COLUMNS, Booking, cancelBooking() (+13 more)
+
+### Community 29 - "Reminders"
 Cohesion: 0.13
-Nodes (22): Coach For All design handoff, 12. Accessibility, 6.1 App map, 7.8 Book (1:1, group, kids), 7.11 Bookings, 6.3 Category icons, Confirmation ring, 11. Content style (+14 more)
-
-### Community 23 - "Mobile Package Manifest"
-Cohesion: 0.09
-Nodes (21): main, name, private, version, @cfa/tokens, expo, expo-constants, expo-localization (+13 more)
-
-### Community 24 - "Testing Strategy & Monorepo"
-Cohesion: 0.17
-Nodes (20): react-native-maps, Testing and CI, Phase 2 technical design, bookings.series_id column, Chat client (idempotent send, typing broadcast, mark read), data/chat.ts (threads, messages, send, realtime hooks), Engagement migration (2026111xxxxxxx_engagement.sql), MapPin custom marker (+12 more)
-
-### Community 25 - "Home Data & Time Rules"
-Cohesion: 0.17
-Nodes (18): Home(), styles, cairo(), cairoDaysUntil(), Departure, distanceKm(), greetingPeriod(), GroupSessionRow (+10 more)
-
-### Community 26 - "Explore Filters Sheet"
-Cohesion: 0.14
-Nodes (21): Availability, byKey(), DISTANCES, ExploreState, filterPeople(), filterWorkshops(), matchesAvailability(), PersonResult (+13 more)
-
-### Community 27 - "Phase 1 Requirements & Decisions"
-Cohesion: 0.12
-Nodes (19): Booking card, Bookings Filter sheet, Explore Filters sheet, MonthCalendar, Bookings strings (41), Explore, Filters and Sort strings (43), Month calendar strings (4), Time slots strings (6) (+11 more)
-
-### Community 28 - "Working Agreement & Phase 1 Design"
-Cohesion: 0.22
-Nodes (17): cancel-confirm test ID, 8. Cancel with refund as app credit, 9. Cancel without refund (within 24 h), 10. Refund shows as app credit on Profile, Migration 20261105120000_app_credit.sql, Cancel sheet credit wording ("Cancel and get N EGP credit"), grant_credit() ops function, Profile app credit row (+9 more)
-
-### Community 29 - "Checkout, Demo Pay & Reminders"
-Cohesion: 0.11
-Nodes (18): DemoCheckout(), Profile(), MY_BOOKING_COLUMNS, applyPromo(), Booking, cancelBooking(), demoPay(), KNOWN (+10 more)
+Nodes (17): MyBooking, DEFAULT_REMINDER, ReminderChoice, askReminderPermission(), REMINDED, syncReminders(), N, useReminderSync() (+9 more)
 
 ### Community 30 - "Root Package & Scripts"
-Cohesion: 0.11
-Nodes (18): devDependencies, supabase, engines, node, name, overrides, react, private (+10 more)
+Cohesion: 0.09
+Nodes (21): dependencies, expo, devDependencies, supabase, engines, node, expo, name (+13 more)
 
-### Community 31 - "Accessibility & Glass Lens"
-Cohesion: 0.17
-Nodes (14): A11y, isContrast(), mergeA11y(), useA11y(), GlassLens(), Lens, styles, useGlassLens() (+6 more)
-
-### Community 32 - "Family, Account & Interests Data"
-Cohesion: 0.13
-Nodes (15): Interest, Level, useArea(), CHILD_AGE, FamilyMember, FamilyMemberErrors, NAME_MAX, PendingKidsBooking (+7 more)
-
-### Community 33 - "Instructor Profile Data"
-Cohesion: 0.15
-Nodes (12): bookableAfter(), InstructorExtras, nextAvailable(), Offering, OpenSlot, mockParams, padel, pottery (+4 more)
-
-### Community 34 - "Working Agreement"
-Cohesion: 0.19
-Nodes (10): The Glass Is Apple's Rule, Navigation (native tabs, glass), Android tab bar returns on landing on a tab, GlassLens / useGlassLens, NativeTabs (Apple tab bar), Floating TabBar, Segmented control, Tab bar strings (1) (+2 more)
-
-### Community 35 - "Workshop Seats"
-Cohesion: 0.17
-Nodes (12): styles, Workshop(), BookDraft, BookOffering, useBookDraft, clampSeats(), maxWorkshopSeats(), mockData (+4 more)
-
-### Community 36 - "Explore Tests"
-Cohesion: 0.13
-Nodes (14): activeFilterCount(), DEFAULT_FILTERS, Filters, OfferingPrice, at(), base, card(), dina (+6 more)
-
-### Community 37 - "Arabic Strings & Phase 1 Report"
-Cohesion: 0.18
-Nodes (15): Arabic app strings to translate, App credit strings (review, cancel, profile), Appearance sheet strings (3), Buttons and messages strings (5), Cancel sheet strings (15), Egyptian Arabic drafts (await owner; Arabic in last phase), Family & kids and its sheet strings (19), Instructor and workshop cards strings (6) (+7 more)
-
-### Community 38 - "Engagement Schema & CI Database Job"
-Cohesion: 0.38
-Nodes (16): R1.1 One thread per learner and instructor (RLS), T1: Engagement migration (done 6 Nov, CI green; pushed to hosted with T3), 20261106120000_engagement.sql (engagement migration), instructors.user_id column (unique, auth.users, on delete set null), is_thread_member() (RLS membership check), messages table (text 1-2000 chars, sender_id default auth.uid()), my_instructor_id() (caller's instructor row or null), my_threads view (Messages list read model) (+8 more)
-
-### Community 39 - "CI Jobs & Checks"
-Cohesion: 0.22
-Nodes (11): Local Supabase with fake provider and fixture, e2e job (Maestro on Android emulator), Emulator: API 34, swangle_indirect GPU, 4 GB, Edge Function log and bookings on failure, Free disk space step, Phase 1 Maestro journey (R10.1), apps/mobile/e2e/fixture.sql (pins two class times), Venue panel instead of map on Android without Maps key (+3 more)
-
-### Community 40 - "Book & Reschedule Screens"
-Cohesion: 0.27
-Nodes (12): KIDS_AGE, styles, Reschedule(), styles, useBookOptions(), cairoHM(), cairoKey, isBookable() (+4 more)
-
-### Community 41 - "Gallery E2E & Dev Setup"
-Cohesion: 0.20
-Nodes (14): Maestro gallery E2E flow, Gallery flow: Reduce Transparency / Increase Contrast screenshots, Gallery flow: Arabic/RTL screenshots, 7.15 Arabic / RTL, Phase 0 technical design, Mac dev environment and toolchain, Monorepo layout (apps/mobile, packages/tokens, supabase), Zustand settings store (theme, category, devForce) (+6 more)
-
-### Community 42 - "Product Brief"
-Cohesion: 0.20
-Nodes (10): PRODUCT.md (product record), Accessibility & inclusion, Capabilities and constraints, Platform: iPhone-first, adaptive, Positioning, Product principles, Product purpose: directory and booking, Users: Cairo adults booking lessons (+2 more)
-
-### Community 43 - "Confirmed & Checkout Tests"
-Cohesion: 0.16
-Nodes (13): Review(), booking(), inDays(), mockCheckout, mockDemoPay, mockInvalidate, mockParams, mockPlace (+5 more)
-
-### Community 44 - "Reminders"
-Cohesion: 0.20
-Nodes (10): MyBooking, DEFAULT_REMINDER, ReminderChoice, askReminderPermission(), REMINDED, syncReminders(), N, useReminderSync() (+2 more)
-
-### Community 45 - "Phase 1 Design Notes"
+### Community 31 - "Instructor Profile Data"
 Cohesion: 0.14
-Nodes (13): 14. Sample content (seed data), CI design (checks + supabase jobs), setLanguage RTL switch (forceRTL + reload), R3 Supabase foundation, R9 Gallery screen, Phase 0 ordered tasks, T10 i18n + RTL + number format, T12 Gallery shell (+5 more)
+Nodes (14): BookDraft, BookOffering, bookableAfter(), InstructorExtras, nextAvailable(), Offering, OpenSlot, mockParams (+6 more)
 
-### Community 46 - "Arabic Copy & Dev Machine"
-Cohesion: 0.16
-Nodes (13): Atomic slot and seat holds, Booking reference CFA-#####, 9. Business rules, Cancellation rule (24 h), Booking detail strings (13), Phase 1 requirements: hobbies-first booking loop, R1 data, R10 e2e (+5 more)
+### Community 32 - "Realtime"
+Cohesion: 0.10
+Nodes (13): admin, arrived, coachMsgs, got, [learner, coach, outsider], learnerMsgs, learnerReads, outsiderMsgs (+5 more)
 
-### Community 47 - "Level Options & Colour Types"
-Cohesion: 0.26
-Nodes (10): Family(), styles, styles, Method, useFamily(), formatDayMonth(), Banner(), styles (+2 more)
+### Community 33 - "Confirmed & Checkout Tests"
+Cohesion: 0.13
+Nodes (18): Review(), applyPromo(), placeBooking(), booking(), inDays(), mockAddEvent, mockCheckout, mockDemoPay (+10 more)
 
-### Community 48 - "Theme Tokens & Basics Tests"
-Cohesion: 0.18
-Nodes (9): off, blur, dark, light, radius, shadow, space, touch (+1 more)
+### Community 34 - "Phase 1 Requirements & Decisions"
+Cohesion: 0.13
+Nodes (15): Booking card, Bookings Filter sheet, Explore Filters sheet, Booking detail strings (13), Bookings strings (41), Explore, Filters and Sort strings (43), Time slots strings (6), R11 Owner revision (D54) (+7 more)
 
-### Community 49 - "Mobile TypeScript Config"
+### Community 35 - "Phone Sign-up & Verify"
+Cohesion: 0.19
+Nodes (14): SignUp(), styles, authErrorKey(), e164(), formatEgMobile(), isValidEgMobile(), Profile, sendCode() (+6 more)
+
+### Community 36 - "Weekly Series & Phase 2 Functions"
+Cohesion: 0.22
+Nodes (18): my_bookings view, reschedule_booking() SQL function, book_series() SQL function (calls book() once per week), cancel_booking(every_week) branch, my_bookings gains series_id, reschedule_booking() wrapper (moved week leaves the series), R5.2 One atomic booking of all weeks (book_series), R5.5 Cancel every week switch (+10 more)
+
+### Community 37 - "Manual Test & Phase 3 Gate"
+Cohesion: 0.17
+Nodes (13): Phase 2 waiting at the Phase 3 gate (draft specs/phase-3 on approval), grant_credit() ops function, refresh_demo_slots.sql demo times script, Manual end-to-end test on the iPhone (22 steps), Before you start: Metro, test sign-ins, second phone as Nour, Dark mode and background catch-up checks, Part 1: the booking loop (Phase 1), Part 2: what Phase 2 added (favourites, calendar, chat, series, rate, map, instructor side) (+5 more)
+
+### Community 38 - "Root Stack"
+Cohesion: 0.20
+Nodes (11): Props, styles, TabBar(), TabIcon(), TABS, useMinimiseOnScroll(), useTabBarBottom(), useTabBarMinimised() (+3 more)
+
+### Community 39 - "Token Generator Script"
+Cohesion: 0.23
+Nodes (14): build(), camel(), cssShadow(), glassShadow(), handoffPath, leadingNumber(), outPath, PLAYFAIR (+6 more)
+
+### Community 40 - "Theme Tokens & Basics Tests"
+Cohesion: 0.15
+Nodes (11): off, resolveScheme(), SegmentedControl(), blur, dark, light, radius, shadow (+3 more)
+
+### Community 41 - "Concurrency"
+Cohesion: 0.15
+Nodes (10): b64(), jwt(), noSeats, seriesRefused, seriesWins, starts, taken, week0 (+2 more)
+
+### Community 42 - "Gallery E2E & Dev Setup"
+Cohesion: 0.22
+Nodes (13): Maestro gallery E2E flow, Gallery flow: open tray and pick Sports, 6.2 Category tray, Phase 0 technical design, Mac dev environment and toolchain, Monorepo layout (apps/mobile, packages/tokens, supabase), Zustand settings store (theme, category, devForce), Sheet as formSheet route; CategoryTray as custom Modal with Reanimated (+5 more)
+
+### Community 43 - "Phase 1 Design Notes"
+Cohesion: 0.17
+Nodes (12): Gallery flow: Arabic/RTL screenshots, 7.15 Arabic / RTL, CI design (checks + supabase jobs), setLanguage RTL switch (forceRTL + reload), R5 Theme, direction and accessibility plumbing, Phase 0 ordered tasks, T10 i18n + RTL + number format, T21 CategoryTray + trigger (+4 more)
+
+### Community 44 - "Mobile TypeScript Config"
 Cohesion: 0.15
 Nodes (11): compilerOptions, allowImportingTsExtensions, noUncheckedIndexedAccess, paths, strict, types, extends, include (+3 more)
 
-### Community 50 - "Brand Tokens (Purple & Gold)"
+### Community 45 - "Brand Tokens (Purple & Gold)"
 Cohesion: 0.23
 Nodes (13): band / band-label / band-control tokens, board / board-line tokens, brand / brand-text / brand-tint tokens, 3.1 Colour, 3. Design tokens, glass-* tokens, gold / gold-ink / gold-tint tokens, Playfair Display brand type styles (+5 more)
 
-### Community 51 - "Glass Component & Sheets"
-Cohesion: 0.24
-Nodes (8): useIsRTL(), GlassGroup(), GlassMode, liquidAvailable(), Props, flat(), useSheetOptions(), expo-blur
+### Community 46 - "Working Agreement"
+Cohesion: 0.23
+Nodes (8): The Glass Is Apple's Rule, Navigation (native tabs, glass), Android tab bar returns on landing on a tab, GlassLens / useGlassLens, NativeTabs (Apple tab bar), Floating TabBar, Segmented control, Tab bar strings (1)
 
-### Community 52 - "Weekly Series & Phase 2 Functions"
-Cohesion: 0.29
-Nodes (12): my_bookings view, reschedule_booking() SQL function, my_bookings gains series_id, reschedule_booking() wrapper (moved week leaves the series), R5.6 Reschedule moves one week, leaves the series, 20261106130000_engagement_functions.sql (Phase 2 functions migration), cancel_booking(p_every_week) wrapper, cancel_one_booking() (renamed Phase 1 cancel, not app-callable) (+4 more)
+### Community 47 - "Root Layout & Query Client"
+Cohesion: 0.23
+Nodes (10): AppToast(), RootLayout(), RootNavigator(), styles, useProfile(), queryClient, useApplyThemeOverride(), useToast (+2 more)
 
-### Community 53 - "Ratings"
-Cohesion: 0.31
-Nodes (11): Last seat goes to one of 20 bookings step, Supabase CLI pinned to 2.121.0, supabase job (db reset, lint, pgTAP), T4: Concurrency test, rate_booking() SQL function, reviews table, R2 ratings (Rate sheet on completed bookings), R2.3 Instructor average and count update at once (+3 more)
+### Community 48 - "Onboarding Screens"
+Cohesion: 0.17
+Nodes (9): Interests(), Area, nearestArea(), mockAreas, mockBuilder, mockCalls, mockDisciplines, mockRefetch (+1 more)
 
-### Community 54 - "Rules"
-Cohesion: 0.29
-Nodes (10): cairoDay(), cairoOffset(), fromCairo(), monthGrid(), monthsAhead(), Policy, policyFor(), sameCairoDay() (+2 more)
-
-### Community 55 - "Favourites & Series Schema"
+### Community 49 - "Glass Component & Sheets"
 Cohesion: 0.27
-Nodes (11): Review & pay "Use my app credit" switch, book_series() SQL function (calls book() once per week), favourites table, R3 favourites (heart on instructors, Profile Favourites list), R5 recurring weekly bookings (2-8 weeks, paid up front), R5.2 One atomic booking of all weeks (book_series), R5.3 Series paid at once on one checkout, bookings.series_id column + partial index (+3 more)
+Nodes (8): useIsRTL(), Glass(), GlassGroup(), GlassMode, liquidAvailable(), Props, flat(), useSheetOptions()
 
-### Community 56 - "Mobile Dev Dependencies"
+### Community 50 - "Phase 0 Report & Requirements"
+Cohesion: 0.23
+Nodes (12): Phase 0 requirements, Category Tray (R8, handoff 6.2), Lint rule rejecting colour literals outside packages/tokens, Dev-only component gallery (R9), Glass material primitive (R6), NavigationBar P17 (one glass capsule), Phase 0 primitives P1-P21, R2 Quality gates (+4 more)
+
+### Community 51 - "Onboarding Draft & Save"
+Cohesion: 0.22
+Nodes (10): Discipline, Draft, empty, finishOnboarding(), LEVELS, saveInterests(), useApplyDraftAfterSignUp(), useAreas() (+2 more)
+
+### Community 52 - "Instructor Sign-in & Tabs"
+Cohesion: 0.42
+Nodes (9): Demo sign-in: Omar, code 111111 hosted / 482917 local and CI; instructors Yasmine and Nour, instructors.user_id column, Instructor journey gate (Messages and Profile tab bar, D69), R1.2 Instructor sign-in for chat (instructors.user_id; Messages and Profile tabs), T3: Seed and push; instructors see Messages and Profile (done, D69, D70), instructors.user_id column (unique, auth.users, on delete set null), demo_instructors.sql (demo instructor sign-ins and demo chat), Demo thread Omar and Nour (two messages) (+1 more)
+
+### Community 53 - "Mobile Dev Dependencies"
 Cohesion: 0.20
 Nodes (10): devDependencies, eslint, eslint-config-expo, jest, jest-expo, prettier, @testing-library/react-native, @types/jest (+2 more)
 
-### Community 57 - "Root Layout & Query Client"
-Cohesion: 0.27
-Nodes (9): AppToast(), RootLayout(), RootNavigator(), styles, useProfile(), useSettings, useApplyThemeOverride(), expo-font (+1 more)
+### Community 54 - "Family, Account & Interests Data"
+Cohesion: 0.22
+Nodes (9): CHILD_AGE, FamilyMember, FamilyMemberErrors, NAME_MAX, PendingKidsBooking, toLatinDigits(), usePendingKidsBookings(), useSaveFamilyMember() (+1 more)
 
-### Community 58 - "Instructor Sign-in & Tabs"
-Cohesion: 0.44
-Nodes (8): TabsLayout(), instructors.user_id column, Instructor journey gate (Messages and Profile tab bar, D69), R1.2 Instructor sign-in for chat (instructors.user_id; Messages and Profile tabs), T3: Seed and push (done 6 Nov: migrations pushed, demo_instructors.sql run on hosted; Messages and Profile only, D69), demo_instructors.sql (demo instructor sign-ins and demo chat), Demo thread Omar and Nour (two messages), Demo instructor sign-ins Yasmine Fathy and Nour El-Sayed (test numbers)
-
-### Community 59 - "Glass Component"
+### Community 55 - "Glass Component"
 Cohesion: 0.29
 Nodes (7): CATEGORIES, CategoryButton(), CategoryTray(), Props, Radio(), styles, openTray()
 
-### Community 60 - "Tokens Package Manifest"
+### Community 56 - "Phase Boundaries & Skills"
+Cohesion: 0.20
+Nodes (6): Working agreement, DESIGN_HANDOFF.md (source of truth), Required skills: spec-driven-development, graphify, ponytail, Boundaries, Proposed Phase 2 spec outline (Engagement), Phase 2 boundaries (always / ask first / never)
+
+### Community 57 - "Tokens Package Manifest"
 Cohesion: 0.20
 Nodes (9): main, name, private, scripts, check, generate, test, type (+1 more)
 
-### Community 61 - "Phase 0 Report & Requirements"
-Cohesion: 0.29
-Nodes (10): Phase 0 requirements, Category Tray (R8, handoff 6.2), Lint rule rejecting colour literals outside packages/tokens, Dev-only component gallery (R9), Glass material primitive (R6), NavigationBar P17 (one glass capsule), Phase 0 primitives P1-P21, R2 Quality gates (+2 more)
-
-### Community 62 - "Base TypeScript Config"
+### Community 58 - "Base TypeScript Config"
 Cohesion: 0.20
 Nodes (9): compilerOptions, esModuleInterop, module, moduleResolution, noUncheckedIndexedAccess, resolveJsonModule, skipLibCheck, strict (+1 more)
 
-### Community 63 - "Book Screen Tests"
+### Community 59 - "Book Screen Tests"
 Cohesion: 0.22
-Nodes (6): Book(), days, mockData, mockFamily, mockParams, now
+Nodes (6): days, mockData, mockFamily, mockParams, now, weekDays()
 
-### Community 64 - "Design Handoff"
+### Community 60 - "Arabic Copy & Dev Machine"
+Cohesion: 0.25
+Nodes (9): Atomic slot and seat holds, Booking reference CFA-#####, 9. Business rules, Cancellation rule (24 h), Members' Circle, 14. Sample content (seed data), R9 Gallery screen, T12 Gallery shell (+1 more)
+
+### Community 61 - "Design Handoff"
 Cohesion: 0.22
 Nodes (9): Button, Chip, 5. Components, Date tile, Day picker, Instructor card, One primary action per screen, Time slot (+1 more)
 
-### Community 65 - "Glass Chrome Specs (Tabs, Sheets)"
+### Community 62 - "Ratings"
+Cohesion: 0.39
+Nodes (9): Rate sheet strings (11), rate_booking() SQL function, reviews table, R2 ratings (Rate sheet on completed bookings), R2.3 Instructor average and count update at once, T6: Rate sheet (done), reviews table (one per booking, 1-5 stars, body <= 1000), rate_booking() (one rating per completed booking, moves instructor average) (+1 more)
+
+### Community 63 - "Text Field & Family Member Sheet"
+Cohesion: 0.32
+Nodes (6): FamilyMemberSheet(), styles, useFamily(), Props, styles, TextField()
+
+### Community 64 - "Account Data & Supabase Client"
+Cohesion: 0.29
+Nodes (6): Interest, Level, useArea(), supabase, supabaseConfigured, @supabase/supabase-js
+
+### Community 65 - "Time Slots"
+Cohesion: 0.29
+Nodes (7): setLanguage(), sat, slots, groupSlots(), PartOfDay, Slot, TimeSlots()
+
+### Community 66 - "Glass Chrome Specs (Tabs, Sheets)"
 Cohesion: 0.36
 Nodes (7): Bottom action bar, Navigation bar (glass capsule), Sheets, 4.4 Signature glass components, Tab bar (floating glass capsule), R7 Primitives P1-P21, T19 TabBar with minimise
 
-### Community 66 - "Category Tray & Explore Specs"
-Cohesion: 0.33
-Nodes (7): Gallery flow: open tray and pick Sports, 6.2 Category tray, 7.5 Explore, Sheet as formSheet route; CategoryTray as custom Modal with Reanimated, R8 Category Tray (exact), R5 discovery, R5.3 Explore
-
-### Community 67 - "Category Tray & Hand-set Tokens"
+### Community 68 - "Category Tray & Hand-set Tokens"
 Cohesion: 0.29
 Nodes (6): component, homeIndicator, icon, layout, motion, tray
 
-### Community 68 - "Mobile npm Scripts"
+### Community 69 - "Liquid Glass Materials"
+Cohesion: 0.47
+Nodes (6): Gallery flow: Reduce Transparency / Increase Contrast screenshots, 4.3 Fallbacks, 4. Materials and the rules of Liquid Glass, Glass decision table (GlassView / BlurView / frosted), R6 Glass material primitive, T11 Glass + GlassGroup + Icon
+
+### Community 70 - "Mobile npm Scripts"
 Cohesion: 0.33
 Nodes (6): scripts, android, lint, start, test, typecheck
 
-### Community 69 - "Lint Config"
+### Community 71 - "Lint Config"
 Cohesion: 0.40
 Nodes (4): { defineConfig }, expoConfig, eslint, eslint-config-expo
 
-### Community 70 - "Liquid Glass Materials"
-Cohesion: 0.60
-Nodes (5): 4.3 Fallbacks, 4. Materials and the rules of Liquid Glass, Glass decision table (GlassView / BlurView / frosted), R6 Glass material primitive, T11 Glass + GlassGroup + Icon
-
-### Community 71 - "Jest Config"
+### Community 72 - "Jest Config"
 Cohesion: 0.50
 Nodes (4): jest, preset, resolver, setupFiles
 
-### Community 73 - "Product in One Page (Handoff)"
+### Community 74 - "Product in One Page (Handoff)"
 Cohesion: 0.50
 Nodes (4): Four categories (Hobbies, Sports, Education, Languages), Hobbies-first, 1. Product in one page, Roles: Learner, Instructor, Ops admin
 
@@ -429,25 +426,25 @@ Nodes (4): Four categories (Hobbies, Sports, Education, Languages), Hobbies-firs
   apps/mobile/e2e/gallery.yaml · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **55 isolated node(s):** `@cfa/tokens`, `expo`, `expo-localization`, `jest`, `jest-expo` (+50 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 494 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **59 isolated node(s):** `expo`, `@cfa/tokens`, `expo`, `expo-localization`, `jest` (+54 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 543 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `D64: Refunds are app credit` connect `Working Agreement & Phase 1 Design` to `Bookings Filter & Types`, `Gallery Screen & Theme`, `Decisions Log & Expo Docs Rule`, `Ar App Strings · Tasks`, `Report · Claude`, `Payment Settlement & Reminders`, `Arabic Copy & Dev Machine`, `Level Options & Colour Types`, `Explore, Map & Calendar Specs`, `Phase 1 Design: Auth, Payments & Boundaries`, `Project Guide & Design Sources`, `Weekly Series & Phase 2 Functions`, `Requirements · Design`?**
-  _High betweenness centrality (0.213) - this node is a cross-community bridge._
-- **What connects `@cfa/tokens`, `expo`, `expo-localization` to the rest of the system?**
-  _55 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `Decisions log (DECISIONS.md)` connect `Decisions Log & Expo Docs Rule` to `Phase 1 Requirements & Decisions`, `Chat Requirements & Screens`, `Manual Test & Phase 3 Gate`, `E2E Journey & Arabic Strings`, `Phase 1 Design Notes`, `Design Tokens Pipeline`, `CI Jobs & Project Guide`, `Payment Settlement & Reminders`, `Working Agreement`, `Working Agreement & Phase 1 Design`, `Explore, Map & Calendar Specs`, `Instructor Sign-in & Tabs`, `CI Jobs & Checks`, `Testing Strategy & Monorepo`, `Phase Boundaries & Skills`, `Project Guide & Design Sources`?**
+  _High betweenness centrality (0.148) - this node is a cross-community bridge._
+- **What connects `expo`, `@cfa/tokens`, `expo` to the rest of the system?**
+  _59 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Cards & Booking Card` be split into smaller, more focused modules?**
-  _Cohesion score 0.055997642204538754 - nodes in this community are weakly interconnected._
-- **Why does `Decisions log (DECISIONS.md)` connect `Decisions Log & Expo Docs Rule` to `Working Agreement`, `Chat Requirements & Screens`, `Ar App Strings · Tasks`, `CI Jobs & Checks`, `Report · Claude`, `Product Brief`, `E2E Journey & Arabic Strings`, `Design Tokens Pipeline`, `Payment Settlement & Reminders`, `Phase 1 Design Notes`, `Arabic Copy & Dev Machine`, `Explore, Map & Calendar Specs`, `Project Guide & Design Sources`, `Instructor Sign-in & Tabs`, `Phase 1 Requirements & Decisions`, `Working Agreement & Phase 1 Design`?**
-  _High betweenness centrality (0.167) - this node is a cross-community bridge._
-- **Should `Interests Screen & Tests` be split into smaller, more focused modules?**
-  _Cohesion score 0.07243195785776997 - nodes in this community are weakly interconnected._
-- **Why does `Coach For All design handoff` connect `Product Overview (Handoff)` to `Design Handoff`, `Glass Chrome Specs (Tabs, Sheets)`, `Category Tray & Explore Specs`, `Decisions Log & Expo Docs Rule`, `Liquid Glass Materials`, `Report · Claude`, `Product in One Page (Handoff)`, `Gallery E2E & Dev Setup`, `Design Tokens Pipeline`, `Phase 1 Design Notes`, `Arabic Copy & Dev Machine`, `Explore, Map & Calendar Specs`, `Brand Tokens (Purple & Gold)`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+  _Cohesion score 0.04949314251639833 - nodes in this community are weakly interconnected._
+- **Why does `D64: Refunds are app credit` connect `Working Agreement & Phase 1 Design` to `Bookings Filter & Types`, `Interests Screen & Tests`, `Decisions Log & Expo Docs Rule`, `Manual Test & Phase 3 Gate`, `E2E Journey & Arabic Strings`, `Weekly Series & Phase 2 Functions`, `Gallery Screen & Theme`, `Payment Settlement & Reminders`, `Phase 1 Design: Auth, Payments & Boundaries`, `Explore, Map & Calendar Specs`, `Project Guide & Design Sources`?**
+  _High betweenness centrality (0.115) - this node is a cross-community bridge._
+- **Should `Home Data & Time Rules` be split into smaller, more focused modules?**
+  _Cohesion score 0.0506155950752394 - nodes in this community are weakly interconnected._
+- **Why does `Phase 2 technical design` connect `Testing Strategy & Monorepo` to `Weekly Series & Phase 2 Functions`, `E2E Journey & Arabic Strings`, `Phase 1 Design: Auth, Payments & Boundaries`, `Working Agreement & Phase 1 Design`, `Explore, Map & Calendar Specs`, `Instructor Sign-in & Tabs`, `Phase Boundaries & Skills`, `Ratings`?**
+  _High betweenness centrality (0.059) - this node is a cross-community bridge._
 
 ### Low-confidence Hints
 _AMBIGUOUS edges — the extractor was unsure. Verify before acting on these._
