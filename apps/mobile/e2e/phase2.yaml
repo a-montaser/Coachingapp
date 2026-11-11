@@ -25,6 +25,7 @@ appId: com.coachforall.app
 
 # 12. Message her; her reply arrives live (Realtime)
 - tapOn: 'Padel, Nour El-Sayed.*'
+- assertVisible: 'Remove Nour El-Sayed from favourites' # the profile's heart is on too
 - tapOn: 'Message'
 - tapOn:
     id: 'composer-input'
@@ -39,9 +40,17 @@ appId: com.coachforall.app
 - back
 
 # 13. Book her 1:1 for two weeks in a row, paid at once (here from the app credit)
+- scrollUntilVisible:
+    element: '.* · Private 1:1'
+    direction: DOWN
+    centerElement: true
 - tapOn:
     text: '.* · Private 1:1'
     index: 0
+- scrollUntilVisible:
+    element: 'Repeat weekly'
+    direction: DOWN
+    centerElement: true
 - tapOn: 'Repeat weekly'
 - assertVisible: '2 weeks · .*'
 - tapOn: 'Continue'
