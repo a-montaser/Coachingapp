@@ -44,7 +44,7 @@ Status: **APPROVED 6 Nov 2026** (D68). Follows the owner's answers Q1–Q4 (D67)
   - Verify: RNTL for the event fields; on the iPhone.
 
 ## F. End to end and close
-- [ ] **T13 Maestro:** the R8.1 additions to the CI journey.
+- [x] **T13 Maestro:** the R8.1 additions to the CI journey.
   - Verify: CI green on all jobs.
 - [ ] **T14 Graphify `--update`, DECISIONS, Phase 2 report** with the Phase 3 outline.
   - Verify: CI green on the final commit. **STOP for the Phase 3 gate.**
