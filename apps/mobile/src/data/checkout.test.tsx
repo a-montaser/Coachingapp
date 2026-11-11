@@ -27,6 +27,8 @@ jest.mock('expo-notifications', () => ({
   ...jest.requireActual('expo-notifications'),
   setNotificationHandler: jest.fn(),
 }));
+const mockAddEvent = jest.fn();
+jest.mock('expo-calendar/legacy', () => ({ createEventInCalendarAsync: (e: unknown) => mockAddEvent(e) }));
 jest.mock('expo-linking', () => ({ createURL: (p: string) => `coachforall://${p}` }));
 jest.mock('./supabase', () => ({ supabaseConfigured: true, supabase: {} }));
 jest.mock('./auth', () => ({
@@ -281,7 +283,10 @@ const booking = (extra = {}) => ({
   title: 'Private padel',
   category_id: 'sports',
   instructor_name: 'Nour El-Sayed',
+  discipline_en: 'Padel',
+  discipline_ar: null,
   venue_name: 'Cedar Court Club',
+  venue_notes: null,
   venue_lat: 30.028,
   venue_lng: 31.47,
   child_name: null,
@@ -296,6 +301,18 @@ test('Confirmed: category headline, ref, paid amount; pending says "Request sent
   expect(screen.getByText('Nour has confirmed. Booking ref CFA-33333')).toBeOnTheScreen();
   expect(screen.getByText('Paid')).toBeOnTheScreen();
   expect(screen.getByText('2 hours before')).toBeOnTheScreen(); // default reminder
+  // Add to calendar (R6.1): the system sheet opens with the session, its times, the venue and the ref.
+  mockAddEvent.mockResolvedValue({ action: 'saved' });
+  await fireEvent.press(screen.getByRole('button', { name: 'Add to calendar' }));
+  await waitFor(() =>
+    expect(mockAddEvent).toHaveBeenCalledWith({
+      title: 'Padel with Nour',
+      startDate: new Date((mockBooking as { starts_at: string }).starts_at),
+      endDate: new Date((mockBooking as { ends_at: string }).ends_at),
+      location: 'Cedar Court Club',
+      notes: 'Booking CFA-33333 · Coach For All',
+    }),
+  );
   // Back to the tabs underneath, not a new Home on top of them (SDK 58 drew that one without its tab bar).
   await fireEvent.press(screen.getByRole('link', { name: 'Back to Home' }));
   expect(mockRouter.dismissTo).toHaveBeenCalledWith('/');

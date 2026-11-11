@@ -559,3 +559,6 @@ Fill the **Egyptian Arabic** column and save. Keep anything in `{{double braces}
 | `explore.who` | Explore | Who it's for | لمين |
 | `explore.audience.private` | Explore | Adults | كبار |
 | `explore.audience.kids` | Explore | Kids | أطفال |
+| `calendar.add` | Confirmed, Booking detail | Add to calendar | ضيفه للتقويم |
+| `calendar.failed` | Confirmed, Booking detail | Couldn't open your calendar | مقدرناش نفتح التقويم |
+| `calendar.notes` | Calendar event | Booking {{ref}} · Coach For All | حجز {{ref}} · Coach For All |

@@ -5,7 +5,7 @@ import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { layout, space } from '@cfa/tokens';
 import { firstName } from '@/data/book';
-import { directionsUrl } from '@/data/bookings';
+import { addToCalendar, bookingTitle, calendarEvent, directionsUrl } from '@/data/bookings';
 import { DEFAULT_REMINDER, useMyBooking, useReminders } from '@/data/checkout';
 import { askReminderPermission } from '@/data/reminders';
 import { useLang } from '@/i18n';
@@ -17,11 +17,12 @@ import { EmptyState } from '@/ui/EmptyState';
 import { GroupedList } from '@/ui/GroupedList';
 import { T } from '@/ui/T';
 import { TextLink } from '@/ui/TextLink';
+import { showToast } from '@/ui/Toast';
 
 /**
  * §7.10 Confirmed: ring then tick, a headline per category ("Request sent." while pending), the ref,
  * When / Where / Paid, Directions and Share, "Remind me", View booking (Booking detail) and Back to Home.
- * Add to calendar is Phase 2 (R6.4).
+ * Add to calendar (Phase 2 R6.1) sits under Remind me.
  */
 export default function Confirmed() {
   const { c } = useTheme();
@@ -56,6 +57,10 @@ export default function Confirmed() {
       : { title: t('confirmed.paid'), value: formatPrice(b.total_egp, lang) };
   const reminderLabel = t(`remind.${typeof reminder === 'number' ? `m${reminder}` : reminder}`);
   const directions = () => Linking.openURL(directionsUrl(b.venue_lat, b.venue_lng));
+  const calendar = () =>
+    addToCalendar(calendarEvent(b, bookingTitle(b, t, lang), t('calendar.notes', { ref: b.ref }))).catch(() =>
+      showToast(t('calendar.failed')),
+    );
 
   return (
     <ScrollView
@@ -110,6 +115,7 @@ export default function Confirmed() {
             value: reminderLabel,
             onPress: () => router.push({ pathname: '/remind/[ref]', params: { ref: b.ref } }),
           },
+          { key: 'calendar', icon: 'calendarAdd', title: t('calendar.add'), onPress: calendar },
         ]}
       />
 

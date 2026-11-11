@@ -17,6 +17,8 @@ import {
   canCancel,
   canReschedule,
   bookingTitle,
+  addToCalendar,
+  calendarEvent,
   directionsUrl,
   staticMapUrl,
   statusPill,
@@ -42,8 +44,8 @@ const map = component.bookingMap;
 /**
  * §7.12 Booking detail: map header with Directions, status pill, title, date and time, venue, payment,
  * the cancellation policy, the instructor and what to bring. A kids booking that was approved is paid
- * here (D29). Reschedule until 24 h before; Cancel until the start. Message (Phase 2 R1.9) and Rate (R2); Add to calendar
- * are Phase 2.
+ * here (D29). Reschedule until 24 h before; Cancel until the start. Message (Phase 2 R1.9), Rate (R2) and
+ * Add to calendar (R6.1).
  */
 export default function BookingDetail() {
   const { c } = useTheme();
@@ -259,6 +261,17 @@ export default function BookingDetail() {
               label={t('chat.message')}
               variant="secondary"
               onPress={() => void openChat(b.instructor_id, () => showToast(t('chat.openFailed')))}
+            />
+          )}
+          {upcoming && (
+            <Button
+              label={t('calendar.add')}
+              variant="secondary"
+              onPress={() =>
+                addToCalendar(calendarEvent(b, title, t('calendar.notes', { ref: b.ref }))).catch(() =>
+                  showToast(t('calendar.failed')),
+                )
+              }
             />
           )}
           {canCancel(b, now) && (

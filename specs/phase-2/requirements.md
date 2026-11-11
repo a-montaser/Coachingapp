@@ -89,7 +89,7 @@ Everything still runs in Expo Go on the owner's iPhone, against the hosted dev p
 
 ### R6 `calendar` (handoff §7.10, §7.12)
 
-- R6.1 "Add to calendar" on Confirmed (tile) and Booking detail (action) opens the system's add-event sheet with the title ("Padel with Nour"), start and end, venue name and address, and the booking ref in the notes. The learner confirms it in the system sheet; the app asks for no calendar permission it doesn't need.
+- R6.1 "Add to calendar" on Confirmed (a row under Remind me) and Booking detail (a button, upcoming bookings) opens the system's add-event sheet with the title ("Padel with Nour"), start and end, venue name and address, and the booking ref in the notes. The learner confirms it in the system sheet; the app asks for no calendar permission it doesn't need.
 - R6.2 Calendar sync (Bookings capsule) stays hidden: it needs a calendar feed or full calendar access. Moved to Later.
 - **AC:** RNTL: the event passed to the calendar has the right fields (Cairo times, venue, ref). Checked on the iPhone.
 

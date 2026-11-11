@@ -623,7 +623,10 @@
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
     "hasTimes": "Has open times",
-    "hasBookings": "Has bookings"
+    "hasBookings": "Has bookings",
+    "add": "Add to calendar",
+    "failed": "Couldn't open your calendar",
+    "notes": "Booking {{ref}} · Coach For All"
   },
   "chat": {
     "today": "Today",

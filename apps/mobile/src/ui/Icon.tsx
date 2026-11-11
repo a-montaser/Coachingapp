@@ -38,6 +38,7 @@ const names = {
   card: { ios: 'creditcard', android: 'credit_card' },
   pin: { ios: 'mappin.and.ellipse', android: 'location_on' },
   bell: { ios: 'bell', android: 'notifications' },
+  calendarAdd: { ios: 'calendar.badge.plus', android: 'calendar_add_on' }, // Add to calendar (R6.1)
   filter: { ios: 'line.3.horizontal.decrease', android: 'filter_list' },
   bag: { ios: 'bag', android: 'shopping_bag' },
   send: { ios: 'arrow.up', android: 'arrow_upward' }, // Chat composer (§7.13)

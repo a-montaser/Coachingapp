@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { createEventInCalendarAsync } from 'expo-calendar/legacy';
 import { create } from 'zustand';
 import { component } from '@cfa/tokens';
 import type { Category } from '@/theme/settings';
@@ -228,3 +229,26 @@ export const useBookingsFilter = create<
   set: (patch) => set(patch),
   reset: () => set(DEFAULT_BOOKINGS_FILTER),
 }));
+
+/**
+ * Add to calendar (Phase 2 R6.1): the event the system's "New Event" sheet opens with. The learner confirms it
+ * there, so the app needs no calendar permission. Venue notes go in the location (they hold the address).
+ */
+export function calendarEvent(
+  b: Pick<MyBooking, 'ref' | 'starts_at' | 'ends_at' | 'venue_name' | 'venue_notes'>,
+  title: string,
+  notes: string,
+) {
+  return {
+    title,
+    startDate: new Date(b.starts_at),
+    endDate: new Date(b.ends_at),
+    location: [b.venue_name, b.venue_notes].filter(Boolean).join(', '),
+    notes,
+  };
+}
+
+/** Opens the system add-event sheet. The legacy API: the newer one doesn't run in Expo Go (SDK 58). */
+export function addToCalendar(event: ReturnType<typeof calendarEvent>) {
+  return createEventInCalendarAsync(event);
+}
