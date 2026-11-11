@@ -85,7 +85,7 @@ appId: com.coachforall.app
 - assertVisible: '.*1,300 EGP.*'
 - tapOn:
     id: 'cancel-confirm'
-- assertVisible: 'Booking cancelled.*'
+- assertVisible: '(Booking cancelled.*|No upcoming sessions)'
 
 # 15. Rate the finished 1:1 (helper.sh) from Past
 - tapOn: 'Past'

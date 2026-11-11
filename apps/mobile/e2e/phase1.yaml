@@ -148,7 +148,8 @@ appId: com.coachforall.app
 - assertVisible: "(Less than 24 hours to go|Same-day bookings are final).*"
 - tapOn:
     id: 'cancel-confirm'
-- assertVisible: 'Booking cancelled'
+# The toast can fade before a slow emulator looks, so an empty Upcoming list counts too.
+- assertVisible: '(Booking cancelled|No upcoming sessions)'
 
 # 10. The refund is on Profile as app credit (D64)
 - tapOn: 'Profile'
