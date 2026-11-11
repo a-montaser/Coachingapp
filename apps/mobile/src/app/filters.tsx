@@ -2,7 +2,7 @@ import Slider from '@react-native-community/slider';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
-import { layout, space } from '@cfa/tokens';
+import { component, layout, space } from '@cfa/tokens';
 import {
   DEFAULT_FILTERS,
   DISTANCES,
@@ -81,7 +81,7 @@ export default function FiltersSheet() {
         ))}
       </Section>
 
-      <Section title={t('explore.maxPrice')} variant="footnote" wrap>
+      <Section title={t('explore.maxPrice')} variant="footnote">
         <T variant="headline">
           {filters.maxPrice >= PRICE.max
             ? any
@@ -95,6 +95,7 @@ export default function FiltersSheet() {
           value={filters.maxPrice}
           onValueChange={(v) => setFilter('maxPrice', v)}
           inverted={rtl}
+          style={styles.slider}
           minimumTrackTintColor={c.brand}
           maximumTrackTintColor={c.surface2}
         />
@@ -184,4 +185,5 @@ export default function FiltersSheet() {
 
 const styles = StyleSheet.create({
   body: { padding: layout.sideMargin, paddingTop: space.space6, gap: layout.sectionGap },
+  slider: { alignSelf: 'stretch', height: component.iconButton.size }, // full width, 44 pt to drag
 });
