@@ -133,6 +133,13 @@ jobs:
           docker logs "$(docker ps -qf name=edge_runtime)" 2>&1 | tail -80
           eval "$(supabase status -o env)"
           psql "$DB_URL" -c "select ref, status, method, total_egp, created_at from public.bookings order by created_at desc limit 5"
+      - name: Screen recording of the journey (Actions → this run → Artifacts)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-recording
+          path: e2e-output/video
+          if-no-files-found: warn
       - name: Keep the Maestro output and Metro log
         if: failure()
         uses: actions/upload-artifact@v4
