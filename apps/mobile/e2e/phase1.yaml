@@ -101,7 +101,7 @@ appId: com.coachforall.app
     timeout: 30000
 - tapOn: '.*Dina Samir.*'
 - tapOn:
-    text: '(Today|Tomorrow) \d\d:\d\d'
+    text: '(Today|Tomorrow) \d\d:\d\d · .*'
     index: 0
 - tapOn: 'Continue'
 - assertVisible: 'Review & pay'
