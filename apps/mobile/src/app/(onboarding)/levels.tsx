@@ -24,8 +24,6 @@ import { NavigationBar } from '@/ui/NavigationBar';
 import { Progress } from '@/ui/Progress';
 import { T } from '@/ui/T';
 
-const BAR_CLEARANCE = component.button.height + space.space8;
-
 /**
  * §7.3 step 2, on one page (owner revision D54): every pick with its four levels as chips. Tapping a
  * chosen level again clears it; Skip skips them all and moves on. Continue saves to `interests`.
@@ -68,7 +66,7 @@ export default function Levels() {
           styles.body,
           {
             paddingTop: insets.top + component.navBar.height + space.space6,
-            paddingBottom: insets.bottom + BAR_CLEARANCE,
+            paddingBottom: insets.bottom + space.space4,
           },
         ]}
       >

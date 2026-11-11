@@ -1,4 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Share, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated';
@@ -10,6 +11,7 @@ import { useFavourites } from '@/data/favourites';
 import { distanceKm, cairoDaysUntil } from '@/data/home';
 import { useOrigin } from '@/data/explore';
 import { nextAvailable, useInstructor, type Offering } from '@/data/instructor';
+import { cairoKey, monthsAhead } from '@/data/rules';
 import { useLang } from '@/i18n';
 import { formatClock, formatDistance, formatNumber, formatPrice, formatWeekday } from '@/i18n/format';
 import { useTheme } from '@/theme/useTheme';
@@ -21,6 +23,7 @@ import { EmptyState } from '@/ui/EmptyState';
 import { GroupedList } from '@/ui/GroupedList';
 import { Hero } from '@/ui/Hero';
 import { Icon, disciplineIcon } from '@/ui/Icon';
+import { MonthCalendar } from '@/ui/MonthCalendar';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Section } from '@/ui/Section';
 import { SessionRow } from '@/ui/SessionRow';
@@ -54,6 +57,8 @@ export default function InstructorProfile() {
   // An instructor looking at their own profile has nobody to message there.
   const self = useMyInstructorId(useSession().session?.user.id).data === id;
   const fav = useFavourites(); // Phase 2 R3.1: the heart in the glass cluster (§7.6)
+  const [monthChoice, setMonthChoice] = useState<number | null>(null);
+  const [dayChoice, setDayChoice] = useState<string | null>(null);
   const ar = lang === 'ar';
   const n = (x: number) => formatNumber(x, lang);
   const now = new Date();
@@ -86,6 +91,14 @@ export default function InstructorProfile() {
   const lessons = offerings.filter((o) => o.type !== 'workshop');
   const workshopSlots = slots.filter((s) => workshops.some((w) => w.id === s.offering_id));
   const soonest = nextAvailable(slots, offerings);
+  // Full calendar under Next available (D75): every open lesson time, by Cairo day.
+  const lessonSlots = slots.filter((s) => lessons.some((o) => o.id === s.offering_id));
+  const dayOf = (iso: string) => cairoKey(new Date(iso));
+  const openDays = new Set(lessonSlots.map((s) => dayOf(s.starts_at)));
+  const dayKey = dayChoice ?? (lessonSlots[0] ? dayOf(lessonSlots[0].starts_at) : null);
+  const month = monthChoice ?? (dayKey ? monthsAhead(dayKey, now) : 0);
+  const lastMonth = lessonSlots.length ? monthsAhead(dayOf(lessonSlots.at(-1)!.starts_at), now) : 0;
+  const daySlots = dayKey ? lessonSlots.filter((s) => dayOf(s.starts_at) === dayKey) : [];
   const venue = offerings.find((o) => o.venue)?.venue;
   const bring = offerings.find((o) => o.what_to_bring)?.what_to_bring;
   const km = origin ? distanceKm(origin, p) : null;
@@ -96,6 +109,11 @@ export default function InstructorProfile() {
     (ar && p.area_ar) || p.area_en,
   ].filter(Boolean);
 
+  // Several session types can share a time, so each time names its type ("Tomorrow 09:00 · Small group").
+  const sessionName = (offeringId: string) => {
+    const o = lessons.find((x) => x.id === offeringId);
+    return !o ? '' : isHobbies ? o.title : t(`instructor.types.${o.type}`);
+  };
   const detail = (o: Offering) => {
     const bits = [t('instructor.minutes', { n: n(o.duration_min) })];
     if (o.type === 'private') bits.push(isHobbies && o.included ? o.included : t('instructor.onePerson'));
@@ -164,7 +182,11 @@ export default function InstructorProfile() {
             {soonest.length ? (
               <View style={styles.chips}>
                 {soonest.map((s) => (
-                  <Chip key={s.id} label={when(s.starts_at)} onPress={() => toBook(s.offering_id, s.id)} />
+                  <Chip
+                    key={s.id}
+                    label={`${when(s.starts_at)} · ${sessionName(s.offering_id)}`}
+                    onPress={() => toBook(s.offering_id, s.id)}
+                  />
                 ))}
               </View>
             ) : (
@@ -173,6 +195,32 @@ export default function InstructorProfile() {
               </T>
             )}
           </Card>
+
+          {lessonSlots.length > 0 && (
+            <Card style={styles.next}>
+              <MonthCalendar
+                offset={month}
+                onOffset={setMonthChoice}
+                maxOffset={Math.max(lastMonth, month)}
+                marked={openDays}
+                selected={dayKey}
+                onSelect={setDayChoice}
+                markedLabel={t('calendar.hasTimes')}
+                now={now}
+              />
+              {daySlots.length > 0 && (
+                <View style={styles.chips}>
+                  {daySlots.map((s) => (
+                    <Chip
+                      key={s.id}
+                      label={`${formatClock(new Date(s.starts_at), lang)} · ${sessionName(s.offering_id)}`}
+                      onPress={() => toBook(s.offering_id, s.id)}
+                    />
+                  ))}
+                </View>
+              )}
+            </Card>
+          )}
 
           {isHobbies && workshopSlots.length > 0 && (
             <Section title={t('instructor.upcomingWorkshops')}>

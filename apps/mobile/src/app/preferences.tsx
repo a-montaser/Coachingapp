@@ -23,8 +23,6 @@ import { NavigationBar } from '@/ui/NavigationBar';
 import { Section } from '@/ui/Section';
 import { T } from '@/ui/T';
 
-const BAR_CLEARANCE = component.button.height + space.space8;
-
 /**
  * Profile → "Change interests and levels" on one page (owner revision D54): every category's
  * disciplines as chips to pick, and each pick's level right under it. Save writes only what changed.
@@ -72,7 +70,7 @@ export default function Preferences() {
           styles.body,
           {
             paddingTop: insets.top + component.navBar.height + space.space4,
-            paddingBottom: insets.bottom + BAR_CLEARANCE,
+            paddingBottom: insets.bottom + space.space4,
           },
         ]}
       >

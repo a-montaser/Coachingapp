@@ -139,6 +139,8 @@ beforeEach(() => {
   mockParams = { id: 'yasmine', discipline: 'pottery' };
 });
 
+const NEXT_CHIP = /^(\w{3}|Today|Tomorrow) \d{2}:\d{2} · /; // "Thu 09:00 · 1:1 on the wheel"
+
 test('"Next available" is the three soonest open lesson slots, not workshops', () => {
   expect(nextAvailable(pottery.slots, pottery.offerings).map((s) => s.id)).toEqual(['a', 'b', 'c']);
 });
@@ -149,7 +151,7 @@ test('Hobbies profile: header, next available, upcoming workshops, then private 
   expect(screen.getByText('Pottery · Beginners welcome')).toBeOnTheScreen();
   expect(screen.getByText('112 reviews')).toBeOnTheScreen();
   expect(screen.getByText(/7 yrs teaching · .*Zamalek/)).toBeOnTheScreen();
-  expect(screen.getAllByRole('button', { name: /^\w{3} \d{2}:\d{2}$|^Today|^Tomorrow/ })).toHaveLength(3);
+  expect(screen.getAllByRole('button', { name: NEXT_CHIP })).toHaveLength(3);
   expect(screen.getByRole('header', { name: 'Upcoming groups' })).toBeOnTheScreen();
   expect(screen.getByText('Wheel-throwing taster')).toBeOnTheScreen();
   expect(screen.getByText('3 of 8 spots left')).toBeOnTheScreen();
@@ -168,8 +170,16 @@ test('Hobbies profile: header, next available, upcoming workshops, then private 
     pathname: '/book/[offeringId]',
     params: { offeringId: 'kids' },
   });
-  await fireEvent.press(screen.getAllByRole('button', { name: /^\w{3} \d{2}:\d{2}$|^Today|^Tomorrow/ })[0]!);
+  await fireEvent.press(screen.getAllByRole('button', { name: NEXT_CHIP })[0]!);
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith({
+    pathname: '/book/[offeringId]',
+    params: { offeringId: 'wheel', slot: 'a' },
+  });
+  // Full calendar under it (D75): the first open day is chosen; its times open their own session.
+  expect(screen.getAllByRole('button', { name: /open times$/ }).length).toBeGreaterThan(0);
+  const dayChip = screen.getByRole('button', { name: /^\d{2}:\d{2} · 1:1 on the wheel$/ });
+  await fireEvent.press(dayChip);
+  expect(jest.requireMock('expo-router').router.push).toHaveBeenLastCalledWith({
     pathname: '/book/[offeringId]',
     params: { offeringId: 'wheel', slot: 'a' },
   });
