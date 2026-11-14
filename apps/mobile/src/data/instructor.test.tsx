@@ -56,7 +56,7 @@ const pottery = {
     levels: 'Beginners welcome',
     rating_avg: 4.9,
     rating_count: 112,
-    from_price: 450,
+    from_price: 900,
     next_at: inDays(1),
     venue_name: 'The Clay Room',
     area_en: 'Zamalek',
@@ -69,15 +69,6 @@ const pottery = {
     bio: null,
   },
   offerings: [
-    offering({
-      id: 'kids',
-      type: 'kids',
-      title: 'Kids clay club',
-      price_egp: 450,
-      capacity: 6,
-      min_age: 7,
-      max_age: 12,
-    }),
     offering({
       id: 'taster',
       type: 'workshop',
@@ -100,7 +91,6 @@ const pottery = {
   slots: [
     slot('w1', 'taster', inDays(2), 3),
     slot('a', 'wheel', inDays(3)),
-    slot('b', 'kids', inDays(4)),
     slot('c', 'wheel', inDays(5)),
     slot('d', 'wheel', inDays(6)),
   ],
@@ -142,7 +132,7 @@ beforeEach(() => {
 const NEXT_CHIP = /^(\w{3}|Today|Tomorrow) \d{2}:\d{2} · /; // "Thu 09:00 · 1:1 on the wheel"
 
 test('"Next available" is the three soonest open lesson slots, not workshops', () => {
-  expect(nextAvailable(pottery.slots, pottery.offerings).map((s) => s.id)).toEqual(['a', 'b', 'c']);
+  expect(nextAvailable(pottery.slots, pottery.offerings).map((s) => s.id)).toEqual(['a', 'c', 'd']);
 });
 
 test('Hobbies profile: header, next available, upcoming workshops, then private lessons (§7.6)', async () => {
@@ -158,17 +148,16 @@ test('Hobbies profile: header, next available, upcoming workshops, then private 
   expect(screen.getByRole('header', { name: 'Private lessons' })).toBeOnTheScreen();
   expect(screen.getByText('1:1 on the wheel')).toBeOnTheScreen();
   expect(screen.getByText('90 min · clay and firing included')).toBeOnTheScreen();
-  expect(screen.getByText('60 min · ages 7–12 · up to 6 kids')).toBeOnTheScreen();
   expect(screen.getByText('The Clay Room')).toBeOnTheScreen();
   expect(screen.getByText('Clothes that can get muddy')).toBeOnTheScreen();
   expect(screen.getByText('Free cancellation up to 24 hours before')).toBeOnTheScreen();
   expect(screen.getByText('Usually replies within an hour')).toBeOnTheScreen();
-  expect(screen.getAllByText('450 EGP')).toHaveLength(2); // Kids price and the bar's "From"
+  expect(screen.getAllByText('900 EGP')).toHaveLength(2); // the 1:1 price and the bar's "From"
   // Book opens the cheapest lesson type; a slot chip opens its own offering at that time.
   await fireEvent.press(screen.getByRole('button', { name: 'Book' }));
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith({
     pathname: '/book/[offeringId]',
-    params: { offeringId: 'kids' },
+    params: { offeringId: 'wheel' },
   });
   await fireEvent.press(screen.getAllByRole('button', { name: NEXT_CHIP })[0]!);
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith({

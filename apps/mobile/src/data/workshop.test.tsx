@@ -110,7 +110,6 @@ test('a requested date is preselected with its seats cap; Reserve keeps date and
     offeringId: 'taster',
     slotId: 'two',
     seats: 2,
-    childId: null,
   });
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/review');
 });

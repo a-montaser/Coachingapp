@@ -133,25 +133,9 @@ test('Lessons list only instructors who teach 1:1 or Kids; groups are the Groups
   expect(filterPeople([hany], offerings, base, null, NOW)[0]!.price).toBe(350);
 });
 
-test('session type sets the "From" price and drops instructors without it (§9.7)', () => {
-  const kids = filterPeople(
-    [yasmine, dina, hany],
-    offerings,
-    { ...base, filters: { ...DEFAULT_FILTERS, type: 'kids' } },
-    null,
-    NOW,
-  );
-  expect(kids.map((r) => [r.id, r.price])).toEqual([['yasmine', 450]]);
-  const priv = filterPeople(
-    [yasmine],
-    offerings,
-    { ...base, filters: { ...DEFAULT_FILTERS, type: 'private' } },
-    null,
-    NOW,
-  );
-  expect(priv[0]!.price).toBe(900);
-  const anyType = filterPeople([yasmine], offerings, base, null, NOW);
-  expect(anyType[0]!.price).toBe(450); // lowest across types
+test('the "From" price is the lowest 1:1 price; kids sessions never count (§9.7, D80)', () => {
+  const [y] = filterPeople([yasmine], offerings, base, null, NOW);
+  expect(y!.price).toBe(900); // her 450 EGP kids session is ignored
 });
 
 test('price, gender, rating, distance and availability filters', () => {
@@ -174,7 +158,7 @@ test('sorts: soonest (none last), lowest price, highest rated, nearest; ties by 
   const run = (sort: 'soonest' | 'price' | 'rating' | 'nearest') =>
     ids(filterPeople(rows, offerings, { ...base, sort }, zamalek, NOW));
   expect(run('soonest')).toEqual(['yasmine', 'dina', 'hany']);
-  expect(run('price')).toEqual(['hany', 'yasmine', 'dina']);
+  expect(run('price')).toEqual(['hany', 'dina', 'yasmine']); // 1:1 prices only (D80)
   expect(run('rating')).toEqual(['yasmine', 'hany', 'dina']); // 4.9 tie → Yasmine is sooner
   expect(run('nearest')).toEqual(['yasmine', 'hany', 'dina']);
 });
@@ -275,13 +259,12 @@ test('Explore: live search, Lessons | Groups, Filters button, result line, then 
   expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/sort');
 });
 
-test('Filters sheet: chips update the live count; nothing left shows a disabled "No matches"', async () => {
+test('Filters sheet: chips update the live count; Reset clears them', async () => {
   await render(<Filters />);
   expect(screen.getByRole('button', { name: 'Show 3 lessons' })).toBeOnTheScreen();
   await fireEvent.press(screen.getByRole('button', { name: 'Male' }));
   expect(screen.getByRole('button', { name: 'Show 1 lesson' })).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('button', { name: 'Kids' }));
-  expect(screen.getByRole('button', { name: 'No matches' })).toBeDisabled();
+  expect(screen.queryByText("Who it's for")).toBeNull(); // Adults | Kids is gone (D80)
   await fireEvent.press(screen.getByRole('button', { name: 'Reset' }));
   expect(screen.getByRole('button', { name: 'Show 3 lessons' })).toBeOnTheScreen();
   // The discipline is chosen here now (D54); the category chips switch the whole tab.

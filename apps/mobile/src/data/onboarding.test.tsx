@@ -186,16 +186,15 @@ test('Levels: Skip skips them all at once and moves on', async () => {
   await waitFor(() => expect(mockRouter.push).toHaveBeenCalledWith('/who-where'));
 });
 
-test('Who & where saves the answers, marks onboarding done and opens Home (then Family for kids)', async () => {
+test('Where saves the answers (sessions are for the learner, D80), marks onboarding done and opens Home', async () => {
   await render(wrap(<WhoWhere />));
-  await fireEvent.press(screen.getByRole('radio', { name: /^Both/ }));
   await fireEvent.press(screen.getByRole('button', { name: 'Zamalek' }));
   await fireEvent.press(screen.getByRole('button', { name: 'Female' }));
   await fireEvent.press(screen.getByRole('button', { name: 'Show my picks' }));
   await waitFor(() => expect(mockRouter.replace).toHaveBeenCalledWith('/'));
-  expect(mockRouter.push).toHaveBeenCalledWith('/family');
+  expect(mockRouter.push).not.toHaveBeenCalledWith('/family');
   const update = mockCalls.find((c) => c[0] === 'update')![1] as Record<string, unknown>;
-  expect(update).toMatchObject({ who_for: 'both', area_id: 'zamalek', instructor_pref: 'female' });
+  expect(update).toMatchObject({ who_for: 'me', area_id: 'zamalek', instructor_pref: 'female' });
   expect(update.onboarded_at).toEqual(expect.any(String));
 });
 
@@ -229,7 +228,6 @@ describe('onboarding before sign-up (D34)', () => {
     await levels.unmount();
 
     await render(wrap(<WhoWhere />));
-    await fireEvent.press(screen.getByRole('radio', { name: /^Me/ }));
     await fireEvent.press(screen.getByRole('button', { name: 'Show my picks' }));
     expect(mockRouter.push).toHaveBeenCalledWith('/sign-up');
     expect(mockCalls).toEqual([]);

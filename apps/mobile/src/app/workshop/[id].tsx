@@ -281,7 +281,7 @@ export default function Workshop() {
             if (!chosen || !count) return;
             useBookDraft
               .getState()
-              .set({ offeringId: o.id, slotId: chosen.id, seats: count, childId: null, note: '', weeks });
+              .set({ offeringId: o.id, slotId: chosen.id, seats: count, note: '', weeks });
             router.push('/review');
           }}
         />

@@ -27,7 +27,6 @@ export const DISTANCES = [2, 5, 10] as const;
 
 export type Filters = {
   maxPrice: number;
-  type: SessionType | null;
   gender: 'female' | 'male' | null;
   minRating: number | null;
   maxKm: number | null;
@@ -35,7 +34,6 @@ export type Filters = {
 };
 export const DEFAULT_FILTERS: Filters = {
   maxPrice: PRICE.max,
-  type: null,
   gender: null,
   minRating: null,
   maxKm: null,
@@ -109,17 +107,12 @@ export function filterPeople(
   const q = s.query.trim().toLowerCase();
   const out: PersonResult[] = [];
   for (const r of rows) {
-    // Lessons are 1:1 and Kids (owner revision D54); groups and workshops are the Groups tab.
+    // Lessons are 1:1 (owner revision D54; kids descoped, D80); groups and workshops are the Groups tab.
     const mine = offerings.filter(
-      (o) =>
-        o.instructor_id === r.id &&
-        o.discipline_id === r.discipline_id &&
-        (o.type === 'private' || o.type === 'kids'),
+      (o) => o.instructor_id === r.id && o.discipline_id === r.discipline_id && o.type === 'private',
     );
     if (offerings.length && mine.length === 0) continue;
-    const typed = f.type ? mine.filter((o) => o.type === f.type) : mine;
-    if (f.type && typed.length === 0) continue;
-    const price = typed.length ? Math.min(...typed.map((o) => o.price_egp)) : r.from_price;
+    const price = mine.length ? Math.min(...mine.map((o) => o.price_egp)) : r.from_price;
     const km = origin ? distanceKm(origin, r) : null;
     if (s.discipline && r.discipline_id !== s.discipline) continue;
     if (

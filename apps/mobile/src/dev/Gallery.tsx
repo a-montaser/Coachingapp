@@ -246,7 +246,6 @@ export function Gallery() {
         <Section variant="title2" title={g.sections.list}>
           <GroupedList
             rows={[
-              { key: 'family', title: g.list.family, icon: 'profile', onPress: () => {} },
               {
                 key: 'lang',
                 title: g.list.language,
@@ -409,12 +408,6 @@ export function Gallery() {
             title={g.app.againTitle}
             subtitle={g.app.againSub}
             onPress={() => {}}
-          />
-          <RowCard
-            leading={<IconTile icon="family" />}
-            title={g.app.childTitle}
-            subtitle={g.app.childSub}
-            trailing={<Button label={g.app.change} size="small" onPress={() => {}} />}
           />
           <View style={styles.row}>
             <Avatar size={component.profilePhoto.size} accessibilityLabel={g.app.avatar} />

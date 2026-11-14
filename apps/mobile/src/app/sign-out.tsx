@@ -26,7 +26,7 @@ export default function SignOutSheet() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.body}>
+    <ScrollView style={styles.fit} contentContainerStyle={styles.body}>
       <SheetHeader title={t('auth.signOutTitle')} />
       <T color={c.label2}>{t('auth.signOutBody')}</T>
       {error && (
@@ -41,5 +41,6 @@ export default function SignOutSheet() {
 }
 
 const styles = StyleSheet.create({
+  fit: { flexGrow: 0 }, // the sheet sizes to its content
   body: { padding: layout.sideMargin, paddingTop: space.space6, gap: space.space4 },
 });

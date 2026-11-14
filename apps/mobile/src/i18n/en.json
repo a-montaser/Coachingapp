@@ -111,7 +111,6 @@
     "noInterests": "No interests picked yet",
     "changeInterests": "Change interests and levels",
     "settings": "Settings",
-    "family": "Family & kids",
     "language": "Language",
     "appearance": "Appearance",
     "credit": "App credit"
@@ -126,27 +125,6 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System"
-  },
-  "family": {
-    "title": "Family & kids",
-    "explainer": "Book and pay for your children from your account. Instructors see their first name and age only.",
-    "child": "{{name}} · {{age}}",
-    "edit": "Edit",
-    "editLabel": "Edit {{name}}",
-    "pending": "{{title}} · {{when}} · waiting for the instructor to confirm",
-    "bookFor": "Book a session for {{name}}",
-    "add": "Add a family member",
-    "infoLength": "Kids sessions are 45 minutes, for ages 6–14",
-    "infoGuardian": "A guardian stays on site",
-    "editTitle": "Edit {{name}}",
-    "firstName": "First name",
-    "age": "Age",
-    "agePlaceholder": "6–14",
-    "nameRequired": "Enter their first name.",
-    "nameTooLong": "Keep the first name to 40 letters or fewer.",
-    "ageRange": "Kids sessions are for ages 6 to 14.",
-    "addButton": "Add to family",
-    "saveButton": "Save changes"
   },
   "onboarding": {
     "progress": "Setup progress",
@@ -170,15 +148,6 @@
     "allSetSub": "Tap a pick to change its level.",
     "continue": "Continue",
     "saveChanges": "Save changes",
-    "whoTitle": "Who are the sessions for?",
-    "who": {
-      "me": "Me",
-      "meSub": "Adult sessions",
-      "child": "My child",
-      "childSub": "Kids sessions, ages 6–14",
-      "both": "Both",
-      "bothSub": "Add kids as family members next"
-    },
     "whereTitle": "Where do you usually learn?",
     "useLocation": "Use my location",
     "locationOff": "Location is off. Pick an area instead.",
@@ -316,11 +285,6 @@
     "segGroups": "Groups",
     "category": "Category",
     "discipline": "What",
-    "who": "Who it's for",
-    "audience": {
-      "private": "Adults",
-      "kids": "Kids"
-    },
     "showMap": "Show map",
     "showList": "Show list",
     "searchArea": "Search this area",
@@ -349,8 +313,6 @@
     "minutes": "{{n}} min",
     "onePerson": "one person",
     "upTo": "up to {{n}}, price per person",
-    "ages": "ages {{min}}–{{max}}",
-    "upToKids": "up to {{n}} kids",
     "whatToBring": "What to bring",
     "policyCancel": "Free cancellation up to 24 hours before",
     "from": "From",
@@ -385,7 +347,6 @@
   },
   "book": {
     "title": "Book with {{name}}",
-    "typeLabel": "Session type",
     "types": {
       "private": "1:1",
       "group": "Group",
@@ -393,25 +354,15 @@
     },
     "desc": {
       "private": "Just you and {{name}}, {{n}} min",
-      "group": "Up to {{cap}} people, {{n}} min, price per person",
-      "kids": "Ages {{min}}–{{max}}, {{n}} min. A guardian stays on site."
+      "group": "Up to {{cap}} people, {{n}} min, price per person"
     },
-    "change": "Change",
-    "addChild": "Add a child to book kids sessions",
-    "childOutOfRange": "Kids sessions here are for ages {{min}}–{{max}}. Add a child in that range.",
     "noTimes": "No times on {{day}} · {{name}} isn't coaching that day.",
     "note": "Note for {{name}} (optional)",
     "pickTime": "Pick a time",
     "pickTimeReason": "Pick a time to continue",
-    "needChild": "Add a child to continue",
     "continue": "Continue",
     "summary": "{{day}} · {{start}}–{{end}}",
     "notFound": "These sessions aren't available any more.",
-    "childTitle": "For {{name}}, age {{age}}",
-    "audience": {
-      "private": "Adults",
-      "kids": "Kids"
-    },
     "repeat": "Repeat weekly",
     "repeatSub": "Same time every {{day}}",
     "repeatSpan": "{{n}} weeks · {{from}} – {{to}}",
@@ -423,13 +374,11 @@
   "review": {
     "title": "Review & pay",
     "edit": "Edit",
-    "forChild": "for {{name}}",
     "payWith": "Pay with",
     "card": "Card",
     "cardSub": "Debit or credit card",
     "venue": "Pay at the venue",
     "venueSub": "Cash or card on arrival",
-    "kidsNote": "Nothing is charged now. {{name}} confirms first, then you have 24 hours to pay.",
     "promo": "Promo code",
     "apply": "Apply",
     "remove": "Remove",
@@ -471,7 +420,8 @@
     "paymentFailed": "The payment didn't go through. Your seat is held for 5 minutes, so you can try again.",
     "notFound": "This time isn't available any more.",
     "sessionWeeks": "{{n}} weeks × {{price}}",
-    "weekly": "weekly · {{n}} weeks"
+    "weekly": "weekly · {{n}} weeks",
+    "approvalNote": "Nothing is charged now. {{name}} confirms first, then you have 24 hours to pay."
   },
   "demoPay": {
     "title": "Demo payment",

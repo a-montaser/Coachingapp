@@ -8,7 +8,7 @@ appId: com.coachforall.app
     visible: 'Get started'
     timeout: 300000
 
-# 1. Onboarding: Categories → Interests → Levels → Who & where (D34, D35)
+# 1. Onboarding: Categories → Interests → Levels → Where (D34, D35; no "who for" since D80)
 - tapOn: 'Get started'
 - tapOn: 'Hobbies.*'
 - tapOn: 'Continue'
@@ -17,8 +17,7 @@ appId: com.coachforall.app
 - assertVisible: 'How experienced are you?'
 - tapOn: 'Beginner, .*'
 - tapOn: 'Continue'
-- assertVisible: 'Who are the sessions for?'
-- tapOn: 'Me, .*'
+- assertVisible: 'Where do you usually learn?'
 - tapOn: 'Heliopolis'
 - scrollUntilVisible:
     element: 'Show my picks'

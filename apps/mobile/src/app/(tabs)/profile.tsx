@@ -18,7 +18,8 @@ import { Section } from '@/ui/Section';
 import { T } from '@/ui/T';
 
 /**
- * §7.14 Profile, Phase 1 scope (R3.4): header, Levels, Settings (Family & kids, Language, Appearance), Sign out.
+ * §7.14 Profile, Phase 1 scope (R3.4): header, Levels, Settings (Language, Appearance), Sign out. Family & kids
+ * is descoped until after the last phase (D80).
  * Not yet: Edit, Members' Circle, Payments & receipts, Notifications, Become an instructor (requirements "Later").
  */
 export default function Profile() {
@@ -110,12 +111,6 @@ export default function Profile() {
               icon: 'heart',
               title: t('favourites.title'),
               onPress: () => router.push('/favourites'),
-            },
-            {
-              key: 'family',
-              icon: 'family',
-              title: t('profile.family'),
-              onPress: () => router.push('/family'),
             },
             {
               key: 'language',

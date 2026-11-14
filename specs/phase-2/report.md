@@ -81,7 +81,7 @@ From the working agreement:
 - **R2 Verification:** documents uploaded, reviewed by ops, then the "Verified" badge.
 - **R3 Availability rules:** weekly hours and exceptions, which generate slots.
 - **R4 Offerings and workshops:** create, edit and publish 1:1, group, kids and workshop sessions, with prices and capacity.
-- **R5 Accepting bookings:** approve or decline requests (the kids flow, D29), the day's schedule, and messaging from the bookings.
+- **R5 Accepting bookings:** approve or decline requests (sessions that need approval, D29), the day's schedule, and messaging from the bookings.
 - **R6 Earnings:** per-session earnings and a payout summary. The payout ledger itself is Phase 4.
 - **R7 Ops admin web:** verification queue, refunds and credits (`grant_credit`), support view of bookings and chats, instructor sign-in linking.
 - **Carry-overs to decide at the gate:**
@@ -89,3 +89,7 @@ From the working agreement:
   - whether Phase 3 needs a development build: instructor photo upload works in Expo Go; push doesn't
   - chat media
   - the Phase 2 pull request into `main`
+
+## Descoped after the report (14 Nov 2026, D80)
+
+**Kids and family are out of scope until after all phases** (owner). The app no longer asks who sessions are for, and has no Family & kids screen. There's no Adults | Kids switch on Book or in Filters, and no kids sessions anywhere. The database keeps everything (kids sessions are unpublished, not deleted; `family_members` and the kids booking rules stay), so it can come back after Phase 5. This also takes "deeper kids and guardian flows" out of Phase 4.

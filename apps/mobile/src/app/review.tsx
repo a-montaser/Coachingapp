@@ -17,7 +17,6 @@ import {
   type BookingErrorKey,
   type Method,
 } from '@/data/checkout';
-import { useFamily } from '@/data/family';
 import { policyFor, promoDiscount, subtotal } from '@/data/rules';
 import { useLang } from '@/i18n';
 import { formatClock, formatDayMonth, formatNumber, formatPrice, formatWeekday } from '@/i18n/format';
@@ -57,7 +56,6 @@ export default function Review() {
   const draft = useBookDraft();
   const q = useReview(draft.offeringId, draft.slotId);
   const userId = useSession().session?.user.id;
-  const child = (useFamily(userId).data ?? []).find((m) => m.id === draft.childId);
   const [method, setMethod] = useState<Method>('card');
   const [code, setCode] = useState('');
   const [promo, setPromo] = useState<{ code: string; pct: number } | null>(null);
@@ -95,8 +93,8 @@ export default function Review() {
       ? Math.min(balance, total)
       : 0;
   const due = total - credit;
-  // Kids and approval sessions are charged only after the instructor confirms (D29).
-  const askFirst = o.type === 'kids' || o.needs_approval;
+  // Sessions that need the instructor's approval are charged only after they confirm (D29).
+  const askFirst = o.needs_approval;
   const policy = policyFor(start, new Date());
   const when = `${formatWeekday(start, lang)} ${formatDayMonth(start, lang)}, ${formatClock(start, lang)}`;
   const amount = formatPrice(due, lang);
@@ -136,7 +134,6 @@ export default function Review() {
         const b = await placeBooking({
           slotId: slot.id,
           seats,
-          childId: draft.childId,
           method,
           promo: promo?.code ?? null,
           note: draft.note,
@@ -188,7 +185,6 @@ export default function Review() {
             t(`instructor.types.${o.type}`),
             seats > 1 ? t('workshop.seat', { count: seats, n: formatNumber(seats, lang) }) : null,
             weeks > 1 ? t('review.weekly', { n: formatNumber(weeks, lang) }) : null,
-            child ? t('review.forChild', { name: child.first_name }) : null,
             o.venue?.name,
           ]
             .filter(Boolean)
@@ -211,7 +207,7 @@ export default function Review() {
           />
           {askFirst && (
             <T variant="footnote" color={c.label2}>
-              {t('review.kidsNote', { name })}
+              {t('review.approvalNote', { name })}
             </T>
           )}
         </Section>

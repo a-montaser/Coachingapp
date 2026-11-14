@@ -82,11 +82,10 @@ export type Booking = {
   method: Method;
 };
 
-/** SQL `book()`: holds the seats atomically. Card → awaiting payment (5 min); venue → confirmed; kids/approval → pending. */
+/** SQL `book()`: holds the seats atomically. Card → awaiting payment (5 min); venue → confirmed; approval → pending. Never for a child (kids descoped, D80). */
 export async function placeBooking(b: {
   slotId: string;
   seats: number;
-  childId: string | null;
   method: Method;
   promo: string | null;
   note: string;
@@ -111,7 +110,7 @@ export async function placeBooking(b: {
   const { data, error } = await supabase.rpc('book', {
     p_slot: b.slotId,
     p_seats: b.seats,
-    p_child: b.childId,
+    p_child: null,
     p_method: b.method,
     p_promo: b.promo,
     p_note: b.note || null,

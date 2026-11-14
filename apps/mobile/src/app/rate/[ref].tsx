@@ -53,7 +53,7 @@ export default function RateSheet() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
+    <ScrollView style={styles.fit} contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
       <SheetHeader title={t('rate.title')} />
       {b && (
         <T variant="headline" style={styles.center}>
@@ -89,6 +89,7 @@ export default function RateSheet() {
 }
 
 const styles = StyleSheet.create({
+  fit: { flexGrow: 0 }, // the sheet sizes to its content
   body: { padding: layout.sideMargin, paddingTop: space.space6, gap: space.space4 },
   center: { textAlign: 'center' },
 });

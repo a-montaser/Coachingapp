@@ -27,15 +27,7 @@ export function useBookOptions(offeringId: string) {
       if (off.error) throw off.error;
       const o = off.data as unknown as BookOffering;
       const now = new Date();
-      const [siblings, card, slots] = await Promise.all([
-        supabase
-          .from('offerings')
-          .select(cols)
-          .eq('instructor_id', o.instructor_id)
-          .eq('discipline_id', o.discipline_id)
-          .eq('published', true)
-          // Lessons only: Adults (1:1) or Kids; groups book on the Group page (D54).
-          .in('type', ['private', 'kids']),
+      const [card, slots] = await Promise.all([
         supabase
           .from('instructor_cards')
           .select('display_name, discipline_en, discipline_ar')
@@ -50,13 +42,10 @@ export function useBookOptions(offeringId: string) {
           .lt('starts_at', new Date(now.getTime() + WINDOW_DAYS * 86_400_000).toISOString())
           .order('starts_at'),
       ]);
-      if (siblings.error) throw siblings.error;
       if (card.error) throw card.error;
       if (slots.error) throw slots.error;
-      const order = { private: 0, group: 1, kids: 2, workshop: 3 };
       return {
         offering: o,
-        siblings: (siblings.data as unknown as BookOffering[]).sort((a, b) => order[a.type] - order[b.type]),
         instructor: card.data as {
           display_name: string;
           discipline_en: string;
@@ -74,7 +63,6 @@ type BookDraft = {
   slotId: string | null;
   /** 1, except workshops (1–3, §9.4). */
   seats: number;
-  childId: string | null;
   note: string;
   /** Repeat weekly (Phase 2 R5): 1 is a single session, 2–8 a series booked and paid together. */
   weeks: number;
@@ -90,7 +78,6 @@ export const useBookDraft = create<BookDraft>()((set) => ({
   offeringId: null,
   slotId: null,
   seats: 1,
-  childId: null,
   note: '',
   weeks: 1,
   pendingRef: null,

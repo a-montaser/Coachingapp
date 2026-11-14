@@ -118,10 +118,6 @@ export default function InstructorProfile() {
     const bits = [t('instructor.minutes', { n: n(o.duration_min) })];
     if (o.type === 'private') bits.push(isHobbies && o.included ? o.included : t('instructor.onePerson'));
     if (o.type === 'group') bits.push(t('instructor.upTo', { n: n(o.capacity) }));
-    if (o.type === 'kids') {
-      if (o.min_age && o.max_age) bits.push(t('instructor.ages', { min: n(o.min_age), max: n(o.max_age) }));
-      bits.push(t('instructor.upToKids', { n: n(o.capacity) }));
-    }
     return bits.join(' · ');
   };
   // Book opens the cheapest lesson type (lessons are sorted by price); a slot chip opens its own offering at that time.
@@ -256,7 +252,7 @@ export default function InstructorProfile() {
               <GroupedList
                 rows={lessons.map((o) => ({
                   key: o.id,
-                  icon: o.type === 'kids' ? 'family' : 'profile',
+                  icon: 'profile',
                   title: isHobbies ? o.title : t(`instructor.types.${o.type}`),
                   subtitle: detail(o),
                   value: formatPrice(o.price_egp, lang),

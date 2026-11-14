@@ -11,7 +11,6 @@ import {
   useExplore,
   useExploreResults,
   type Availability,
-  type SessionType,
 } from '@/data/explore';
 import { useIsRTL, useLang } from '@/i18n';
 import { formatNumber, formatPrice } from '@/i18n/format';
@@ -24,8 +23,6 @@ import { Section } from '@/ui/Section';
 import { SheetHeader } from '@/ui/SheetHeader';
 import { T } from '@/ui/T';
 
-// Lessons only (owner revision D54): Adults (1:1) or Kids. Groups need no type filter.
-const TYPES: SessionType[] = ['private', 'kids'];
 const WHEN: Availability[] = ['any', 'today', 'week', 'weekend'];
 
 /**
@@ -100,20 +97,6 @@ export default function FiltersSheet() {
           maximumTrackTintColor={c.surface2}
         />
       </Section>
-
-      {!workshopsTab && (
-        <Section title={t('explore.who')} variant="footnote" wrap>
-          <Chip label={any} selected={!filters.type} onPress={() => setFilter('type', null)} />
-          {TYPES.map((x) => (
-            <Chip
-              key={x}
-              label={t(`explore.audience.${x}`)}
-              selected={filters.type === x}
-              onPress={() => setFilter('type', x)}
-            />
-          ))}
-        </Section>
-      )}
 
       <Section title={t('explore.gender')} variant="footnote" wrap>
         <Chip label={any} selected={!filters.gender} onPress={() => setFilter('gender', null)} />

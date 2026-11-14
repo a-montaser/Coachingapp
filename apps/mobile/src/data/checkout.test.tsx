@@ -35,10 +35,6 @@ jest.mock('./auth', () => ({
   ...jest.requireActual('./auth'),
   useSession: () => ({ session: { user: { id: 'u1' } }, loading: false }),
 }));
-jest.mock('./family', () => ({
-  ...jest.requireActual('./family'),
-  useFamily: () => ({ data: [{ id: 'ali', first_name: 'Ali', age: 9 }] }),
-}));
 const mockPlace = jest.fn();
 const mockCheckout = jest.fn();
 const mockPromo = jest.fn();
@@ -106,7 +102,6 @@ beforeEach(() => {
     offeringId: 'o1',
     slotId: 's1',
     seats: 1,
-    childId: null,
     note: '',
     weeks: 1,
     pendingRef: null,
@@ -236,7 +231,7 @@ test('Review: card holds the seat, then opens the demo checkout; a retry pays fo
   expect(mockPlace).toHaveBeenCalledTimes(1); // never a second hold
 });
 
-test('Review: a lost last seat says so; kids sessions send a request instead of charging', async () => {
+test('Review: a lost last seat says so; sessions needing approval send a request instead of charging', async () => {
   mockPlace.mockRejectedValue({ message: 'no_seats' });
   const view = await render(<Review />);
   await fireEvent.press(screen.getByRole('button', { name: 'Pay 650 EGP' }));
@@ -244,12 +239,10 @@ test('Review: a lost last seat says so; kids sessions send a request instead of 
     expect(screen.getByText('Someone just took the last seat. Pick another time.')).toBeOnTheScreen(),
   );
   await view.unmount();
-  mockReview = review('kids');
-  useBookDraft.setState({ childId: 'ali' });
+  mockReview = review('private', { needs_approval: true });
   await render(<Review />);
   expect(screen.getByRole('button', { name: 'Send request' })).toBeOnTheScreen();
   expect(screen.getByText(/Nothing is charged now/)).toBeOnTheScreen();
-  expect(screen.getByText(/for Ali/)).toBeOnTheScreen();
 });
 
 test('Demo checkout: Pay confirms and opens Confirmed; Fail returns with the seat still held', async () => {

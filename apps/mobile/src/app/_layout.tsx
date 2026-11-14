@@ -41,7 +41,6 @@ function RootNavigator() {
       </Stack.Protected>
       <Stack.Protected guard={signedIn && onboarded} redirectTo={signedIn ? '/categories' : '/welcome'}>
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="family" />
         <Stack.Screen name="favourites" />
         <Stack.Screen name="credit" />
         <Stack.Screen name="preferences" />
@@ -60,10 +59,10 @@ function RootNavigator() {
         {/* Sized to its content so both buttons always show; at the half detent Android cut off "Cancel". */}
         <Stack.Screen name="cancel/[ref]" options={{ ...sheet, sheetAllowedDetents: 'fitToContents' }} />
         <Stack.Screen name="reschedule/[ref]" />
-        <Stack.Screen name="family-member" options={sheet} />
         <Stack.Screen name="language" options={sheet} />
         <Stack.Screen name="appearance" options={sheet} />
-        <Stack.Screen name="sign-out" options={sheet} />
+        {/* Sized to its content: the half detent left a band of empty sheet under "Stay signed in". */}
+        <Stack.Screen name="sign-out" options={{ ...sheet, sheetAllowedDetents: 'fitToContents' }} />
         <Stack.Screen name="filters" options={sheet} />
         <Stack.Screen name="sort" options={sheet} />
       </Stack.Protected>

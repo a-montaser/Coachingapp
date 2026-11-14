@@ -18,21 +18,19 @@ import { useLang } from '@/i18n';
 import { useTheme } from '@/theme/useTheme';
 import { Button } from '@/ui/Button';
 import { Chip } from '@/ui/Chip';
-import { GroupedList } from '@/ui/GroupedList';
 import { NavigationBar } from '@/ui/NavigationBar';
 import { Progress } from '@/ui/Progress';
 import { T } from '@/ui/T';
 
-type Who = NonNullable<Profile['who_for']>;
 type Pref = Profile['instructor_pref'];
-const WHO: Who[] = ['me', 'child', 'both'];
 const PREFS: Pref[] = ['none', 'female', 'male'];
 // §7.3 chip order.
 const AREA_ORDER = ['new-cairo', 'zamalek', 'maadi', 'sheikh-zayed', 'heliopolis', 'downtown'];
 
 /**
- * §7.3 step 3: who the sessions are for, usual area (or the nearest one to the device), instructor
- * preference. "Show my picks" and Skip both finish onboarding and open Home.
+ * §7.3 step 3: usual area (or the nearest one to the device) and instructor preference. "Show my picks"
+ * and Skip both finish onboarding and open Home. Sessions are always for the learner: kids are out of
+ * scope until after the last phase (D80), so "Who are the sessions for?" is gone.
  */
 export default function WhoWhereScreen() {
   const { c } = useTheme();
@@ -44,7 +42,6 @@ export default function WhoWhereScreen() {
   const areas = [...(useAreas().data ?? [])].sort(
     (a, b) => AREA_ORDER.indexOf(a.id) - AREA_ORDER.indexOf(b.id),
   );
-  const [who, setWho] = useState<Who | null>(null);
   const [areaId, setAreaId] = useState<string | null>(null);
   const [located, setLocated] = useState(false);
   const [locationOff, setLocationOff] = useState(false);
@@ -82,7 +79,6 @@ export default function WhoWhereScreen() {
       // The gate opens the tabs once the refreshed profile says onboarding is done.
       await qc.invalidateQueries({ queryKey: ['profile', userId] });
       router.replace('/');
-      if (answers.who_for === 'child' || answers.who_for === 'both') router.push('/family');
     } catch {
       setError(true);
       setSaving(false);
@@ -101,21 +97,6 @@ export default function WhoWhereScreen() {
         ]}
       >
         <Progress value={3} accessibilityLabel={t('onboarding.progress')} />
-
-        <View style={styles.section}>
-          <T variant="title2" accessibilityRole="header">
-            {t('onboarding.whoTitle')}
-          </T>
-          <GroupedList
-            rows={WHO.map((w) => ({
-              key: w,
-              title: t(`onboarding.who.${w}`),
-              subtitle: t(`onboarding.who.${w}Sub`),
-              selected: who === w,
-              onPress: () => setWho(w),
-            }))}
-          />
-        </View>
 
         <View style={styles.section}>
           <T variant="title2" accessibilityRole="header">
@@ -170,7 +151,7 @@ export default function WhoWhereScreen() {
           label={t('onboarding.showPicks')}
           variant="primary"
           busy={saving}
-          onPress={() => finish({ who_for: who, area_id: areaId, instructor_pref: pref })}
+          onPress={() => finish({ who_for: 'me', area_id: areaId, instructor_pref: pref })}
         />
       </ScrollView>
       <NavigationBar

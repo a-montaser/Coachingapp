@@ -3,6 +3,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -51,6 +52,20 @@ export default function Chat() {
   const { t } = useTranslation();
   const lang = useLang();
   const insets = useSafeAreaInsets();
+  // The home-bar inset only matters with the keyboard down; with it up, the field sits right on the keyboard.
+  const [keyboardUp, setKeyboardUp] = useState(false);
+  useEffect(() => {
+    const show = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', () =>
+      setKeyboardUp(true),
+    );
+    const hide = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', () =>
+      setKeyboardUp(false),
+    );
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
   const qc = useQueryClient();
   const userId = useSession().session?.user.id;
   const thread = useThreads(userId).data?.find((th) => th.id === threadId);
@@ -184,7 +199,7 @@ export default function Chat() {
         {typing.typing && <TypingDots accessibilityLabel={t('chat.typing', { name: firstName(name) })} />}
       </ScrollView>
 
-      <View style={[styles.composer, { paddingBottom: insets.bottom + space.space2 }]}>
+      <View style={[styles.composer, { paddingBottom: (keyboardUp ? 0 : insets.bottom) + space.space2 }]}>
         <Composer
           value={draft}
           onChangeText={(text) => {

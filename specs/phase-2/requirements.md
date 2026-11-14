@@ -58,7 +58,7 @@ Everything still runs in Expo Go on the owner's iPhone, against the hosted dev p
 - R2.1 A learner can rate a **completed** booking once: five stars (34 pt, gold when on) and optional text, "Shared with Nour only", "Send rating". Stars are required.
 - R2.2 Entry points: "Rate session" on a past Bookings card and "Rate" on a past Booking detail. After rating they read "Rated 5★" and can't be changed.
 - R2.3 The instructor's ★ average and review count (Instructor profile, cards) include the new rating at once. The text is visible only to the learner, that instructor and ops. No public review list in Phase 2.
-- R2.4 The parent rates a child's completed booking. Cancelled bookings can't be rated.
+- R2.4 Cancelled bookings can't be rated. _(Rating a child's booking went with the kids descope, D80.)_
 - **AC:** pgTAP for `rate_booking`: not completed, not mine, cancelled, second rating, stars outside 1–5 are refused; the average and count update correctly from the seeded values. RNTL for the sheet and the "Rated" state.
 
 ### R3 `favourites`

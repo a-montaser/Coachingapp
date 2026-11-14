@@ -213,3 +213,6 @@ values ('00000000-0000-4000-8000-000000000001', '00000000-0000-0000-0000-0000000
 update public.profiles set first_name = 'Omar', area_id = 'new-cairo', who_for = 'both'
  where id = '00000000-0000-4000-8000-000000000001';
 insert into public.family_members (user_id, first_name, age) values ('00000000-0000-4000-8000-000000000001', 'Ali', 9);
+
+-- Kids sessions are descoped until after the last phase (D80): seeded, but hidden.
+update public.offerings set published = false where type = 'kids';

@@ -91,6 +91,7 @@ export type BookingKind = 'all' | 'lessons' | 'groups';
 export type BookingTime = 'any' | PartOfDay;
 export type BookingsFilter = { discipline: string | null; kind: BookingKind; time: BookingTime };
 export const DEFAULT_BOOKINGS_FILTER: BookingsFilter = { discipline: null, kind: 'all', time: 'any' };
+// Kids bookings made before the descope (D80) still count as lessons.
 const LESSON_TYPES = ['private', 'kids'];
 
 export function matchesFilter(b: MyBooking, f: Partial<BookingsFilter>) {

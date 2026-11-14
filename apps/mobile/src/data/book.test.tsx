@@ -15,8 +15,6 @@ jest.mock('./auth', () => ({
   ...jest.requireActual('./auth'),
   useSession: () => ({ session: { user: { id: 'u1' } }, loading: false }),
 }));
-let mockFamily: { id: string; first_name: string; age: number }[] = [];
-jest.mock('./family', () => ({ ...jest.requireActual('./family'), useFamily: () => ({ data: mockFamily }) }));
 
 test('bookable: future, and at least 60 minutes ahead when it is later today (Cairo) — mirrors assert_bookable', () => {
   const now = new Date('2026-10-17T15:00:00Z'); // Sat 18:00 Cairo (UTC+3)
@@ -63,7 +61,6 @@ const offering = (id: string, type: string, extra = {}) => ({
 const mockData = {
   offering: offering('one', 'private'),
   // Lessons only: Adults (1:1) and Kids; groups book on the Group page (D54).
-  siblings: [offering('one', 'private'), offering('kid', 'kids', { duration_min: 45 })],
   instructor: { display_name: 'Nour El-Sayed', discipline_en: 'Padel', discipline_ar: null },
   slots: [
     { id: 'soon', offering_id: 'one', starts_at: iso(now, 20), ends_at: iso(now, 80), seats_free: 1 },
@@ -82,16 +79,13 @@ beforeEach(() => {
   useSettings.setState({ lang: 'en' });
   mockParams = { offeringId: 'one' };
   mockQuery = mockData;
-  mockFamily = [];
 });
 
-test('Book: Adults | Kids, starts on the first day with times, picking a time fills the summary, no price', async () => {
+test('Book: starts on the first day with times, picking a time fills the summary, no price', async () => {
   await render(<Book />);
   expect(screen.getByRole('header', { name: 'Book with Nour' })).toBeOnTheScreen();
   expect(screen.getByText('Padel')).toBeOnTheScreen();
-  expect(screen.getAllByRole('tab')).toHaveLength(2);
-  expect(screen.getByText('Adults')).toBeOnTheScreen();
-  expect(screen.getByText('Kids')).toBeOnTheScreen();
+  expect(screen.queryByText('Kids')).toBeNull(); // no Adults | Kids switch (D80)
   // Open days are marked on the month calendar.
   expect(screen.getAllByRole('button', { name: /Has open times/ })).toHaveLength(1);
   expect(screen.getByText('Just you and Nour, 60 min')).toBeOnTheScreen();
@@ -144,30 +138,8 @@ test('a day with two open times waits for a tap, and says why', async () => {
   expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
 });
 
-test('switching Adults | Kids goes to the sibling offering; kids need a child aged 6–14', async () => {
-  await render(<Book />);
-  await fireEvent.press(screen.getAllByRole('tab')[1]!);
-  expect(jest.requireMock('expo-router').router.setParams).toHaveBeenCalledWith({
-    offeringId: 'kid',
-    slot: undefined,
-  });
-
-  mockQuery = { ...mockData, offering: mockData.siblings[1] };
-  mockParams = { offeringId: 'kid' };
-  const view = await render(<Book />);
-  expect(screen.getByText('Ages 6–14, 45 min. A guardian stays on site.')).toBeOnTheScreen();
-  await fireEvent.press(screen.getByRole('button', { name: 'Add a child to book kids sessions' }));
-  expect(jest.requireMock('expo-router').router.push).toHaveBeenCalledWith('/family-member');
-  await view.unmount();
-
-  mockFamily = [{ id: 'ali', first_name: 'Ali', age: 9 }];
-  await render(<Book />);
-  expect(screen.getByText('For Ali, age 9')).toBeOnTheScreen();
-  expect(screen.getByText('A guardian stays on site')).toBeOnTheScreen();
-});
-
 test('the draft keeps the choice for Review & pay', () => {
-  useBookDraft.getState().set({ offeringId: 'one', slotId: 'tmr', childId: null, note: 'Left-handed' });
+  useBookDraft.getState().set({ offeringId: 'one', slotId: 'tmr', note: 'Left-handed' });
   expect(useBookDraft.getState()).toMatchObject({ offeringId: 'one', slotId: 'tmr', note: 'Left-handed' });
 });
 
