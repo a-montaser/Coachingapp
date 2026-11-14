@@ -199,7 +199,10 @@ export default function Chat() {
         {typing.typing && <TypingDots accessibilityLabel={t('chat.typing', { name: firstName(name) })} />}
       </ScrollView>
 
-      <View style={[styles.composer, { paddingBottom: (keyboardUp ? 0 : insets.bottom) + space.space2 }]}>
+      <View
+        testID="chat-composer"
+        style={[styles.composer, { paddingBottom: (keyboardUp ? 0 : insets.bottom) + space.space2 }]}
+      >
         <Composer
           value={draft}
           onChangeText={(text) => {

@@ -1,4 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { Keyboard } from 'react-native';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import { space } from '@cfa/tokens';
 import i18n from '@/i18n';
 import { useSettings } from '@/theme/settings';
 import Chat from '@/app/chat/[threadId]';
@@ -273,4 +276,26 @@ test('a new message notifies like a reminder; without permission it falls back t
   expect(mockNotif.schedule).not.toHaveBeenCalled();
   expect(fallback).toHaveBeenCalled();
   mockNotif.status = 'granted';
+});
+
+test('Chat: the field sits on the keyboard; the home-bar inset applies only with it down (D81)', async () => {
+  const handlers: Record<string, () => void> = {};
+  const listen = jest.spyOn(Keyboard, 'addListener').mockImplementation((event, fn) => {
+    handlers[event] = fn as () => void;
+    return { remove: jest.fn() } as unknown as ReturnType<typeof Keyboard.addListener>;
+  });
+  mockThreads = [thread()];
+  mockMessages = [msg('a', 'nour', 10)];
+  await render(
+    <SafeAreaInsetsContext.Provider value={{ top: 0, left: 0, right: 0, bottom: 34 }}>
+      <Chat />
+    </SafeAreaInsetsContext.Provider>,
+  );
+  const composer = () => screen.getByTestId('chat-composer');
+  expect(composer()).toHaveStyle({ paddingBottom: 34 + space.space2 });
+  await act(async () => handlers.keyboardWillShow?.());
+  expect(composer()).toHaveStyle({ paddingBottom: space.space2 });
+  await act(async () => handlers.keyboardWillHide?.());
+  expect(composer()).toHaveStyle({ paddingBottom: 34 + space.space2 });
+  listen.mockRestore();
 });

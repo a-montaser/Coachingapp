@@ -24,7 +24,7 @@ Decisions D67–D78 are in `docs/DECISIONS.md`.
 
 ## How to try it
 
-The full checklist is in `specs/phase-2/manual-test.md`: 22 steps, about 25 minutes on your iPhone. It covers Phase 1 and Phase 2.
+The full checklist is in `specs/phase-2/manual-test.md`: 23 steps, about 25 minutes on your iPhone. It covers Phase 1 and Phase 2.
 
 ## Test results (CI, all four jobs green)
 

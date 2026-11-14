@@ -108,3 +108,15 @@ appId: com.coachforall.app
     centerElement: true
 - tapOn: 'Favourites'
 - assertVisible: '.*Nour El-Sayed.*'
+
+# 17. Sign out sheet fits its content (D81): both buttons show on a small screen; staying keeps the session
+- back
+- scrollUntilVisible:
+    element: 'Sign out'
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Sign out'
+- assertVisible: 'Sign out?'
+- assertVisible: 'Stay signed in'
+- tapOn: 'Stay signed in'
+- assertVisible: 'App credit.*'
